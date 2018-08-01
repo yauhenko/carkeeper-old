@@ -22,6 +22,7 @@ app.use(async (ctx, next)=>{
 
 app.use(require("./routes/user"));
 app.use(require("./routes/auth"));
+app.use(require("./routes/cars"));
 
 
 app.listen("8000");
