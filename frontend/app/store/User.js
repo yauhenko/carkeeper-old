@@ -3,24 +3,23 @@ import Api from '../modules/Api';
 import Notification from "../components/Notification";
 
 class User {
-  constructor() {
+  constructor () {
     setInterval(()=>this.ping(), 15000);
   }
+
 
   @observable auth = false;
   @observable loading = false;
   @observable profile = {};
   @observable token = null;
 
-
-  @action login = (tel, password) => {
+  @action login = async (tel, password) => {
     this.loading = true;
-    Api('users/login', {tel, password}).then((response)=>{
+    Api('users/login', {tel, password}).then((response) => {
       this.loading = false;
       this.auth = true;
       this.profile = response.user;
       this.token = response.token;
-      console.log(response)
     }).catch(Notification);
   };
 
@@ -37,13 +36,13 @@ class User {
   @action ping = async () => {
     if(!this.token) return;
     Api('auth/ping', {}).then((response) => {
-      console.log(response);
       this.profile = response;
     }).catch(Notification);
   };
 
   @action logout = () => {
-
+    this.token = null;
+    this.auth = false;
   };
 }
 

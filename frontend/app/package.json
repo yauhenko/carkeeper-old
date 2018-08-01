@@ -25,7 +25,9 @@
     "mobx-react": "^5.2.3",
     "native-base": "^2.7.2",
     "react": "16.3.1",
-    "react-native": "~0.55.2",
+    "react-native": "^0.55.4",
+    "react-native-camera": "^1.1.4",
+    "react-native-image-crop-picker": "^0.20.3",
     "react-navigation": "^2.9.3"
   }
 }

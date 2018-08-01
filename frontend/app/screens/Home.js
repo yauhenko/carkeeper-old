@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Input, Label } from 'native-base';
-import User from "../store/User";
-import { observable, action} from 'mobx';
 
 @observer
 export default class Home extends React.Component {
@@ -11,7 +9,7 @@ export default class Home extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={styles.container}>
-          <Text onPress={()=>{User.auth = false}} style={styles.logo}>Выход</Text>
+          <Text style={styles.logo}>Пусто</Text>
         </Content>
       </Container>
     );

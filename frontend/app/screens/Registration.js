@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Input, Label, Segment } from 'native-base';
 import UserStore from "../store/User";
@@ -15,7 +15,6 @@ export default class Registration extends React.Component {
   @action change = (type, value) => {
     this[type] = value;
   };
-
 
   @action submitHandler = () => {
     UserStore.create(this.role, this.tel, this.email, this.password);
