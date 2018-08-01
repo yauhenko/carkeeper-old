@@ -23,6 +23,7 @@ app.use(async (ctx, next)=>{
 app.use(require("./routes/user"));
 app.use(require("./routes/auth"));
 app.use(require("./routes/cars"));
+app.use(require("./routes/garage"));
 
 
 app.listen("8000");
