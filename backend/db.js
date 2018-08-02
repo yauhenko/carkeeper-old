@@ -84,4 +84,9 @@ db.aggregateOne = async (sql, data = [], rules = {}) => {
     return res[0];
 };
 
+db.delete = async (table, id, pk = 'id') => {
+    let res = await db.query('DELETE FROM ?? WHERE ?? = ?', [table, pk, id]);
+    return Boolean(res['affectedRows']);
+};
+
 export default db;
