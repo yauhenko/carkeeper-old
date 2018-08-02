@@ -1,6 +1,6 @@
 import User from "../store/User";
 
-export default async function (url, params) {
+export default async (url, params) => {
   return fetch("http://192.168.1.20:8000/" + url, {
     method: 'POST',
     headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},

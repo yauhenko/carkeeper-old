@@ -29,7 +29,7 @@ export default class Garage {
     }
 
     static async addCar(user, { mark, model, generation, modification, serie, year} = {}) {
-        return await db.insert('cars', { user, mark, model, generation, modification, serie, year });
+        return await db.insert('cars', { user, mark, model, generation: generation || null, modification : modification || null, serie: serie || null, year });
     }
 
 }

@@ -14,6 +14,13 @@ export default class AddCar extends React.Component {
     Cars.getMarks();
   };
 
+  componentWillUnmount () {
+    Cars.car = Object.assign({}, Cars.initialCar);
+  }
+
+  submitHandler = () => {
+    Cars.addCar().then(()=>this.props.navigation.navigate('Garage'));
+  };
 
   render() {
     return (

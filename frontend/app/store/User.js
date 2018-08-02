@@ -17,9 +17,10 @@ class User {
     this.loading = true;
     Api('users/login', {tel, password}).then((response) => {
       this.loading = false;
-      this.auth = true;
       this.profile = response.user;
       this.token = response.token;
+
+      this.auth = true;
     }).catch(Notification);
   };
 

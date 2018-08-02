@@ -25,7 +25,6 @@ const Navigator = createDrawerNavigator({
   contentComponent : Navigation
 });
 
-
 const Auth = createStackNavigator({
     Login: {screen: Login, path: 'login'},
     Registration: {screen: Registration, path: 'registration'}

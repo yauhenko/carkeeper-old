@@ -22,11 +22,25 @@ class Cars {
   @observable series = [];
   @observable modifications = [];
 
+
+  @action getCars = () => {
+    return Api('garage/cars', {}).then((response) => {
+      this.cars = response;
+      console.log(response)
+    }).catch(Notification);
+  };
+
+  @action addCar = () => {
+    console.log('asdasdasd')
+    return Api('garage/cars/add', this.car).then((response) => {
+      console.log(response)
+    }).catch(Notification);
+  };
+
   @action getMarks = () => {
     return Api('cars/marks', {}).then((response) => {
       this.marks = response;
       console.log(response)
-
     }).catch(Notification);
   };
 

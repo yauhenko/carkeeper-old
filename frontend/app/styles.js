@@ -8,9 +8,7 @@ export default {
     fontSize: 16
   },
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    padding: 20
   },
   primaryButton: {
     backgroundColor: "#3e4669"
@@ -32,5 +30,8 @@ export default {
   itemInput: {
     marginLeft: 0,
     marginBottom: 15
+  },
+  textNote: {
+    color: "#ccc"
   }
 }

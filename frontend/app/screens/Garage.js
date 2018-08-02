@@ -1,14 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
 import styles from "../styles"
 import Hr from "../components/Hr";
 import Footer from "../components/Footer";
+import Cars from "../store/Cars";
 
 
 @observer
 export default class Garage extends React.Component {
+  componentDidMount() {
+    Cars.getCars();
+  }
+
+
   render() {
     return (
       <Container>
@@ -34,18 +40,39 @@ export default class Garage extends React.Component {
         </Header>
 
         <Content contentContainerStyle={styles.container}>
-          <Text>Мои автомобили</Text>
-          <Hr/>
-          <Text>Машина 1</Text>
-          <Hr/>
-          <Text>Машина 2</Text>
-          <Hr/>
-          <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>
+          <List>
+            {Cars.cars.map((car) => {
+              return(
+                <ListItem style={customStyles.listItem} onPress={()=>console.log('1')} thumbnail key={car.id}>
+                  <Left>
+                    <Thumbnail source={require('../assets/images/car_stub.png')}/>
+                  </Left>
+                  <Body>
+                    <Text>{car.mark_name} {car.model_name}</Text>
+                    <Text style={styles.textNote}>{car.year}г. {car.serie_name} {car.generation_name} {car.modification_name}</Text>
+                  </Body>
+                  <Right style={{paddingLeft: 10}}>
+                    <Icon name="arrow-forward" />
+                  </Right>
+                </ListItem>
+              )
+            })}
+          </List>
+
+          {!Cars.cars.length && <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
         </Content>
-
-
         <Footer {...this.props}/>
       </Container>
     );
   }
 }
+
+
+const customStyles = StyleSheet.create({
+  listItem : {
+
+  }
+
+
+
+});
