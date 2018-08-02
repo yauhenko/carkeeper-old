@@ -1,7 +1,22 @@
 import React from 'react';
 import {Text, View, Picker } from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Item, Label, Input, Form} from 'native-base';
+import {
+  Container,
+  Button,
+  Content,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  Item,
+  Label,
+  Input,
+  Form,
+  List, ListItem
+} from 'native-base';
 import styles from "../styles"
 import { observable, action} from 'mobx';
 import Cars from "../store/Cars";
@@ -38,7 +53,7 @@ export default class AddCar extends React.Component {
         </Header>
 
         <Content contentContainerStyle={styles.container}>
-          <Form>
+          <Form style={{padding: 20}}>
             <View style={styles.pickerWrapper}>
               <Picker selectedValue={Cars.car.mark} onValueChange={(value)=>{Cars.car.mark = value; Cars.getModels()}}>
                 <Picker.Item label="Марка автомобиля" value="" />
@@ -58,9 +73,8 @@ export default class AddCar extends React.Component {
             </View>
 
             <Item style={styles.itemInput}>
-              <Input keyboardType="numeric" maxLength={4} placeholderTextColor={"#ccc"} disabled={!Boolean(Cars.car.model)} placeholder={"Год автомобиля"} onChangeText={(text)=>{Cars.car.year = text; Cars.getGenerations()}} value={Cars.car.year} />
+              <Input  keyboardType="numeric" maxLength={4} placeholderTextColor={"#d6d7da"} disabled={!Boolean(Cars.car.model)} placeholder={"Год автомобиля"} onChangeText={(text)=>{Cars.car.year = text; Cars.getGenerations()}} value={Cars.car.year} />
             </Item>
-
 
             <View style={styles.pickerWrapper}>
               <Picker style={Boolean(Cars.car.year.length === 4) ? {} : styles.pickerDisabled} enabled={Boolean(Cars.car.year.length === 4)} selectedValue={Cars.car.generation} onValueChange={(value)=>{Cars.car.generation = value; Cars.getSeries();}}>
@@ -89,7 +103,7 @@ export default class AddCar extends React.Component {
               </Picker>
             </View>
 
-            <Button onPress={this.submitHandler} style={styles.primaryButton} block><Text style={styles.primaryButtonText}>Добавить</Text></Button>
+            <Button onPress={this.submitHandler} style={{...styles.primaryButton, marginTop: 25}} block><Text style={styles.primaryButtonText}>Добавить</Text></Button>
           </Form>
         </Content>
 

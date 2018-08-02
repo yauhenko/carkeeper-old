@@ -1,4 +1,6 @@
-export default {
+
+
+export default styles = {
   header : {
     paddingTop: 20,
     height: 80,
@@ -16,22 +18,29 @@ export default {
   primaryButtonText: {
     color: "#fff"
   },
+
   pickerWrapper: {
-    marginBottom: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc"
+    marginBottom: 5,
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#d6d7da"
   },
+
   pickerDisabled: {
-    color: "#ccc"
+    color: "#d6d7da"
   },
+
   footerButton : {
     backgroundColor: "#3e4669"
   },
+
   itemInput: {
     marginLeft: 0,
-    marginBottom: 15
+    marginBottom: 15,
+    borderBottomColor: "#d6d7da",
+    borderBottomWidth: 0.5
   },
+
   textNote: {
-    color: "#ccc"
+    color: "#d6d7da"
   }
 }

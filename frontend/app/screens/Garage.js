@@ -1,19 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, RefreshControl } from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
 import styles from "../styles"
-import Hr from "../components/Hr";
 import Footer from "../components/Footer";
 import Cars from "../store/Cars";
-
 
 @observer
 export default class Garage extends React.Component {
   componentDidMount() {
     Cars.getCars();
   }
-
 
   render() {
     return (
@@ -39,11 +36,11 @@ export default class Garage extends React.Component {
           </Right>
         </Header>
 
-        <Content contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
           <List>
             {Cars.cars.map((car) => {
               return(
-                <ListItem style={customStyles.listItem} onPress={()=>console.log('1')} thumbnail key={car.id}>
+                <ListItem  style={customStyles.listItem} onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
                   <Left>
                     <Thumbnail source={require('../assets/images/car_stub.png')}/>
                   </Left>
@@ -59,7 +56,7 @@ export default class Garage extends React.Component {
             })}
           </List>
 
-          {!Cars.cars.length && <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
+          {!Cars.cars.length && !Cars.loading && <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
         </Content>
         <Footer {...this.props}/>
       </Container>

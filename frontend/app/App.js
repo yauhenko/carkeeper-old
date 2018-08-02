@@ -9,10 +9,12 @@ import Home from "./screens/Home";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage";
 import AddCar from "./screens/AddCar";
+import Car from "./screens/Car";
 
 const Navigator = createDrawerNavigator({
     Home: {screen: Home},
     Garage: {screen: Garage},
+    Car: {screen: Car},
     AddCar: {screen: AddCar},
 }, {
   initialRouteName: 'Garage',

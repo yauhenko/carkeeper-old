@@ -3,6 +3,8 @@ import Api from "../modules/Api";
 import Notification from "../components/Notification";
 
 class Cars {
+  @observable loading = false;
+
   @observable initialCar = Object.freeze({
     mark: String(),
     year: String(),
@@ -22,18 +24,33 @@ class Cars {
   @observable series = [];
   @observable modifications = [];
 
+  @observable carDetail = {};
+
+  @action getCar = (id) => {
+    this.loading = true;
+    return Api('garage/cars/get', {id}).then((response) => {
+      this.carDetail = response;
+      this.loading = false;
+      console.log(response)
+    }).catch(Notification);
+  };
 
   @action getCars = () => {
+    this.loading = true;
     return Api('garage/cars', {}).then((response) => {
       this.cars = response;
+      this.loading = false;
       console.log(response)
     }).catch(Notification);
   };
 
   @action addCar = () => {
-    console.log('asdasdasd')
     return Api('garage/cars/add', this.car).then((response) => {
-      console.log(response)
+    }).catch(Notification);
+  };
+
+  @action deleteCar = (id) => {
+    return Api('garage/cars/delete', {id}).then((response) => {
     }).catch(Notification);
   };
 
