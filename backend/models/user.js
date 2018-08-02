@@ -44,8 +44,8 @@ class User {
     await db.query('UPDATE users SET password = PASSWORD(?) WHERE id = ?', [password, id]);
   }
 
-  static async update (id, { tel, email } = {}) {
-    return await db.update('users', { tel, email }, id);
+  static async update (id, data) {
+    return await db.update('users', data, id);
   }
 
 }
