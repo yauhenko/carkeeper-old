@@ -24,7 +24,7 @@ router.post('/users/get', async (ctx) => {
 });
 
 router.post('/users/create', async (ctx) => {
-  const role = ctx.checkBody('role').notEmpty().in(["admin", "seller", "buyer"]).value;
+  const role = ctx.checkBody('role').notEmpty().in(["seller", "buyer"]).value;
   const tel = ctx.checkBody('tel').notEmpty().value;
   const password = ctx.checkBody('password').notEmpty().len(6).value;
   const email = ctx.checkBody('email').notEmpty().isEmail().value;

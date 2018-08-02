@@ -1,4 +1,4 @@
-import db from '../db';
+import db from '../utils/db';
 
 export default class Cars {
 

@@ -1,8 +1,9 @@
-import db from "../db";
+import db from "../utils/db";
 import error from "../module/error";
 import Sessions from "./sessions";
 
 class User {
+
   static async list () {
     return await db.query("SELECT id, role, tel, email FROM users");
   }
@@ -40,11 +41,11 @@ class User {
   }
 
   static async setPassword(id, password) {
-    await db.query('UPDATE users SET password = PASSWORD(?) WHERE id=?', [password, id]);
+    await db.query('UPDATE users SET password = PASSWORD(?) WHERE id = ?', [password, id]);
   }
 
-  static async update (id, data) {
-    return await db.update('users', data, id);
+  static async update (id, { tel, email } = {}) {
+    return await db.update('users', { tel, email }, id);
   }
 
 }

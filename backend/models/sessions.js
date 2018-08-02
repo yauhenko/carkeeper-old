@@ -1,4 +1,4 @@
-import db from '../db';
+import db from '../utils/db';
 import error from "../module/error";
 import User from "./user";
 
