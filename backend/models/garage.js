@@ -32,4 +32,16 @@ export default class Garage {
         return await db.insert('cars', { user, mark, model, generation: generation || null, modification : modification || null, serie: serie || null, year });
     }
 
+    static async getCar(id) {
+        return await db.aggregateOne('SELECT id, user, mark, model, generation, serie, modification FROM cars WHERE id = ?', [id], {
+            mark: { table: 'car_mark', fields: ['id', 'name'] },
+            model: { table: 'car_model', fields: ['name'] },
+            generation: { table: 'car_generation', fields: ['name'] },
+            serie: { table: 'car_serie', fields: ['id', 'name'] },
+            modification: { table: 'car_modification', fields: ['name'] },
+        });
+    }
+
+
+
 }
