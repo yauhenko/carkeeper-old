@@ -3,6 +3,15 @@ import db from '../db';
 export default class Garage {
 
     static async getCars(user) {
+
+        // return await db.aggregate('SELECT id, mark, model, generation, serie, modification FROM cars', [], {
+        //     mark: { table: 'car_mark', fields: ['id', 'name'] },
+        //     model: { table: 'car_model', fields: ['name'] },
+        //     generation: { table: 'car_generation', fields: ['name'] },
+        //     serie: { table: 'car_serie', fields: ['id', 'name'] },
+        //     modification: { table: 'car_modification', fields: ['name'] },
+        // });
+
         return await db.query('SELECT ' +
             ' c.id, c.year, ' +
             ' mark.id AS mark_id, mark.name AS mark_name, ' +
