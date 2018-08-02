@@ -28,8 +28,8 @@ class User {
   static async create (role, tel, password, email) {
     tel = String(tel).replace(/[^0-9]/g, "");
     if (!tel.match(/^375(25|29|33|44|24)[0-9]{7}$/)) error("Кривой номер телефона");
-    if (await User.get(tel, "tel", true)) error("Телефон уже зарегистрирован");
-    if (await User.get(email, "email", true)) error("E-mail уже зарегистрирован");
+    if (await db.get('users', tel, { pk: 'tel', fields: 'id'})) error("Телефон уже зарегистрирован");
+    if (await db.get('users', email, { pk: 'email', fields: 'id'})) error("E-mail уже зарегистрирован");
     const res = await db.query(`INSERT INTO users (role, tel, password, email) VALUES (?,?,PASSWORD(?),?)`, [role, tel, password, email]);
     return res.insertId;
   }
