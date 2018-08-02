@@ -28,9 +28,8 @@ export default class Garage {
             ' WHERE user = ?', [user]);
     }
 
-    static async addCar(user, car = {}) {
-        car.user = user;
-        return await db.insert('cars', car);
+    static async addCar(user, { mark, model, generation, modification, serie, year} = {}) {
+        return await db.insert('cars', { user, mark, model, generation, modification, serie, year });
     }
 
 }

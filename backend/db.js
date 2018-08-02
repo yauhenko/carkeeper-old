@@ -56,8 +56,8 @@ db.aggregate = async (sql, data = [], rules = {}) => {
         for(let key of Object.keys(rules)) {
             if(item[key]) {
                 if(!items[key]) items[key] = [];
-                items[key].push(item[key]);
                 if(!index[key]) index[key] = {};
+                items[key].push(item[key]);
                 index[key][item[key]] = idx;
             }
         }
@@ -67,7 +67,6 @@ db.aggregate = async (sql, data = [], rules = {}) => {
        let rule = rules[key];
        let res = await db.query('SELECT ?? FROM ?? WHERE ?? IN (?)', [rule.fields, rule.table, rule.key, items[key]]);
        res.forEach((item) => {
-           console.log(item);
            let idx = index[key][ item[rule.key] ];
            result[idx][key] = rule.single ? item[rule.single] : Object.assign(item, {});
        });
@@ -76,6 +75,13 @@ db.aggregate = async (sql, data = [], rules = {}) => {
 
     return result;
 
+};
+
+db.aggregateOne = async (sql, data = [], rules = {}) => {
+    if(!sql.match(/LIMIT 1/i)) sql += ' LIMIT 1';
+    let res = await db.aggregate(sql, data, rules);
+    if(res.length === 0) return 0;
+    return res[0];
 };
 
 export default db;
