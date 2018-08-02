@@ -42,6 +42,8 @@ export default class Garage {
         });
     }
 
-
+    static async deleteCar(id) {
+        return await db.delete('cars', id);
+    }
 
 }
