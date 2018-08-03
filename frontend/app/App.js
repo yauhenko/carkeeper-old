@@ -1,7 +1,6 @@
 import React from 'react';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
-import { Font } from "expo";
 import Login from "./screens/Login";
 import Registration from "./screens/Registration";
 import User from "./store/User";
@@ -37,15 +36,11 @@ const Auth = createStackNavigator({
 
 @observer
 export default class App extends React.Component {
-
   componentWillMount() {
-    Font.loadAsync({
-      Roboto: require("native-base/Fonts/Roboto.ttf"),
-      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-    });
+    User.checkAuth();
   }
 
   render() {
-    return (User.auth ? <Navigator/> : <Auth/>);
+    return User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null;
   }
 }

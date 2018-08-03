@@ -20,7 +20,6 @@ import Cars from "../store/Cars";
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
 
-
 @observer
 export default class Car extends React.Component {
   @observable id = this.props.navigation.state.params.id;

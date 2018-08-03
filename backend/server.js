@@ -9,7 +9,7 @@ app.use(Body());
 require('koa-validate')(app);
 
 app.use(async (ctx, next)=>{
-  console.log(ctx.request.body);
+  console.log(ctx.req.url, ctx.request.body);
 
   try {
     await next();
