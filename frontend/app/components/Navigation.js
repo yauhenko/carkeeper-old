@@ -8,6 +8,10 @@ export default class Navigation extends Component {
     return (
       <Container style={{backgroundColor: "#3e4669", paddingTop: 20}}>
         <Content>
+          <View>
+            <Text onPress={()=>{this.props.navigation.navigate('Camera')}} style={styles.link}>Сделать фоту</Text>
+          </View>
+
           <List>
             <ListItem icon noIndent style={styles.listItem} onPress={() => this.props.navigation.navigate('Home')}>
               <Body style={styles.listItemBody}>
@@ -21,11 +25,20 @@ export default class Navigation extends Component {
               </Body>
             </ListItem>
 
+            <ListItem icon noIndent style={styles.listItem} onPress={() => this.props.navigation.navigate('Profile')}>
+              <Body style={styles.listItemBody}>
+              <Text style={styles.link}>Профиль</Text>
+              </Body>
+            </ListItem>
+
+
             <ListItem icon noIndent style={styles.listItem} onPress={() => User.logout()}>
               <Body style={styles.listItemBody}>
                 <Text style={styles.link}>Выход</Text>
               </Body>
             </ListItem>
+
+
 
           </List>
         </Content>

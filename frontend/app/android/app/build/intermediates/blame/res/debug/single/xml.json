@@ -1,6 +1,10 @@
 [
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/xml/preferences.xml",
-        "source": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.55.4/res/xml/preferences.xml"
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/e592fe0577009ee5cfb58ff8f9b64f09/res/xml/preferences.xml"
+    },
+    {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/xml/provider_paths.xml",
+        "source": "/home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/packaged_res/debug/xml/provider_paths.xml"
     }
 ]

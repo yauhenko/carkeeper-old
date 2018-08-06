@@ -9,12 +9,16 @@ import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage";
 import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
+import Camera from "./screens/Camera";
+import Profile from "./screens/Profile";
 
 const Navigator = createDrawerNavigator({
     Home: {screen: Home},
     Garage: {screen: Garage},
     Car: {screen: Car},
+    Profile: {screen: Profile},
     AddCar: {screen: AddCar},
+    Camera: {screen: Camera},
 }, {
   initialRouteName: 'Garage',
   navigationOptions: {

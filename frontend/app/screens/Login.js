@@ -9,7 +9,7 @@ import styles from "../styles";
 @observer
 export default class Login extends React.Component {
   @observable tel = "+375 29 384-53-61";
-  @observable password = "";
+  @observable password = "123456";
 
   @action change = (type, value) => {
       this[type] = value;
@@ -20,7 +20,6 @@ export default class Login extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <Container>
         <Content contentContainerStyle={customStyles.container}>
