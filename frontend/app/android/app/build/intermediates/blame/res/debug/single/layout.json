@@ -104,10 +104,6 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/1e32b11a612ac37684ea6e5500a2714e/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/surface_view.xml",
-        "source": "/home/elfexor/WORK/auto/frontend/app/node_modules/react-native-camera/android/build/intermediates/packaged_res/debug/layout/surface_view.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/notification_template_part_time.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/1e32b11a612ac37684ea6e5500a2714e/res/layout/notification_template_part_time.xml"
     },

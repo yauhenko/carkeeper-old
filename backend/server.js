@@ -21,6 +21,8 @@ app.use(async (ctx, next)=>{
     console.log(e);
     ctx.body = {error: e}
   }
+
+  console.log(ctx.body)
 });
 
 app.use(require('./routes/user'));

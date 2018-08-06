@@ -9,7 +9,6 @@ import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage";
 import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
-import Camera from "./screens/Camera";
 import Profile from "./screens/Profile";
 
 const Navigator = createDrawerNavigator({
@@ -17,15 +16,11 @@ const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
     Car: {screen: Car},
     Profile: {screen: Profile},
-    AddCar: {screen: AddCar},
-    Camera: {screen: Camera},
+    AddCar: {screen: AddCar}
 }, {
-  initialRouteName: 'Garage',
+  initialRouteName: 'Profile',
   navigationOptions: {
-    headerMode: 'float',
-    headerStyle: {backgroundColor: '#0091ea'},
-    headerTintColor: '#fff',
-    headerTitleStyle: {}
+    header: {visible: false}
   },
   contentComponent : Navigation
 });
