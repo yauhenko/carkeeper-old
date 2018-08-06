@@ -28,16 +28,14 @@ export default class Login extends React.Component {
           <Form>
             <Item style={customStyles.label} floatingLabel>
               <Label>Номер телефона</Label>
-              <Input onChangeText={(text)=>{this.change('tel', text)}} value={this.tel} />
+              <Input keyboardType="numeric" onChangeText={(text)=>{this.change('tel', text)}} value={this.tel} />
             </Item>
             <Item style={customStyles.label} floatingLabel>
               <Label>Пароль</Label>
               <Input onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
-
             <Button onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={styles.primaryButtonText}>Войти</Text></Button>
           </Form>
-
           <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Зарегистрироваться</Text>
         </Content>
       </Container>

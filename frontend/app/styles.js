@@ -1,9 +1,5 @@
-
-
 export default styles = {
   header : {
-    paddingTop: 20,
-    height: 80,
     backgroundColor: "#3e4669"
   },
   headerTitle: {

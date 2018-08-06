@@ -25,6 +25,8 @@
     "react": "16.3.1",
     "react-native": "^0.55.4",
     "react-native-android-image-cropper": "^0.2.4",
+    "react-native-camera": "^1.1.4",
+    "react-native-camera-kit": "^6.2.4",
     "react-navigation": "^2.9.3"
   }
 }

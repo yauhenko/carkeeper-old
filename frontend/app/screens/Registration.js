@@ -39,15 +39,6 @@ export default class Registration extends React.Component {
               <Label>Пароль</Label>
               <Input onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
-
-            <Segment style={customStyles.segment}>
-              <Button onPress={()=>{this.role = "buyer"}} style={this.role === "buyer" ? customStyles.segmentButtonActive : customStyles.segmentButton} first active>
-                <Text style={this.role === "buyer" ? {color: "#fff"} : {}}>Покупатель</Text>
-              </Button>
-              <Button onPress={()=>{this.role = "seller"}} style={this.role === "seller" ? customStyles.segmentButtonActive : customStyles.segmentButton} last>
-                <Text style={this.role === "seller" ? {color: "#fff"} : {}}>Продавец</Text>
-              </Button>
-            </Segment>
             <Button onPress={this.submitHandler} style={[customStyles.button, styles.primaryButton]} block><Text style={styles.primaryButtonText}>Зарегистрироваться</Text></Button>
           </Form>
 

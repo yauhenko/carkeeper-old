@@ -73,7 +73,7 @@ export default class AddCar extends React.Component {
             </View>
 
             <Item style={styles.itemInput}>
-              <Input  keyboardType="numeric" maxLength={4} placeholderTextColor={"#d6d7da"} disabled={!Boolean(Cars.car.model)} placeholder={"Год автомобиля"} onChangeText={(text)=>{Cars.car.year = text; Cars.getGenerations()}} value={Cars.car.year} />
+              <Input keyboardType="numeric" maxLength={4} placeholderTextColor={"#d6d7da"} disabled={!Boolean(Cars.car.model)} placeholder={"Год автомобиля"} onChangeText={(text)=>{Cars.car.year = text; Cars.getGenerations()}} value={Cars.car.year} />
             </Item>
 
             <View style={styles.pickerWrapper}>
