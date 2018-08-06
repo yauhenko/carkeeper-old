@@ -56,7 +56,7 @@ router.post('/users/update', async (ctx) => {
 
     let password = ctx.checkBody('password').optional().len(6).value;
     let email = ctx.checkBody('email').optional().isEmail().value;
-    let avatar = ctx.checkBody('email').optional().len(36, 36).value;
+    let avatar = ctx.checkBody('avatar').optional().len(36, 36).value;
 
     if (ctx.errors) error(ctx.errors);
     if (password) await User.setPassword(id, password);
