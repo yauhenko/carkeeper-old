@@ -86,6 +86,7 @@ const customStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     paddingBottom: 25,
+    paddingTop: 5,
     backgroundColor: "#3e4669",
     marginBottom: 30
   },
