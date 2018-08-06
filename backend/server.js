@@ -1,12 +1,15 @@
 import koa from 'koa';
-import Body from 'koa-body';
+import koaBody from 'koa-body';
+import koaStatic from 'koa-static';
+import koaValidate from 'koa-validate';
 import './utils/cron';
 
 const app = new koa();
 
-app.use(Body());
+app.use(koaStatic(__dirname + '/public'));
+app.use(koaBody());
 
-require('koa-validate')(app);
+koaValidate(app);
 
 app.use(async (ctx, next)=>{
   console.log(ctx.req.url, ctx.request.body);
@@ -24,6 +27,7 @@ app.use(require('./routes/user'));
 app.use(require('./routes/auth'));
 app.use(require('./routes/cars'));
 app.use(require('./routes/garage'));
+app.use(require('./routes/uploads'));
 
 app.listen(8000);
 

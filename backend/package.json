@@ -23,7 +23,9 @@
     "koa-body": "^4.0.4",
     "koa-mysql": "^1.0.3",
     "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "koa-validate": "^1.0.7",
+    "mkdirp": "^0.5.1",
     "promise-mysql": "^3.3.1"
   },
   "devDependencies": {
