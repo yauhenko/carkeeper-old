@@ -31,7 +31,7 @@ export default class Login extends React.Component {
             </Item>
             <Item style={customStyles.label} floatingLabel>
               <Label>Пароль</Label>
-              <Input onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
+              <Input secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
             <Button onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={styles.primaryButtonText}>Войти</Text></Button>
           </Form>

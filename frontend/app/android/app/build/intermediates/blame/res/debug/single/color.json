@@ -4,10 +4,6 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/color/abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_dark.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-12.0.1.aar/fa67540501934e474757c94a759026ae/res/color/common_google_signin_btn_text_dark.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_disable_only_material_light.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/color/abc_primary_text_disable_only_material_light.xml"
     },
@@ -22,10 +18,6 @@
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/abc_primary_text_material_light.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/color/abc_primary_text_material_light.xml"
-    },
-    {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_text_light.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-12.0.1.aar/fa67540501934e474757c94a759026ae/res/color/common_google_signin_btn_text_light.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/abc_tint_seek_thumb.xml",
@@ -82,10 +74,6 @@
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/abc_tint_switch_track.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/color/abc_tint_switch_track.xml"
-    },
-    {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/common_google_signin_btn_tint.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-12.0.1.aar/fa67540501934e474757c94a759026ae/res/color/common_google_signin_btn_tint.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color/abc_hint_foreground_material_dark.xml",

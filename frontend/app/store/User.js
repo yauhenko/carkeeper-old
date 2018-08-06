@@ -13,13 +13,12 @@ class User {
     if(!token) return this.ready = true;
     this.token = token;
 
-    this.ping(true).then((auth)=>{
+    this.ping(true).then((auth) => {
       this.ready = true;
       this.auth = auth;
       if(!auth) this.clean();
     });
   };
-
 
   @observable auth = false;
   @observable loading = false;
@@ -38,6 +37,11 @@ class User {
     }).catch(Notification);
   };
 
+  @action update = async (data = {}) => {
+    Api('users/update', data).then(async (response) => {
+      if(data.avatar) {this.profile.avatar = data.avatar}
+    }).catch(Notification);
+  };
 
   @action create = async (role, tel, email, password) => {
     this.loading = true;
