@@ -3,7 +3,7 @@ import Api from "../modules/Api";
 
 class Uploader {
   @action get = (id) => {
-    return "http://192.168.1.20:8000/uploads/" + id
+    return "http://apps.redstream.by:8000/uploads/" + id
   };
 
   @action save = async (obj = {}) => {
