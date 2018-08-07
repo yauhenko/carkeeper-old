@@ -5,22 +5,21 @@ import { observable, action} from 'mobx';
 
 @observer
 export default class ModalMenu extends React.Component {
-  state = {
-    opacity: new Animated.Value(0)
-  };
+  @observable opacity = new Animated.Value(0);
+
 
   componentDidMount() {
-    Animated.timing(this.state.opacity, {toValue: 1, duration: 1000}).start();
+    Animated.timing(this.opacity, {toValue: 1, duration: 150}).start();
   }
 
   hide = async () => {
-    Animated.timing(this.state.opacity, {toValue: 0, duration: 1000}).start(this.props.onClose);
+    Animated.timing(this.opacity, {toValue: 0, duration: 150}).start(this.props.onClose);
   };
 
   render() {
     return (
       <TouchableWithoutFeedback onPress={this.hide}>
-        <Animated.View style={[style.overlay, {opacity: this.state.opacity}]}>
+        <Animated.View style={[style.overlay, {opacity: this.opacity}]}>
           <View style={style.modal}>
             {this.props.children}
           </View>

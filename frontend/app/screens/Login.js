@@ -8,8 +8,8 @@ import styles from "../styles";
 
 @observer
 export default class Login extends React.Component {
-  @observable tel = "+375 29 384-53-61";
-  @observable password = "123456";
+  @observable tel = "+375 ";
+  @observable password = "";
 
   @action change = (type, value) => {
       this[type] = value;

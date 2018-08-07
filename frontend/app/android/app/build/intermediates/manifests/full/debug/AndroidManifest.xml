@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.auto"
+    package="com.carkeeper"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -18,14 +18,14 @@
     <uses-permission android:name="android.permission.READ_STORAGE" />
 
     <application
-        android:name="com.auto.MainApplication"
+        android:name="com.carkeeper.MainApplication"
         android:allowBackup="false"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.auto.MainActivity"
+            android:name="com.carkeeper.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -40,7 +40,7 @@
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.auto.provider"
+            android:authorities="com.carkeeper.provider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data

@@ -30,7 +30,7 @@ INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidM
 INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
 INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
 	package
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:2:5-23
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:2:5-28
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	android:versionName
@@ -115,7 +115,7 @@ MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:18:7-38
 	android:name
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:14:7-38
-activity#com.auto.MainActivity
+activity#com.carkeeper.MainActivity
 ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:19:7-29:18
 	android:screenOrientation
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:23:9-45

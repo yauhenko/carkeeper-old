@@ -53,7 +53,7 @@ export default class Profile extends React.Component {
         <Content contentContainerStyle={styles.container}>
             <View style={customStyles.top}>
               <View>
-                <TouchableOpacity onPress={()=>{this.avatarMenu = true}}>
+                <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
                   <Thumbnail style={customStyles.avatar} source={{uri: Uploader.get(User.profile.avatar)}} />
                   <Icon style={customStyles.camera} name="camera"/>
                 </TouchableOpacity>
