@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
 import {observer} from 'mobx-react';
 import {
   Container,
@@ -21,12 +21,12 @@ import Footer from "../components/Footer";
 import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
+import ModalMenu from "../components/ModalMenu";
+import { observable, action} from 'mobx';
 
 @observer
 export default class Profile extends React.Component {
-  componentDidMount() {
-
-  }
+  @observable avatarMenu = false;
 
   render() {
     return (
@@ -49,11 +49,11 @@ export default class Profile extends React.Component {
           </Right>
         </Header>
 
+
         <Content contentContainerStyle={styles.container}>
             <View style={customStyles.top}>
-
               <View>
-                <TouchableOpacity onPress={()=>{Cropper.camera({cropperCircleOverlay: true}).then((id)=>{User.update({avatar: id})})}}>
+                <TouchableOpacity onPress={()=>{this.avatarMenu = true}}>
                   <Thumbnail style={customStyles.avatar} source={{uri: Uploader.get(User.profile.avatar)}} />
                   <Icon style={customStyles.camera} name="camera"/>
                 </TouchableOpacity>
@@ -73,6 +73,28 @@ export default class Profile extends React.Component {
           </Form>
         </Content>
         <Footer {...this.props}/>
+
+        {this.avatarMenu
+          ?
+            <ModalMenu onClose={()=>{this.avatarMenu = false}}>
+              <List>
+                <ListItem onPress={() => {this.avatarMenu = false; Cropper.gallery({cropperCircleOverlay: true}).then((id)=>{User.update({avatar: id})})}}>
+                  <Text>Загрузить из галереи</Text>
+                </ListItem>
+
+                <ListItem onPress={() => {this.avatarMenu = false; Cropper.camera({cropperCircleOverlay: true}).then((id)=>{User.update({avatar: id})})}}>
+                  <Text>Сделать снимок</Text>
+                </ListItem>
+
+                <ListItem onPress={() => {this.avatarMenu = false;}}>
+                  <Text>Удалить</Text>
+                </ListItem>
+              </List>
+            </ModalMenu>
+          :
+            null
+        }
+
       </Container>
     );
   }

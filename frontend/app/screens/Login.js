@@ -23,7 +23,7 @@ export default class Login extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={customStyles.container}>
-          <Text style={customStyles.logo}>АВТОЛЮБИТЕЛЬ</Text>
+          <Text style={customStyles.logo}><Text style={{color:"#ab3131"}}>CAR</Text>KEEPER</Text>
           <Form>
             <Item style={customStyles.label} floatingLabel>
               <Label>Номер телефона</Label>
