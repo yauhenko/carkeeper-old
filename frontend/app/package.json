@@ -18,7 +18,9 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "jsc-android": "224109.x.x",
     "create-react-class": "^15.6.3",
+    "es6-symbol": "^3.1.1",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "native-base": "^2.7.2",

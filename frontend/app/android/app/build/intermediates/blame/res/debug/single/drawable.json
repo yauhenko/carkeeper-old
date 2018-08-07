@@ -56,10 +56,6 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/abc_ic_arrow_drop_right_black_24dp.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_btn_colored_material.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/abc_btn_colored_material.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_ic_ab_back_material.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/abc_ic_ab_back_material.xml"
     },
@@ -166,10 +162,6 @@
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/1e32b11a612ac37684ea6e5500a2714e/res/drawable/notification_tile_bg.xml"
-    },
-    {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_edit_text_material.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/abc_edit_text_material.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/ucrop_vector_loader.xml",

@@ -43,3 +43,6 @@ export default class App extends React.Component {
     return User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null;
   }
 }
+
+
+//https://medium.com/@nhancv/react-native-build-release-duplicate-file-original-is-here-the-version-qualifier-may-be-implied-115e967c59e6
