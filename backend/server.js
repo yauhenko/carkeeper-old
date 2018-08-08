@@ -1,3 +1,6 @@
+import "babel-polyfill";
+import "babel-core/register";
+
 import koa from 'koa';
 import koaBody from 'koa-body';
 import koaStatic from 'koa-static';
