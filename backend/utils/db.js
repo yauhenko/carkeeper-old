@@ -1,6 +1,6 @@
 const mysql = require('promise-mysql');
-// const host = "redstream.by";
-const host = "192.168.1.99";
+const host = "redstream.by";
+//const host = "192.168.1.99";
 const db = mysql.createPool({user: 'vadim', password: 'vadim', database: 'vadim', host});
 
 db.update = async (table, data, id, { pk = 'id', ignore = false } = {}) => {
