@@ -1,5 +1,5 @@
 import db from '../utils/db';
-import error from "../module/error";
+import error from "../utils/error";
 import User from "./user";
 
 export default class Sessions {

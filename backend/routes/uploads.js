@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import Sessions from '../models/sessions';
 import Uploads from '../models/uploads';
-import error from '../module/error';
+import error from '../utils/error';
 
 const router = new Router();
 

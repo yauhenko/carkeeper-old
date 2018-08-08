@@ -1,5 +1,5 @@
 import db from "../utils/db";
-import error from "../module/error";
+import error from "../utils/error";
 import Sessions from "./sessions";
 
 class User {
