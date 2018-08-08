@@ -42,7 +42,7 @@ export default class Sessions {
   }
 
   static async destroy(token) {
-    return await db.delete('sessions', token, { pk: token });
+    return await db.delete('sessions', token, 'token');
   }
 
 }
