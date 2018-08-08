@@ -8,4 +8,8 @@ router.post('/auth/ping', async (ctx) => {
   ctx.body = ctx.user;
 });
 
+router.post('/auth/logout', async (ctx) => {
+    ctx.body = await Sessions.destroy(ctx.token);
+});
+
 module.exports = router.routes();

@@ -40,4 +40,9 @@ export default class Sessions {
     await db.query('INSERT INTO sessions (token, user, ip) VALUES(?, ?, ?)', [token, id, ip]);
     return token;
   }
+
+  static async destroy(token) {
+    return await db.delete('sessions', token, { pk: token });
+  }
+
 }
