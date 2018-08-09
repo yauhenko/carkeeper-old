@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, RefreshControl } from 'react-native';
+import { StyleSheet, Text, RefreshControl} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
 import styles from "../styles"
@@ -15,7 +15,7 @@ export default class Garage extends React.Component {
   render() {
     return (
       <Container>
-        <Header style={styles.header}>
+        <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
               <Icon name='menu'/>
@@ -40,7 +40,7 @@ export default class Garage extends React.Component {
           <List>
             {Cars.cars.map((car) => {
               return(
-                <ListItem  style={customStyles.listItem} onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
+                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
                   <Left>
                     <Thumbnail source={require('../assets/images/car_stub.png')}/>
                   </Left>
@@ -63,13 +63,3 @@ export default class Garage extends React.Component {
     );
   }
 }
-
-
-const customStyles = StyleSheet.create({
-  listItem : {
-
-  }
-
-
-
-});

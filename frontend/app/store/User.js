@@ -28,7 +28,7 @@ class User {
 
   @action login = async (tel, password) => {
     this.loading = true;
-    Api('users/login', {tel, password}).then(async (response) => {
+    return Api('users/login', {tel, password}).then(async (response) => {
       this.loading = false;
       this.profile = response.user;
       this.token = response.token;
@@ -66,6 +66,7 @@ class User {
 
   @action logout = () => {
     //todo httpreq
+    Api('auth/logout').catch(Notification);
     this.clean();
   };
 

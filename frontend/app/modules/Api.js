@@ -1,7 +1,8 @@
 import User from "../store/User";
+import Url from "../modules/Url";
 
-export default async (url, params = {}) => {
-    let result = await fetch("http://apps.redstream.by:8000/" + url, {
+export default async (path, params = {}) => {
+    let result = await fetch( Url + "/" +path, {
       method: 'POST',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
       mode: "cors",

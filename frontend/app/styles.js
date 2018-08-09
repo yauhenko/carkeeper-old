@@ -1,6 +1,8 @@
 export default styles = {
+  statusBarColor: "#a23737",
+
   header : {
-    backgroundColor: "#3e4669"
+    backgroundColor: "#f13f3f",
   },
   headerTitle: {
     fontSize: 16
@@ -26,7 +28,13 @@ export default styles = {
   },
 
   footerButton : {
-    backgroundColor: "#3e4669"
+    backgroundColor: "#383a43",
+    borderRadius: 0
+  },
+
+  footerButtonActive : {
+    backgroundColor: "#21242b",
+    borderRadius: 0
   },
 
   itemInput: {
@@ -37,6 +45,6 @@ export default styles = {
   },
 
   textNote: {
-    color: "#d6d7da"
+    color: "#b9babd"
   }
 }

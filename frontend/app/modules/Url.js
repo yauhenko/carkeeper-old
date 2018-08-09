@@ -1,0 +1,1 @@
+export default "http://apps.redstream.by:8000";

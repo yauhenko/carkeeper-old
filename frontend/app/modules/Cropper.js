@@ -1,8 +1,5 @@
 import ImagePicker from 'react-native-image-crop-picker';
 import Uploader from "../store/Uploader";
-import User from "../store/User";
-
-
 
 export default class Cropper {
   static params = {
@@ -14,7 +11,6 @@ export default class Cropper {
     mediaType: "photo",
     cropping: true
   };
-
 
   static async gallery(props = {}) {
     let image = await ImagePicker.openPicker(Object.assign({...Cropper.params}, props));
