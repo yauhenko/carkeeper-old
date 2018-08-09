@@ -60,6 +60,8 @@ router.post('/users/update', async (ctx) => {
     let password = ctx.checkBody('password').optional().len(6).value;
     let email = ctx.checkBody('email').optional().isEmail().value;
     let avatar = ctx.checkBody('avatar').optional().len(36, 36).value;
+    let name = ctx.checkBody('name').optional().len(2, 50).value;
+    let username = ctx.checkBody('username').optional().len(2, 20).value;
 
     if (ctx.errors) error(ctx.errors);
     if (password) await User.setPassword(id, password);
@@ -67,6 +69,8 @@ router.post('/users/update', async (ctx) => {
     let update = {};
     if (email) update.email = email;
     if (avatar) update.avatar = avatar;
+    if (name) update.name = avatar;
+    if (username) update.username = avatar;
 
     ctx.body = {
         updated: Boolean(await User.update(id, update)),
