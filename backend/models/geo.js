@@ -2,6 +2,8 @@ import db from '../utils/db';
 
 export default class Geo {
 
+    static cache = {};
+
     static async getRegions() {
         return await db.query('SELECT id, name FROM geo_regions ORDER BY name ASC');
     }
@@ -19,6 +21,14 @@ export default class Geo {
             + (district ? ' AND c.district = ' + db.escape(district) : '')
             + (name ? ' AND c.name LIKE ' + db.escape(name).replace(/'$/, "%'") : '')
             + ' ORDER BY c.district IS NULL DESC, c.type = "г." DESC, c.type = "гп." DESC, c.type = "аг." DESC, c.name ASC LIMIT 100');
+    }
+
+    static async getCity(id) {
+        let data = Geo.cache[id] || await db.aggregateOne('SELECT * FROM geo_cities WHERE id = ?', [id], {
+            region: { table: 'geo_regions', fields: ['id', 'name'] },
+            district: { table: 'geo_districts', fields: ['id', 'name'] },
+        });
+        return Geo.cache[id] = data;
     }
 
 }

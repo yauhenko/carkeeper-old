@@ -1,6 +1,7 @@
 import db from '../utils/db';
 import { error } from '../utils';
 import Sessions from './sessions';
+import Geo from './geo';
 
 class User {
 
@@ -13,6 +14,7 @@ class User {
   static async login (tel, password, ip = null, ttl = 3600) {
     tel = String(tel).replace(/[^0-9]/g, '');
     let user = await db.one('SELECT ?? FROM users WHERE tel = ? AND `password` = PASSWORD(?)', [User.brief, tel, password]);
+    if(user && user.city) user.city = await Geo.getCity(user.city);
     if(!user) error(`Неправильный tel или пароль`);
     return {
       token: await Sessions.create(user.id, ip, ttl),
@@ -22,6 +24,7 @@ class User {
 
   static async get (id, field = 'id', silent = false) {
     let user = await db.one('SELECT ?? FROM users WHERE ?? = ?', [User.brief, field, id]);
+    if(user && user.city) user.city = await Geo.getCity(user.city);
     if(user) return user;
     if(silent) return null;
     error(`Нет пользователя с ${field} ${id}`);
