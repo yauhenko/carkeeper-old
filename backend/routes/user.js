@@ -67,8 +67,8 @@ router.post('/users/update', async (ctx) => {
     let update = {};
     if (email) update.email = email;
     if (avatar) update.avatar = avatar;
-    if (name) update.name = avatar;
-    if (username) update.username = avatar;
+    if (name) update.name = name;
+    if (username) update.username = username;
 
     ctx.body = {
         updated: Boolean(await User.update(id, update)),
