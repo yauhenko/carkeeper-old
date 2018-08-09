@@ -61,11 +61,9 @@ router.post('/users/update', async (ctx) => {
     let email = ctx.checkBody('email').optional().isEmail().value;
     let avatar = ctx.checkBody('avatar').optional().len(36, 36).value;
     let name = ctx.checkBody('name').optional().len(2, 50).value;
-    let username = ctx.checkBody('username').optional().len(2, 20).value;
-
+    let username = ctx.checkBody('username').optional().match(/^[a-z][a-z0-9-_.]{1,18}$/i).value;
     if (ctx.errors) error(ctx.errors);
     if (password) await User.setPassword(id, password);
-
     let update = {};
     if (email) update.email = email;
     if (avatar) update.avatar = avatar;

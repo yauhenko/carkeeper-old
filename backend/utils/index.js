@@ -16,7 +16,10 @@ export function uuid() {
 }
 
 export function error(message = "Неизвестная ошибка", code = -1) {
-    if(message instanceof Array) message = message.join(', ');
+    if(message instanceof Array) {
+        let key = Object.keys(message[0])[0];
+        message = message[0][key];
+    }
     console.error(`Error ${code}: ${message}`);
     throw { message, code }
 }

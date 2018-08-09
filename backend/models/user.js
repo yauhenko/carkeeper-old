@@ -4,13 +4,15 @@ import Sessions from './sessions';
 
 class User {
 
+  static brief = ['id', 'role', 'tel', 'email', 'avatar', 'name', 'username'];
+
   static async list () {
-    return await db.query('SELECT id, role, tel, email, avatar FROM users');
+    return await db.query('SELECT ?? FROM users', [User.brief]);
   }
 
   static async login (tel, password, ip = null, ttl = 3600) {
     tel = String(tel).replace(/[^0-9]/g, '');
-    let user = await db.one('SELECT id, role, tel, email, avatar FROM users WHERE tel = ? AND `password` = PASSWORD(?)', [tel, password]);
+    let user = await db.one('SELECT ?? FROM users WHERE tel = ? AND `password` = PASSWORD(?)', [User.brief, tel, password]);
     if(!user) error(`Неправильный tel или пароль`);
     return {
       token: await Sessions.create(user.id, ip, ttl),
@@ -19,7 +21,7 @@ class User {
   }
 
   static async get (id, field = 'id', silent = false) {
-    let user = await db.one('SELECT id, role, tel, email, avatar FROM users WHERE ?? = ?', [field, id]);
+    let user = await db.one('SELECT ?? FROM users WHERE ?? = ?', [User.brief, field, id]);
     if(user) return user;
     if(silent) return null;
     error(`Нет пользователя с ${field} ${id}`);
