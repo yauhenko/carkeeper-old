@@ -160,6 +160,10 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/6e0cb3b16ccca08c274fe9cf7b0a0f6b/res/layout/ucrop_activity_photobox.xml"
     },
     {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/launch_screen.xml",
+        "source": "/home/elfexor/WORK/auto/frontend/app/android/app/src/main/res/layout/launch_screen.xml"
+    },
+    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/abc_activity_chooser_view_list_item.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/layout/abc_activity_chooser_view_list_item.xml"
     },

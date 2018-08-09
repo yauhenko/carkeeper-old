@@ -4,24 +4,23 @@ import {observer} from 'mobx-react';
 import Login from "./screens/Login";
 import Registration from "./screens/Registration";
 import User from "./store/User";
-import Home from "./screens/Home";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage";
 import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
 import Profile from "./screens/Profile";
+import Preview from "./screens/Preview";
+import SplashScreen from 'react-native-splash-screen';
+
 
 const Navigator = createDrawerNavigator({
-    Home: {screen: Home},
     Garage: {screen: Garage},
     Car: {screen: Car},
     Profile: {screen: Profile},
     AddCar: {screen: AddCar}
 }, {
-  initialRouteName: 'Profile',
-  navigationOptions: {
-    header: {visible: false}
-  },
+  initialRouteName: 'Garage',
+  headerMode: 'none',
   contentComponent : Navigation
 });
 
@@ -35,12 +34,13 @@ const Auth = createStackNavigator({
 
 @observer
 export default class App extends React.Component {
-  componentWillMount() {
-    User.checkAuth();
+  async componentWillMount() {
+    await User.checkAuth();
+    SplashScreen.hide();
   }
 
   render() {
-    return User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null;
+    return(User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null)
   }
 }
 

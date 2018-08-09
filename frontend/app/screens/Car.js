@@ -40,9 +40,7 @@ export default class Car extends React.Component {
   render() {
     return (
       <Container>
-
-
-        <Header style={styles.header}>
+        <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={() => {
               this.props.navigation.navigate('Garage')

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import {StatusBar, StyleSheet, Text} from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Input, Label, Segment } from 'native-base';
 import UserStore from "../store/User";
@@ -11,6 +11,8 @@ export default class Registration extends React.Component {
   @observable tel = "";
   @observable email = "";
   @observable password = "";
+  @observable firstname = "";
+  @observable lastname = "";
   @observable role = "buyer";
 
   @action change = (type, value) => {
@@ -24,6 +26,7 @@ export default class Registration extends React.Component {
   render() {
     return (
       <Container>
+        <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
         <Content contentContainerStyle={customStyles.container}>
           <Text style={customStyles.logo}>РЕГИСТРАЦИЯ</Text>
           <Form>
@@ -31,14 +34,28 @@ export default class Registration extends React.Component {
               <Label>Номер телефона</Label>
               <Input onChangeText={(text)=>{this.change('tel', text)}} value={this.tel} />
             </Item>
-            <Item style={customStyles.label} floatingLabel>
-              <Label>E-mail</Label>
-              <Input onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
-            </Item>
+
             <Item style={customStyles.label} floatingLabel>
               <Label>Пароль</Label>
               <Input onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
+
+            <Item style={customStyles.label} floatingLabel>
+              <Label>E-mail</Label>
+              <Input onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
+            </Item>
+
+            <Item style={customStyles.label} floatingLabel>
+              <Label>Имя</Label>
+              <Input onChangeText={(text)=>{this.change('firstname', text)}} value={this.firstname} />
+            </Item>
+
+            <Item style={customStyles.label} floatingLabel>
+              <Label>Фамилия</Label>
+              <Input onChangeText={(text)=>{this.change('lastname', text)}} value={this.lastname} />
+            </Item>
+
+
             <Button onPress={this.submitHandler} style={[customStyles.button, styles.primaryButton]} block><Text style={styles.primaryButtonText}>Зарегистрироваться</Text></Button>
           </Form>
 

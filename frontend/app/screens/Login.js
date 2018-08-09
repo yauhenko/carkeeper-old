@@ -1,5 +1,5 @@
 import React from 'react';
-import {customStylesheet, StyleSheet, Text, View} from 'react-native';
+import {AsyncStorage, StyleSheet, Text, StatusBar} from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Input, Label } from 'native-base';
 import UserStore from "../store/User";
@@ -8,7 +8,7 @@ import styles from "../styles";
 
 @observer
 export default class Login extends React.Component {
-  @observable tel = "+375 ";
+  @observable tel = "";
   @observable password = "";
 
   @action change = (type, value) => {
@@ -16,12 +16,28 @@ export default class Login extends React.Component {
   };
 
   @action submitHandler = () => {
-    UserStore.login(this.tel, this.password);
+    UserStore.login(this.tel, this.password).then(() => {
+      AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]])
+    });
   };
+
+  @action autoFill = () => {
+    AsyncStorage.multiGet(["tel", "password"], (err, data) => {
+      if(data) {
+        this.tel = data[0][1];
+        // this.password = data[1][1];
+      }
+    })
+  };
+
+  componentDidMount() {
+    this.autoFill();
+  }
 
   render() {
     return (
       <Container>
+        <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
         <Content contentContainerStyle={customStyles.container}>
           <Text style={customStyles.logo}><Text style={{color:"#ab3131"}}>CAR</Text>KEEPER</Text>
           <Form>

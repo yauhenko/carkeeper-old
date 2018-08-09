@@ -28,10 +28,12 @@ import { observable, action} from 'mobx';
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
 
+  @observable name = User.profile.name;
+
   render() {
     return (
       <Container>
-        <Header style={styles.header}>
+        <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
               <Icon name='menu'/>
@@ -60,15 +62,20 @@ export default class Profile extends React.Component {
               </View>
 
               <View style={{paddingLeft: 20}}>
-                <Text style={{fontSize: 20, color: "#fff"}}>Вадим Васильевич</Text>
-                <Text style={{color: "#fff", marginTop: 5}}>Написать по красоте</Text>
+                <Text style={{fontSize: 20, color: "#fff"}}>{User.profile.name}</Text>
+                <Text style={{color: "#fff", marginTop: 5}}>Езжу на Acura TSX 2004</Text>
               </View>
             </View>
 
           <Form>
-            <Item style={customStyles.label} inlineLabel>
+            <Item style={customStyles.label} stackedLabel>
               <Label>Номер телефона</Label>
-              <Input keyboardType="numeric" onChangeText={(text)=>{}} value={String(User.profile.tel)} />
+              <Input disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(User.profile.tel)} />
+            </Item>
+
+            <Item style={customStyles.label} stackedLabel>
+              <Label>Имя</Label>
+              <Input onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
             </Item>
           </Form>
         </Content>
@@ -109,7 +116,7 @@ const customStyles = StyleSheet.create({
     paddingRight: 15,
     paddingBottom: 25,
     paddingTop: 5,
-    backgroundColor: "#3e4669",
+    backgroundColor: "#f13f3f",
     marginBottom: 30
   },
 
@@ -123,7 +130,7 @@ const customStyles = StyleSheet.create({
     position: "absolute",
     right: -7,
     bottom: -7,
-    backgroundColor: "#3e4669",
+    backgroundColor: "#f13f3f",
     color:"#fff",
     padding: 10,
     fontSize: 20,

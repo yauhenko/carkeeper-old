@@ -1,9 +1,10 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-14:12
 MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-29:12
 MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/e592fe0577009ee5cfb58ff8f9b64f09/AndroidManifest.xml:2:1-15:12
 MERGED from [com.github.yalantis:ucrop:2.2.2-native] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/6e0cb3b16ccca08c274fe9cf7b0a0f6b/AndroidManifest.xml:2:1-11:12
@@ -26,20 +27,20 @@ MERGED from [com.facebook.fresco:drawee:1.3.0] /home/elfexor/.gradle/caches/tran
 MERGED from [com.facebook.fresco:imagepipeline:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.3.0.aar/d82737f204ecac4302588d809958a467/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.3.0.aar/6caf41a7ef384060ac1a2c5c2ac5aa5a/AndroidManifest.xml:2:1-9:12
 MERGED from [com.facebook.fresco:fbcore:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fbcore-1.3.0.aar/ab200e2042e18ccf98e199e53721c45c/AndroidManifest.xml:2:1-9:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
-INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
 	package
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:2:5-28
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-33:12
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-35:12
 		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:11-69
@@ -80,7 +81,9 @@ ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidMani
 	android:name
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:11:22-68
 application
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:13:5-31:19
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:13:5-33:19
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-12:19
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-12:19
 MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:5-27:19
 MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:5-27:19
 MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/e592fe0577009ee5cfb58ff8f9b64f09/AndroidManifest.xml:13:5-20
@@ -116,35 +119,37 @@ MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/
 	android:name
 		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:14:7-38
 activity#com.carkeeper.MainActivity
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:19:7-29:18
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:20:7-30:18
 	android:screenOrientation
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:23:9-45
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:24:9-45
 	android:label
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:21:9-41
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:22:9-41
 	android:windowSoftInputMode
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:24:9-51
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:25:9-51
 	android:configChanges
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:22:9-79
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:23:9-79
 	android:name
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:20:9-37
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:21:9-37
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:25:9-28:25
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:26:9-29:25
 action#android.intent.action.MAIN
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:26:13-65
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:27:13-65
 	android:name
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:26:21-62
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:27:21-62
 category#android.intent.category.LAUNCHER
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:27:13-73
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:28:13-73
 	android:name
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:27:23-70
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:28:23-70
 activity#com.facebook.react.devsupport.DevSettingsActivity
-ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:30:7-84
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:32:7-84
 	android:name
-		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:30:17-81
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:32:17-81
 uses-sdk
 INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
 MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:6:5-8:41
 MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:6:5-8:41
 MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/e592fe0577009ee5cfb58ff8f9b64f09/AndroidManifest.xml:7:5-9:41
