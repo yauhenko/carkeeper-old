@@ -4,7 +4,7 @@ import Sessions from './sessions';
 
 class User {
 
-  static brief = ['id', 'role', 'tel', 'email', 'avatar', 'name', 'username'];
+  static brief = ['id', 'role', 'tel', 'email', 'avatar', 'name', 'username', 'city'];
 
   static async list () {
     return await db.query('SELECT ?? FROM users', [User.brief]);

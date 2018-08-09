@@ -28,9 +28,10 @@ app.use(async (ctx, next)=>{
   console.log(ctx.body)
 });
 
-app.use(require('./routes/user'));
+app.use(require('./routes/users'));
 app.use(require('./routes/auth'));
 app.use(require('./routes/cars'));
+app.use(require('./routes/geo'));
 app.use(require('./routes/garage'));
 app.use(require('./routes/uploads'));
 
