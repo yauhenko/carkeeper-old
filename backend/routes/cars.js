@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import Cars from '../models/cars';
-import error from '../utils/error';
+import { error } from '../utils';
 
 const router = new Router();
 

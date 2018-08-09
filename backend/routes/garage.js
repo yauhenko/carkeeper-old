@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import Garage from '../models/garage';
 import Sessions from '../models/sessions';
-import error from '../utils/error';
+import { error } from '../utils';
 
 const router = new Router();
 
