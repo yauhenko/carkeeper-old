@@ -13,8 +13,9 @@ router.post('/users/list', async (ctx) => {
 router.post('/users/login', async (ctx) => {
     const password = ctx.checkBody('password').notEmpty().len(6).value;
     const tel = ctx.checkBody('tel').notEmpty().value;
+    const ttl = ctx.checkBody('ttl').default(3600).toInt().value;
     if (ctx.errors) error(ctx.errors);
-    ctx.body = await User.login(tel, password, ctx.ip);
+    ctx.body = await User.login(tel, password, ctx.ip, ttl);
 });
 
 router.post('/users/get', async (ctx) => {

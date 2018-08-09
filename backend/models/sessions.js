@@ -11,12 +11,12 @@ export default class Sessions {
     if(session.ip && session.ip !== ctx.ip) error('IP изменился. Авторизуйтесь заново', 40101);
     ctx.user = await User.get(session.user);
     ctx.role = ctx.user.role;
-    db.query('UPDATE sessions SET access_date = now() WHERE token = ?', [token]);
+    db.query('UPDATE sessions SET edate = DATE_ADD(NOW(), INTERVAL `ttl` SECOND) WHERE token = ?', [token]);
     if(roles.length && roles.indexOf(ctx.role) === -1) error('Ошибка доступа');
   }
 
   static async clean() {
-    await db.query('DELETE from sessions WHERE timestampdiff(minute, access_date, now()) > 60')
+    await db.query('DELETE from sessions WHERE edate < NOW()')
   }
 
   static async get(token) {
@@ -25,7 +25,7 @@ export default class Sessions {
     error("Invalid token")
   }
 
-  static async create(id, ip = null) {
+  static async create(id, ip = null, ttl = 3600) {
     function generate_token(length){
       const a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
       const b = [];
@@ -36,8 +36,9 @@ export default class Sessions {
       return b.join("");
     }
 
-    let token = generate_token(32);
-    await db.query('INSERT INTO sessions (token, user, ip) VALUES(?, ?, ?)', [token, id, ip]);
+    let token = generate_token(64);
+    await db.query('INSERT INTO sessions (token, user, ip, edate, ttl) ' +
+        ' VALUES(?, ?, ?, DATE_ADD(NOW(), INTERVAL ? SECOND), ?)', [token, id, ip, ttl, ttl]);
     return token;
   }
 

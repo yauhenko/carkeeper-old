@@ -8,20 +8,19 @@ class User {
     return await db.query("SELECT id, role, tel, email, avatar FROM users");
   }
 
-  static async login (tel, password, ip = null) {
+  static async login (tel, password, ip = null, ttl = 3600) {
     tel = String(tel).replace(/[^0-9]/g, "");
-    let response = await db.query("SELECT id, role, tel, email, avatar FROM users WHERE tel=? AND `password` = PASSWORD(?)", [tel, password]);
-    if(!response.length) error(`Неправильный tel или пароль`);
+    let user = await db.one("SELECT id, role, tel, email, avatar FROM users WHERE tel = ? AND `password` = PASSWORD(?)", [tel, password]);
+    if(!user) error(`Неправильный tel или пароль`);
     return {
-      token: await Sessions.create(response[0].id, ip),
-      user: response[0]
+      token: await Sessions.create(user.id, ip, ttl),
+      user
     };
   }
 
   static async get (id, field = "id", silent = false) {
-    let response = await db.query("SELECT id, role, tel, email, avatar FROM users WHERE ?? = ?", [field, id]);
-    if(response.length) return response[0];
-
+    let user = await db.one("SELECT id, role, tel, email, avatar FROM users WHERE ?? = ?", [field, id]);
+    if(user) return user;
     if(silent) return null;
     error(`Нет пользователя с ${field} ${id}`);
   }
