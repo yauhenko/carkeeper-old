@@ -10,6 +10,8 @@ import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
 import Profile from "./screens/Profile";
 import Preview from "./screens/Preview";
+import SplashScreen from 'react-native-splash-screen';
+
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -32,12 +34,13 @@ const Auth = createStackNavigator({
 
 @observer
 export default class App extends React.Component {
-  componentWillMount() {
-    User.checkAuth();
+  async componentWillMount() {
+    await User.checkAuth();
+    SplashScreen.hide();
   }
 
   render() {
-    return(User.ready ? (User.auth ? <Navigator/> : <Auth/>) : <Preview/>)
+    return(User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null)
   }
 }
 

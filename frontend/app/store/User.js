@@ -10,10 +10,12 @@ class User {
 
   @action checkAuth = async () => {
     let token = (await AsyncStorage.getItem('token')) || null;
+
     if(!token) return this.ready = true;
+
     this.token = token;
 
-    this.ping(true).then((auth) => {
+    return this.ping(true).then((auth) => {
       this.ready = true;
       this.auth = auth;
       if(!auth) this.clean();
@@ -28,7 +30,7 @@ class User {
 
   @action login = async (tel, password) => {
     this.loading = true;
-    return Api('users/login', {tel, password}).then(async (response) => {
+    return Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true}).then(async (response) => {
       this.loading = false;
       this.profile = response.user;
       this.token = response.token;
@@ -40,6 +42,7 @@ class User {
   @action update = async (data = {}) => {
     Api('users/update', data).then(async (response) => {
       if(data.avatar) {this.profile.avatar = data.avatar}
+      if(data.name) {this.profile.name = data.name}
     }).catch(Notification);
   };
 
@@ -56,6 +59,7 @@ class User {
     if(!this.token) return false;
     try {
       this.profile = await Api('auth/ping');
+      console.log(this.profile);
       return true;
     } catch (e) {
       this.clean();

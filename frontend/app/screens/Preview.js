@@ -15,7 +15,6 @@ export default class Preview extends React.Component {
         </Content>
       </Container>
     );
-
   }
 }
 

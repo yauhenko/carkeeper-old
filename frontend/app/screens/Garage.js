@@ -45,8 +45,8 @@ export default class Garage extends React.Component {
                     <Thumbnail source={require('../assets/images/car_stub.png')}/>
                   </Left>
                   <Body>
-                    <Text>{car.mark_name} {car.model_name}</Text>
-                    <Text style={styles.textNote}>{car.year}г. {car.serie_name} {car.generation_name} {car.modification_name}</Text>
+                    <Text>{car.mark_name} {car.model_name}, {car.year}г.</Text>
+                    <Text style={styles.textNote}>{car.serie_name} {car.generation_name} {car.modification_name}</Text>
                   </Body>
                   <Right style={{paddingLeft: 10}}>
                     <Icon name="arrow-forward" />
