@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 rm -rf ./build && \
-babel . --out-dir build --ignore node_modules && \
+tsc && \
 cp package.json ./build/ && \
 cd build && \
 npm i --production && \

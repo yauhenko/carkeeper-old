@@ -46,7 +46,7 @@ db.aggregate = async (sql, data = [], rules = {}) => {
         rule.key = rule.key || 'id';
         rule.fields = rule.fields || '*';
         rule.single = rule.single || null;
-        if(rule.fields instanceof Array && rule.fields.indexOf(rule.key) === -1) rule.fields.push(rule.key);
+        //if(rule.fields instanceof Array && rule.fields.indexOf(rule.key) === -1) rule.fields.push(rule.key);
     }
 
     let index = {};

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec 'babel-node ./server'",
+    "start": "nodemon --exec 'ts-node ./source/server.ts'",
     "build": "./build.sh",
     "deploy": "./deploy.sh"
   },
@@ -15,15 +15,13 @@
     "koa-static": "^5.0.0",
     "koa-validate": "^1.0.7",
     "mkdirp": "^0.5.1",
-    "promise-mysql": "^3.3.1",
-    "babel-core": "^6.0.20",
-    "babel-polyfill": "^6.0.16"
+    "promise-mysql": "^3.3.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-preset-stage-0": "^6.0.15",
-    "nodemon": "^1.18.3"
+    "@types/koa": "^2.0.46",
+    "@types/koa-router": "^7.0.31",
+    "nodemon": "^1.18.3",
+    "ts-node": "^7.0.0",
+    "typescript": "^3.0.1"
   }
 }

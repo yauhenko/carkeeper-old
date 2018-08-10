@@ -1,4 +1,4 @@
-export function passgen(length = 64){
+export function passgen(length = 64): string {
     const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('');
     const b = [];
     for (let i = 0; i < length; i++) {
@@ -8,14 +8,14 @@ export function passgen(length = 64){
     return b.join('');
 }
 
-export function uuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+export function uuid(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
         let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
 
-export function error(message = "Неизвестная ошибка", code = -1) {
+export function error(message: any = "Неизвестная ошибка", code = -1): void {
     if(message instanceof Array) {
         let key = Object.keys(message[0])[0];
         message = message[0][key];

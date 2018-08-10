@@ -1,8 +1,8 @@
 import db from '../utils/db';
-import {uuid} from '../utils';
-import fs from 'fs';
-import mkdirp from 'mkdirp';
-import {promisify} from 'util';
+import * as fs from 'fs';
+import { uuid } from '../utils';
+import { mkdirp } from 'mkdirp';
+import { promisify } from 'util';
 
 const writeFile = promisify(fs.writeFile);
 const realpath = promisify(fs.realpath);
