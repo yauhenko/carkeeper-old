@@ -1,6 +1,6 @@
 import db from '../utils/db';
 import * as fs from 'fs';
-import { uuid } from '../utils';
+import {error, uuid} from '../utils';
 import { mkdirp } from 'mkdirp';
 import { promisify } from 'util';
 
@@ -21,8 +21,10 @@ export default class Uploads {
         return id;
     }
 
-    static async getPath(id) {
-        return (await db.get('uploads', id, { fields: 'path' })).path || null;
+    static async getPath(id): Promise<string> {
+        let res = await db.get('uploads', id, { fields: 'path' });
+        if(!res) error('Not found', 404);
+        return res.path;
     }
 
 }
