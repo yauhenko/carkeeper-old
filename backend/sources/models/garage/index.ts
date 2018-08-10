@@ -1,4 +1,5 @@
 import db from '../../utils/db';
+import {error} from "../../utils";
 
 export interface ICarMark {
     id: number,
@@ -47,9 +48,9 @@ export interface ICar {
     image: string | null
 }
 
-export default class Index {
+export default class Garage {
 
-    public static aggregate = {
+    public static rules = {
         mark: { table: 'car_mark', fields: ['id', 'name'] },
         model: { table: 'car_model', fields: ['id', 'name'] },
         generation: { table: 'car_generation', fields: ['id', 'name', 'year_begin', 'year_end'] },
@@ -58,10 +59,12 @@ export default class Index {
     };
 
     static async getCars(user: number): Promise<Array<ICar>> {
-        return await db.aggregate('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE user = ?', [user], Index.aggregate);
+        return await db.aggregate('SELECT id, user, mark, model, year, generation, serie, modification, image ' +
+            ' FROM cars WHERE user = ?', [user], Garage.rules);
     }
 
-    static async addCar(user: number, { mark = null, model = null, generation = null, modification = null, serie = null, year = null, image = null } = {}): Promise<Boolean>  {
+    static async addCar(user: number, { mark = null, model = null, generation = null, modification = null,
+            serie = null, year = null, image = null } = {}): Promise<Boolean>  {
         return await db.insert('cars', { user, mark, model, generation, modification, serie, year, image });
     }
 
@@ -70,7 +73,10 @@ export default class Index {
     }
 
     static async getCar(id: number): Promise<ICar> {
-        return await db.aggregateOne('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE id = ?', [id], Index.aggregate);
+        let res = await db.aggregateOne('SELECT id, user, mark, model, year, generation, serie, modification, image ' +
+            ' FROM cars WHERE id = ?', [id], Garage.rules);
+        if(!res) error('Машина не существует', 404);
+        return res;
     }
 
     static async deleteCar(id: number): Promise<Boolean> {

@@ -23,3 +23,12 @@ export function error(message: any = "Неизвестная ошибка", code
     console.error(`Error ${code}: ${message}`);
     throw { message, code }
 }
+
+export function filterKeys(object: {}, keys: Array<string>): {} {
+    let res = Object.assign({}, object);
+    for(let key of Object.keys(res)) {
+        if(keys.indexOf(key) === -1)
+            delete res[key];
+    }
+    return res;
+}
