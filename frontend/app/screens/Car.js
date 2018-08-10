@@ -19,23 +19,21 @@ import {observable, action} from 'mobx';
 import Cars from "../store/Cars";
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
+import CarMenu from "../components/CarMenu";
 
 @observer
 export default class Car extends React.Component {
-  @observable id = this.props.navigation.state.params.id;
+  @observable id = this.props.navigation.state.params.id || 20;
   @observable menu = false;
 
   componentWillMount() {
     Cars.loading = true;
+    Cars.carDetail = {};
   }
 
   componentDidMount() {
     Cars.getCar(this.id)
   };
-
-  componentWillUnmount() {
-    Cars.carDetail = {};
-  }
 
   render() {
     return (
@@ -74,7 +72,7 @@ export default class Car extends React.Component {
           }
         </Content>
 
-        <Footer {...this.props}/>
+        <Footer><CarMenu {...this.props}/></Footer>
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
           <List>
@@ -90,6 +88,9 @@ export default class Car extends React.Component {
             </ListItem>
           </List>
         </HeaderMenu>
+
+
+
       </Container>
     );
   }

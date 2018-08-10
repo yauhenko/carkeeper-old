@@ -1,8 +1,7 @@
 import React from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
 import {observer} from 'mobx-react';
-import {
-  Container,
+import {ActionSheet, Container,
   Button,
   Content,
   Icon,
@@ -17,18 +16,29 @@ import {
   Item, Label, Input, Form
 } from 'native-base';
 import styles from "../styles"
-import Footer from "../components/Footer";
 import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
 import { observable, action} from 'mobx';
 
+var BUTTONS = [
+  { text: "Option 0", icon: "american-football", iconColor: "#2c8ef4" },
+  { text: "Option 1", icon: "analytics", iconColor: "#f42ced" },
+  { text: "Option 2", icon: "aperture", iconColor: "#ea943b" },
+  { text: "Delete", icon: "trash", iconColor: "#fa213b" },
+  { text: "Cancel", icon: "close", iconColor: "#25de5b" }
+];
+
+var DESTRUCTIVE_INDEX = 3;
+var CANCEL_INDEX = 4;
+
 @observer
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
 
   @observable name = User.profile.name;
+  @observable city = User.profile.city.name;
 
   render() {
     return (
@@ -53,19 +63,19 @@ export default class Profile extends React.Component {
 
 
         <Content contentContainerStyle={styles.container}>
-            <View style={customStyles.top}>
-              <View>
-                <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
-                  <Thumbnail style={customStyles.avatar} source={{uri: Uploader.get(User.profile.avatar)}} />
-                  <Icon style={customStyles.camera} name="camera"/>
-                </TouchableOpacity>
-              </View>
-
-              <View style={{paddingLeft: 20}}>
-                <Text style={{fontSize: 20, color: "#fff"}}>{User.profile.name}</Text>
-                <Text style={{color: "#fff", marginTop: 5}}>Езжу на Acura TSX 2004</Text>
-              </View>
+          <View style={customStyles.top}>
+            <View style={{paddingRight: 20}}>
+              <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
+                <Thumbnail style={customStyles.avatar} source={{uri: Uploader.get(User.profile.avatar)}} />
+                <Icon style={customStyles.camera} name="camera"/>
+              </TouchableOpacity>
             </View>
+
+            <View>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.name}`}</Text>
+              <Text style={{color: "#fff", marginTop: 5}}>Езжу на Acura TSX 2004</Text>
+            </View>
+          </View>
 
           <Form>
             <Item style={customStyles.label} stackedLabel>
@@ -75,11 +85,22 @@ export default class Profile extends React.Component {
 
             <Item style={customStyles.label} stackedLabel>
               <Label>Имя</Label>
-              <Input onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
+              <Input selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
+              <View style={{ right: 10, bottom: 15, position: "absolute"}} pointerEvents="none">
+                <Icon style={customStyles.editIcon} name="create"/>
+              </View>
+            </Item>
+
+            <Item style={customStyles.label} stackedLabel>
+              <Label>Город</Label>
+              <Input selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({city: this.city})}  onChangeText={(text)=>{this.city = text}} value={this.city || ""} />
+              <View style={{ right: 10, bottom: 15, position: "absolute"}} pointerEvents="none">
+                <Icon style={customStyles.editIcon} name="create"/>
+              </View>
             </Item>
           </Form>
+
         </Content>
-        <Footer {...this.props}/>
 
         {this.avatarMenu
           ?
@@ -124,6 +145,12 @@ const customStyles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100
+  },
+
+  editIcon : {
+
+    fontSize: 18,
+    color: "#ccc"
   },
 
   camera : {

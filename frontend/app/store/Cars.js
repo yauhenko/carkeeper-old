@@ -30,8 +30,8 @@ class Cars {
     this.loading = true;
     return Api('garage/cars/get', {id}).then((response) => {
       this.carDetail = response;
-      this.loading = false;
       console.log(response)
+      this.loading = false;
     }).catch(Notification);
   };
 
@@ -40,7 +40,6 @@ class Cars {
     return Api('garage/cars', {}).then((response) => {
       this.cars = response;
       this.loading = false;
-      console.log(response)
     }).catch(Notification);
   };
 

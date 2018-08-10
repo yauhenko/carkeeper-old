@@ -1,5 +1,6 @@
 export default styles = {
   statusBarColor: "#a23737",
+  selectionColor: "#a23737",
 
   header : {
     backgroundColor: "#f13f3f",
@@ -11,7 +12,7 @@ export default styles = {
     backgroundColor: '#fff',
   },
   primaryButton: {
-    backgroundColor: "#3e4669"
+    backgroundColor: "#f13f3f"
   },
   primaryButtonText: {
     color: "#fff"
@@ -29,12 +30,19 @@ export default styles = {
 
   footerButton : {
     backgroundColor: "#383a43",
-    borderRadius: 0
+    borderRadius: 0,
+    height: 60
   },
 
   footerButtonActive : {
     backgroundColor: "#21242b",
-    borderRadius: 0
+    borderRadius: 0,
+    height: 60
+  },
+
+  footerBadge: {
+    color: "#fff",
+    marginBottom: 1
   },
 
   itemInput: {

@@ -12,9 +12,9 @@ export default async (path, params = {}) => {
     let data = await result.json();
 
     if (data.error) {
-      let error = data.error.message || data.error.sql || "Внутренняя ошибка";
-      throw error
+      throw data.error.message || data.error.sql || "Внутренняя ошибка";
     }
 
+    console.log(data.result);
     return data.result
 }

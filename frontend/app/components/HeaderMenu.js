@@ -20,9 +20,9 @@ export default class HeaderMenu extends React.Component {
 const style = {
   modal: {
     position: "absolute",
-    right: 15,
+    right: 20,
     width: 150,
-    top: 40,
+    top: 20,
     zIndex: 20,
     backgroundColor: "#fff",
     borderRadius: 2,

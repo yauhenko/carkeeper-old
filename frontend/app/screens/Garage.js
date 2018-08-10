@@ -5,6 +5,7 @@ import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List
 import styles from "../styles"
 import Footer from "../components/Footer";
 import Cars from "../store/Cars";
+import Uploader from "../store/Uploader";
 
 @observer
 export default class Garage extends React.Component {
@@ -38,16 +39,23 @@ export default class Garage extends React.Component {
 
         <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
           <List>
-            {Cars.cars.map((car) => {
+            {Cars.cars && Cars.cars.map((car) => {
               return(
                 <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
                   <Left>
-                    <Thumbnail source={require('../assets/images/car_stub.png')}/>
+                    {car.image ?
+                      <Thumbnail source={{uri: Uploader.get(car.image)}}/>
+                      :
+                      <Thumbnail source={require('../assets/images/car_stub.png')}/>
+                    }
                   </Left>
+
                   <Body>
-                    <Text>{car.mark_name} {car.model_name}, {car.year}г.</Text>
-                    <Text style={styles.textNote}>{car.serie_name} {car.generation_name} {car.modification_name}</Text>
+                    <Text>{car.mark.name} {car.model.name}, {String(car.year)}г.</Text>
+                    <Text style={styles.textNote}>{car.serie.name} {car.generation.name}</Text>
+                    <Text style={[styles.textNote, {position: "relative", top: -3}]}>{car.modification.name}</Text>
                   </Body>
+
                   <Right style={{paddingLeft: 10}}>
                     <Icon name="arrow-forward" />
                   </Right>
@@ -58,7 +66,6 @@ export default class Garage extends React.Component {
 
           {!Cars.cars.length && !Cars.loading && <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
         </Content>
-        <Footer {...this.props}/>
       </Container>
     );
   }

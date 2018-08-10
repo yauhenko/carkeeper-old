@@ -9,15 +9,15 @@ import Garage from "./screens/Garage";
 import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
 import Profile from "./screens/Profile";
-import Preview from "./screens/Preview";
 import SplashScreen from 'react-native-splash-screen';
-
+import Reminders from "./screens/Reminders";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
     Car: {screen: Car},
+    AddCar: {screen: AddCar},
     Profile: {screen: Profile},
-    AddCar: {screen: AddCar}
+    Reminders: {screen: Reminders},
 }, {
   initialRouteName: 'Garage',
   headerMode: 'none',

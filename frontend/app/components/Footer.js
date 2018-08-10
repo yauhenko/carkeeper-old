@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Keyboard} from 'react-native';
-import { Footer, FooterTab, Button, Text } from 'native-base';
+import { Footer, FooterTab, Button, Text, Badge, Icon } from 'native-base';
 import styles from "../styles";
 
 export default class FooterWrapper extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
+
     this.state = {
       showFooter: true
     }
@@ -30,19 +31,10 @@ export default class FooterWrapper extends Component {
 
 
   render () {
-    let active = this.props.navigation.state.routeName;
-
-    if(!this.state.showFooter) return null;
-
     return (
       <Footer>
         <FooterTab>
-          <Button style={active === "Garage" ? styles.footerButtonActive : styles.footerButton} onPress={()=>this.props.navigation.navigate('Garage')} active={active === "Garage"}>
-            <Text style={{color: "#fff"}}>Гараж</Text>
-          </Button>
-          <Button style={active === "Profile" ? styles.footerButtonActive : styles.footerButton} onPress={()=>this.props.navigation.navigate('Profile')} active={active === "Profile"}>
-            <Text style={{color: "#fff"}}>Профиль</Text>
-          </Button>
+          {this.props.children}
         </FooterTab>
       </Footer>
     )

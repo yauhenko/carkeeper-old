@@ -11,8 +11,7 @@ export default class Registration extends React.Component {
   @observable tel = "";
   @observable email = "";
   @observable password = "";
-  @observable firstname = "";
-  @observable lastname = "";
+  @observable name = "";
   @observable role = "buyer";
 
   @action change = (type, value) => {
@@ -20,7 +19,7 @@ export default class Registration extends React.Component {
   };
 
   @action submitHandler = () => {
-    UserStore.create(this.role, this.tel, this.email, this.password);
+    UserStore.create(this.role, this.tel, this.email, this.password, this.name);
   };
 
   render() {
@@ -28,35 +27,29 @@ export default class Registration extends React.Component {
       <Container>
         <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
         <Content contentContainerStyle={customStyles.container}>
-          <Text style={customStyles.logo}>РЕГИСТРАЦИЯ</Text>
+          <Text style={customStyles.logo}><Text style={{color:"#fff"}}>CAR</Text>KEEPER</Text>
           <Form>
-            <Item style={customStyles.label} floatingLabel>
-              <Label>Номер телефона</Label>
-              <Input onChangeText={(text)=>{this.change('tel', text)}} value={this.tel} />
+            <Item style={customStyles.item} stackedLabel>
+              <Label style={customStyles.label}>Имя</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={(text)=>{this.change('name', text)}} value={this.name} />
             </Item>
 
-            <Item style={customStyles.label} floatingLabel>
-              <Label>Пароль</Label>
-              <Input onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
+            <Item style={customStyles.item} stackedLabel>
+              <Label style={customStyles.label}>Номер телефона</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} keyboardType="numeric" onChangeText={(text)=>{this.change('tel', text)}} value={this.tel} />
             </Item>
 
-            <Item style={customStyles.label} floatingLabel>
-              <Label>E-mail</Label>
-              <Input onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
+            <Item style={customStyles.item} stackedLabel>
+              <Label style={customStyles.label}>Пароль</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
 
-            <Item style={customStyles.label} floatingLabel>
-              <Label>Имя</Label>
-              <Input onChangeText={(text)=>{this.change('firstname', text)}} value={this.firstname} />
+            <Item style={customStyles.item} stackedLabel>
+              <Label style={customStyles.label}>E-mail</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
             </Item>
 
-            <Item style={customStyles.label} floatingLabel>
-              <Label>Фамилия</Label>
-              <Input onChangeText={(text)=>{this.change('lastname', text)}} value={this.lastname} />
-            </Item>
-
-
-            <Button onPress={this.submitHandler} style={[customStyles.button, styles.primaryButton]} block><Text style={styles.primaryButtonText}>Зарегистрироваться</Text></Button>
+            <Button onPress={this.submitHandler} style={customStyles.button} block><Text style={{color: "#000"}}>Зарегистрироваться</Text></Button>
           </Form>
 
           <Text onPress={()=>this.props.navigation.navigate('Login')} style={customStyles.link}>Войти</Text>
@@ -69,17 +62,27 @@ export default class Registration extends React.Component {
 const customStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#f13f3f",
     justifyContent: 'center',
     padding: 20
   },
 
   label : {
+    color: "#fff"
+  },
+
+  input: {
+    color: "#fff"
+  },
+
+  item : {
     marginLeft: 0
   },
 
   button : {
-    marginTop: 25
+    marginTop: 25,
+    ...styles.primaryButton,
+    backgroundColor: "#fff",
   },
 
   logo : {
@@ -107,13 +110,13 @@ const customStyles = StyleSheet.create({
     padding: 10,
     flex: 1,
     height: 45
-
   },
 
   link : {
     textDecorationLine: "underline",
     textAlign: "center",
     marginTop: 30,
-    padding: 5
+    padding: 5,
+    color: "#fff"
   }
 });
