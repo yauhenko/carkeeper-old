@@ -1,4 +1,4 @@
-import db from '../utils/db';
+import db from '../../utils/db';
 
 export interface ICarMark {
     id: number,
@@ -47,7 +47,7 @@ export interface ICar {
     image: string | null
 }
 
-export default class Garage {
+export default class Index {
 
     public static aggregate = {
         mark: { table: 'car_mark', fields: ['id', 'name'] },
@@ -58,7 +58,7 @@ export default class Garage {
     };
 
     static async getCars(user: number): Promise<Array<ICar>> {
-        return await db.aggregate('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE user = ?', [user], Garage.aggregate);
+        return await db.aggregate('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE user = ?', [user], Index.aggregate);
     }
 
     static async addCar(user: number, { mark = null, model = null, generation = null, modification = null, serie = null, year = null, image = null } = {}): Promise<Boolean>  {
@@ -70,7 +70,7 @@ export default class Garage {
     }
 
     static async getCar(id: number): Promise<ICar> {
-        return await db.aggregateOne('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE id = ?', [id], Garage.aggregate);
+        return await db.aggregateOne('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE id = ?', [id], Index.aggregate);
     }
 
     static async deleteCar(id: number): Promise<Boolean> {

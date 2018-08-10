@@ -11,7 +11,7 @@ db.update = async (table, data, id, { pk = 'id', ignore = false } = {}) => {
     let sql = 'UPDATE ' + (ignore ? 'IGNORE' : '') + ' ?? SET ' + pairs.join(', ') + ' WHERE ?? = ?';
     let res = await db.query(sql, [table, pk, id]);
     console.log(res);
-    return Boolean(res['affectedRows']);
+    return Boolean(res['changedRows']);
 };
 
 db.insert = async (table, data, { ignore = false } = {}) => {
