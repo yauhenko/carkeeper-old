@@ -13,7 +13,7 @@ export default class Garage {
         // });
 
         return await db.query('SELECT ' +
-            ' c.id, c.year, ' +
+            ' c.id, c.year, c.image, ' +
             ' mark.id AS mark_id, mark.name AS mark_name, ' +
             ' model.id AS model_id, model.name AS model_name, ' +
             ' generation.id AS generation_id, generation.name AS generation_name, ' +
