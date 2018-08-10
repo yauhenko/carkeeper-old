@@ -1,5 +1,7 @@
 import db from "../../utils/db";
 import { error } from "../../utils";
+import { IInsurance } from "./insurance";
+import { ICheckup } from "./checkup";
 
 export interface ICarMark {
 	id: number,
@@ -45,7 +47,9 @@ export interface ICar {
 	generation: ICarGeneration | null,
 	serie: ICarSerie | null,
 	modification: ICarModification | null,
-	image: string | null
+	image: string | null,
+	insurance?: Array<IInsurance>,
+	checkup?: ICheckup
 }
 
 export default class Garage {
