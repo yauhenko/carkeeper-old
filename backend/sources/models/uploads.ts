@@ -10,7 +10,7 @@ const mkdir = promisify(mkdirp);
 
 export default class Uploads {
 
-    static async save(name, data) {
+    static async save(name: string, data: Buffer): Promise<string> {
         const id = uuid();
         const pub_dir = await realpath(__dirname + '/../public');
         const dir = '/uploads/' + id.substr(0, 2) + '/' + id.substr(0, 4) + '/' + id;

@@ -1,52 +1,79 @@
 import db from '../utils/db';
 
+export interface ICarMark {
+    id: number,
+    name: string
+}
+
+export interface ICarModel {
+    id: number,
+    mark: number,
+    name: string
+}
+
+export interface ICarGeneration {
+    id: number,
+    model: number,
+    name: string,
+    year_begin: number | null,
+    year_end: number | null
+}
+
+export interface ICarModification {
+    id: number,
+    model: number,
+    serie: number,
+    name: string,
+    year_begin: number | null,
+    year_end: number | null
+}
+
+export interface ICarSerie {
+    id: number,
+    model: number,
+    generation: number,
+    name: string,
+}
+
+export interface ICar {
+    id: number,
+    user: number,
+    mark: ICarMark,
+    model: ICarModel,
+    year: number,
+    generation: ICarGeneration | null,
+    serie: ICarSerie | null,
+    modification: ICarModification | null,
+    image: string | null
+}
+
 export default class Garage {
 
-    static async getCars(user) {
+    public static aggregate = {
+        mark: { table: 'car_mark', fields: ['id', 'name'] },
+        model: { table: 'car_model', fields: ['id', 'name'] },
+        generation: { table: 'car_generation', fields: ['id', 'name', 'year_begin', 'year_end'] },
+        serie: { table: 'car_serie', fields: ['id', 'name' ]  },
+        modification: { table: 'car_modification', fields: ['id', 'name', 'year_begin', 'year_end'] },
+    };
 
-        // return await db.aggregate('SELECT id, mark, model, generation, serie, modification FROM cars', [], {
-        //     mark: { table: 'car_mark', fields: ['id', 'name'] },
-        //     model: { table: 'car_model', fields: ['name'] },
-        //     generation: { table: 'car_generation', fields: ['name'] },
-        //     serie: { table: 'car_serie', fields: ['id', 'name'] },
-        //     modification: { table: 'car_modification', fields: ['name'] },
-        // });
-
-        return await db.query('SELECT ' +
-            ' c.id, c.year, c.image, ' +
-            ' mark.id AS mark_id, mark.name AS mark_name, ' +
-            ' model.id AS model_id, model.name AS model_name, ' +
-            ' generation.id AS generation_id, generation.name AS generation_name, ' +
-            ' serie.id AS serie_id, serie.name AS serie_name, ' +
-            ' modification.id AS modification_id, modification.name AS modification_name ' +
-            ' FROM cars c ' +
-            ' LEFT JOIN car_mark mark ON mark.id = c.mark ' +
-            ' LEFT JOIN car_model model ON model.id = c.model ' +
-            ' LEFT JOIN car_generation generation ON generation.id = c.generation ' +
-            ' LEFT JOIN car_serie serie ON serie.id = c.serie ' +
-            ' LEFT JOIN car_modification modification ON modification.id = c.modification ' +
-            ' WHERE user = ?', [user]);
+    static async getCars(user: number): Promise<Array<ICar>> {
+        return await db.aggregate('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE user = ?', [user], Garage.aggregate);
     }
 
-    static async addCar(user, { mark = null, model = null, generation = null, modification = null, serie = null, year = null, image = null } = {}) {
+    static async addCar(user: number, { mark = null, model = null, generation = null, modification = null, serie = null, year = null, image = null } = {}): Promise<Boolean>  {
         return await db.insert('cars', { user, mark, model, generation, modification, serie, year, image });
     }
 
-    static async updateCar(id, data = {}) {
+    static async updateCar(id: number, data: {} = {}): Promise<boolean> {
         return await db.update('cars', id, data);
     }
 
-    static async getCar(id) {
-        return await db.aggregateOne('SELECT id, user, mark, model, generation, serie, modification FROM cars WHERE id = ?', [id], {
-            mark: { table: 'car_mark', fields: ['id', 'name'] },
-            model: { table: 'car_model', fields: ['name'] },
-            generation: { table: 'car_generation', fields: ['name'] },
-            serie: { table: 'car_serie', fields: ['id', 'name'] },
-            modification: { table: 'car_modification', fields: ['name'] },
-        });
+    static async getCar(id: number): Promise<ICar> {
+        return await db.aggregateOne('SELECT id, user, mark, model, year, generation, serie, modification, image FROM cars WHERE id = ?', [id], Garage.aggregate);
     }
 
-    static async deleteCar(id) {
+    static async deleteCar(id: number): Promise<Boolean> {
         return await db.delete('cars', id);
     }
 

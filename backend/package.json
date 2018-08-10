@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec 'ts-node ./sources/server.ts'",
+    "start": "nodemon --exec 'node ./build/server'",
     "build": "./build.sh",
     "deploy": "./deploy.sh"
   },
