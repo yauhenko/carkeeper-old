@@ -1,56 +1,6 @@
 import db from "../../utils/db";
 import { error } from "../../utils";
-import { IInsurance } from "./insurance";
-import { ICheckup } from "./checkup";
-
-export interface ICarMark {
-	id: number,
-	name: string
-}
-
-export interface ICarModel {
-	id: number,
-	mark: number,
-	name: string
-}
-
-export interface ICarGeneration {
-	id: number,
-	model: number,
-	name: string,
-	year_begin: number | null,
-	year_end: number | null
-}
-
-export interface ICarModification {
-	id: number,
-	model: number,
-	serie: number,
-	name: string,
-	year_begin: number | null,
-	year_end: number | null
-}
-
-export interface ICarSerie {
-	id: number,
-	model: number,
-	generation: number,
-	name: string,
-}
-
-export interface ICar {
-	id: number,
-	user: number,
-	mark: ICarMark,
-	model: ICarModel,
-	year: number,
-	generation: ICarGeneration | null,
-	serie: ICarSerie | null,
-	modification: ICarModification | null,
-	image: string | null,
-	insurance?: Array<IInsurance>,
-	checkup?: ICheckup
-}
+import { ICar } from "../cars";
 
 export default class Garage {
 

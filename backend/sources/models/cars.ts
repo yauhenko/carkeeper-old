@@ -1,5 +1,56 @@
 import db from "../utils/db";
-import { ICarGeneration, ICarMark, ICarModel, ICarModification, ICarSerie } from "./garage";
+import { IInsurance } from "./garage/insurance";
+import { ICheckup } from "./garage/checkup";
+
+
+export interface ICarMark {
+	id: number,
+	name: string
+}
+
+export interface ICarModel {
+	id: number,
+	mark: number,
+	name: string
+}
+
+export interface ICarGeneration {
+	id: number,
+	model: number,
+	name: string,
+	year_begin: number | null,
+	year_end: number | null
+}
+
+export interface ICarModification {
+	id: number,
+	model: number,
+	serie: number,
+	name: string,
+	year_begin: number | null,
+	year_end: number | null
+}
+
+export interface ICarSerie {
+	id: number,
+	model: number,
+	generation: number,
+	name: string,
+}
+
+export interface ICar {
+	id: number,
+	user: number,
+	mark: ICarMark,
+	model: ICarModel,
+	year: number,
+	generation: ICarGeneration | null,
+	serie: ICarSerie | null,
+	modification: ICarModification | null,
+	image: string | null,
+	insurance?: Array<IInsurance>,
+	checkup?: ICheckup
+}
 
 export default class Cars {
 
