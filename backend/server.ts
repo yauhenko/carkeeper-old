@@ -13,6 +13,7 @@ import RouteUsers from './routes/users';
 import RouteGarage from './routes/garage';
 import RouteUploads from './routes/uploads';
 import RouteAdmin from './routes/admin';
+import redis from './utils/redis';
 
 const server = new Koa();
 
@@ -24,7 +25,13 @@ server.keys = [
 
 server.use(KoaStatic(__dirname + '/public'));
 server.use(KoaBody());
-server.use(KoaSession(server));
+server.use(KoaSession({
+	store: {
+		get: redis.get,
+		set: redis.set,
+		destroy: redis.del
+	}
+}, server));
 
 server.use(async (ctx, next) => {
 	console.log('Request', ctx.req.url, ctx.request.body);
@@ -41,7 +48,7 @@ server.use(async (ctx, next) => {
 		console.error(e);
 		ctx.body = { error: e }
 	}
-	console.log('Response', ctx.body);
+	console.log('Response', typeof ctx.body === 'string' ? 'HTML' : ctx.body);
 });
 
 server.use(RouteGeo);

@@ -8,11 +8,9 @@ declare module 'koa' {
 		errors: Array<any>,
 		token: string,
 		role: any,
-
 		render(template: string, data?: {}): any,
-
 		request: Request,
-		session?: any
+		session?: any,
 	}
 
 	interface Request {
