@@ -1,5 +1,5 @@
 import db from "../utils/db";
-import { error } from "../utils";
+import { error } from "../utils/index";
 import Sessions from "./sessions";
 import Geo from "./geo";
 

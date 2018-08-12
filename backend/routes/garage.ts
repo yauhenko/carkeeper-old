@@ -1,5 +1,5 @@
 import * as Router from "koa-router";
-import Garage from "../models/garage";
+import Garage from "../models/garage/index";
 import Sessions from "../models/sessions";
 import Insurance from "../models/garage/insurance";
 import { error } from "../utils";

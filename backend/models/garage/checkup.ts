@@ -1,5 +1,5 @@
 import db from "../../utils/db";
-import { filterKeys } from "../../utils";
+import { filterKeys } from "../../utils/index";
 
 export interface ICheckup {
 	car: number,

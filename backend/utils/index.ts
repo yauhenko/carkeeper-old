@@ -1,3 +1,12 @@
+import * as ejs from "ejs";
+
+export async function render(template: string, data?: {}) {
+	return await ejs.renderFile(__dirname + '/../views/' + template + '.ejs', data, {
+		cache: true,
+		await: true
+	});
+}
+
 export function passgen(length = 64): string {
 	const a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
 	const b = [];

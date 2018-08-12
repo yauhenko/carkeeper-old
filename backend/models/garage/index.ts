@@ -1,5 +1,5 @@
 import db from "../../utils/db";
-import { error } from "../../utils";
+import { error } from "../../utils/index";
 import { ICar } from "../cars";
 
 export default class Garage {

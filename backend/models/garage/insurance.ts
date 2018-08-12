@@ -1,5 +1,5 @@
 import db from "../../utils/db";
-import { error, filterKeys } from "../../utils";
+import { error, filterKeys } from "../../utils/index";
 import { ICar } from "../cars";
 
 enum InsuranceType {

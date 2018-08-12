@@ -1,7 +1,6 @@
 import * as Koa from "koa";
 import * as KoaBody from "koa-body";
 import * as KoaStatic from "koa-static";
-//import * as KoaValidate from "koa-validate";
 
 import "./utils/declare";
 import "./utils/cron";
@@ -12,6 +11,7 @@ import RouteAuth from "./routes/auth";
 import RouteUsers from "./routes/users";
 import RouteGarage from "./routes/garage";
 import RouteUploads from "./routes/uploads";
+import RouteAdmin from "./routes/admin";
 
 const server = new Koa();
 
@@ -25,7 +25,8 @@ server.use(async (ctx, next) => {
 	try {
 		await next();
 		if (ctx.body) {
-			ctx.body = { result: ctx.body }
+			if(typeof ctx.body !== "string")
+				ctx.body = { result: ctx.body }
 		} else {
 			ctx.status = 404;
 			ctx.body = "Not Found";
@@ -43,6 +44,7 @@ server.use(RouteAuth);
 server.use(RouteUsers);
 server.use(RouteGarage);
 server.use(RouteUploads);
+server.use(RouteAdmin);
 
 server.listen(8000);
 

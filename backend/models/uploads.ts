@@ -1,6 +1,6 @@
 import db from "../utils/db";
 import * as fs from "fs";
-import { error, uuid } from "../utils";
+import { error, uuid } from "../utils/index";
 import { mkdirp } from "mkdirp";
 import { promisify } from "util";
 

@@ -1,6 +1,6 @@
 import db from "../utils/db";
 import User from "./user";
-import { passgen, error } from "../utils";
+import { passgen, error } from "../utils/index";
 
 export default class Sessions {
 
