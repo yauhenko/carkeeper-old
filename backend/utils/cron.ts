@@ -1,3 +1,3 @@
-import sessions from "../models/sessions";
+import sessions from '../models/sessions';
 
 setInterval(sessions.clean, 60000);

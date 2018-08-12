@@ -13,6 +13,7 @@
     "koa-body": "^4.0.4",
     "koa-mysql": "^1.0.3",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.8.2",
     "koa-static": "^5.0.0",
     "mkdirp": "^0.5.1",
     "promise-mysql": "^3.3.1"

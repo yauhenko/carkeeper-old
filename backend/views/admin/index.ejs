@@ -2,26 +2,12 @@
 
 <div class="container">
 
-    <% if(typeof error !== 'undefined') { %>
-        <p class="alert alert-danger"><%= error %></p>
-    <% } %>
-
-    <form style="max-width: 500px;" method="post">
-        <div class="form-group">
-            <label>Login</label>
-            <input type="text" class="form-control" name="username" autofocus required>
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" required>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">
-                <i class="fas fa-sign-in-alt"></i>
-                Log in
-            </button>
-        </div>
-    </form>
+    <p>Hello, <b>Admin</b>!</p>
+    <p>
+        <a href="/admin/logout" class="btn btn-xs btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Exit
+        </a>
+    </p>
 
 </div>
 
