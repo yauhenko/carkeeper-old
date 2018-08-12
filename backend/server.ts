@@ -17,6 +17,8 @@ import redis from './utils/redis';
 
 const server = new Koa();
 
+server.context.redis = redis;
+
 server.keys = [
 	'Exq7ng4R9VKvEHIwd3qxHXZTgCkAxWv2g19RIemaeYe8e1I57KkynBwSxjYEY4K9',
 	'e1e23WDHldDrEaHX57VG9kMPF9P5ctUQsISB4kQSkL1KhDhHmv0cLGnVrtVj3irK',

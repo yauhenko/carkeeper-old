@@ -10,7 +10,12 @@ declare module 'koa' {
 		role: any,
 		render(template: string, data?: {}): any,
 		request: Request,
-		session?: any,
+		redis?: any
+		//session?: any,
+	}
+
+	interface BaseContext {
+		redis?: any
 	}
 
 	interface Request {
