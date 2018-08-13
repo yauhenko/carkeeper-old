@@ -13,7 +13,7 @@ router.all('/login', async (ctx) => {
 	if (ctx.method === 'POST') {
 		if (ctx.request.body.username === 'admin' && ctx.request.body.password === 'admin') {
 			ctx.session.logged = true;
-			ctx.redirect('/admin/');
+			ctx.redirect(decodeURIComponent(ctx.request.query.return) || '/admin/');
 		} else {
 			data.error = 'access denied';
 		}
@@ -24,7 +24,7 @@ router.all('/login', async (ctx) => {
 
 router.all('*', async (ctx, next) => {
 	if (!ctx.session.logged) {
-		ctx.redirect('/admin/login');
+		ctx.redirect('/admin/login?return=' + encodeURIComponent(ctx.request.url));
 	} else {
 		await next();
 	}
