@@ -41,3 +41,13 @@ export function filterKeys(object: {}, keys: Array<string>): {} {
 	}
 	return res;
 }
+
+export function urlEncode(str: string): string {
+	return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+		return '%' + c.charCodeAt(0).toString(16);
+	});
+}
+
+export function urlDecode(str: string): string {
+	return decodeURIComponent(str);
+}

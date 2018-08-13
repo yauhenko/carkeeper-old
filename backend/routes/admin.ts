@@ -1,5 +1,5 @@
 import * as Router from 'koa-router';
-import { render } from '../utils';
+import { render, urlDecode, urlEncode } from '../utils';
 
 const router = new Router({
 	prefix: '/admin',
@@ -13,7 +13,7 @@ router.all('/login', async (ctx) => {
 	if (ctx.method === 'POST') {
 		if (ctx.request.body.username === 'admin' && ctx.request.body.password === 'admin') {
 			ctx.session.logged = true;
-			ctx.redirect(decodeURIComponent(ctx.request.query.return) || '/admin/');
+			ctx.redirect(urlDecode(ctx.request.query.return) || '/admin/');
 		} else {
 			data.error = 'access denied';
 		}
@@ -24,7 +24,7 @@ router.all('/login', async (ctx) => {
 
 router.all('*', async (ctx, next) => {
 	if (!ctx.session.logged) {
-		ctx.redirect('/admin/login?return=' + encodeURIComponent(ctx.request.url));
+		ctx.redirect('/admin/login?return=' + urlEncode(ctx.request.url));
 	} else {
 		await next();
 	}
