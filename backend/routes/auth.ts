@@ -9,7 +9,8 @@ router.post('/auth/ping', async (ctx) => {
 });
 
 router.post('/auth/logout', async (ctx) => {
-	ctx.body = await Sessions.destroy(ctx.token);
+	await Sessions.check(ctx);
+	ctx.body = { closed: await Sessions.destroy(ctx.token) };
 });
 
 export default router.routes();

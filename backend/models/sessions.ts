@@ -33,7 +33,7 @@ export default class Sessions {
 		return token;
 	}
 
-	static async destroy(token): Promise<Boolean> {
+	static async destroy(token): Promise<boolean> {
 		return await db.delete('sessions', token, 'token');
 	}
 
