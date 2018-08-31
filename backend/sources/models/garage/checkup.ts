@@ -28,5 +28,4 @@ export default class Checkup {
 		await db.insert('cars_checkup', data);
 		return true;
 	}
-
 }

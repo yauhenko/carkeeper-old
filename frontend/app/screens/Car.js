@@ -23,7 +23,7 @@ import CarMenu from "../components/CarMenu";
 
 @observer
 export default class Car extends React.Component {
-  @observable id = this.props.navigation.state.params.id || 20;
+  @observable id = this.props.navigation.state.params.id;
   @observable menu = false;
 
   componentWillMount() {
@@ -72,7 +72,7 @@ export default class Car extends React.Component {
           }
         </Content>
 
-        <Footer><CarMenu {...this.props}/></Footer>
+        <Footer><CarMenu id={this.id} {...this.props}/></Footer>
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
           <List>
@@ -88,9 +88,6 @@ export default class Car extends React.Component {
             </ListItem>
           </List>
         </HeaderMenu>
-
-
-
       </Container>
     );
   }

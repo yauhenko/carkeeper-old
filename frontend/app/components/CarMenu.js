@@ -5,6 +5,8 @@ import {Badge, Button, Icon, Text} from "native-base";
 
 @observer
 export default class CarMenu extends React.Component {
+  id = this.props.id;
+
   render() {
     const active = this.props.navigation.state.routeName;
 

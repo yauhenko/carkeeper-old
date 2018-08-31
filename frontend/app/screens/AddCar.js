@@ -106,8 +106,6 @@ export default class AddCar extends React.Component {
             <Button onPress={this.submitHandler} style={{...styles.primaryButton, marginTop: 25}} block><Text style={styles.primaryButtonText}>Добавить</Text></Button>
           </Form>
         </Content>
-
-        <Footer {...this.props}/>
       </Container>
     );
   }

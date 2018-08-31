@@ -30,12 +30,11 @@ class Cars {
     this.loading = true;
     return Api('garage/cars/get', {id}).then((response) => {
       this.carDetail = response;
-      console.log(response)
       this.loading = false;
     }).catch(Notification);
   };
 
-  @action getCars = () => {
+  @action getCars = async () => {
     this.loading = true;
     return Api('garage/cars', {}).then((response) => {
       this.cars = response;
@@ -88,7 +87,16 @@ class Cars {
       this.modifications = response || [];
       console.log(response)
     }).catch(Notification);
-  }
+  };
+
+  @action checkupUpdate = async (data = {}) => {
+    console.log(data)
+    return Api('garage/cars/checkup/update', data).then((response) => {
+    }).catch(Notification);
+  };
+
+
+  // garage/cars/checkup/update
 }
 
 export default new Cars();

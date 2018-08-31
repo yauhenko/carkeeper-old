@@ -51,7 +51,6 @@ export default class Registration extends React.Component {
 
             <Button onPress={this.submitHandler} style={customStyles.button} block><Text style={{color: "#000"}}>Зарегистрироваться</Text></Button>
           </Form>
-
           <Text onPress={()=>this.props.navigation.navigate('Login')} style={customStyles.link}>Войти</Text>
         </Content>
       </Container>
