@@ -76,7 +76,6 @@ export default class Reminders extends React.Component {
             </Right>
           </ListItem>
 
-
           {Cars.carDetail.checkup.notify
             ?
             <React.Fragment>
