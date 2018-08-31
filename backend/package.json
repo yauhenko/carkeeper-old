@@ -3,25 +3,32 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec 'node ./build/server'",
+    "start": "nodemon -e ts,ejs --exec 'ts-node --no-cache ./server.ts'",
     "build": "./build.sh",
     "deploy": "./deploy.sh"
   },
   "dependencies": {
+    "async-redis": "^1.1.4",
+    "ejs": "^2.6.1",
     "koa": "^2.5.2",
     "koa-body": "^4.0.4",
     "koa-mysql": "^1.0.3",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.8.2",
     "koa-static": "^5.0.0",
-    "koa-validate": "^1.0.7",
     "mkdirp": "^0.5.1",
-    "promise-mysql": "^3.3.1"
+    "promise-mysql": "^3.3.1",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.31",
+    "@types/koa-session": "^5.7.4",
+    "@types/koa-static": "^4.0.0",
+    "@types/mkdirp": "^0.5.2",
+    "@types/redis": "^2.8.6",
     "nodemon": "^1.18.3",
-    "ts-node": "^7.0.0",
+    "ts-node": "^7.0.1",
     "typescript": "^3.0.1"
   }
 }
