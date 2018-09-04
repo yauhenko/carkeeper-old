@@ -1,5 +1,5 @@
 import db from '../../utils/db';
-import { error } from '../../utils';
+import { error, filterKeys } from '../../utils';
 import { ICar } from '../cars';
 
 export default class Garage {
@@ -25,6 +25,7 @@ export default class Garage {
 	}
 
 	static async updateCar(id: number, data: {} = {}): Promise<boolean> {
+		data = filterKeys(data, ['image']);
 		return await db.update('cars', data, id);
 	}
 

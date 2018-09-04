@@ -30,7 +30,8 @@ router.post('/garage/cars/update', async (ctx) => {
 	await Sessions.check(ctx);
 	let car = await Garage.getCar(ctx.request.body.id || 0);
 	if (car.user !== ctx.user.id) error('В доступе отказано', 403);
-	ctx.body = await Garage.updateCar(car.id, ctx.request.body);
+	await Garage.updateCar(car.id, ctx.request.body);
+	ctx.body = await Garage.getCar(ctx.request.body.id || 0);
 });
 
 router.post('/garage/cars/delete', async (ctx) => {
