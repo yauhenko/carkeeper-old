@@ -34,7 +34,9 @@ class Cars {
     }).catch(Notification);
   };
 
-
+  @action updateCar = async (data = {}) => {
+    return await Api('garage/cars/update', data);
+  };
 
   @action getCars = async () => {
     this.loading = true;
@@ -102,6 +104,8 @@ class Cars {
       console.log(response)
     }).catch(Notification);
   };
+
+
 
 }
 

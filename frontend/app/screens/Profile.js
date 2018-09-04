@@ -20,23 +20,11 @@ import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
-import { observable, action} from 'mobx';
-
-var BUTTONS = [
-  { text: "Option 0", icon: "american-football", iconColor: "#2c8ef4" },
-  { text: "Option 1", icon: "analytics", iconColor: "#f42ced" },
-  { text: "Option 2", icon: "aperture", iconColor: "#ea943b" },
-  { text: "Delete", icon: "trash", iconColor: "#fa213b" },
-  { text: "Cancel", icon: "close", iconColor: "#25de5b" }
-];
-
-var DESTRUCTIVE_INDEX = 3;
-var CANCEL_INDEX = 4;
+import {observable} from 'mobx';
 
 @observer
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
-
   @observable name = User.profile.name;
   @observable city = User.profile.city.name;
 
@@ -114,7 +102,7 @@ export default class Profile extends React.Component {
                   <Text>Сделать снимок</Text>
                 </ListItem>
 
-                <ListItem onPress={() => {this.avatarMenu = false;}}>
+                <ListItem onPress={() => {this.avatarMenu = false}}>
                   <Text>Удалить</Text>
                 </ListItem>
               </List>
@@ -148,7 +136,6 @@ const customStyles = StyleSheet.create({
   },
 
   editIcon : {
-
     fontSize: 18,
     color: "#ccc"
   },

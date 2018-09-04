@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Picker, RefreshControl, Alert, Dimensions} from 'react-native';
+import {Text, View, Picker, RefreshControl, Alert, Dimensions, TouchableOpacity, StyleSheet} from 'react-native';
 import {observer} from 'mobx-react';
 import {
   Container,
@@ -21,11 +21,15 @@ import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
 import CarMenu from "../components/CarMenu";
 import Uploader from "../store/Uploader";
+import ModalMenu from "../components/ModalMenu";
+import Cropper from "../modules/Cropper";
 
 @observer
 export default class Car extends React.Component {
   @observable id = this.props.navigation.state.params.id;
   @observable menu = false;
+
+  @observable cameraMenu = false;
 
   componentWillMount() {
     Cars.loading = true;
@@ -68,6 +72,9 @@ export default class Car extends React.Component {
             <React.Fragment>
               <View style={{alignItems: "center"}}>
                 <Thumbnail square style={{width: Dimensions.get('window').width, height: 200}} large source={car.image ? {uri: Uploader.get(car.image)} : require('../assets/images/car_stub_square.png')} />
+                <TouchableOpacity style={customStyles.camera} onPressIn={()=>{this.cameraMenu = true}}>
+                  <Icon style={{color: "#f13f3f"}} name="camera"/>
+                </TouchableOpacity>
               </View>
 
               <List>
@@ -116,7 +123,49 @@ export default class Car extends React.Component {
               </List>
             </HeaderMenu>
         }
+
+        {this.cameraMenu
+          ?
+          <ModalMenu onClose={()=>{this.cameraMenu = false}}>
+            <List>
+              <ListItem onPress={() => {this.cameraMenu = false; Cropper.gallery().then((id)=>{Cars.updateCar({id: car.id, image: id}).then(response => {car.image = response.image})}).catch(console.log)}}>
+                <Text>Загрузить из галереи</Text>
+              </ListItem>
+
+              <ListItem onPress={() => {this.cameraMenu = false; Cropper.camera().then((id)=>{Cars.updateCar({id: car.id, image: id}).then(response => {car.image = response.image})}).catch(console.log)}}>
+                <Text>Сделать снимок</Text>
+              </ListItem>
+
+              {car.image
+                ?
+                <ListItem onPress={() => {this.cameraMenu = false; Cars.updateCar({id: car.id, image: null}).then(()=>{car.image = null})}}>
+                  <Text>Удалить</Text>
+                </ListItem>
+                :
+                null
+              }
+            </List>
+          </ModalMenu>
+          :
+          null
+        }
+
       </Container>
     );
   }
 }
+
+const customStyles = StyleSheet.create({
+  camera : {
+    position: "absolute",
+    right: 20,
+    bottom: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    width:40,
+    height: 40,
+    borderRadius: 40,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});
