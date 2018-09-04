@@ -8,10 +8,10 @@ enum InsuranceType {
 }
 
 export interface IInsurance {
-	id: number,
+	id?: number,
 	car: number,
 	notify: boolean,
-	edate: Date,
+	edate?: Date,
 	type: InsuranceType
 }
 
@@ -41,7 +41,23 @@ export default class Insurance {
 	// Static
 
 	public static async list(car: ICar): Promise<Array<IInsurance>> {
-		return await db.query('SELECT * FROM cars_insurance WHERE car = ?', car.id);
+		let data = await db.query('SELECT * FROM cars_insurance WHERE car = ?', car.id);
+		if(!data.length) {
+			await Insurance.add({
+				car: car.id,
+				notify: false,
+				edate: null,
+				type: InsuranceType.regular,
+			});
+			await Insurance.add({
+				car: car.id,
+				notify: false,
+				edate: null,
+				type: InsuranceType.casco,
+			});
+			return await Insurance.list(car);
+		}
+		return data;
 	}
 
 	public static async add(data: IInsurance): Promise<number> {
