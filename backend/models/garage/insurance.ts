@@ -3,8 +3,8 @@ import { error, filterKeys } from '../../utils';
 import { ICar } from '../cars';
 
 enum InsuranceType {
-	regular,
-	casco
+	regular = 'regular',
+	casco = 'casco'
 }
 
 export interface IInsurance {
