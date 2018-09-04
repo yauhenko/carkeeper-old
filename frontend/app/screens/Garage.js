@@ -28,9 +28,6 @@ export default class Garage extends React.Component {
           </Body>
 
           <Right>
-            <Button transparent>
-              <Icon name='search'/>
-            </Button>
             <Button onPress={()=>this.props.navigation.navigate('AddCar')} transparent>
               <Icon name='add' />
             </Button>
@@ -38,33 +35,37 @@ export default class Garage extends React.Component {
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
-          <List>
-            {Cars.cars && Cars.cars.map((car) => {
-              return(
-                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
-                  <Left>
-                    {car.image ?
-                      <Thumbnail source={{uri: Uploader.get(car.image)}}/>
-                      :
-                      <Thumbnail source={require('../assets/images/car_stub.png')}/>
-                    }
-                  </Left>
+          {Cars.loading
+            ?
+            null
+            :
+            <List>
+              {Cars.cars && Cars.cars.map((car) => {
+                return(
+                  <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
+                    <Left>
+                      {car.image ?
+                        <Thumbnail source={{uri: Uploader.get(car.image)}}/>
+                        :
+                        <Thumbnail source={require('../assets/images/car_stub.png')}/>
+                      }
+                    </Left>
 
-                  <Body>
+                    <Body>
                     <Text>{car.mark.name} {car.model.name}, {String(car.year)}г.</Text>
                     <Text style={styles.textNote}>{car.serie.name} {car.generation.name}</Text>
                     <Text style={[styles.textNote, {position: "relative", top: -3}]}>{car.modification.name}</Text>
-                  </Body>
+                    </Body>
 
-                  <Right style={{paddingLeft: 10}}>
-                    <Icon name="arrow-forward" />
-                  </Right>
-                </ListItem>
-              )
-            })}
-          </List>
-
-          {!Cars.cars.length && !Cars.loading && <Button style={styles.primaryButton} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
+                    <Right style={{paddingLeft: 10}}>
+                      <Icon name="arrow-forward" />
+                    </Right>
+                  </ListItem>
+                )
+              })}
+            </List>
+          }
+          {!Cars.cars.length && !Cars.loading && <Button style={[styles.primaryButton, {marginLeft: 20, marginRight: 20}]} onPress={()=>this.props.navigation.navigate('AddCar')} block><Text style={styles.primaryButtonText}>Добавить автомобиль</Text></Button>}
         </Content>
       </Container>
     );
