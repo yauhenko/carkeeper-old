@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Picker, RefreshControl, Alert} from 'react-native';
+import {Text, View, Picker, RefreshControl, Alert, Dimensions} from 'react-native';
 import {observer} from 'mobx-react';
 import {
   Container,
@@ -20,6 +20,7 @@ import Cars from "../store/Cars";
 import Footer from "../components/Footer";
 import HeaderMenu from "../components/HeaderMenu";
 import CarMenu from "../components/CarMenu";
+import Uploader from "../store/Uploader";
 
 @observer
 export default class Car extends React.Component {
@@ -36,6 +37,8 @@ export default class Car extends React.Component {
   };
 
   render() {
+    const car = Cars.carDetail;
+
     return (
       <Container>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
@@ -48,46 +51,71 @@ export default class Car extends React.Component {
           </Left>
           <Body>
           {!Cars.loading &&
-          <Title><Text style={styles.headerTitle}>{Cars.carDetail.mark.name} {Cars.carDetail.model.name}</Text></Title>}
+          <Title><Text style={styles.headerTitle}>{car.mark.name} {car.model.name}</Text></Title>}
           </Body>
           <Right>
-            <Button onPress={() => {
-              this.menu = true
-            }} transparent>
+            <Button onPress={() => {this.menu = true}} transparent>
               <Icon name='more'/>
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={() => {
-          Cars.getCar(this.id)
-        }}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={() => {Cars.getCar(this.id)}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
           {Cars.loading
             ?
             null
             :
-            <View style={{alignItems: "center", padding: 20}}>
-              <Thumbnail style={{width: 200, height: 200}} large source={require('../assets/images/car_stub.png')}/>
-            </View>
+            <React.Fragment>
+              <View style={{alignItems: "center"}}>
+                <Thumbnail square style={{width: Dimensions.get('window').width, height: 200}} large source={car.image ? {uri: Uploader.get(car.image)} : require('../assets/images/car_stub_square.png')} />
+              </View>
+
+              <List>
+                <ListItem itemDivider first>
+                  <Text>ПОСЛЕДНЯЯ АКТИВНОСТЬ</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Замена масла</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Замена правого ступичного подшипника</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Получен штраф на сумму 20р.</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Замена каленвала</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Замена тормозных колодок</Text>
+                </ListItem>
+                <ListItem>
+                  <Text>08.16.1550 - Замена масла</Text>
+                </ListItem>
+              </List>
+            </React.Fragment>
           }
         </Content>
 
         <Footer><CarMenu id={this.id} {...this.props}/></Footer>
 
-        <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
-          <List>
-            <ListItem onPress={() => this.menu = false}>
-              <Text>Редактировать</Text>
-            </ListItem>
-            <ListItem onPress={() => Alert.alert('Удалить автомобиль', `${Cars.carDetail.mark.name} ${Cars.carDetail.model.name}`,
-              [
-                {text: 'Отмена', onPress: () => {this.menu = false}, style: 'cancel'},
-                {text: 'Удалить', onPress: () => {this.menu = false; Cars.deleteCar(this.id).then(()=>this.props.navigation.navigate('Garage'))}},
-              ], {cancelable: true })} last={true}>
-              <Text>Удалить</Text>
-            </ListItem>
-          </List>
-        </HeaderMenu>
+        {Cars.loading
+          ? null
+          : <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
+              <List>
+                <ListItem onPress={() => this.menu = false}>
+                  <Text>Редактировать</Text>
+                </ListItem>
+                <ListItem onPress={() => Alert.alert('Удалить автомобиль', `${car.mark.name} ${car.model.name}`,
+                  [
+                    {text: 'Отмена', onPress: () => {this.menu = false}, style: 'cancel'},
+                    {text: 'Удалить', onPress: () => {this.menu = false; Cars.deleteCar(this.id).then(()=>this.props.navigation.navigate('Garage'))}},
+                  ], {cancelable: true })} last={true}>
+                  <Text>Удалить</Text>
+                </ListItem>
+              </List>
+            </HeaderMenu>
+        }
       </Container>
     );
   }

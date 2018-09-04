@@ -5,14 +5,14 @@ import { AsyncStorage } from "react-native";
 
 class User {
   constructor () {
-    setInterval(()=>this.ping(), 15000);
+    setInterval(()=>this.ping(), 30000);
   }
 
   @action checkAuth = async () => {
     let token = (await AsyncStorage.getItem('token')) || null;
     if(!token) return this.ready = true;
     this.token = token;
-    return this.ping(true).then((auth) => {
+    return await this.ping(true).then((auth) => {
       this.ready = true;
       this.auth = auth;
       if(!auth) this.clean();
@@ -27,16 +27,17 @@ class User {
 
   @action login = async (tel, password) => {
     this.loading = true;
-    await Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true}).then(async (response) => {
+    try {
+      let response = await Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true});
       this.loading = false;
       this.profile = response.user;
       this.token = response.token;
       this.auth = true;
       await AsyncStorage.setItem('token', response.token);
-    }).catch((err) => {
+    } catch (e) {
       this.loading = false;
-      Notification(err)
-    });
+      Notification(e)
+    }
   };
 
   @action update = async (data = {}) => {

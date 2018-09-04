@@ -1,4 +1,5 @@
 import React from 'react';
+import {NetInfo} from 'react-native';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
 import Login from "./screens/Login";
@@ -11,6 +12,8 @@ import Car from "./screens/Car";
 import Profile from "./screens/Profile";
 import SplashScreen from 'react-native-splash-screen';
 import Reminders from "./screens/Reminders";
+import AppStore from "./store/App";
+import ConnectError from "./components/ConnectError";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -39,8 +42,12 @@ export default class App extends React.Component {
     SplashScreen.hide();
   }
 
+  componentDidMount() {
+    NetInfo.isConnected.addEventListener('connectionChange', result => {AppStore.connect = result; console.log(result)});
+  }
+
   render() {
-    return(User.ready ? (User.auth ? <Navigator/> : <Auth/>) : null)
+    return(<ConnectError>{User.ready ? (User.auth ? <Navigator/>: <Auth/>) : null}</ConnectError> )
   }
 }
 

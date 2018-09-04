@@ -34,6 +34,8 @@ class Cars {
     }).catch(Notification);
   };
 
+
+
   @action getCars = async () => {
     this.loading = true;
     return Api('garage/cars', {}).then((response) => {
@@ -95,8 +97,12 @@ class Cars {
     }).catch(Notification);
   };
 
+  @action insuranceUpdate = async (data = {}) => {
+    return await Api('garage/cars/insurance/update', data).then((response) => {
+      console.log(response)
+    }).catch(Notification);
+  };
 
-  // garage/cars/checkup/update
 }
 
 export default new Cars();

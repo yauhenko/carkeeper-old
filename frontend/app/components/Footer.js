@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Keyboard} from 'react-native';
-import { Footer, FooterTab, Button, Text, Badge, Icon } from 'native-base';
-import styles from "../styles";
+import { Footer, FooterTab} from 'native-base';
+import {observer} from 'mobx-react';
 
+@observer
 export default class FooterWrapper extends Component {
   constructor() {
     super();

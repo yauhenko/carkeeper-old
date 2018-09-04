@@ -9,7 +9,6 @@ export default class Navigation extends Component {
     return (
       <Container style={{backgroundColor: "#f5f5f5"}}>
         <Content>
-
           <List>
             <View style={styles.top}>
               <View style={{marginRight: 15}}>
