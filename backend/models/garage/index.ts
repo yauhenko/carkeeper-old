@@ -25,7 +25,7 @@ export default class Garage {
 	}
 
 	static async updateCar(id: number, data: {} = {}): Promise<boolean> {
-		return await db.update('cars', id, data);
+		return await db.update('cars', data, id);
 	}
 
 	static async getCar(id: number): Promise<ICar> {
