@@ -1,6 +1,7 @@
 import User from "../store/User";
 import Url from "../modules/Url";
 import App from "../store/App";
+import Notification from "../components/Notification";
 
 export default async (path, params = {}) => {
     if(!App.connect) return;
@@ -15,8 +16,9 @@ export default async (path, params = {}) => {
     let data = await result.json();
 
     if (data.error) {
-      console.error(data.error)
-      // throw data.error.message || data.error.sql || "Внутренняя ошибка";
+      const error = data.error.message || data.error.sql || "Внутренняя ошибка";
+      Notification(error);
+      throw error;
     }
 
     console.log(data.result);

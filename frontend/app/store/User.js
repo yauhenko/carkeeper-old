@@ -25,20 +25,23 @@ class User {
   @observable token = null;
   @observable ready = false;
 
-  @action login = async (tel, password) => {
+  @action login = (tel, password) => {
     this.loading = true;
-    try {
-      let response = await Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true});
-      this.loading = false;
+
+    return Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true}).then(response => {
       this.profile = response.user;
       this.token = response.token;
-      this.auth = true;
-      await AsyncStorage.setItem('token', response.token);
-    } catch (e) {
       this.loading = false;
-      Notification(e)
-    }
+      this.auth = true;
+      AsyncStorage.setItem('token', response.token);
+      return response;
+    }).catch((err) => {
+      console.log(err);
+      this.loading = false;
+    });
+
   };
+
 
   @action update = async (data = {}) => {
     Api('users/update', data).then(async () => {

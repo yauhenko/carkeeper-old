@@ -12,14 +12,12 @@ export default class Login extends React.Component {
   @observable tel = "";
   @observable password = "";
 
-  @action change = (type, value) => {
-      this[type] = value;
-  };
+  @action change = (type, value) => {this[type] = value};
 
   @action submitHandler = () => {
     User.login(this.tel, this.password).then(() => {
-      AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]])
-    });
+      AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+    }).catch(console.log);
   };
 
   @action autoFill = () => {
@@ -30,7 +28,6 @@ export default class Login extends React.Component {
       }
     })
   };
-
 
   componentDidMount() {
     this.autoFill();
