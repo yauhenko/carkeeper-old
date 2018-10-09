@@ -3,11 +3,13 @@ export default styles = {
   selectionColor: "#a23737",
 
   header : {
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#f13f3f"
   },
+
   headerTitle: {
     fontSize: 16
   },
+
   container: {
     backgroundColor: '#fff',
   },
@@ -53,6 +55,7 @@ export default styles = {
   },
 
   textNote: {
+    fontSize: 12,
     color: "#b9babd"
   }
 }

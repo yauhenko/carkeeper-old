@@ -54,7 +54,7 @@ export default class Garage extends React.Component {
                     <Body>
                     <Text>{car.mark.name} {car.model.name}, {String(car.year)}г.</Text>
                     <Text style={styles.textNote}>{car.serie.name} {car.generation.name}</Text>
-                    <Text style={[styles.textNote, {position: "relative", top: -3}]}>{car.modification.name}</Text>
+                    <Text style={styles.textNote}>{car.modification.name}</Text>
                     </Body>
 
                     <Right style={{paddingLeft: 10}}>

@@ -3,7 +3,10 @@ import { StyleSheet, View, Image, TouchableHighlight} from 'react-native';
 import {Container, Content, Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
 import User from "../store/User";
 import Uploader from "../store/Uploader";
+import Cars from "../store/Cars";
+import {observer} from "mobx-react";
 
+@observer
 export default class Navigation extends Component {
   render () {
     return (
@@ -16,7 +19,11 @@ export default class Navigation extends Component {
               </View>
               <View>
                 <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${User.profile.name}`}</Text>
-                <Text style={{fontSize: 12, color: "#fff"}}>Езжу на Acura TSX 2004</Text>
+                {Cars.cars.length ?
+                  <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+                  :
+                  null
+                }
               </View>
             </View>
 
@@ -57,11 +64,10 @@ const styles = StyleSheet.create({
   link : {
     fontSize : 15
   },
-
   top: {
-    paddingTop: 30,
+    paddingTop: 53,
+    paddingBottom: 53,
     paddingLeft: 15,
-    paddingBottom: 30,
     borderBottomColor: "#d6d7da",
     borderBottomWidth: 0.5,
     marginBottom: 20,
@@ -70,7 +76,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f13f3f",
     marginTop: 0
   },
-
   listItem : {
     height: 60,
     alignItems: "flex-end"

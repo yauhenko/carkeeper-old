@@ -1,11 +1,8 @@
 import User from "../store/User";
 import Url from "../modules/Url";
-import App from "../store/App";
 import Notification from "../components/Notification";
 
 export default async (path, params = {}) => {
-    if(!App.connect) return;
-
     let result = await fetch( Url + "/" +path, {
       method: 'POST',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},

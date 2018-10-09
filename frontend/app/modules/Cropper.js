@@ -17,6 +17,7 @@ export default class Cropper {
     let name = image.path.split('/').pop();
     return await Uploader.save({name: name, data: image.data});
   }
+
   static async camera(props = {}) {
     let image = await ImagePicker.openCamera(Object.assign({...Cropper.params}, props));
     let name = image.path.split('/').pop();

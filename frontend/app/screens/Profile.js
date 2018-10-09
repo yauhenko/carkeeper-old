@@ -1,26 +1,14 @@
 import React from 'react';
-import {Alert, StyleSheet, Text, TouchableOpacity, View, Animated} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {observer} from 'mobx-react';
-import {ActionSheet, Container,
-  Button,
-  Content,
-  Icon,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  List,
-  ListItem,
-  Thumbnail,
-  Item, Label, Input, Form
-} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Label, Input, Form} from 'native-base';
 import styles from "../styles"
 import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
 import {observable} from 'mobx';
+import Cars from "../store/Cars";
 
 @observer
 export default class Profile extends React.Component {
@@ -43,12 +31,11 @@ export default class Profile extends React.Component {
           </Body>
 
           <Right>
-            {/*<Button transparent>*/}
-              {/*<Icon name='search'/>*/}
-            {/*</Button>*/}
+            <Button transparent>
+              <Icon name="more"/>
+            </Button>
           </Right>
         </Header>
-
 
         <Content contentContainerStyle={styles.container}>
           <View style={customStyles.top}>
@@ -61,7 +48,7 @@ export default class Profile extends React.Component {
 
             <View>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.name}`}</Text>
-              <Text style={{color: "#fff", marginTop: 5}}>Езжу на Acura TSX 2004</Text>
+              <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
             </View>
           </View>
 
@@ -110,7 +97,6 @@ export default class Profile extends React.Component {
           :
             null
         }
-
       </Container>
     );
   }

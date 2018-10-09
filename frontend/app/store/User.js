@@ -2,6 +2,7 @@ import { observable, action} from 'mobx';
 import Api from '../modules/Api';
 import Notification from "../components/Notification";
 import { AsyncStorage } from "react-native";
+import App from "../store/App";
 
 class User {
   constructor () {
@@ -65,6 +66,7 @@ class User {
   };
 
   @action ping = async (silent = false) => {
+    if(!App.connect) return false;
     if(!this.token) return false;
     try {
       this.profile = await Api('auth/ping');

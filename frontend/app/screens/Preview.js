@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, StatusBar} from 'react-native';
 import {observer} from 'mobx-react';
-import { Container, Button, Content, Form, Item, Input, Label } from 'native-base';
+import { Container, Content} from 'native-base';
 import styles from "../styles";
 
 @observer

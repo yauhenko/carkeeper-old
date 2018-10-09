@@ -1,4 +1,4 @@
-import { observable, action} from 'mobx';
+import {action} from 'mobx';
 import Api from "../modules/Api";
 import Url from "../modules/Url";
 

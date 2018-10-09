@@ -14,13 +14,15 @@ import SplashScreen from 'react-native-splash-screen';
 import Reminders from "./screens/Reminders";
 import AppStore from "./store/App";
 import ConnectError from "./components/ConnectError";
+import Fines from "./screens/Garage/Fines";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
     Car: {screen: Car},
+    Fines: {screen: Fines},
     AddCar: {screen: AddCar},
     Profile: {screen: Profile},
-    Reminders: {screen: Reminders},
+    Reminders: {screen: Reminders}
 }, {
   initialRouteName: 'Garage',
   headerMode: 'none',
@@ -43,7 +45,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    NetInfo.isConnected.addEventListener('connectionChange', result => {AppStore.connect = result; console.log(result)});
+    NetInfo.isConnected.addEventListener('connectionChange', result => {AppStore.connect = result});
   }
 
   render() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, RefreshControl, DatePickerAndroid} from 'react-native';
+import { StyleSheet, Text, RefreshControl} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch, Separator} from 'native-base';
 import styles from "../styles"
@@ -23,10 +23,9 @@ export default class Reminders extends React.Component {
               <Icon name='arrow-back'/>
             </Button>
           </Left>
-          <Body>
-            <Title><Text style={styles.headerTitle}>Напоминания: {car.mark.name} {car.mark.model}</Text></Title>
+          <Body style={{flexGrow: 2}}>
+            <Title><Text style={styles.headerTitle}>Напоминания: {car.mark.name} {car.model.name}</Text></Title>
           </Body>
-          <Right/>
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>

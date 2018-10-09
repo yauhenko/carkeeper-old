@@ -26,12 +26,16 @@ class Cars {
 
   @observable carDetail = {};
 
-  @action getCar = (id) => {
+  @action getCar = async id => {
     this.loading = true;
-    return Api('garage/cars/get', {id}).then((response) => {
-      this.carDetail = response;
-      this.loading = false;
-    }).catch(Notification);
+    try {
+      this.carDetail = await Api('garage/cars/get', {id: id});
+    } catch (e) {
+      Notification(e)
+    }
+
+    this.loading = false;
+    return this.carDetail;
   };
 
   @action updateCar = async (data = {}) => {
@@ -59,7 +63,6 @@ class Cars {
   @action getMarks = () => {
     return Api('cars/marks', {}).then((response) => {
       this.marks = response;
-      console.log(response)
     }).catch(Notification);
   };
 
@@ -81,7 +84,6 @@ class Cars {
     if(!this.car.generation) return;
     return Api('cars/series', {generation: this.car.generation}).then((response) => {
       this.series = response || [];
-      console.log(response)
     }).catch(Notification);
   };
 
@@ -89,24 +91,18 @@ class Cars {
     if(!this.car.serie) return;
     return Api('cars/modifications', {serie: this.car.serie}).then((response) => {
       this.modifications = response || [];
-      console.log(response)
     }).catch(Notification);
   };
 
   @action checkupUpdate = async (data = {}) => {
-    console.log(data)
     return Api('garage/cars/checkup/update', data).then((response) => {
     }).catch(Notification);
   };
 
   @action insuranceUpdate = async (data = {}) => {
     return await Api('garage/cars/insurance/update', data).then((response) => {
-      console.log(response)
     }).catch(Notification);
   };
-
-
-
 }
 
 export default new Cars();
