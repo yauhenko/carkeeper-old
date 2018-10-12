@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Collections\Users;
+use Entities\User;
 use Framework\DB\Client;
 use Framework\MVC\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +24,7 @@ abstract class BaseController extends AbstractController {
 	 */
 	protected $params;
 
+	/** @var User */
 	protected $user;
 
 	/**
@@ -57,10 +60,12 @@ abstract class BaseController extends AbstractController {
 		/** @var Client $db */
 		$db = $this->di->db;
 
-		$this->user = $db->findOne('SELECT u.* FROM users u
+		$Users = new Users;
+
+		$this->user = $Users->findOne('SELECT u.* FROM users u
 			INNER JOIN sessions s ON s.user = u.id AND s.token = {$token}
 			WHERE u.active = 1 AND s.edate > NOW()
-		', ['token' => $this->params['token']]);
+		', ['token' => $this->params->token]);
 
 		if(!$this->user)
 			throw new \Exception('Invalid token', 403);

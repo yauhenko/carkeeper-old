@@ -1,6 +1,6 @@
 <?php
 
-namespace RS;
+namespace Framework\Utils;
 
 class Time {
 

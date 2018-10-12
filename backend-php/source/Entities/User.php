@@ -19,7 +19,9 @@ class User extends Entity {
 	 * @validate required; in: seller, buyer, admin
 	 * @var string
 	 */
-	public $role;
+	public $role = 'buyer';
+
+	public $active = true;
 
 	/**
 	 * @caption Mobile phone
@@ -50,6 +52,8 @@ class User extends Entity {
 	 * @var string|null
 	 */
 	public $avatar = null;
+
+	public $city = null;
 
 	/** @var string */
 	protected $_collection = Users::class;

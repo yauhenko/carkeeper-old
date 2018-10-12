@@ -68,18 +68,22 @@ abstract class Collection {
 	/**
 	 * Find Entities in Collection
 	 *
-	 * @param string|null $where
+	 * @param string|null $query
 	 * @param array $data
 	 * @return array
 	 * @throws ConstraintError
 	 * @throws CommonError
 	 * @throws \Exception
 	 */
-	public function find(string $where = null, array $data = []): array {
+	public function find(string $query = null, array $data = []): array {
 		$result = [];
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
-		$sql = $db->prepare('SELECT * FROM {&table} WHERE ' . ($where ?: 'TRUE'), ['table' => $this->_table]);
+		if(preg_match('/^SELECT/i', $query)) {
+			$sql = $query;
+		} else {
+			$sql = $db->prepare('SELECT * FROM {&table} WHERE ' . ($query ?: 'TRUE'), ['table' => $this->_table]);
+		}
 		$items = $db->find($sql, $data);
 		foreach ($items as $item) {
 			/** @var Entity $entity */
@@ -93,18 +97,23 @@ abstract class Collection {
 	/**
 	 * Find Entity in Collection
 	 *
-	 * @param string|null $where
+	 * @param string|null $query
 	 * @param array $data
 	 * @return Entity|null
 	 * @throws ConstraintError
 	 * @throws CommonError
 	 * @throws \Exception
 	 */
-	public function findOne(string $where = null, array $data = []): ?Entity {
+	public function findOne(string $query = null, array $data = []): ?Entity {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
-		$sql = $db->prepare('SELECT * FROM {&table} WHERE ' . ($where ?: 'TRUE'), ['table' => $this->_table]);
+		if(preg_match('/^SELECT/i', $query)) {
+			$sql = $query;
+		} else {
+			$sql = $db->prepare('SELECT * FROM {&table} WHERE ' . ($query ?: 'TRUE'), ['table' => $this->_table]);
+		}
 		$data = $db->findOne($sql, $data);
+		if(!$data) return null;
 		/** @var Entity $entity */
 		$entity = new $this->_entity;
 		$entity->setData($data);
@@ -125,6 +134,7 @@ abstract class Collection {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
 		$data = $db->findOneBy($this->_table, $field, $value);
+		if(!$data) return null;
 		/** @var Entity $entity */
 		$entity = new $this->_entity;
 		$entity->setData($data);
