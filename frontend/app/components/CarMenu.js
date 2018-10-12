@@ -18,7 +18,7 @@ export default class CarMenu extends React.Component {
           <Text style={{color: "#fff"}}>Напоминания</Text>
         </Button>
 
-        <Button vertical style={active === "Profile" ? styles.footerButtonActive : styles.footerButton} onPress={()=>this.props.navigation.navigate("Profile", {id: this.id})} active={active === "Profile"}>
+        <Button vertical style={active === "Journal" ? styles.footerButtonActive : styles.footerButton} onPress={()=>this.props.navigation.navigate("Journal", {id: this.id})} active={active === "Journal"}>
           <Icon style={styles.footerBadge} name={"clipboard"} />
           <Text style={{color: "#fff"}}>Бортжурнал</Text>
         </Button>

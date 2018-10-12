@@ -1,11 +1,11 @@
 import React from 'react';
-import {AsyncStorage, StyleSheet, Text, StatusBar, RefreshControl} from 'react-native';
+import {AsyncStorage, StyleSheet, Text, StatusBar, RefreshControl, Image, View} from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Input, Label } from 'native-base';
 import User from "../store/User";
 import { observable, action} from 'mobx';
 import styles from "../styles";
-import Cars from "../store/Cars";
+import Logo from "../assets/images/logo.png";
 
 @observer
 export default class Login extends React.Component {
@@ -38,15 +38,27 @@ export default class Login extends React.Component {
       <Container>
         <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
         <Content refreshControl={<RefreshControl refreshing={User.loading}/>} opacity={User.loading ? 0.8 : 1}  contentContainerStyle={customStyles.container}>
-          <Text style={customStyles.logo}><Text style={{color:"#fff"}}>CAR</Text>KEEPER</Text>
+
+          <View>
+            <View style={{alignItems: "center", paddingBottom: 20}}>
+              <Image style={{width: 125, height: 74}} source={Logo}/>
+            </View>
+
+            <View style={{alignItems: "center", paddingBottom: 60}}>
+              <Text style={{color: "#fff", marginBottom: 4}}>Весь автомобильный мир в одном приложении.</Text>
+              <Text style={{color: "#fff"}}>Присоединяйся!</Text>
+            </View>
+          </View>
+
+
           <Form>
-            <Item style={customStyles.item} stackedLabel>
-              <Label style={customStyles.label}>Номер телефона</Label>
+            <Item style={customStyles.item} inlineLabel>
+              <Label style={customStyles.label}>Номер телефона:</Label>
               <Input selectionColor={styles.selectionColor} style={customStyles.input} keyboardType="numeric" onChangeText={(text)=>{this.change('tel', text)}} value={this.tel ? String(this.tel) : ""} />
             </Item>
 
-            <Item style={customStyles.item} stackedLabel>
-              <Label style={customStyles.label}>Пароль</Label>
+            <Item style={customStyles.item} inlineLabel>
+              <Label style={customStyles.label}>Пароль:</Label>
               <Input selectionColor={styles.selectionColor} style={customStyles.input} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password ? String(this.password) : ""} />
             </Item>
 
@@ -69,15 +81,20 @@ const customStyles = StyleSheet.create({
   },
 
   input: {
-    color: "#fff",
-    fontSize: 16
+    fontSize: 14,
+    color: "#fff"
   },
 
   label: {
-    color: "#d6d7da"
+    color: "#000",
+    fontSize: 14,
+    marginBottom: 1
+
   },
 
   item : {
+    borderBottomWidth: 0.4,
+    borderBottomColor: "#fff",
     marginLeft: 0
   },
 
@@ -85,12 +102,6 @@ const customStyles = StyleSheet.create({
     marginTop: 25,
     ...styles.primaryButton,
     backgroundColor: "#fff",
-  },
-
-  logo : {
-    textAlign: "center",
-    fontSize: 30,
-    marginBottom: 20
   },
 
   link : {
