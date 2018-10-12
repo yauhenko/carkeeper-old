@@ -1,0 +1,12 @@
+{% extends 'app.twig' %}
+
+{% block title %}Error {{ code|default(500) }}{% endblock %}
+
+{% block body %}
+	<div class="card card-danger">
+		<div class="card-body">
+			<h1 class="text-danger">Error {{ code|default(500) }}</h1>
+			<h3>{{ message|default('Oops!') }}</h3>
+		</div>
+	</div>
+{% endblock %}

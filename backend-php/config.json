@@ -1,0 +1,33 @@
+{
+	"debug": true,
+	"db": {
+		"host": "localhost",
+		"user": "root",
+		"pass": "yasooshae",
+		"name": "carkeeper"
+	},
+	"cache": {
+		"default": "file",
+		"redis": {
+			"host": "127.0.0.1",
+			"port": 6379
+		},
+		"file": {
+			"dir": "/dev/shm/carkeeper-cache",
+			"factor": 1
+		}
+	},
+	"mutex": {
+		"file": {
+			"dir": "/dev/shm/carkeeper-mutex"
+		}
+	},
+	"twig": {
+		"path": "views",
+		"options": {
+			"cache": "/dev/shm/carkeeper-cache",
+			"debug": true
+		}
+	},
+	"static_regexp": "/\\.(jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i"
+}
