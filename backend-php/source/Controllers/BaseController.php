@@ -44,11 +44,15 @@ abstract class BaseController extends AbstractController {
 		if(!$this->params = json_decode($data))
 			throw new \Exception('Invalid JSON-data', 400);
 
-		if($this->params->token) $this->auth();
+		if($this->params->token)
+			$this->auth();
 
 	}
 
 	protected function auth(): void {
+
+		if(!$this->params->token)
+			throw new \Exception('Token is not specified', 401);
 
 		/** @var Client $db */
 		$db = $this->di->db;
@@ -59,7 +63,7 @@ abstract class BaseController extends AbstractController {
 		', ['token' => $this->params['token']]);
 
 		if(!$this->user)
-			throw new \Exception('Invalid token', 401);
+			throw new \Exception('Invalid token', 403);
 
 	}
 

@@ -171,4 +171,16 @@ class Parser {
 		return json_decode($data, true);
 	}
 
+	/**
+	 * @param string $data
+	 * @return array
+	 */
+	protected function refParser(string $data) {
+		$vars = explode(' ', $data);
+		return [
+			'class' => $vars[0],
+			'key' => $vars[1] ?: 'id'
+		];
+	}
+
 }

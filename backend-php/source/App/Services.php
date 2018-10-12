@@ -66,13 +66,15 @@ class Services {
         })->set('annotations', function () {
 
         	return new Parser([
-        		__DIR__ . '/../Models',
+        		__DIR__ . '/../Entities',
         		__DIR__ . '/../Controllers',
+        		__DIR__ . '/../Collections',
 	        ]);
 
         })->set('cache', function (DI $di) {
 
-	        return $this->get("cache:{$di->config->cache->default}");
+        	$driver = $di->config->cache->default ?: 'file';
+	        return $di->get("cache:{$driver}");
 
         })->set('cache:redis', function (DI $di) {
 

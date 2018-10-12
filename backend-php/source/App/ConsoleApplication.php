@@ -25,6 +25,27 @@ class ConsoleApplication extends AbstractConsoleApplication {
 			$this->di->get('routes');
 			$this->println('<b><green>[OK]<n> Cache warmed</>');
 
+		} elseif ($cmd === 'dump') {
+
+			if(!$key = $this->args[3]) {
+				$this->error("Key is not specified.\n<yellow>Type <b>./bin/console cache dump KEY</>");
+			}
+
+			$driver = $this->params['driver'] ? "cache:{$this->params['driver']}" : 'cache';
+
+			/** @var CacheInterface $ci */
+			$ci = $this->di->get($driver);
+
+			$this->print("<green>{$driver} -> <b>{$key}:</> <yellow>");
+
+			if($data = $ci->get($key)) {
+				$this->println(print_r($data, true));
+			} else {
+				$this->println('(empty)');
+			}
+
+			$this->print('</>');
+
 		} else {
 			$this->println("<yellow>Usage: <b>./bin/console cache [flush|warm]</>");
 		}
