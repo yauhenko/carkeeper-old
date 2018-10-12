@@ -29,5 +29,6 @@
 			"debug": true
 		}
 	},
-	"static_regexp": "/\\.(jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i"
+	"static_regexp": "/\\.(jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
+	"cdn": "https://car.loghub.pro"
 }
