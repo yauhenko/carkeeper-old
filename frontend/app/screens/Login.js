@@ -89,7 +89,6 @@ const customStyles = StyleSheet.create({
     color: "#000",
     fontSize: 14,
     marginBottom: 1
-
   },
 
   item : {

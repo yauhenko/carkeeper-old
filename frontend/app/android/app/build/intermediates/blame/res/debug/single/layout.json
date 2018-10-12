@@ -16,12 +16,12 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/e592fe0577009ee5cfb58ff8f9b64f09/res/layout/dev_loading_view.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/notification_template_media_custom.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/b831ed0e3af7e61c339ca59e241d8ab1/res/layout/notification_template_media_custom.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/layout/select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/notification_template_media_custom.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/b831ed0e3af7e61c339ca59e241d8ab1/res/layout/notification_template_media_custom.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/abc_action_bar_view_list_nav_layout.xml",
@@ -56,12 +56,12 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/b831ed0e3af7e61c339ca59e241d8ab1/res/layout/notification_template_big_media_custom.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_title_material.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/layout/abc_alert_dialog_title_material.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/notification_template_big_media_narrow_custom.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/b831ed0e3af7e61c339ca59e241d8ab1/res/layout/notification_template_big_media_narrow_custom.xml"
+    },
+    {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/abc_alert_dialog_title_material.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/layout/abc_alert_dialog_title_material.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/layout/ucrop_fragment_photobox.xml",

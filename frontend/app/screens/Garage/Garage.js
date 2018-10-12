@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, RefreshControl} from 'react-native';
+import {Text, RefreshControl} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
-import styles from "../styles"
-import Footer from "../components/Footer";
-import Cars from "../store/Cars";
-import Uploader from "../store/Uploader";
+import styles from "../../styles"
+import Cars from "../../store/Cars";
+import Uploader from "../../store/Uploader";
 
 @observer
 export default class Garage extends React.Component {
@@ -47,7 +46,7 @@ export default class Garage extends React.Component {
                       {car.image ?
                         <Thumbnail source={{uri: Uploader.get(car.image)}}/>
                         :
-                        <Thumbnail source={require('../assets/images/car_stub.png')}/>
+                        <Thumbnail source={require('../../assets/images/car_stub.png')}/>
                       }
                     </Left>
 

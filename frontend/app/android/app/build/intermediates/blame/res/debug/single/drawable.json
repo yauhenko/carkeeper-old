@@ -16,12 +16,12 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/tooltip_frame_dark.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/1e32b11a612ac37684ea6e5500a2714e/res/drawable/notification_icon_background.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/tooltip_frame_light.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/8d522a1aaecf3ecd1763aa0157fb0d1d/res/drawable/tooltip_frame_light.xml"
+    },
+    {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/1e32b11a612ac37684ea6e5500a2714e/res/drawable/notification_icon_background.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_textfield_search_material.xml",

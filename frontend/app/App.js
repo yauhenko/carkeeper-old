@@ -6,7 +6,7 @@ import Login from "./screens/Login";
 import Registration from "./screens/Registration";
 import User from "./store/User";
 import Navigation from "./components/Navigation";
-import Garage from "./screens/Garage";
+import Garage from "./screens/Garage/Garage";
 import AddCar from "./screens/AddCar";
 import Car from "./screens/Car";
 import Profile from "./screens/Profile";

@@ -7,6 +7,12 @@ import Footer from "../../components/Footer";
 import Cars from "../../store/Cars";
 import CarMenu from "../../components/CarMenu";
 
+const dataArray = [
+  { title: "First Element", content: "Lorem ipsum dolor sit amet" },
+  { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
+  { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
+];
+
 @observer
 export default class Journal extends React.Component {
   render() {
@@ -34,7 +40,7 @@ export default class Journal extends React.Component {
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
-          <Text>БортЖурнал</Text>
+          <Accordion dataArray={dataArray} expanded={0}/>
         </Content>
 
         <Footer><CarMenu {...this.props}/></Footer>
