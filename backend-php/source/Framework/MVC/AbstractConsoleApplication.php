@@ -4,14 +4,27 @@ namespace Framework\MVC;
 
 use Framework\Patterns\DI;
 
+/**
+ * Class AbstractConsoleApplication
+ * @package Framework\MVC
+ */
 abstract class AbstractConsoleApplication {
 
+	/**
+	 * @var
+	 */
 	protected $args;
+	/**
+	 * @var
+	 */
 	protected $params;
 
 	/** @var DI */
 	protected $di;
 
+	/**
+	 *
+	 */
 	protected const ATTRS = [
 		'n' => 0, # Normal
 		'b' => 1, # Bold
@@ -21,6 +34,9 @@ abstract class AbstractConsoleApplication {
 		'h' => 8, # Hidden (invisible)
 	];
 
+	/**
+	 *
+	 */
 	protected const COLORS = [
 		'black'  => 0,
 		'red'    => 1,
@@ -32,11 +48,18 @@ abstract class AbstractConsoleApplication {
 		'white'  => 7,
 	];
 
+	/**
+	 * AbstractConsoleApplication constructor.
+	 * @throws \Exception
+	 */
 	public function __construct() {
 		$this->di = DI::getInstance();
 		$this->parseParams();
 	}
 
+	/**
+	 *
+	 */
 	public function run(): void {
 		$cmd = $this->args[1];
 
@@ -55,6 +78,9 @@ abstract class AbstractConsoleApplication {
 
 	}
 
+	/**
+	 * Parse command line params
+	 */
 	protected function parseParams(): void {
 		foreach ($_SERVER['argv'] as $item) {
 			if($item{0} === '-') {
@@ -68,17 +94,31 @@ abstract class AbstractConsoleApplication {
 		}
 	}
 
-	protected function print(string $message): void {
+	/**
+	 * @param string $message
+	 * @param bool $force
+	 */
+	protected function print(string $message, bool $force = false): void {
+		if($this->params['silent'] && !$force) return;
 		echo $this->colorize($message);
 	}
 
-	protected function println(string $message): void {
-		$this->print($message . PHP_EOL);
+	/**
+	 * @param string $message
+	 * @param bool $force
+	 */
+	protected function println(string $message, bool $force = false): void {
+		$this->print($message . PHP_EOL, $force);
 	}
 
+	/**
+	 * @param string $message
+	 * @param null $context
+	 * @param int $code
+	 */
 	protected function error(string $message, $context = null, $code = 1) {
-		$this->println("<b><red>[ERROR] <n><red>{$message}</>");
-		if($context) $this->println("<yellow>" . print_r($context, true) . "</>");
+		$this->println("<b><red>[ERROR] <n><red>{$message}</>", true);
+		if($context) $this->println("<yellow>" . print_r($context, true) . "</>", true);
 		exit($code);
 	}
 

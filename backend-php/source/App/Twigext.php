@@ -2,12 +2,19 @@
 
 namespace App;
 
-use Twig_Extension;
 use Twig_Filter;
 use Twig_Function;
+use Twig_Extension;
 
+/**
+ * Class Twigext
+ * @package App
+ */
 class Twigext extends Twig_Extension {
 
+	/**
+	 * @return array|Twig_Filter[]
+	 */
 	public function getFilters() {
 		return [
 			new Twig_Filter('t', 't'),
@@ -24,6 +31,9 @@ class Twigext extends Twig_Extension {
 		];
 	}
 
+	/**
+	 * @return array|Twig_Function[]
+	 */
 	public function getFunctions() {
 		return [
 			new Twig_Function('icon',  [$this, 'icon'], ['is_safe' => ['html']]),
@@ -44,6 +54,13 @@ class Twigext extends Twig_Extension {
 		];
 	}
 
+	/**
+	 * @param $var
+	 * @param string $stub
+	 * @param string $before
+	 * @param string $after
+	 * @return string
+	 */
 	public function def($var, $stub = '', $before = '', $after = '') {
 		$orig = $var;
 		$var = preg_replace('/[^0-9]/', '', $var);
@@ -51,6 +68,10 @@ class Twigext extends Twig_Extension {
 		return $before . $orig . $after;
 	}
 
+	/**
+	 * @param $var
+	 * @return string
+	 */
 	public function hl($var) {
 		$orig = $var;
 		$var = (float)$var;
@@ -63,6 +84,13 @@ class Twigext extends Twig_Extension {
 		}
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $sort
+	 * @param bool $default_order
+	 * @param string $addParams
+	 * @return string
+	 */
 	public function html_sort(string $name, string $sort, bool $default_order = false, string $addParams = '') {
 
 		if(isset($_REQUEST['order']) && $_REQUEST['sort'] == $sort) {
@@ -85,6 +113,10 @@ class Twigext extends Twig_Extension {
 		return $html;
 	}
 
+	/**
+	 * @param string $filter
+	 * @return string
+	 */
 	public function params($filter = '*') {
 		$result = $_REQUEST;
 		if(!is_array($filter)) $filter = explode(',', $filter);
@@ -97,26 +129,47 @@ class Twigext extends Twig_Extension {
 		return http_build_query($params);
 	}
 
+	/**
+	 * @param $str
+	 * @param bool $fixed
+	 * @return string
+	 */
 	public function icon($str, bool $fixed = false) {
 		if($fixed) $str .= ' fas-fw';
 		return '<i class="fas fa-' . $str . '"></i>';
 	}
 
 
+	/**
+	 * @param $var
+	 * @return mixed
+	 */
 	public function dump($var) {
 		return print_r($var, true);
 	}
 
+	/**
+	 * @param $str
+	 * @return mixed
+	 */
 	public function bbcode($str) {
 		//$str = str_replace(['[B]', '[/B]'], ['<b>', '</b>'], $str);
 		return $str;
 	}
 
+	/**
+	 * @param $data
+	 * @return string
+	 */
 	public function color($data): string {
 		$color = '#' . substr(md5($data), 0, 6);
 		return $color;
 	}
 
+	/**
+	 * @param string $color
+	 * @return string
+	 */
 	public function contrast(string $color): string {
 		$color = str_replace('#', '', $color);
 		$r = hexdec(substr($color, 0, 2));
@@ -126,14 +179,28 @@ class Twigext extends Twig_Extension {
 		return ($yiq >= 128) ? 'black' : 'white';
 	}
 
+	/**
+	 * @param $from
+	 * @param $till
+	 * @return false|int
+	 */
 	public function date_diff($from, $till) {
 		return strtotime($from) - strtotime($till);
 	}
 
+	/**
+	 * @param $html
+	 * @return string
+	 */
 	public function unhtml($html): string {
 		return html_entity_decode(strip_tags($html), ENT_QUOTES);
 	}
 
+	/**
+	 * @param $text
+	 * @param int $size
+	 * @return string
+	 */
 	public function truncate($text, $size = 100): string {
 		$text = $this->unhtml($text);
 		if(mb_strlen($text) > $size) {

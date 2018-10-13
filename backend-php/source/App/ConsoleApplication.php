@@ -150,5 +150,13 @@ class ConsoleApplication extends AbstractConsoleApplication {
 
 	}
 
+	public function cleanup() {
+		$this->println("<b>Cleanup Manager</>");
+		$cmd = $this->args[2];
+		if($cmd === 'sessions' || $cmd == 'all') {
+			Sessions::cleanup();
+			$this->println("<green><b>[OK]</> <yellow>Sessions cleaned</>");
+		}
+	}
 
 }

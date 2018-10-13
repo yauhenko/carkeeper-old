@@ -53,6 +53,9 @@ abstract class BaseController extends AbstractController {
 
 	}
 
+	/**
+	 * @throws \Exception
+	 */
 	protected function auth(): void {
 
 		if(!$this->params->token)
