@@ -100,4 +100,13 @@ abstract class Entity {
 		throw new \Exception('Unknown property: ' . $name);
 	}
 
+	/**
+	 * Assign data from entity
+	 *
+	 * @param Entity $entity
+	 */
+	public function assign(Entity $entity) {
+		$this->setData($entity->getData());
+	}
+
 }

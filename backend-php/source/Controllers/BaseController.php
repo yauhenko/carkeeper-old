@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use App\Sessions;
 use Collections\Users;
 use Entities\User;
 use Framework\DB\Client;
@@ -57,15 +58,7 @@ abstract class BaseController extends AbstractController {
 		if(!$this->params->token)
 			throw new \Exception('Token is not specified', 401);
 
-		/** @var Client $db */
-		$db = $this->di->db;
-
-		$Users = new Users;
-
-		$this->user = $Users->findOne('SELECT u.* FROM users u
-			INNER JOIN sessions s ON s.user = u.id AND s.token = {$token}
-			WHERE u.active = 1 AND s.edate > NOW()
-		', ['token' => $this->params->token]);
+		$this->user = Sessions::get($this->params->token, $this->req->getClientIp());
 
 		if(!$this->user)
 			throw new \Exception('Invalid token', 403);

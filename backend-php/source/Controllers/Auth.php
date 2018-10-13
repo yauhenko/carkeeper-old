@@ -2,13 +2,18 @@
 
 namespace Controllers;
 
+use App\Sessions;
 use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
-use Framework\Utils\Time;
 use Framework\Security\Password;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class Auth
+ *
+ * @package Controllers
+ */
 class Auth extends BaseController {
 
 	/**
@@ -16,10 +21,11 @@ class Auth extends BaseController {
 	 */
 	public function login(): Response {
 
-		if(!$this->params->username) return $this->jsonError('Username is not specified', 400);
-		if(!$this->params->password) return $this->jsonError('Password is not specified', 400);
+		if(!$this->params->username)
+			return $this->jsonError('Username is not specified', 400);
 
-		$ttl = $this->params->ttl ?: 3600;
+		if(!$this->params->password)
+			return $this->jsonError('Password is not specified', 400);
 
 		$Users = new Users;
 
@@ -32,21 +38,18 @@ class Auth extends BaseController {
 		if(!Password::checkHash($this->params->password, $user->password))
 			return $this->jsonError('Invalid password', 403);
 
-		$token = Password::getMedium(64);
+		$ip = $this->req->getClientIp();
+		$ttl = $this->params->ttl ?: 3600;
 
-		/** @var Client $db */
-		$db = $this->di->db;
+		$token = Sessions::start($user, $ip, $ttl);
 
-		$db->insert('sessions', [
+		return $this->jsonResult([
 			'token' => $token,
-			'user' => $user->id,
-			'edate' => Time::dateTimeOffset($ttl),
-			'ip' => $this->params->noip ? null : $this->req->getClientIp()
+			'role' => $user->role
 		]);
 
-		return $this->jsonResult(['token' => $token, 'role' => $user->role]);
-
 	}
+
 
 	/**
 	 * @route /account/logout
@@ -64,6 +67,7 @@ class Auth extends BaseController {
 
 	}
 
+
 	/**
 	 * @route /account/register
 	 * @return Response
@@ -80,25 +84,23 @@ class Auth extends BaseController {
 		$user->setData($data);
 		$user->save();
 
+		$ip = $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
 
-		$token = Password::getMedium(64);
+		$token = Sessions::start($user, $ip, $ttl);
 
-		/** @var Client $db */
-		$db = $this->di->db;
-
-		$db->insert('sessions', [
+		return $this->jsonResult([
+			'registered' => true,
 			'token' => $token,
-			'user' => $user->id,
-			'edate' => Time::dateTimeOffset($ttl),
-			'ip' => $this->params->noip ? null : $this->req->getClientIp()
+			'role' => $user->role
 		]);
-
-		return $this->jsonResult(['registered' => true, 'token' => $token, 'role' => $user->role]);
 
 	}
 
+
 	/**
+	 * Get info
+	 *
 	 * @route /account/info
 	 */
 	public function info(): Response {

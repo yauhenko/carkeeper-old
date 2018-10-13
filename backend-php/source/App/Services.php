@@ -36,7 +36,10 @@ class Services {
 
         })->set('request', function () {
 
-            return Request::createFromGlobals();
+            $req = Request::createFromGlobals();
+			$req->setTrustedProxies(['127.0.0.1'], Request::HEADER_X_FORWARDED_ALL);
+
+            return $req;
 
         })->set('response', function () {
 
