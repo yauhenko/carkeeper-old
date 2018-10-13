@@ -7,7 +7,6 @@ use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
 use Framework\Security\Password;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Auth
@@ -19,13 +18,13 @@ class Auth extends BaseController {
 	/**
 	 * @route /account/login
 	 */
-	public function login(): Response {
+	public function login() {
 
 		if(!$this->params->username)
-			return $this->jsonError('Username is not specified', 400);
+			throw new \Exception('Username is not specified', 400);
 
 		if(!$this->params->password)
-			return $this->jsonError('Password is not specified', 400);
+			throw new \Exception('Password is not specified', 400);
 
 		$Users = new Users;
 
@@ -33,20 +32,20 @@ class Auth extends BaseController {
 		$user = $Users->findOneBy('username', $this->params->username);
 
 		if(!$user)
-			return $this->jsonError('User does not exists', 400);
+			throw new \Exception('User does not exists', 400);
 
 		if(!Password::checkHash($this->params->password, $user->password))
-			return $this->jsonError('Invalid password', 403);
+			throw new \Exception('Invalid password', 403);
 
 		$ip = $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
 
 		$token = Sessions::start($user, $ip, $ttl);
 
-		return $this->jsonResult([
+		return [
 			'token' => $token,
 			'role' => $user->role
-		]);
+		];
 
 	}
 
@@ -54,7 +53,7 @@ class Auth extends BaseController {
 	/**
 	 * @route /account/logout
 	 */
-	public function logout(): Response {
+	public function logout() {
 
 		$this->auth();
 
@@ -63,17 +62,16 @@ class Auth extends BaseController {
 
 		$db->delete('sessions', 'token', $this->params->token);
 
-		return $this->jsonResult(true);
+		return true;
 
 	}
 
 
 	/**
 	 * @route /account/register
-	 * @return Response
 	 * @throws \Exception
 	 */
-	public function register(): Response {
+	public function register() {
 
 		$data = (array)$this->params->user;
 
@@ -89,11 +87,11 @@ class Auth extends BaseController {
 
 		$token = Sessions::start($user, $ip, $ttl);
 
-		return $this->jsonResult([
+		return [
 			'registered' => true,
 			'token' => $token,
 			'role' => $user->role
-		]);
+		];
 
 	}
 
@@ -103,11 +101,11 @@ class Auth extends BaseController {
 	 *
 	 * @route /account/info
 	 */
-	public function info(): Response {
+	public function info() {
 		$this->auth();
 		$data = $this->user->getData();
 		unset($data['password']);
-		return $this->jsonResult($data);
+		return $data;
 	}
 
 }

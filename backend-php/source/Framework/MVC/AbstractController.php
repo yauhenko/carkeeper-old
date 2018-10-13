@@ -68,7 +68,10 @@ abstract class AbstractController {
     final public function render(string $template, array $context = []): Response {
     	/** @var \Twig_Environment $twig */
         $twig = $this->di->twig;
-        return new Response($twig->render($template, $context));
+        /** @var Response $res */
+	    $res = $this->di->response;
+	    $res->setContent($twig->render($template, $context));
+	    return $res;
     }
 
 }
