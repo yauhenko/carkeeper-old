@@ -10,7 +10,7 @@ use Framework\Cache\CacheInterface;
 use Framework\MVC\AbstractConsoleApplication;
 use Framework\Patterns\DI;
 
-class ConsoleApplication extends AbstractConsoleApplication {
+class Console extends AbstractConsoleApplication {
 
 	public function cache() {
 		$this->println("<b>Cache Manager</>");

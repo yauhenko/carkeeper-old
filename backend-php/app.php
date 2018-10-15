@@ -1,13 +1,13 @@
 <?php
 
 use App\Services;
-use Framework\MVC\WebApplication;
+use Framework\MVC\ApiApplication;
 
 error_reporting(E_ALL ^ E_NOTICE);
 
 require __DIR__ . '/vendor/autoload.php';
 
-$app = new WebApplication();
+$app = new ApiApplication();
 
 Services::register();
 
