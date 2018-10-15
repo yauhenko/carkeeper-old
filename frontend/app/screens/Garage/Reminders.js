@@ -23,9 +23,14 @@ export default class Reminders extends React.Component {
               <Icon name='arrow-back'/>
             </Button>
           </Left>
-          <Body style={{flexGrow: 2}}>
+          <Body>
             <Title><Text style={styles.headerTitle}>Напоминания: {car.mark.name} {car.model.name}</Text></Title>
           </Body>
+          <Right>
+            <Button onPress={()=>{}} transparent>
+              <Icon name='add'/>
+            </Button>
+          </Right>
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
@@ -44,12 +49,7 @@ export default class Reminders extends React.Component {
                 if(!value) return;
                 Cars.checkupUpdate({car: car.id, notify: true, edate: moment(value).format("YYYY-MM-DD")});
                 checkup.edate = value.format("YYYY-MM-DD")})}>
-                <Body>
                   <Text>Дата: {checkup.edate ? moment(checkup.edate).format("DD.MM.YYYY") : "Выберите дату"}</Text>
-                </Body>
-                <Right>
-                  {/*<Icon name="create"/>*/}
-                </Right>
               </ListItem>
               <Separator bordered/>
             </React.Fragment>

@@ -17,18 +17,25 @@ const dataArray = [
 
 @observer
 export default class Journal extends React.Component {
-  _renderHeader({title}, expanded) {
+  renderHeader({title}, expanded) {
     return (
-      <View style={{flexDirection: "row", padding: 10, justifyContent: "space-between", alignItems: "center", backgroundColor: "#d6d7da"}}>
-        <Text style={{fontSize: 14}}>{moment().format("DD.MM.YYYY")} {title}</Text>
-        {expanded ? <Icon style={{ fontSize: 18 }} name="remove-circle" /> : <Icon style={{ fontSize: 18 }} name="add-circle" />}
+      <View style={{flexDirection: "row", alignItems: "center", padding: 10,  backgroundColor: "#fff", borderBottomWidth: 0.5, borderBottomColor: "#d6d7da"}}>
+        <View>
+          <Text style={{fontSize: 14}}>{moment().format("DD.MM.YYYY")}</Text>
+        </View>
+        <View style={{flex: 1, paddingLeft: 10, paddingRight: 10}}>
+          <Text style={{fontSize: 14}}>{title}</Text>
+        </View>
+        <View style={{padding: 5}}>
+          {expanded ? <Icon style={{ fontSize: 18 }} name="arrow-up" /> : <Icon style={{ fontSize: 18 }} name="arrow-down" />}
+        </View>
       </View>
     );
   }
 
-  _renderContent(content) {
+  renderContent(content) {
     return (
-      <Text style={{padding: 10, fontStyle: "italic" }}>1</Text>
+      <Text style={{padding: 10}}>1</Text>
     );
   }
 
@@ -43,25 +50,23 @@ export default class Journal extends React.Component {
               <Icon name='arrow-back'/>
             </Button>
           </Left>
-
           <Body>
-          <Title><Text style={styles.headerTitle}>Журнал: {car.mark.name} {car.model.name}</Text></Title>
+            <Title><Text style={styles.headerTitle}>Журнал: {car.mark.name} {car.model.name}</Text></Title>
           </Body>
-
           <Right>
             <Button onPress={()=>{}} transparent>
-              <Icon name='add' />
+              <Icon name='add'/>
             </Button>
           </Right>
         </Header>
 
         <Content contentContainerStyle={styles.container}>
-
-          <Accordion renderHeader={this._renderHeader} renderContent={this._renderContent} dataArray={dataArray}/>
-
+          <Accordion renderHeader={this.renderHeader} renderContent={this.renderContent} dataArray={dataArray}/>
         </Content>
 
-        <Footer><CarMenu {...this.props}/></Footer>
+        <Footer>
+          <CarMenu {...this.props}/>
+        </Footer>
       </Container>
     );
   }

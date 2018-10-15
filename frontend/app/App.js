@@ -16,6 +16,7 @@ import AppStore from "./store/App";
 import ConnectError from "./components/ConnectError";
 import Fines from "./screens/Garage/Fines";
 import Journal from "./screens/Garage/Journal";
+import Logger from "./modules/Logger";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -47,7 +48,13 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    NetInfo.isConnected.addEventListener('connectionChange', result => {AppStore.connect = result});
+    NetInfo.isConnected.addEventListener('connectionChange', result => {
+      AppStore.connect = result;
+      Logger.info(result ? "Подключение к интернету установлено" : "Нет подключения к интернету")
+    });
+    Logger.session(null, ()=>{
+      Logger.info("Запуск приложения");
+    });
   }
 
   render() {

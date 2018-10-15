@@ -16,7 +16,6 @@ export default class CarMenu extends React.Component {
     return this.props.navigation.state.routeName === current;
   };
 
-
   render() {
     return (
       <React.Fragment>

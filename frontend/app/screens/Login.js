@@ -6,6 +6,7 @@ import User from "../store/User";
 import { observable, action} from 'mobx';
 import styles from "../styles";
 import Logo from "../assets/images/logo.png";
+import Logger from "../modules/Logger";
 
 @observer
 export default class Login extends React.Component {
@@ -17,6 +18,7 @@ export default class Login extends React.Component {
   @action submitHandler = () => {
     User.login(this.tel, this.password).then(() => {
       AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+      Logger.info("Пользоваль авторизовался", String(this.tel))
     }).catch(console.log);
   };
 
