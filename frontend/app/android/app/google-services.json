@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:651583725237:android:310be1f1c3b753ab",
+        "mobilesdk_app_id": "1:651583725237:android:75ccd9259ba0c58d",
         "android_client_info": {
-          "package_name": "com.carkeeper"
+          "package_name": "by.carkeeper"
         }
       },
       "oauth_client": [

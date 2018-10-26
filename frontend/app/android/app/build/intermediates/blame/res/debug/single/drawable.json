@@ -52,12 +52,12 @@
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable/abc_ratingbar_material.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_ic_clear_material.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable/abc_ic_clear_material.xml"
-    },
-    {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/notification_bg.xml",
         "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/abc_ic_clear_material.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable/abc_ic_clear_material.xml"
     },
     {
         "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable/notification_bg_low.xml",

@@ -98,7 +98,7 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.carkeeper"
+        applicationId "by.carkeeper"
         minSdkVersion 21
         targetSdkVersion 27
         versionCode 1

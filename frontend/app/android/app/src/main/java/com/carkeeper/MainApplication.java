@@ -1,4 +1,4 @@
-package com.carkeeper;
+package by.carkeeper;
 
 import android.app.Application;
 

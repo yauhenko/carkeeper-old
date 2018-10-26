@@ -1,4 +1,4 @@
-package com.carkeeper;
+package by.carkeeper;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen;
