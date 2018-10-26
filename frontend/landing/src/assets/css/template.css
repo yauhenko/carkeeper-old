@@ -51,3 +51,7 @@ html, body {
     padding: 25px 0;
     background-color: #a94545;
 }
+
+.modal h2 {
+    color: #a94545;
+}

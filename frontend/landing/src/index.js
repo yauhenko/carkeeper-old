@@ -31,7 +31,7 @@ class App extends Component {
           </ul>
         </div>
 
-        <Modal closeIconSize={20} open={this.state.modal} onClose={()=>{this.setState({modal: false})}} center>
+        <Modal classNames={{overlay: "modal"}} closeIconSize={20} open={this.state.modal} onClose={()=>{this.setState({modal: false})}} center>
           <h2>Privacy Policy</h2>
 
           <p>Last Updated: 8/8/2018</p>
