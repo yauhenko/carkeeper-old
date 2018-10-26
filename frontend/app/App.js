@@ -17,6 +17,7 @@ import ConnectError from "./components/ConnectError";
 import Fines from "./screens/Garage/Fines";
 import Journal from "./screens/Garage/Journal";
 import Logger from "./modules/Logger";
+import Notifications from "./modules/Notifications";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -47,11 +48,14 @@ export default class App extends React.Component {
     SplashScreen.hide();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', result => {
       AppStore.connect = result;
       Logger.info(result ? "Подключение к интернету установлено" : "Нет подключения к интернету")
     });
+
+    Notifications.initial();
+
     Logger.session(null, ()=>{
       Logger.info("Запуск приложения");
     });

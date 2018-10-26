@@ -52,14 +52,13 @@ export default class Login extends React.Component {
             </View>
           </View>
 
-
           <Form>
-            <Item style={customStyles.item} inlineLabel>
-              <Label style={customStyles.label}>Номер телефона:</Label>
+            <Item style={customStyles.item} fixedLabel>
+              <Label style={customStyles.label}>Телефон:</Label>
               <Input selectionColor={styles.selectionColor} style={customStyles.input} keyboardType="numeric" onChangeText={(text)=>{this.change('tel', text)}} value={this.tel ? String(this.tel) : ""} />
             </Item>
 
-            <Item style={customStyles.item} inlineLabel>
+            <Item style={customStyles.item} fixedLabel>
               <Label style={customStyles.label}>Пароль:</Label>
               <Input selectionColor={styles.selectionColor} style={customStyles.input} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password ? String(this.password) : ""} />
             </Item>
