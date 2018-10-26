@@ -2,8 +2,10 @@
 
 namespace Framework\DB;
 
+use Framework\Annotations\Parser;
 use Framework\DB\Errors\CommonError;
 use Framework\DB\Errors\ConstraintError;
+use Framework\Patterns\DI;
 
 /**
  * Class Entity
@@ -107,6 +109,25 @@ abstract class Entity {
 	 */
 	public function assign(Entity $entity) {
 		$this->setData($entity->getData());
+	}
+
+	public function ref(string $field): ?Entity {
+
+		$id = $this->{$field};
+		print $id;
+		if(!$id) return null;
+
+		/** @var Parser $ann */
+		$ann = DI::getInstance()->annotations;
+
+		if(!$ref = $ann->getProperties($this)[$field]['ref'])
+			throw new \Exception('Referrence ' . $field . ' does not exists on ' . get_class($this));
+
+		/** @var Entity $obj */
+		$obj = new $ref['class'];
+		$obj = $obj->getCollection()->findOneBy($ref['key'], $id);
+
+		return $obj;
 	}
 
 }

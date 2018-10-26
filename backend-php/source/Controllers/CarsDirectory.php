@@ -4,12 +4,12 @@ namespace Controllers;
 
 use Framework\DB\Client;
 
-class Directory extends BaseController {
+class CarsDirectory extends ApiController {
 
 	/**
 	 * @route /directory/cars/marks
 	 */
-	public function getCarMarks(): array {
+	public function marks(): array {
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT * FROM car_mark ORDER BY name');
@@ -18,7 +18,7 @@ class Directory extends BaseController {
 	/**
 	 * @route /directory/cars/models
 	 */
-	public function getCarModels(): array {
+	public function models(): array {
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT * FROM car_model WHERE mark = {$mark} ORDER BY name', [
@@ -29,7 +29,7 @@ class Directory extends BaseController {
 	/**
 	 * @route /directory/cars/generations
 	 */
-	public function getCarGenerations(): array {
+	public function generations(): array {
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT * FROM car_generation WHERE model = {$model} ORDER BY year_begin', [
@@ -40,7 +40,7 @@ class Directory extends BaseController {
 	/**
 	 * @route /directory/cars/series
 	 */
-	public function getCarSeries(): array {
+	public function series(): array {
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT * FROM car_serie WHERE generation = {$generation} ORDER BY name', [
@@ -51,7 +51,7 @@ class Directory extends BaseController {
 	/**
 	 * @route /directory/cars/modifications
 	 */
-	public function getCarModifications(): array {
+	public function modifications(): array {
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT * FROM car_modification WHERE serie = {$serie} ORDER BY name', [

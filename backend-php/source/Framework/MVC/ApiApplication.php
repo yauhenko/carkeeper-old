@@ -2,14 +2,12 @@
 
 namespace Framework\MVC;
 
-use Framework\Patterns\{DI, Singleton};
+use Framework\Patterns\DI;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{RequestContext, RouteCollection};
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 class ApiApplication {
-
-    use Singleton;
 
 	/** @var DI */
 	public $di;
@@ -48,8 +46,7 @@ class ApiApplication {
 			/** @var AbstractController $controller */
 			$controller = new $class;
 
-			$result = call_user_func([$controller, $method], $this->di->request);
-
+			$result = call_user_func([$controller, $method]);
 			if ($result instanceof Response) {
 				$res = $result;
 			} else {

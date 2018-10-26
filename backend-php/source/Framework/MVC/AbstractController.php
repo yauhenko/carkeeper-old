@@ -26,7 +26,7 @@ abstract class AbstractController {
      * @return Response
      * @throws \Exception
      */
-    final public function json($data) {
+    final public function json($data): Response {
     	/** @var Response $res */
 	    $res = $this->di->response;
 	    $res->headers->set('Content-Type', 'application/json; charset: utf-8', true);

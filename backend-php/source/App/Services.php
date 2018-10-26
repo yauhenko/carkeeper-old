@@ -69,9 +69,11 @@ class Services {
         })->set('annotations', function () {
 
         	return new Parser([
-        		__DIR__ . '/../Entities',
-        		__DIR__ . '/../Controllers',
-        		__DIR__ . '/../Collections',
+		        __DIR__ . '/../Collections',
+		        __DIR__ . '/../Entities',
+		        __DIR__ . '/../Entities/Geo',
+		        __DIR__ . '/../Controllers',
+		        __DIR__ . '/../Collections/Geo',
 	        ]);
 
         })->set('cache', function (DI $di) {

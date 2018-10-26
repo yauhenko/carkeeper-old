@@ -47,7 +47,7 @@ class Console extends AbstractConsoleApplication {
 			$this->print('</>');
 
 		} else {
-			$this->println("<yellow>Usage: <b>./bin/console cache [flush|warm]</>");
+			$this->println("<yellow>Usage: <b>./bin/console cache [flush|warm|dump]</>");
 		}
 
 	}
@@ -124,7 +124,9 @@ class Console extends AbstractConsoleApplication {
 					$data = file_get_contents($fn);
 					foreach (explode(';', $data) as $query) {
 						if ($query = trim($query)) {
-							$this->println("<yellow>[>] <b>{$query}</>");
+							if($this->params['verbose']) {
+								$this->println("<yellow>[>] <b>{$query}</>");
+							}
 							try {
 								$db->query($query);
 							} catch (CommonError $e) {
@@ -134,6 +136,7 @@ class Console extends AbstractConsoleApplication {
 						}
 					}
 					$db->insert('versions', ['id' => $id]);
+					$db->query('COMMIT');
 				} else {
 					$this->println("<blue>[-] Skipping migration: <b>{$fn}</>");
 				}

@@ -3,6 +3,10 @@
 namespace Controllers;
 
 use App\Sessions;
+use App\Tools;
+use Entities\Geo\City;
+use Entities\Geo\District;
+use Entities\Geo\Region;
 use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
@@ -13,15 +17,17 @@ use Framework\Security\Password;
  *
  * @package Controllers
  */
-class Auth extends BaseController {
+class Auth extends ApiController {
 
 	/**
 	 * @route /account/login
 	 */
 	public function login() {
 
-		if(!$this->params->username)
-			throw new \Exception('Username is not specified', 400);
+		$this->params->tel = Tools::tel($this->params->tel, 375);
+
+		if(!$this->params->tel)
+			throw new \Exception('Phone number is not specified', 400);
 
 		if(!$this->params->password)
 			throw new \Exception('Password is not specified', 400);
@@ -29,7 +35,7 @@ class Auth extends BaseController {
 		$Users = new Users;
 
 		/** @var User $user */
-		$user = $Users->findOneBy('username', $this->params->username);
+		$user = $Users->findOneBy('tel', $this->params->tel);
 
 		if(!$user)
 			throw new \Exception('User does not exists', 400);
@@ -37,18 +43,22 @@ class Auth extends BaseController {
 		if(!Password::checkHash($this->params->password, $user->password))
 			throw new \Exception('Invalid password', 403);
 
-		$ip = $this->req->getClientIp();
+		if($this->params->fcm) {
+			$user->fcm = $this->params->fcm;
+			$user->save();
+		}
+
+		$ip = $this->params->noip ? null : $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
 
 		$token = Sessions::start($user, $ip, $ttl);
 
 		return [
 			'token' => $token,
-			'role' => $user->role
+			//'role' => $user->role
 		];
 
 	}
-
 
 	/**
 	 * @route /account/logout
@@ -56,6 +66,9 @@ class Auth extends BaseController {
 	public function logout() {
 
 		$this->auth();
+
+		$this->user->fcm = null;
+		$this->user->save();
 
 		/** @var Client $db */
 		$db = $this->di->db;
@@ -66,7 +79,6 @@ class Auth extends BaseController {
 
 	}
 
-
 	/**
 	 * @route /account/register
 	 * @throws \Exception
@@ -75,14 +87,21 @@ class Auth extends BaseController {
 
 		$data = (array)$this->params->user;
 
+		$data['tel'] = Tools::tel($data['tel'], 375);
+
+		print_r($data);
+
+		if(!$data['tel']) throw new \Exception('Empty phone number', 400);
+		if(!$data['password']) throw new \Exception('Empty password', 400);
+
 		$data['password'] = Password::getHash($data['password']);
-		$data['role'] = 'buyer';
+		//$data['role'] = 'buyer';
 
 		$user = new User;
 		$user->setData($data);
 		$user->save();
 
-		$ip = $this->req->getClientIp();
+		$ip = $this->params->noip ? null : $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
 
 		$token = Sessions::start($user, $ip, $ttl);
@@ -90,9 +109,23 @@ class Auth extends BaseController {
 		return [
 			'registered' => true,
 			'token' => $token,
-			'role' => $user->role
+			//'role' => $user->role
 		];
 
+	}
+
+
+	/**
+	 * Update profile
+	 *
+	 * @route /account/update
+	 */
+	public function update() {
+		$this->auth();
+		$update = (array)$this->params->user;
+		if($update['password']) $update['password'] = Password::getHash($update['password']);
+		$this->user->setData($update);
+		return $this->user->save();
 	}
 
 
@@ -104,6 +137,18 @@ class Auth extends BaseController {
 	public function info() {
 		$this->auth();
 		$data = $this->user->getData();
+
+		/** @var City|null $city */
+		if($city = $this->user->ref('city')) {
+			/** @var District|null $district */
+			$district = $city->ref('district');
+			/** @var Region|null $district */
+			$region = $city->ref('region');
+			$data['region'] = $region->getData();
+			$data['district'] = $district->getData();
+			$data['city'] = $city->getData();
+		}
+
 		unset($data['password']);
 		return $data;
 	}

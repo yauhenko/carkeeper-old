@@ -42,7 +42,7 @@ class WebApplication {
 			$controller = new $class;
 
 			/** @var Response $res */
-			$res = call_user_func([$controller, $method], $this->di->request);
+			$res = call_user_func([$controller, $method]);
 
 			if(!$res instanceof Response) {
                 $res = Response::create('Empty response', 444);

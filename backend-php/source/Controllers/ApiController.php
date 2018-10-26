@@ -3,18 +3,16 @@
 namespace Controllers;
 
 use App\Sessions;
-use Collections\Users;
 use Entities\User;
-use Framework\DB\Client;
 use Framework\MVC\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Class BaseController
+ * Class ApiController
  *
  * @package Controllers
  */
-abstract class BaseController extends AbstractController {
+abstract class ApiController extends AbstractController {
 
 	/** @var Request req */
 	protected $req;
@@ -29,7 +27,7 @@ abstract class BaseController extends AbstractController {
 	protected $user;
 
 	/**
-	 * BaseController constructor
+	 * ApiController constructor
 	 * @throws \Exception
 	 */
 	public function __construct() {

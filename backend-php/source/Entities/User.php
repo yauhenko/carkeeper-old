@@ -14,12 +14,12 @@ class User extends Entity {
 	 */
 	public $id;
 
-	/**
-	 * @caption Role
-	 * @validate required; in: seller, buyer, admin
-	 * @var string
-	 */
-	public $role = 'buyer';
+//	/**
+//	 * @caption Role
+//	 * @validate required; in: seller, buyer, admin
+//	 * @var string
+//	 */
+//	public $role = 'buyer';
 
 	public $active = true;
 
@@ -37,8 +37,8 @@ class User extends Entity {
 	 */
 	public $email;
 
-	/** @var string */
-	public $username;
+	/** @var string|null */
+	public $username = null;
 
 	/** @var string */
 	public $password;
@@ -53,7 +53,14 @@ class User extends Entity {
 	 */
 	public $avatar = null;
 
+	/**
+	 * @ref Entities\Geo\City
+	 * @var int|null
+	 */
 	public $city = null;
+
+	/** @var string|null  */
+	public $fcm = null;
 
 	/** @var string */
 	protected $_collection = Users::class;
