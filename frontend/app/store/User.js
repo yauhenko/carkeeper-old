@@ -3,6 +3,7 @@ import Api from '../modules/Api';
 import Notification from "../components/Notification";
 import { AsyncStorage } from "react-native";
 import App from "../store/App";
+import Logger from "../modules/Logger";
 
 class User {
   constructor () {
@@ -26,10 +27,15 @@ class User {
   @observable token = null;
   @observable ready = false;
 
-  @action login = (tel, password) => {
+  @action login = async (tel, password) => {
+    const fcm = await AsyncStorage.getItem('fcm');
+
     this.loading = true;
 
-    return Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true}).then(response => {
+    Logger.debug("FCM", fcm);
+
+
+    return Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true, fcm: fcm || null}).then(response => {
       this.profile = response.user;
       this.token = response.token;
       this.loading = false;

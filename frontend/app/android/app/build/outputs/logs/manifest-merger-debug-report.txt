@@ -1,258 +1,607 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-MERGED from [:react-native-splash-screen] D:\auto\frontend\app\node_modules\react-native-splash-screen\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-14:12
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:2:1-29:12
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:2:1-15:12
-MERGED from [com.github.yalantis:ucrop:2.2.2-native] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\ucrop-2.2.2-native.aar\a5c529bb1a11fc907e5d2330abaede6e\AndroidManifest.xml:2:1-11:12
-MERGED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:17:1-31:12
-MERGED from [id.zelory:compressor:2.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\compressor-2.1.0.aar\3e76ad3ae0270c7c92850436e9f17e74\AndroidManifest.xml:2:1-12:12
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:17:1-28:12
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:17:1-31:12
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:17:1-31:12
-MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\textlayoutbuilder-1.0.0.aar\313c7b0ed5626b951a722cf13e0bf1f6\AndroidManifest.xml:10:1-18:12
-MERGED from [com.facebook.fresco:fresco:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fresco-1.3.0.aar\f4311305aa97bbfc7b87c55ffa3076e4\AndroidManifest.xml:2:1-9:12
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-okhttp3-1.3.0.aar\f4f45185685eae72d5732d780204e862\AndroidManifest.xml:2:1-9:12
-MERGED from [com.facebook.soloader:soloader:0.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\soloader-0.1.0.aar\eb76c2236262a0e6403476d6fdbc4d26\AndroidManifest.xml:1:1-4:12
-MERGED from [org.webkit:android-jsc:r224109] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\android-jsc-r224109.aar\9106e9889746adfedc8c25f1be6612e3\AndroidManifest.xml:2:1-11:12
-MERGED from [com.facebook.fresco:drawee:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\drawee-1.3.0.aar\c83d717223049393d0e348c2cdbbc58b\AndroidManifest.xml:2:1-9:12
-MERGED from [com.facebook.fresco:imagepipeline:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-1.3.0.aar\987a7f2f5be37e0857dd5720b426db0a\AndroidManifest.xml:2:1-9:12
-MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-base-1.3.0.aar\61ada7f715bd4e0e685e76473ac1809d\AndroidManifest.xml:2:1-9:12
-MERGED from [com.facebook.fresco:fbcore:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fbcore-1.3.0.aar\cb34d035217b31de35b5e4efd0865eed\AndroidManifest.xml:2:1-9:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-15:12
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-14:12
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:2:1-29:12
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:2:1-15:12
+MERGED from [com.github.yalantis:ucrop:2.2.2-native] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/13476781a5a86a4c63dc744c186e0b41/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:17:1-31:12
+MERGED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:17:1-37:12
+MERGED from [com.google.firebase:firebase-core:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-core-16.0.3.aar/e66c159c0c259833d1e74e7208c4b4c1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:17:1-34:12
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:17:1-55:12
+MERGED from [com.google.android.gms:play-services-measurement-api:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-api-16.0.1.aar/c6b6a18a660067eff8660f277a9e3ef1/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:17:1-40:12
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:17:1-59:12
+MERGED from [com.google.firebase:firebase-iid-interop:16.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-interop-16.0.0.aar/337676d0d0942f4fc4d5ddd02a2f2bc6/AndroidManifest.xml:2:1-10:12
+MERGED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:17:1-29:12
+MERGED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:2:1-52:12
+MERGED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:2:1-17:12
+MERGED from [com.google.android.gms:play-services-tasks:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-tasks-15.0.1.aar/927edcddb2e23e2a4fb1d52390da1d0d/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-stats:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-stats-15.0.1.aar/a09fca32e553fe2739ea0358a130edc9/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-ads-identifier:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-ads-identifier-15.0.1.aar/cc06ece73067b6e8b188dafe9e66654e/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.firebase:firebase-measurement-connector:17.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-17.0.0.aar/fae0c0400efc59abe7862756406c6dcb/AndroidManifest.xml:17:1-25:12
+MERGED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:multidex:1.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/0bc8370ede542ac629dfd90eaf82351b/AndroidManifest.xml:17:1-22:12
+MERGED from [id.zelory:compressor:2.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/compressor-2.1.0.aar/2e9345512bc09d4c4c808c778e3ec4ef/AndroidManifest.xml:2:1-12:12
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:17:1-31:12
+MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/textlayoutbuilder-1.0.0.aar/011faffffcb938ed034564ab1f389b5e/AndroidManifest.xml:10:1-18:12
+MERGED from [com.facebook.fresco:fresco:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fresco-1.3.0.aar/92864f40f666e934aa68af2856915b02/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.3.0.aar/ba353013da0374932d7ab43e2edf2055/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/d299941f48eeabccbf297baf3132c4e2/AndroidManifest.xml:1:1-4:12
+MERGED from [org.webkit:android-jsc:r224109] /home/elfexor/.gradle/caches/transforms-1/files-1.1/android-jsc-r224109.aar/959d749b0ebc3549afd3c1a6047f2aac/AndroidManifest.xml:2:1-11:12
+MERGED from [com.facebook.fresco:drawee:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/drawee-1.3.0.aar/60a2f48fe8f6358de27249141a57928b/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.3.0.aar/f881e79d8a632bf20a199b6b321d7cb1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.3.0.aar/a952804b5636ceff77d278295ebe85a2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.facebook.fresco:fbcore:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fbcore-1.3.0.aar/a633c41e5d30cd70eb6cb1486b20ec1f/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-base-16.0.2.aar/f4a6faf0663053251cb058d7ec07de6c/AndroidManifest.xml:2:1-9:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
 	package
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:2:5-28
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:2:11-33
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	android:versionCode
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:1-36:12
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:1-57:12
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:1:11-69
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:1:11-69
 uses-permission#android.permission.INTERNET
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:4:5-67
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:4:5-66
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-67
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-67
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:23:5-67
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:23:5-67
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:23:5-67
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:23:5-67
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:23:5-67
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:23:5-67
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:4:22-64
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:4:22-64
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:5:5-80
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:5:22-78
+uses-permission#android.permission.VIBRATE
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:6:5-65
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:6:22-63
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:5:5-77
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:11:5-78
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:11:5-78
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:7:5-77
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:11:5-78
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:11:5-78
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:5:22-75
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:7:22-75
 uses-permission#android.permission.CAMERA
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:6:5-64
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:8:5-64
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:6:22-62
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:8:22-62
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:7:5-70
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:9:5-70
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:7:22-68
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:9:22-68
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:8:5-80
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:10:5-79
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:8:22-77
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:10:22-77
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:9:5-81
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:10:5-81
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:10:5-81
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:11:5-80
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:10:5-81
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:10:5-81
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:9:22-78
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:11:22-78
 uses-permission#android.permission.WRITE_STORAGE
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:10:5-72
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:12:5-71
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:10:22-69
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:12:22-69
 uses-permission#android.permission.READ_STORAGE
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:11:5-71
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:13:5-70
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:11:22-68
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:13:22-68
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:12:5-79
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:14:5-78
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:5-79
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:5-79
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:23:5-79
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:24:5-79
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:24:5-79
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:24:5-79
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:24:5-79
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:22:5-79
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:22:5-79
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:12:22-76
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:14:22-76
 application
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:14:5-34:19
-MERGED from [:react-native-splash-screen] D:\auto\frontend\app\node_modules\react-native-splash-screen\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:11:5-12:19
-MERGED from [:react-native-splash-screen] D:\auto\frontend\app\node_modules\react-native-splash-screen\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:11:5-12:19
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:12:5-27:19
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:12:5-27:19
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:13:5-20
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:13:5-20
-MERGED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:22:5-26:19
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:25:5-29:19
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:25:5-29:19
-MERGED from [com.facebook.soloader:soloader:0.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\soloader-0.1.0.aar\eb76c2236262a0e6403476d6fdbc4d26\AndroidManifest.xml:3:3-17
-MERGED from [com.facebook.soloader:soloader:0.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\soloader-0.1.0.aar\eb76c2236262a0e6403476d6fdbc4d26\AndroidManifest.xml:3:3-17
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:16:5-55:19
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-12:19
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:11:5-12:19
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:5-27:19
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:5-27:19
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:13:5-20
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:13:5-20
+MERGED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:25:5-29:19
+MERGED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:22:5-35:19
+MERGED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:22:5-35:19
+MERGED from [com.google.firebase:firebase-core:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-core-16.0.3.aar/e66c159c0c259833d1e74e7208c4b4c1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.firebase:firebase-core:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-core-16.0.3.aar/e66c159c0c259833d1e74e7208c4b4c1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:26:5-32:19
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:26:5-32:19
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:28:5-53:19
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:28:5-53:19
+MERGED from [com.google.android.gms:play-services-measurement-api:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-api-16.0.1.aar/c6b6a18a660067eff8660f277a9e3ef1/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-measurement-api:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-api-16.0.1.aar/c6b6a18a660067eff8660f277a9e3ef1/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:28:5-38:19
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:28:5-38:19
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:28:5-57:19
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:28:5-57:19
+MERGED from [com.google.firebase:firebase-iid-interop:16.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-interop-16.0.0.aar/337676d0d0942f4fc4d5ddd02a2f2bc6/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.firebase:firebase-iid-interop:16.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-interop-16.0.0.aar/337676d0d0942f4fc4d5ddd02a2f2bc6/AndroidManifest.xml:7:5-8:19
+MERGED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:9:5-15:19
+MERGED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:9:5-15:19
+MERGED from [com.google.android.gms:play-services-tasks:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-tasks-15.0.1.aar/927edcddb2e23e2a4fb1d52390da1d0d/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-tasks-15.0.1.aar/927edcddb2e23e2a4fb1d52390da1d0d/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-stats:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-stats-15.0.1.aar/a09fca32e553fe2739ea0358a130edc9/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-stats:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-stats-15.0.1.aar/a09fca32e553fe2739ea0358a130edc9/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-ads-identifier:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-ads-identifier-15.0.1.aar/cc06ece73067b6e8b188dafe9e66654e/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-ads-identifier:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-ads-identifier-15.0.1.aar/cc06ece73067b6e8b188dafe9e66654e/AndroidManifest.xml:22:5-20
+MERGED from [com.google.firebase:firebase-measurement-connector:17.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-17.0.0.aar/fae0c0400efc59abe7862756406c6dcb/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.firebase:firebase-measurement-connector:17.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-17.0.0.aar/fae0c0400efc59abe7862756406c6dcb/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:25:5-29:19
+MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/d299941f48eeabccbf297baf3132c4e2/AndroidManifest.xml:3:3-17
+MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/d299941f48eeabccbf297baf3132c4e2/AndroidManifest.xml:3:3-17
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-base-16.0.2.aar/f4a6faf0663053251cb058d7ec07de6c/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-base-16.0.2.aar/f4a6faf0663053251cb058d7ec07de6c/AndroidManifest.xml:7:5-20
 	android:label
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:16:7-39
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:18:13-45
 	android:icon
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:17:7-41
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:19:13-47
 	android:allowBackup
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:18:7-34
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:20:13-40
 	android:theme
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:19:7-38
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:21:13-44
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:15:7-38
-activity#com.carkeeper.MainActivity
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:21:7-31:18
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:17:13-44
+activity#by.carkeeper.MainActivity
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:23:9-34:20
 	android:screenOrientation
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:25:9-45
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:28:17-53
 	android:label
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:23:9-41
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:26:17-49
+	android:launchMode
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:24:17-47
 	android:windowSoftInputMode
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:26:9-51
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:29:17-59
 	android:configChanges
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:24:9-79
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:27:17-87
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:22:9-37
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:25:17-45
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:27:9-30:25
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:30:13-33:29
 action#android.intent.action.MAIN
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:28:13-65
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:31:17-68
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:28:21-62
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:31:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:29:13-73
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:32:17-76
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:29:23-70
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:32:27-74
+service#io.invertase.firebase.messaging.RNFirebaseBackgroundMessagingService
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:36:9-103
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:36:18-101
 activity#com.facebook.react.devsupport.DevSettingsActivity
-ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:33:7-84
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:38:9-85
 	android:name
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml:33:17-81
-uses-sdk
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-MERGED from [:react-native-splash-screen] D:\auto\frontend\app\node_modules\react-native-splash-screen\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-splash-screen] D:\auto\frontend\app\node_modules\react-native-splash-screen\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:7:5-9:41
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:6:5-8:41
-MERGED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:6:5-8:41
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:7:5-9:41
-MERGED from [com.facebook.react:react-native:0.55.4] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\react-native-0.55.4.aar\5ac3aeb39b827c626a21693f8ac0b523\AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.yalantis:ucrop:2.2.2-native] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\ucrop-2.2.2-native.aar\a5c529bb1a11fc907e5d2330abaede6e\AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.yalantis:ucrop:2.2.2-native] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\ucrop-2.2.2-native.aar\a5c529bb1a11fc907e5d2330abaede6e\AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:21:5-23:78
-MERGED from [id.zelory:compressor:2.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\compressor-2.1.0.aar\3e76ad3ae0270c7c92850436e9f17e74\AndroidManifest.xml:8:5-10:41
-MERGED from [id.zelory:compressor:2.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\compressor-2.1.0.aar\3e76ad3ae0270c7c92850436e9f17e74\AndroidManifest.xml:8:5-10:41
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:21:5-23:58
-MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\textlayoutbuilder-1.0.0.aar\313c7b0ed5626b951a722cf13e0bf1f6\AndroidManifest.xml:14:5-16:41
-MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\textlayoutbuilder-1.0.0.aar\313c7b0ed5626b951a722cf13e0bf1f6\AndroidManifest.xml:14:5-16:41
-MERGED from [com.facebook.fresco:fresco:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fresco-1.3.0.aar\f4311305aa97bbfc7b87c55ffa3076e4\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:fresco:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fresco-1.3.0.aar\f4311305aa97bbfc7b87c55ffa3076e4\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-okhttp3-1.3.0.aar\f4f45185685eae72d5732d780204e862\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-okhttp3-1.3.0.aar\f4f45185685eae72d5732d780204e862\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.soloader:soloader:0.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\soloader-0.1.0.aar\eb76c2236262a0e6403476d6fdbc4d26\AndroidManifest.xml:2:3-70
-MERGED from [com.facebook.soloader:soloader:0.1.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\soloader-0.1.0.aar\eb76c2236262a0e6403476d6fdbc4d26\AndroidManifest.xml:2:3-70
-MERGED from [org.webkit:android-jsc:r224109] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\android-jsc-r224109.aar\9106e9889746adfedc8c25f1be6612e3\AndroidManifest.xml:7:5-9:41
-MERGED from [org.webkit:android-jsc:r224109] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\android-jsc-r224109.aar\9106e9889746adfedc8c25f1be6612e3\AndroidManifest.xml:7:5-9:41
-MERGED from [com.facebook.fresco:drawee:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\drawee-1.3.0.aar\c83d717223049393d0e348c2cdbbc58b\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:drawee:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\drawee-1.3.0.aar\c83d717223049393d0e348c2cdbbc58b\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-1.3.0.aar\987a7f2f5be37e0857dd5720b426db0a\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-1.3.0.aar\987a7f2f5be37e0857dd5720b426db0a\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-base-1.3.0.aar\61ada7f715bd4e0e685e76473ac1809d\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\imagepipeline-base-1.3.0.aar\61ada7f715bd4e0e685e76473ac1809d\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:fbcore:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fbcore-1.3.0.aar\cb34d035217b31de35b5e4efd0865eed\AndroidManifest.xml:5:5-7:41
-MERGED from [com.facebook.fresco:fbcore:1.3.0] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\fbcore-1.3.0.aar\cb34d035217b31de35b5e4efd0865eed\AndroidManifest.xml:5:5-7:41
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:23:9-75
-	android:targetSdkVersion
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-	android:minSdkVersion
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		ADDED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-		INJECTED from D:\auto\frontend\app\android\app\src\main\AndroidManifest.xml
-provider#android.support.v4.content.FileProvider
-ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:13:9-21:20
-	android:grantUriPermissions
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:17:13-47
-	android:authorities
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:15:13-60
-	android:exported
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:16:13-37
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:38:19-83
+service#io.invertase.firebase.messaging.RNFirebaseMessagingService
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:40:9-44:19
 	android:name
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:14:13-67
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:18:13-20:58
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:40:18-91
+intent-filter#action:name:com.google.firebase.MESSAGING_EVENT
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:41:13-43:29
+action#com.google.firebase.MESSAGING_EVENT
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:42:17-77
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:42:25-75
+service#io.invertase.firebase.messaging.RNFirebaseInstanceIdService
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:45:9-49:19
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:45:18-92
+intent-filter#action:name:com.google.firebase.INSTANCE_ID_EVENT
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:46:13-48:29
+action#com.google.firebase.INSTANCE_ID_EVENT
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:47:17-79
+	android:name
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:47:25-77
+meta-data#com.google.firebase.messaging.default_notification_icon
+ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:51:9-53:57
 	android:resource
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:20:17-55
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:53:17-55
 	android:name
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:19:17-67
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml:52:17-87
+uses-sdk
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-splash-screen] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-splash-screen/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:7:5-9:41
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:6:5-8:41
+MERGED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:6:5-8:41
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.react:react-native:0.55.4] /home/elfexor/.gradle/caches/transforms-1/files-1.1/react-native-0.55.4.aar/94dcc069df1edd77d844d6c1d90a408f/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.yalantis:ucrop:2.2.2-native] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/13476781a5a86a4c63dc744c186e0b41/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.yalantis:ucrop:2.2.2-native] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ucrop-2.2.2-native.aar/13476781a5a86a4c63dc744c186e0b41/AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:21:5-23:78
+MERGED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-core:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-core-16.0.3.aar/e66c159c0c259833d1e74e7208c4b4c1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-core:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-core-16.0.3.aar/e66c159c0c259833d1e74e7208c4b4c1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-api-16.0.1.aar/c6b6a18a660067eff8660f277a9e3ef1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-measurement-api:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-api-16.0.1.aar/c6b6a18a660067eff8660f277a9e3ef1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-iid-interop:16.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-interop-16.0.0.aar/337676d0d0942f4fc4d5ddd02a2f2bc6/AndroidManifest.xml:5:5-44
+MERGED from [com.google.firebase:firebase-iid-interop:16.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-interop-16.0.0.aar/337676d0d0942f4fc4d5ddd02a2f2bc6/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:20:5-44
+MERGED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:7:5-9:41
+MERGED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-tasks:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-tasks-15.0.1.aar/927edcddb2e23e2a4fb1d52390da1d0d/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-tasks-15.0.1.aar/927edcddb2e23e2a4fb1d52390da1d0d/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-stats:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-stats-15.0.1.aar/a09fca32e553fe2739ea0358a130edc9/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-stats:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-stats-15.0.1.aar/a09fca32e553fe2739ea0358a130edc9/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-ads-identifier-15.0.1.aar/cc06ece73067b6e8b188dafe9e66654e/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-ads-identifier:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-ads-identifier-15.0.1.aar/cc06ece73067b6e8b188dafe9e66654e/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector:17.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-17.0.0.aar/fae0c0400efc59abe7862756406c6dcb/AndroidManifest.xml:20:5-44
+MERGED from [com.google.firebase:firebase-measurement-connector:17.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-17.0.0.aar/fae0c0400efc59abe7862756406c6dcb/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:multidex:1.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/0bc8370ede542ac629dfd90eaf82351b/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:multidex:1.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/multidex-1.0.2.aar/0bc8370ede542ac629dfd90eaf82351b/AndroidManifest.xml:20:5-43
+MERGED from [id.zelory:compressor:2.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/compressor-2.1.0.aar/2e9345512bc09d4c4c808c778e3ec4ef/AndroidManifest.xml:8:5-10:41
+MERGED from [id.zelory:compressor:2.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/compressor-2.1.0.aar/2e9345512bc09d4c4c808c778e3ec4ef/AndroidManifest.xml:8:5-10:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:21:5-23:58
+MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/textlayoutbuilder-1.0.0.aar/011faffffcb938ed034564ab1f389b5e/AndroidManifest.xml:14:5-16:41
+MERGED from [com.facebook.fbui.textlayoutbuilder:textlayoutbuilder:1.0.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/textlayoutbuilder-1.0.0.aar/011faffffcb938ed034564ab1f389b5e/AndroidManifest.xml:14:5-16:41
+MERGED from [com.facebook.fresco:fresco:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fresco-1.3.0.aar/92864f40f666e934aa68af2856915b02/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fresco:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fresco-1.3.0.aar/92864f40f666e934aa68af2856915b02/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.3.0.aar/ba353013da0374932d7ab43e2edf2055/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-okhttp3:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-okhttp3-1.3.0.aar/ba353013da0374932d7ab43e2edf2055/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/d299941f48eeabccbf297baf3132c4e2/AndroidManifest.xml:2:3-70
+MERGED from [com.facebook.soloader:soloader:0.1.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/soloader-0.1.0.aar/d299941f48eeabccbf297baf3132c4e2/AndroidManifest.xml:2:3-70
+MERGED from [org.webkit:android-jsc:r224109] /home/elfexor/.gradle/caches/transforms-1/files-1.1/android-jsc-r224109.aar/959d749b0ebc3549afd3c1a6047f2aac/AndroidManifest.xml:7:5-9:41
+MERGED from [org.webkit:android-jsc:r224109] /home/elfexor/.gradle/caches/transforms-1/files-1.1/android-jsc-r224109.aar/959d749b0ebc3549afd3c1a6047f2aac/AndroidManifest.xml:7:5-9:41
+MERGED from [com.facebook.fresco:drawee:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/drawee-1.3.0.aar/60a2f48fe8f6358de27249141a57928b/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:drawee:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/drawee-1.3.0.aar/60a2f48fe8f6358de27249141a57928b/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.3.0.aar/f881e79d8a632bf20a199b6b321d7cb1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-1.3.0.aar/f881e79d8a632bf20a199b6b321d7cb1/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.3.0.aar/a952804b5636ceff77d278295ebe85a2/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:imagepipeline-base:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/imagepipeline-base-1.3.0.aar/a952804b5636ceff77d278295ebe85a2/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fbcore-1.3.0.aar/a633c41e5d30cd70eb6cb1486b20ec1f/AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.fresco:fbcore:1.3.0] /home/elfexor/.gradle/caches/transforms-1/files-1.1/fbcore-1.3.0.aar/a633c41e5d30cd70eb6cb1486b20ec1f/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-base-16.0.2.aar/f4a6faf0663053251cb058d7ec07de6c/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-measurement-base:16.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-measurement-base-16.0.2.aar/f4a6faf0663053251cb058d7ec07de6c/AndroidManifest.xml:5:5-44
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		ADDED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+		INJECTED from /home/elfexor/WORK/auto/frontend/app/android/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:5-68
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:24:5-68
+MERGED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:24:5-68
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:25:5-68
+MERGED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:25:5-68
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:25:5-68
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:25:5-68
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:24:5-68
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:24:5-68
+	android:name
+		ADDED from [:react-native-firebase] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-firebase/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:12:22-65
+provider#android.support.v4.content.FileProvider
+ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:13:9-21:20
+	android:grantUriPermissions
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:17:13-47
+	android:authorities
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:15:13-60
+	android:exported
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:16:13-37
+	android:name
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:14:13-67
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:18:13-20:58
+	android:resource
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:20:17-55
+	android:name
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:19:17-67
 activity#com.yalantis.ucrop.UCropActivity
-ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:23:9-26:72
+ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:23:9-26:72
 	android:screenOrientation
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:25:13-49
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:25:13-49
 	android:theme
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:26:13-69
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:26:13-69
 	android:name
-		ADDED from [:react-native-image-crop-picker] D:\auto\frontend\app\node_modules\react-native-image-crop-picker\android\build\intermediates\manifests\full\debug\AndroidManifest.xml:24:13-60
+		ADDED from [:react-native-image-crop-picker] /home/elfexor/WORK/auto/frontend/app/node_modules/react-native-image-crop-picker/android/build/intermediates/manifests/full/debug/AndroidManifest.xml:24:13-60
 meta-data#android.support.VERSION
-ADDED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:animated-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\animated-vector-drawable-26.0.1.aar\4d2ffb204afa7d77edff707e14b165ff\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-vector-drawable:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-vector-drawable-26.0.1.aar\a80ef3cdae02374a25d458da781fe715\AndroidManifest.xml:23:9-25:38
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-v4:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-v4-26.0.1.aar\59508605ba0e4b53ca69e404ae5425eb\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-media-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-media-compat-26.0.1.aar\30e7c675cacdab4232a0ea5cb4c7ee49\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-fragment:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-fragment-26.0.1.aar\c78b5425a313c07e9edf2ab4dd550aa9\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-utils:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.0.1.aar\86fa14d7c28144ba64b5d52e78bf4a7b\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-core-ui:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-core-ui-26.0.1.aar\2822a753a9524f3be91fc5b54bffce7c\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:26:9-28:38
-MERGED from [com.android.support:support-compat:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\support-compat-26.0.1.aar\eca490e94abc4d1805ec4c4e002f5358\AndroidManifest.xml:26:9-28:38
+ADDED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-v4:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-v4-26.0.1.aar/aad3a935d109c3de01d2ac7ac5eb274b/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:animated-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-26.0.1.aar/5991e365d950598f609faf4633ce8571/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-vector-drawable:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-26.0.1.aar/5d1388efb5f4d13b3f87b50fcf6fe2ea/AndroidManifest.xml:23:9-25:38
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.0.1.aar/d73c80131a8ab64b1b911626495f21ce/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-fragment-26.0.1.aar/4539d46172002360245fab6515287579/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-utils-26.0.1.aar/a35546465a48f5bf1f8404c0d5fc2518/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-core-ui-26.0.1.aar/7ffa072dda754e9ff9ebdfbdcfe44afa/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/AndroidManifest.xml:26:9-28:38
 	android:value
-		ADDED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:28:13-35
+		ADDED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:28:13-35
 	android:name
-		ADDED from [com.android.support:appcompat-v7:26.0.1] C:\Users\imbal\.gradle\caches\transforms-1\files-1.1\appcompat-v7-26.0.1.aar\2d8c8541f8946d75a7dcf6880fccac98\AndroidManifest.xml:27:13-51
+		ADDED from [com.android.support:appcompat-v7:26.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/AndroidManifest.xml:27:13-51
+service#com.google.firebase.messaging.FirebaseMessagingService
+ADDED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:28:9-34:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:30:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-messaging:17.3.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-messaging-17.3.2.aar/b448b5fad5e594642a1a89601a2bb9e3/AndroidManifest.xml:29:13-82
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:27:9-31:19
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:29:9-35:19
+MERGED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:29:9-35:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:31:13-37
+	android:name
+		ADDED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:27:18-89
+meta-data#com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar
+ADDED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:28:13-30:85
+	android:value
+		ADDED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:30:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-measurement-connector-impl:17.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-measurement-connector-impl-17.0.1.aar/748339408acb9654779a34cca7806c4f/AndroidManifest.xml:29:17-139
+uses-permission#com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:26:5-110
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:26:5-110
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:26:5-110
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:26:22-107
+receiver#com.google.android.gms.measurement.AppMeasurementReceiver
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:29:9-33:20
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:31:13-35
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:32:13-37
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:30:13-85
+receiver#com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:34:9-42:20
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:29:9-37:20
+MERGED from [com.google.firebase:firebase-analytics-impl:16.2.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-impl-16.2.1.aar/6f9d57cdfc757ea551f9e46d18ea9584/AndroidManifest.xml:29:9-37:20
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:36:13-35
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:37:13-36
+	android:permission
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:38:13-69
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:35:13-100
+intent-filter#action:name:com.android.vending.INSTALL_REFERRER
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:39:13-41:29
+action#com.android.vending.INSTALL_REFERRER
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:40:17-79
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:40:25-76
+service#com.google.android.gms.measurement.AppMeasurementService
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:44:9-47:40
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:46:13-35
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:47:13-37
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:45:13-84
+service#com.google.android.gms.measurement.AppMeasurementJobService
+ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:48:9-52:72
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:50:13-35
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:51:13-37
+	android:permission
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:52:13-69
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:16.0.3] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-analytics-16.0.3.aar/756ab5bb9ddd50149025631fa5e25591/AndroidManifest.xml:49:13-87
+uses-permission#com.google.android.c2dm.permission.RECEIVE
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:26:5-82
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:26:22-79
+meta-data#com.google.firebase.components:com.google.firebase.iid.Registrar
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:32:13-34:85
+	android:value
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:34:17-82
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:33:17-96
+receiver#com.google.firebase.iid.FirebaseInstanceIdReceiver
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:37:9-44:20
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:39:13-36
+	android:permission
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:40:13-73
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:38:13-78
+intent-filter#action:name:com.google.android.c2dm.intent.RECEIVE
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:41:13-43:29
+action#com.google.android.c2dm.intent.RECEIVE
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:42:17-81
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:42:25-78
+service#com.google.firebase.iid.FirebaseInstanceIdService
+ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:50:9-56:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:52:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:17.0.2] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-iid-17.0.2.aar/0d7edd360bcec42b6606d0ac219f1dfb/AndroidManifest.xml:51:13-77
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-base-15.0.1.aar/0276de49c73cd35b80992faf6efc4436/AndroidManifest.xml:24:13-79
+uses-permission#com.sec.android.provider.badge.permission.READ
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:19:5-86
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:19:22-83
+uses-permission#com.sec.android.provider.badge.permission.WRITE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:20:5-87
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:20:22-84
+uses-permission#com.htc.launcher.permission.READ_SETTINGS
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:23:5-81
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:23:22-78
+uses-permission#com.htc.launcher.permission.UPDATE_SHORTCUT
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:24:5-83
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:24:22-80
+uses-permission#com.sonyericsson.home.permission.BROADCAST_BADGE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:27:5-88
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:27:22-85
+uses-permission#com.sonymobile.home.permission.PROVIDER_INSERT_BADGE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:28:5-92
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:28:22-89
+uses-permission#com.anddoes.launcher.permission.UPDATE_COUNT
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:31:5-84
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:31:22-81
+uses-permission#com.majeur.launcher.permission.UPDATE_BADGE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:34:5-83
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:34:22-80
+uses-permission#com.huawei.android.launcher.permission.CHANGE_BADGE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:37:5-91
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:37:22-88
+uses-permission#com.huawei.android.launcher.permission.READ_SETTINGS
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:38:5-92
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:38:22-89
+uses-permission#com.huawei.android.launcher.permission.WRITE_SETTINGS
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:39:5-93
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:39:22-90
+uses-permission#android.permission.READ_APP_BADGE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:42:5-73
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:42:22-70
+uses-permission#com.oppo.launcher.permission.READ_SETTINGS
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:45:5-82
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:45:22-79
+uses-permission#com.oppo.launcher.permission.WRITE_SETTINGS
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:46:5-83
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:46:22-80
+uses-permission#me.everything.badger.permission.BADGE_COUNT_READ
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:49:5-88
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:49:22-85
+uses-permission#me.everything.badger.permission.BADGE_COUNT_WRITE
+ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:50:5-89
+	android:name
+		ADDED from [me.leolin:ShortcutBadger:1.1.21] /home/elfexor/.gradle/caches/transforms-1/files-1.1/ShortcutBadger-1.1.21.aar/b5c9d3d42a75feeb663290b8a39493f8/AndroidManifest.xml:50:22-86
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:10:9-14:39
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:12:13-72
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:13:13-37
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:14:13-36
+	android:name
+		ADDED from [com.google.firebase:firebase-common:16.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/firebase-common-16.0.1.aar/2858da5da380da7d55c08edfe1063457/AndroidManifest.xml:11:13-77
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:15.0.1] /home/elfexor/.gradle/caches/transforms-1/files-1.1/play-services-basement-15.0.1.aar/35f92e7676db84bda2aa8108a6da8480/AndroidManifest.xml:24:13-58
