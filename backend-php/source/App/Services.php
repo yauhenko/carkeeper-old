@@ -37,7 +37,7 @@ class Services {
         })->set('request', function () {
 
             $req = Request::createFromGlobals();
-			$req->setTrustedProxies(['127.0.0.1'], Request::HEADER_X_FORWARDED_ALL);
+			$req->setTrustedProxies(['127.0.0.1', $req->getClientIp()], Request::HEADER_X_FORWARDED_ALL);
 
             return $req;
 
