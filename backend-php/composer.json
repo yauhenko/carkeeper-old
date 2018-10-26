@@ -19,6 +19,7 @@
         "ext-mysqli": "*",
         "ext-json": "*",
         "ext-redis": "*",
-	    "ext-fileinfo": "*"
+	    "ext-fileinfo": "*",
+        "ext-curl": "^7.2"
     }
 }
