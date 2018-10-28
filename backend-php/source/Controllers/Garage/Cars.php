@@ -18,7 +18,7 @@ class Cars extends ApiController {
 
 		return [
 			'cars' => $list,
-			'refs' => $this->di->refs->get($list)
+			'refs' => (object)$this->di->refs->get($list)
 		];
 
 	}
@@ -37,7 +37,7 @@ class Cars extends ApiController {
 
 		return [
 			'car' => $car,
-			'refs' => $this->di->refs->single($car)
+			'refs' => (object)$this->di->refs->single($car)
 		];
 
 	}
