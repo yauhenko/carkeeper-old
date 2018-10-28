@@ -45,6 +45,10 @@ class Services {
 
             return Response::create();
 
+        })->set('refs', function () {
+
+        	return new References;
+
         })->set('routes', function () {
 
             return Routes::get();
@@ -73,6 +77,7 @@ class Services {
 		        __DIR__ . '/../Entities',
 		        __DIR__ . '/../Entities/Geo',
 		        __DIR__ . '/../Controllers',
+		        __DIR__ . '/../Controllers/Garage',
 		        __DIR__ . '/../Collections/Geo',
 	        ]);
 
