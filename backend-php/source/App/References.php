@@ -3,6 +3,7 @@
 namespace App;
 
 use Entities\Car;
+use Entities\JournalRecord;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
 
@@ -18,6 +19,10 @@ class References {
 			'generation' => ['table' => 'car_generation', 'fields' => ['id', 'name', 'year_begin', 'year_end']],
 			'serie' => ['table' => 'car_serie', 'fields' => ['id', 'name']],
 			'modification' => ['table' => 'car_modification', 'fields' => ['id', 'name', 'year_begin', 'year_end']],
+			'image' => ['table' => 'uploads']
+		];
+
+		$this->rules[JournalRecord::class] = [
 			'image' => ['table' => 'uploads']
 		];
 
