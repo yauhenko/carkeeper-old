@@ -35,6 +35,17 @@ abstract class Entity {
 	}
 
 	/**
+	 * Delete Entity from Collection
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function delete(): bool {
+		$collection = $this->getCollection();
+		return $collection->delete($this);
+	}
+
+	/**
 	 * Get Entity's data
 	 *
 	 * @return array
@@ -111,6 +122,13 @@ abstract class Entity {
 		$this->setData($entity->getData());
 	}
 
+	/**
+	 * Get referenced Entity
+	 *
+	 * @param string $field
+	 * @return Entity|null
+	 * @throws \Exception
+	 */
 	public function ref(string $field): ?Entity {
 
 		$id = $this->{$field};

@@ -52,6 +52,20 @@ abstract class Collection {
 	}
 
 	/**
+	 * Delete Entity from Collection
+	 *
+	 * @param Entity $entity
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function delete(Entity $entity) {
+		$this->checkEntity($entity);
+		/** @var Client $db */
+		$db = DI::getInstance()->db;
+		return $db->delete($this->_table, 'id', $entity->id);
+	}
+
+	/**
 	 * Check Entity collection
 	 *
 	 * @param Entity $entity
