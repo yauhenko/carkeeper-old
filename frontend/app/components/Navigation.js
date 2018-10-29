@@ -5,6 +5,7 @@ import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cars from "../store/Cars";
 import {observer} from "mobx-react";
+import thumb from "../assets/images/avatar_thumb.png";
 
 @observer
 export default class Navigation extends Component {
@@ -15,14 +16,17 @@ export default class Navigation extends Component {
           <List>
             <View style={styles.top}>
               <View style={{marginRight: 15}}>
-                <Thumbnail large source={{uri: Uploader.get(User.profile.avatar)}} />
+                {User.profile.avatar
+                  ? <Thumbnail large source={{uri: Uploader.get(User.profile.avatar)}}/>
+                  : <Thumbnail large source={thumb}/>
+                }
               </View>
               <View>
                 <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${User.profile.name}`}</Text>
                 {Cars.cars.length ?
                   <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
                   :
-                  null
+                  <Text style={{fontSize: 12, color: "#fff", width: 150}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
                 }
               </View>
             </View>

@@ -1,1 +1,2 @@
-export default "http://apps.redstream.by:8000";
+export default "https://api.carkeeper.pro";
+export const cdn = "https://cdn.carkeeper.pro";

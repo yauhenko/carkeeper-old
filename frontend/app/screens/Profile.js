@@ -9,12 +9,13 @@ import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
 import {observable} from 'mobx';
 import Cars from "../store/Cars";
+import thumb from "../assets/images/avatar_thumb.png";
 
 @observer
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
   @observable name = User.profile.name;
-  @observable city = User.profile.city.name;
+  @observable city = User.profile.city ? User.profile.city.name : null;
 
   render() {
     return (
@@ -41,14 +42,19 @@ export default class Profile extends React.Component {
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
               <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
-                <Thumbnail style={customStyles.avatar} source={{uri: Uploader.get(User.profile.avatar)}} />
+                <Thumbnail style={customStyles.avatar} source={User.profile.avatar ? {uri: Uploader.get(User.profile.avatar)} : thumb} />
                 <Icon style={customStyles.camera} name="camera"/>
               </TouchableOpacity>
             </View>
 
             <View>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.name}`}</Text>
-              <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+              {Cars.cars.length
+                ?
+                <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+                :
+                <Text style={{color: "#fff", marginTop: 5, width: 180}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
+              }
             </View>
           </View>
 

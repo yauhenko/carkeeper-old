@@ -22,7 +22,7 @@ export default styles = {
 
   pickerWrapper: {
     marginBottom: 5,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 0.3,
     borderBottomColor: "#d6d7da"
   },
 

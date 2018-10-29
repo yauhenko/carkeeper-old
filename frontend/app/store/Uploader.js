@@ -8,7 +8,7 @@ class Uploader {
   };
 
   @action save = async (obj = {}) => {
-    let response = await Api('uploads/save', obj);
+    let response = await Api('uploads/upload', obj);
     return response.id
   };
 }
