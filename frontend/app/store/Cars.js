@@ -33,7 +33,6 @@ class Cars {
     } catch (e) {
       Notification(e)
     }
-
     this.loading = false;
     return this.carDetail;
   };
@@ -44,52 +43,55 @@ class Cars {
 
   @action getCars = async () => {
     this.loading = true;
-    return Api('garage/cars', {}).then((response) => {
-      this.cars = response;
-      this.loading = false;
-    }).catch(Notification);
+    const response = await Api('garage/cars', {});
+    this.cars = response.cars;
+    this.loading = false;
+    return this.cars;
   };
 
-  @action addCar = () => {
-    return Api('garage/cars/add', this.car).then((response) => {
-    }).catch(Notification);
+  @action addCar = async () => {
+    try {
+      return await Api('garage/cars/add', this.car)
+    } catch (e) {
+      Notification(e)
+    }
   };
 
-  @action deleteCar = (id) => {
+  @action deleteCar = id => {
     return Api('garage/cars/delete', {id}).then((response) => {
     }).catch(Notification);
   };
 
   @action getMarks = () => {
-    return Api('cars/marks', {}).then((response) => {
+    return Api('directory/cars/marks', {}).then((response) => {
       this.marks = response;
     }).catch(Notification);
   };
 
   @action getModels = () => {
     if(!this.car.mark) return;
-    return Api('cars/models', {mark: this.car.mark}).then((response) => {
+    return Api('directory/cars/models', {mark: this.car.mark}).then((response) => {
       this.models = response;
     }).catch(Notification);
   };
 
   @action getGenerations = () => {
     if(!this.car.model || this.car.year.length !== 4) return;
-    return Api('cars/generations', {model: this.car.model, year: this.car.year }).then((response) => {
+    return Api('directory/cars/generations', {model: this.car.model, year: this.car.year }).then((response) => {
       this.generations = response || [];
     }).catch(Notification);
   };
 
   @action getSeries = () => {
     if(!this.car.generation) return;
-    return Api('cars/series', {generation: this.car.generation}).then((response) => {
+    return Api('directory/cars/series', {generation: this.car.generation}).then((response) => {
       this.series = response || [];
     }).catch(Notification);
   };
 
   @action getModifications = () => {
     if(!this.car.serie) return;
-    return Api('cars/modifications', {serie: this.car.serie}).then((response) => {
+    return Api('directory/cars/modifications', {serie: this.car.serie}).then((response) => {
       this.modifications = response || [];
     }).catch(Notification);
   };
@@ -100,8 +102,11 @@ class Cars {
   };
 
   @action insuranceUpdate = async (data = {}) => {
-    return await Api('garage/cars/insurance/update', data).then((response) => {
-    }).catch(Notification);
+    try {
+      return await Api('garage/cars/insurance/update', data)
+    } catch (e) {
+      Notification(e);
+    }
   };
 }
 

@@ -10,6 +10,14 @@ class User {
     setInterval(()=>this.ping(), 30000);
   }
 
+  @observable auth = false;
+  @observable loading = false;
+  @observable token = null;
+  @observable ready = false;
+  @observable fcm = null;
+
+  @observable profile = {};
+
   @action checkAuth = async () => {
     let token = (await AsyncStorage.getItem('token')) || null;
     if(!token) return this.ready = true;
@@ -21,53 +29,50 @@ class User {
     });
   };
 
-  @observable auth = false;
-  @observable loading = false;
-  @observable profile = {};
-  @observable token = null;
-  @observable ready = false;
-
-  @action login = async (tel, password) => {
-    const fcm = await AsyncStorage.getItem('fcm');
-
+  /**
+   * Авторизация пользователя
+   * @param data {object}
+   * @returns {Promise<void>}
+   */
+  @action login = async (data) => {
     this.loading = true;
 
-    Logger.debug("FCM", fcm);
-
-
-    return Api('users/login', {tel, password, ttl: 3600 * 24 * 7, noip: true, fcm: fcm || null}).then(response => {
-      this.profile = response.user;
+    try {
+      let response = await Api('account/login', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
       this.token = response.token;
-      this.loading = false;
+      await AsyncStorage.setItem('token', response.token);
+      await this.info();
       this.auth = true;
-      AsyncStorage.setItem('token', response.token);
-      return response;
-    }).catch((err) => {
-      console.log(err);
-      this.loading = false;
-    });
+      Logger.debug("FCM", this.fcm);
+    } catch (e) {
+      Notification(e);
+    }
 
+    this.loading = false;
   };
 
+  @action info = async () => {
+    return await Api('account/info').then(user=> {this.profile = user});
+  };
 
   @action update = async (data = {}) => {
-    Api('users/update', data).then(async () => {
+    Api('account/update', {user: data}).then(async () => {
       if(data.avatar) {this.profile.avatar = data.avatar}
       if(data.name) {this.profile.name = data.name}
       if(data.city) {this.profile.name = data.city}
     }).catch(Notification);
   };
 
-  @action create = async (role, tel, email, password, name) => {
+  @action create = async (tel, email, password, name) => {
     this.loading = true;
-    return Api('users/create', {role, tel, email, password, name}).then((response) => {
-      this.profile = response.user || {};
-      this.auth = true;
+    const fcm = await AsyncStorage.getItem('fcm');
+    return Api('account/register', {user: {tel, email, password, name, fcm}, ttl: 3600 * 24 * 7, noip: true}).then(response => {
       this.token = response.token;
-      this.loading = false;
+      Api('account/info').then(user=> {this.profile = user; this.auth = true});
     }).catch((err) => {
-      this.loading = false;
       Notification(err)
+    }).finally(()=>{
+      this.loading = false;
     });
   };
 
@@ -75,7 +80,7 @@ class User {
     if(!App.connect) return false;
     if(!this.token) return false;
     try {
-      this.profile = await Api('auth/ping');
+      this.profile = await Api('account/info');
       return true;
     } catch (e) {
       this.clean();
@@ -86,7 +91,7 @@ class User {
 
   @action logout = () => {
     //todo httpreq
-    Api('auth/logout').catch(Notification);
+    Api('account/logout').catch(Notification);
     this.clean();
   };
 

@@ -12,14 +12,13 @@ export default class Registration extends React.Component {
   @observable email = "";
   @observable password = "";
   @observable name = "";
-  @observable role = "buyer";
 
   @action change = (type, value) => {
     this[type] = value;
   };
 
   @action submitHandler = () => {
-    UserStore.create(this.role, this.tel, this.email, this.password, this.name);
+    UserStore.create(this.tel, this.email, this.password, this.name);
   };
 
   render() {

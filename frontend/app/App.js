@@ -24,7 +24,6 @@ const Navigator = createDrawerNavigator({
     Car: {screen: Car},
     Fines: {screen: Fines},
     Journal: {screen: Journal},
-    AddCar: {screen: AddCar},
     Profile: {screen: Profile},
     Reminders: {screen: Reminders}
 }, {

@@ -16,30 +16,23 @@ export default class Login extends React.Component {
   @action change = (type, value) => {this[type] = value};
 
   @action submitHandler = () => {
-    User.login(this.tel, this.password).then(() => {
-      AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
-      Logger.info("Пользоваль авторизовался", String(this.tel))
-    }).catch(console.log);
-  };
-
-  @action autoFill = () => {
-    AsyncStorage.multiGet(["tel", "password"], (err, data) => {
-      if(data) {
-        this.tel = data[0][1];
-        this.password = data[1][1];
-      }
-    })
+      User.login({tel: this.tel, password: this.password}).then(() => {
+        Logger.info("Пользоваль авторизовался", String(this.tel));
+        AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+      });
   };
 
   componentDidMount() {
-    this.autoFill();
+    AsyncStorage.multiGet(["tel", "password"], (err, data) => {
+      if(data) {this.tel = data[0][1] || ""; this.password = data[1][1]  || ""}
+    })
   }
 
   render() {
     return (
       <Container>
         <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
-        <Content refreshControl={<RefreshControl refreshing={User.loading}/>} opacity={User.loading ? 0.8 : 1}  contentContainerStyle={customStyles.container}>
+        <Content refreshControl={<RefreshControl refreshing={User.loading}/>} contentContainerStyle={customStyles.container}>
 
           <View>
             <View style={{alignItems: "center", paddingBottom: 20}}>
@@ -65,7 +58,7 @@ export default class Login extends React.Component {
 
             <Button disabled={User.loading} onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={{color: "#000"}}>Войти</Text></Button>
           </Form>
-          <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Зарегистрироваться</Text>
+          <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Регистрация</Text>
         </Content>
       </Container>
     );
@@ -87,7 +80,7 @@ const customStyles = StyleSheet.create({
   },
 
   label: {
-    color: "#000",
+    color: "#fff",
     fontSize: 14,
     marginBottom: 1
   },
