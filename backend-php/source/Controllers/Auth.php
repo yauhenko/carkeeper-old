@@ -11,6 +11,7 @@ use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
 use Framework\Security\Password;
+use Framework\Validation\Validator;
 
 /**
  * Class Auth
@@ -24,13 +25,15 @@ class Auth extends ApiController {
 	 */
 	public function login() {
 
+		Validator::validateData($this->params, [
+			'tel' => ['required' => true],
+			'password' => ['required' => true],
+			'fcm' => ['type' => 'string', 'length' => [50, 100]],
+			'noip' => ['type' => 'bool'],
+			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
+		]);
+
 		$this->params->tel = Tools::tel($this->params->tel, 375);
-
-		if(!$this->params->tel)
-			throw new \Exception('Phone number is not specified', 400);
-
-		if(!$this->params->password)
-			throw new \Exception('Password is not specified', 400);
 
 		$Users = new Users;
 
@@ -85,17 +88,24 @@ class Auth extends ApiController {
 	 */
 	public function register() {
 
+		Validator::validateData($this->params, [
+			'user' => [
+				'required' => true,
+				'sub' => [
+					'tel' => ['required' => true, 'match' => '/^375(25|29|33|44)[0-9]{7}$/'],
+					'password' => ['required' => true, 'type' => 'string', 'length' => [6, 50]],
+					'name' => ['required' => true, 'type' => 'string', 'length' => [2, 20]],
+					'email' => ['required' => true, 'type' => 'string', 'filter' => 'email', 'length' => [2, 20]],
+				]
+			],
+			'fcm' => ['type' => 'string', 'length' => [50, 100]],
+			'noip' => ['type' => 'bool'],
+			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
+		]);
+
 		$data = (array)$this->params->user;
-
 		$data['tel'] = Tools::tel($data['tel'], 375);
-
-		print_r($data);
-
-		if(!$data['tel']) throw new \Exception('Empty phone number', 400);
-		if(!$data['password']) throw new \Exception('Empty password', 400);
-
 		$data['password'] = Password::getHash($data['password']);
-		//$data['role'] = 'buyer';
 
 		$user = new User;
 		$user->setData($data);
@@ -109,7 +119,6 @@ class Auth extends ApiController {
 		return [
 			'registered' => true,
 			'token' => $token,
-			//'role' => $user->role
 		];
 
 	}

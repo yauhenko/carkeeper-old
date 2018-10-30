@@ -168,19 +168,29 @@ class Parser {
 	 * @return mixed
 	 */
 	protected function validateParser(string $data) {
-		return json_decode($data, true);
+		return $this->parsePairs($data);
 	}
 
-	/**
-	 * @param string $data
-	 * @return array
-	 */
-	protected function refParser(string $data) {
-		$vars = explode(' ', $data);
-		return [
-			'class' => $vars[0],
-			'key' => $vars[1] ?: 'id'
-		];
+	protected function authParser(string $data = null) {
+		$props = ['auth' => true] + $this->parsePairs((string)$data);
+		$props['role'] = $props['role'] ? explode(',', $props['role']) : null;
+		return $props;
+	}
+
+	protected function parsePairs(string $data) {
+		$props = [];
+		foreach (explode(' ', $data) as $arg) {
+			[$key, $val] = explode('=', $arg, 2);
+			$key = trim($key);
+			if(!$key) continue;
+			if($val === 'true') $val = true;
+			elseif($val === 'false') $val = false;
+			elseif($val === 'null') $val = null;
+			elseif(is_numeric($val)) $val = (float)$val;
+			elseif($val === null) $val = true;
+			$props[$key] = trim($val);
+		}
+		return $props;
 	}
 
 }

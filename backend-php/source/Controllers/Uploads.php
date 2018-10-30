@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Entities\Upload;
 use Framework\Types\UUID;
+use Framework\Validation\Validator;
 
 class Uploads extends ApiController {
 
@@ -12,8 +13,10 @@ class Uploads extends ApiController {
 	 */
 	public function upload() {
 
-		if(!$this->params->name) throw new \Exception('Empty parameter: name', 40001);
-		if(!$this->params->data) throw new \Exception('Empty parameter: data', 40002);
+		Validator::validateData((array)$this->params, [
+			'name' => ['required' => true, 'type' => 'string', 'match' => '/\.(jpe?g|png|gif)$/'],
+			'data' => ['required' => true, 'type' => 'string'],
+		]);
 
 		$id = UUID::generate();
 
