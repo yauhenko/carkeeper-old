@@ -49,7 +49,7 @@ class Validator {
 						if(is_callable($params)) {
 							call_user_func($params, $val);
 						} elseif($name === 'sub') {
-							$this->validate($val, $params, true, $key . ':');
+							$this->validate($val, $params, true, $key . '.');
 						} else {
 							call_user_func([$this, 'check' . $name], $val, $params);
 						}
@@ -64,21 +64,21 @@ class Validator {
 
 		}
 		if(!$prefix) {
-			if(!$silent && $this->errors) throw new Error($this->errors[0]['message'] . ' (' . $this->errors[0]['key'] . ')');
+			if(!$silent && $this->errors) throw new Error($this->errors[0]['key'] . ': ' . $this->errors[0]['message']);
 		}
 		return empty($this->errors);
 	}
 
 	protected function checkRequired($value, bool $required = true) {
-		if($value === null && $required) throw new Error('Required');
+		if($value === null && $required) throw new Error('Обязательное поле');
 	}
 
 	protected function checkMin($value, $min) {
-		if($value < $min) throw new Error('Value must be min: ' . $min);
+		if($value < $min) throw new Error('Значение должно быть больше ' . $min);
 	}
 
 	protected function checkMax($value, $max) {
-		if($value > $max) throw new Error('Value must be max: ' . $max);
+		if($value > $max) throw new Error('Значение должно быть меньше ' . $max);
 	}
 
 	protected function checkLength($value, $params) {
@@ -88,8 +88,8 @@ class Validator {
 			$min = $max = $params;
 		}
 		$len = mb_strlen($value);
-		if($min !== null && $len < $min) throw new Error('Length must be min ' . $min);
-		if($max !== null && $len > $max) throw new Error('Length must be max ' . $max);
+		if($min !== null && $len < $min) throw new Error('Длина должна быть не менее ' . $min);
+		if($max !== null && $len > $max) throw new Error('Длина должна быть не более ' . $max);
 	}
 
 	protected function checkType($value, $type): void  {
@@ -103,47 +103,47 @@ class Validator {
 
 	protected function checkIn($value, $variants): void  {
 		if(!in_array($value, $variants))
-			throw new Error('Invalid value. Expected ' . implode(', ', $variants));
+			throw new Error('Неверное значение. Ожидается одно из: ' . implode(', ', $variants));
 	}
 
 	protected function checkMatch($value, $pattern): void  {
 		if(!preg_match($pattern, $value))
-			throw new Error('Invalid format');
+			throw new Error('Неверный формат');
 	}
 
 	protected function checkEmail($email): void  {
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-			throw new Error('Invalid email');
+			throw new Error('Неверный формат e-mail');
 	}
 
 	protected function checkIP($ip): void  {
 		if(!filter_var($ip, FILTER_VALIDATE_IP))
-			throw new Error('Invalid IP');
+			throw new Error('Неверный формат IP');
 	}
 
 	protected function checkDomain($domain): void  {
 		if(!filter_var($domain, FILTER_VALIDATE_DOMAIN))
-			throw new Error('Invalid domain');
+			throw new Error('Неверный формат домена');
 	}
 
 	protected function checkURL($url): void {
 		if(!filter_var($url, FILTER_VALIDATE_URL))
-			throw new Error('Invalid URL');
+			throw new Error('Неверный формат URL');
 	}
 
 	protected function checkDate($date): void {
 		if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date))
-			throw new Error('Invalid Date format');
+			throw new Error('Неверный формат даты');
 	}
 
 	protected function checkDateTime($value): void {
 		if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value))
-			throw new Error('Invalid DateTime format');
+			throw new Error('Неверный формат даты и времени');
 	}
 
 	protected function checkUUID($value): void {
 		if(preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $value))
-			throw new Error('Invalid UUID');
+			throw new Error('Неверный формат UUID');
 	}
 
 	protected function checkFilter($value, $filter): void {
