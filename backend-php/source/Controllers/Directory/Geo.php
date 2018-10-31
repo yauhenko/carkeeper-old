@@ -1,10 +1,12 @@
 <?php
 
-namespace Controllers;
+namespace Controllers\Directory;
 
 use Framework\DB\Client;
+use Framework\Validation\Validator;
+use Controllers\ApiController;
 
-class GeoDirectory extends ApiController {
+class Geo extends ApiController {
 
 	/**
 	 * @route /directory/geo/regions
@@ -19,6 +21,7 @@ class GeoDirectory extends ApiController {
 	 * @route /directory/geo/districts
 	 */
 	public function districts(): array {
+		Validator::validateData($this->params, ['region' => ['required' => true, 'type' => 'int']]);
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT id, name FROM geo_districts WHERE region = {$region} ORDER BY name', [
@@ -30,6 +33,7 @@ class GeoDirectory extends ApiController {
 	 * @route /directory/geo/cities
 	 */
 	public function cities(): array {
+		Validator::validateData($this->params, ['district' => ['required' => true, 'type' => 'int']]);
 		/** @var Client $db */
 		$db = $this->di->db;
 		return $db->find('SELECT id, type, name FROM geo_cities WHERE district = {$district} 

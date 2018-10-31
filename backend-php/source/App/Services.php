@@ -79,6 +79,7 @@ class Services {
 		        __DIR__ . '/../Entities/Geo',
 		        __DIR__ . '/../Controllers',
 		        __DIR__ . '/../Controllers/Garage',
+		        __DIR__ . '/../Controllers/Directory',
 		        __DIR__ . '/../Collections/Geo',
 	        ]);
 
