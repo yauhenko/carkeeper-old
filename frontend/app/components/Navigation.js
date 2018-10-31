@@ -6,23 +6,27 @@ import Uploader from "../store/Uploader";
 import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
+import {cdn} from "../modules/Url";
 
 @observer
 export default class Navigation extends Component {
   render () {
+    const {user, refs} = User.profile;
+
     return (
       <Container style={{backgroundColor: "#f5f5f5"}}>
         <Content>
           <List>
             <View style={styles.top}>
               <View style={{marginRight: 15}}>
-                {User.profile.avatar
-                  ? <Thumbnail large source={{uri: Uploader.get(User.profile.avatar)}}/>
+                {user.avatar
+                  ? <Thumbnail large source={{uri: cdn + refs.avatar.path}}/>
                   : <Thumbnail large source={thumb}/>
                 }
               </View>
+
               <View>
-                <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${User.profile.name}`}</Text>
+                <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name}`}</Text>
                 {Cars.cars.length ?
                   <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
                   :

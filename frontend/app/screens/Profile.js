@@ -7,18 +7,28 @@ import User from "../store/User";
 import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
-import {observable} from 'mobx';
+import {observable, action} from 'mobx';
 import Cars from "../store/Cars";
 import thumb from "../assets/images/avatar_thumb.png";
+import {cdn} from "../modules/Url";
 
 @observer
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
-  @observable name = User.profile.name;
-  @observable email = User.profile.email;
-  @observable city = User.profile.city ? User.profile.city.name : null;
+  @observable name = User.profile.user.name;
+  @observable email = User.profile.user.email;
+  @observable city = User.profile.user.city ? User.profile.refs.city.name : null;
+
+  @action changeAvatar = async type => {
+    this.avatarMenu = false;
+    const image = await Cropper[type]({cropperCircleOverlay: true});
+    await User.update({avatar: image.id});
+    User.profile.refs.avatar = image;
+  };
 
   render() {
+    const {user, refs} = User.profile;
+
     return (
       <Container>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
@@ -43,13 +53,13 @@ export default class Profile extends React.Component {
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
               <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
-                <Thumbnail style={customStyles.avatar} source={User.profile.avatar ? {uri: Uploader.get(User.profile.avatar)} : thumb} />
+                <Thumbnail style={customStyles.avatar} source={user.avatar ? {uri: cdn+refs.avatar.path} : thumb} />
                 <Icon style={customStyles.camera} name="camera"/>
               </TouchableOpacity>
             </View>
 
             <View>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.name}`}</Text>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${user.name}`}</Text>
               {Cars.cars.length
                 ?
                 <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
@@ -62,7 +72,7 @@ export default class Profile extends React.Component {
           <Form>
             <Item fixedLabel>
               <Label style={customStyles.label}>Телефон:</Label>
-              <Input style={customStyles.input} disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(User.profile.tel)} />
+              <Input style={customStyles.input} disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(user.tel)} />
             </Item>
 
             <Item fixedLabel>
@@ -86,11 +96,11 @@ export default class Profile extends React.Component {
           ?
             <ModalMenu onClose={()=>{this.avatarMenu = false}}>
               <List>
-                <ListItem onPress={() => {this.avatarMenu = false; Cropper.gallery({cropperCircleOverlay: true}).then((id)=>{User.update({avatar: id})})}}>
+                <ListItem onPress={() => {this.changeAvatar("gallery")}}>
                   <Text>Загрузить из галереи</Text>
                 </ListItem>
 
-                <ListItem onPress={() => {this.avatarMenu = false; Cropper.camera({cropperCircleOverlay: true}).then((id)=>{User.update({avatar: id})})}}>
+                <ListItem onPress={() => {this.changeAvatar("camera")}}>
                   <Text>Сделать снимок</Text>
                 </ListItem>
 
