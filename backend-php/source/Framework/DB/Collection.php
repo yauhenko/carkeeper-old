@@ -33,7 +33,8 @@ abstract class Collection {
 		Validator::validateEntity($entity);
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
-		$entity->id = $db->insert($this->_table, $entity->getData());
+		$id = $db->insert($this->_table, $entity->getData());
+		if(is_numeric($id)) $entity->id = $id;
 		return true;
 	}
 
@@ -156,6 +157,12 @@ abstract class Collection {
 		$entity = new $this->_entity;
 		$entity->setData($data);
 		return $entity;
+	}
+
+	public function exists(Entity $entity): bool {
+		/** @var Client $db */
+		$db = DI::getInstance()->db;
+		return (bool)$db->findOneBy($this->_table, 'id', $entity->id, ['id']);
 	}
 
 }

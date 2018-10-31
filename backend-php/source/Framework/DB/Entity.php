@@ -30,8 +30,11 @@ abstract class Entity {
 	 */
 	public function save(): bool {
 		$collection = $this->getCollection();
-		if($this->id) return $collection->update($this);
-		else return $collection->add($this);
+		if($collection->exists($this)) {
+			return $collection->update($this);
+		} else {
+			return $collection->add($this);
+		}
 	}
 
 	/**

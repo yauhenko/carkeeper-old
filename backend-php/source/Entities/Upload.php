@@ -10,7 +10,7 @@ class Upload extends Entity {
 
 	/**
 	 * @caption Id
-	 * @var UUID
+	 * @var string
 	 */
 	public $id;
 
