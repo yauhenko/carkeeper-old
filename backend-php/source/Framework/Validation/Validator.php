@@ -132,17 +132,17 @@ class Validator {
 	}
 
 	protected function checkDate($date): void {
-		if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date))
+		if(!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date))
 			throw new Error('Неверный формат даты');
 	}
 
 	protected function checkDateTime($value): void {
-		if(preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value))
+		if(!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value))
 			throw new Error('Неверный формат даты и времени');
 	}
 
 	protected function checkUUID($value): void {
-		if(preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $value))
+		if(!preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $value))
 			throw new Error('Неверный формат UUID');
 	}
 
