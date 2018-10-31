@@ -12,6 +12,7 @@ class Notifications {
     firebase.notifications().android.createChannel(channel);
 
     firebase.messaging().getToken().then(fcm => {AsyncStorage.setItem('fcm', fcm); this.fcm = fcm; User.fcm = fcm;});
+
     firebase.messaging().hasPermission().then(bool => {this.permission = bool});
 
     firebase.messaging().onMessage((message) => {

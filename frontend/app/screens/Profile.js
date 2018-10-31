@@ -15,6 +15,7 @@ import thumb from "../assets/images/avatar_thumb.png";
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
   @observable name = User.profile.name;
+  @observable email = User.profile.email;
   @observable city = User.profile.city ? User.profile.city.name : null;
 
   render() {
@@ -59,28 +60,26 @@ export default class Profile extends React.Component {
           </View>
 
           <Form>
-            <Item style={customStyles.label} stackedLabel>
-              <Label>Номер телефона</Label>
-              <Input disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(User.profile.tel)} />
+            <Item fixedLabel>
+              <Label style={customStyles.label}>Телефон:</Label>
+              <Input style={customStyles.input} disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(User.profile.tel)} />
             </Item>
 
-            <Item style={customStyles.label} stackedLabel>
-              <Label>Имя</Label>
-              <Input selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
-              <View style={{ right: 10, bottom: 15, position: "absolute"}} pointerEvents="none">
-                <Icon style={customStyles.editIcon} name="create"/>
-              </View>
+            <Item fixedLabel>
+              <Label style={customStyles.label}>Имя:</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
             </Item>
 
-            <Item style={customStyles.label} stackedLabel>
-              <Label>Город</Label>
-              <Input selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({city: this.city})}  onChangeText={(text)=>{this.city = text}} value={this.city || ""} />
-              <View style={{ right: 10, bottom: 15, position: "absolute"}} pointerEvents="none">
-                <Icon style={customStyles.editIcon} name="create"/>
-              </View>
+            <Item fixedLabel>
+              <Label style={customStyles.label}>E-mail:</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({email: this.email})}  onChangeText={(text)=>{this.city = text}} value={this.email || ""} />
             </Item>
+
+            {/*<Item fixedLabel>*/}
+              {/*<Label style={customStyles.label}>Город:</Label>*/}
+              {/*<Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({city: this.city})}  onChangeText={(text)=>{this.city = text}} value={this.city || ""} />*/}
+            {/*</Item>*/}
           </Form>
-
         </Content>
 
         {this.avatarMenu
@@ -121,15 +120,15 @@ const customStyles = StyleSheet.create({
     marginBottom: 30
   },
 
+  label : {
+    fontSize: 14,
+    marginBottom: 1
+  },
+
   avatar : {
     height: 100,
     width: 100,
     borderRadius: 100
-  },
-
-  editIcon : {
-    fontSize: 18,
-    color: "#ccc"
   },
 
   camera : {
@@ -141,5 +140,10 @@ const customStyles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     borderRadius: 50,
+  },
+
+  input: {
+    fontSize: 14
   }
+
 });

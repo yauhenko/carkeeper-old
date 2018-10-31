@@ -4,6 +4,8 @@ import Notification from "../components/Notification";
 import Logger from "./Logger";
 
 export default async (path, params = {}) => {
+    console.log({["request: " + path]: params});
+
     let result = await fetch( Url + "/" +path, {
       method: 'POST',
       headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -20,6 +22,6 @@ export default async (path, params = {}) => {
       throw error;
     }
 
-    console.log(data.result);
+    console.log({["response: " + path]: data.result});
     return data.result;
 }

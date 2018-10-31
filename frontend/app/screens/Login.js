@@ -7,19 +7,28 @@ import { observable, action} from 'mobx';
 import styles from "../styles";
 import Logo from "../assets/images/logo.png";
 import Logger from "../modules/Logger";
+import Notification from "../components/Notification";
 
 @observer
 export default class Login extends React.Component {
   @observable tel = "";
   @observable password = "";
+  @observable loading = false;
 
   @action change = (type, value) => {this[type] = value};
 
-  @action submitHandler = () => {
-      User.login({tel: this.tel, password: this.password}).then(() => {
+  @action submitHandler = async () => {
+      this.loading = true;
+
+      try {
+        await User.login({tel: this.tel, password: this.password});
         Logger.info("Пользоваль авторизовался", String(this.tel));
         AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
-      });
+      } catch (e) {
+        Notification(e);
+      }
+
+      this.loading = false
   };
 
   componentDidMount() {
@@ -32,8 +41,7 @@ export default class Login extends React.Component {
     return (
       <Container>
         <StatusBar backgroundColor={styles.statusBarColor} barStyle="light-content"/>
-        <Content refreshControl={<RefreshControl refreshing={User.loading}/>} contentContainerStyle={customStyles.container}>
-
+        <Content refreshControl={<RefreshControl refreshing={this.loading}/>} contentContainerStyle={customStyles.container}>
           <View>
             <View style={{alignItems: "center", paddingBottom: 20}}>
               <Image style={{width: 125, height: 74}} source={Logo}/>
@@ -56,7 +64,7 @@ export default class Login extends React.Component {
               <Input selectionColor={styles.selectionColor} style={customStyles.input} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password ? String(this.password) : ""} />
             </Item>
 
-            <Button disabled={User.loading} onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={{color: "#000"}}>Войти</Text></Button>
+            <Button disabled={this.loading} onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={{color: "#000"}}>Войти</Text></Button>
           </Form>
           <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Регистрация</Text>
         </Content>
@@ -86,7 +94,7 @@ const customStyles = StyleSheet.create({
   },
 
   item : {
-    borderBottomWidth: 0.4,
+    borderBottomWidth: 0.2,
     borderBottomColor: "#fff",
     marginLeft: 0
   },
