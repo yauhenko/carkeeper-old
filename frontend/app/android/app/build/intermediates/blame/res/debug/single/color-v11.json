@@ -1,10 +1,10 @@
 [
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_light.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/color-v11/abc_background_cache_hint_selector_material_light.xml"
+        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.0.1.aar\\a757c837da24644bc4faf8374e853412\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     },
     {
-        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/color-v11/abc_background_cache_hint_selector_material_dark.xml",
-        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/color-v11/abc_background_cache_hint_selector_material_dark.xml"
+        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.0.1.aar\\a757c837da24644bc4faf8374e853412\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     }
 ]

@@ -1,33 +1,81 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, RefreshControl, View, Alert} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Label, Input, Form} from 'native-base';
 import styles from "../styles"
 import User from "../store/User";
-import Uploader from "../store/Uploader";
 import Cropper from "../modules/Cropper";
 import ModalMenu from "../components/ModalMenu";
-import {observable, action} from 'mobx';
+import {observable, action, toJS} from 'mobx';
 import Cars from "../store/Cars";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
+import Notification from "../components/Notification";
+
 
 @observer
 export default class Profile extends React.Component {
   @observable avatarMenu = false;
-  @observable name = User.profile.user.name;
-  @observable email = User.profile.user.email;
-  @observable city = User.profile.user.city ? User.profile.refs.city.name : null;
+
+  @observable profile = toJS(User.profile);
+  @observable changed = false;
+  @observable loading = false;
+
+  @action change = (field, value) => {
+    this.profile.user[field] = value || null;
+    this.changed = true;
+  };
+
+  @action update = async () => {
+    this.loading = true;
+
+    try {
+      await User.update(this.profile);
+      User.profile = await User.info();
+      Notification("Профиль обновлен");
+      this.changed = false;
+    } catch (e) {
+      Notification(e);
+    }
+
+    this.loading = false;
+  };
 
   @action changeAvatar = async type => {
     this.avatarMenu = false;
-    const image = await Cropper[type]({cropperCircleOverlay: true});
-    await User.update({avatar: image.id});
-    User.profile.refs.avatar = image;
+    this.loading = true;
+
+    try {
+      const image = await Cropper[type]({cropperCircleOverlay: true});
+      this.profile.refs.avatar = image;
+      this.profile.user.avatar = image.id;
+      this.changed = true;
+    } catch (e) {
+      Notification(e)
+    }
+
+    this.loading = false;
   };
 
+  @action refresh = async () => {
+    this.loading = true;
+    User.profile = await User.info();
+    this.loading = false;
+  };
+
+  componentDidMount() {
+    const blur = this.props.navigation.addListener('willBlur', () => {
+          blur.remove();
+          if(!this.changed) return;
+          Alert.alert(null, 'Сохранить изменения в профиле?', [
+          {text: 'Не сохранять', onPress: () => {}, style: 'cancel'},
+          {text: 'Сохранить', onPress: () => {this.update()}}],
+          {cancelable: false })
+    });
+  }
+
   render() {
-    const {user, refs} = User.profile;
+    let {user, refs} = this.profile;
 
     return (
       <Container>
@@ -43,23 +91,24 @@ export default class Profile extends React.Component {
           </Body>
 
           <Right>
-            <Button transparent>
-              <Icon name="more"/>
-            </Button>
+            {this.changed &&
+            <Button onPress={this.update} title={"Сохранить"} transparent>
+              <Icon name='checkmark'/>
+            </Button>}
           </Right>
         </Header>
 
-        <Content contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
               <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
-                <Thumbnail style={customStyles.avatar} source={user.avatar ? {uri: cdn+refs.avatar.path} : thumb} />
+                <Thumbnail style={customStyles.avatar} source={refs.avatar ? {uri: cdn + refs.avatar.path} : thumb} />
                 <Icon style={customStyles.camera} name="camera"/>
               </TouchableOpacity>
             </View>
 
             <View>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${user.name}`}</Text>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.user.name}`}</Text>
               {Cars.cars.length
                 ?
                 <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
@@ -71,24 +120,24 @@ export default class Profile extends React.Component {
 
           <Form>
             <Item fixedLabel>
-              <Label style={customStyles.label}>Телефон:</Label>
-              <Input style={customStyles.input} disabled={true} keyboardType="numeric" onChangeText={(text)=>{}} value={String(user.tel)} />
+              <Label style={customStyles.label}>Имя:</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={value => {this.change("name", value)}} value={user.name || ""} />
             </Item>
 
             <Item fixedLabel>
-              <Label style={customStyles.label}>Имя:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({name: this.name})}  onChangeText={(text)=>{this.name = text}} value={this.name || ""} />
+              <Label style={customStyles.label}>Телефон:</Label>
+              <Input style={customStyles.input} keyboardType="numeric" onChangeText={value => {this.change("tel", value)}} value={String(user.tel || "")} />
+            </Item>
+
+            <Item fixedLabel>
+              <Label style={customStyles.label}>Пароль:</Label>
+              <Input placeholder="Новый пароль" secureTextEntry style={customStyles.input} onChangeText={value => {this.change("password", value)}} value={String(user.password || "")} />
             </Item>
 
             <Item fixedLabel>
               <Label style={customStyles.label}>E-mail:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({email: this.email})}  onChangeText={(text)=>{this.city = text}} value={this.email || ""} />
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={value => {this.change("email", value)}} value={user.email || ""} />
             </Item>
-
-            {/*<Item fixedLabel>*/}
-              {/*<Label style={customStyles.label}>Город:</Label>*/}
-              {/*<Input style={customStyles.input} selectionColor={styles.selectionColor} onSubmitEditing={()=>User.update({city: this.city})}  onChangeText={(text)=>{this.city = text}} value={this.city || ""} />*/}
-            {/*</Item>*/}
           </Form>
         </Content>
 

@@ -94,10 +94,15 @@ class User {
     this.ready = true;
   };
 
-  //Доделать
+  /**
+   * Обновление профиля пользователя
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
   @action update = async (data = {}) => {
-    await Api('account/update', {user: data});
+    return await Api('account/update', data);
   };
+
 
   @action ping = async (silent = false) => {
     if(!App.connect) return false;
