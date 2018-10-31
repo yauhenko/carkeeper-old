@@ -4,6 +4,7 @@ namespace App;
 
 use Entities\Car;
 use Entities\JournalRecord;
+use Entities\User;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
 
@@ -24,6 +25,11 @@ class References {
 
 		$this->rules[JournalRecord::class] = [
 			'image' => ['table' => 'uploads']
+		];
+
+		$this->rules[User::class] = [
+			'avatar' => ['table' => 'uploads'],
+			'city' => ['table' => 'geo_cities', 'fields' => ['id', 'name', 'type']],
 		];
 
 	}

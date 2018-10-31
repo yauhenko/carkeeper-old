@@ -144,19 +144,13 @@ class Auth extends ApiController {
 		$this->auth();
 		$data = $this->user->getData();
 
-		/** @var City|null $city */
-		if($city = $this->user->ref('city')) {
-			/** @var District|null $district */
-			$district = $city->ref('district');
-			/** @var Region|null $district */
-			$region = $city->ref('region');
-			$data['region'] = $region->getData();
-			$data['district'] = $district->getData();
-			$data['city'] = $city->getData();
-		}
-
 		unset($data['password']);
-		return $data;
+
+		return [
+			'user' => $data,
+			'refs' => (object)$this->di->refs->single($this->user)
+		];
+
 	}
 
 	/**
