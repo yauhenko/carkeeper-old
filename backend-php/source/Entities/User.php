@@ -61,7 +61,10 @@ class User extends Entity {
 	 */
 	public $city = null;
 
-	/** @var string|null  */
+	/**
+	 * @validate type: string; length: [100, 255]
+	 * @var string|null
+	 */
 	public $fcm = null;
 
 	/** @var string */

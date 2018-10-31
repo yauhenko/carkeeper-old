@@ -28,7 +28,7 @@ class Auth extends ApiController {
 		Validator::validateData($this->params, [
 			'tel' => ['required' => true],
 			'password' => ['required' => true],
-			'fcm' => ['type' => 'string', 'length' => [50, 100]],
+			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
@@ -41,10 +41,10 @@ class Auth extends ApiController {
 		$user = $Users->findOneBy('tel', $this->params->tel);
 
 		if(!$user)
-			throw new \Exception('User does not exists', 400);
+			throw new \Exception('Пользователь не существует', 400);
 
 		if(!Password::checkHash($this->params->password, $user->password))
-			throw new \Exception('Invalid password', 403);
+			throw new \Exception('Неверный пароль', 403);
 
 		if($this->params->fcm) {
 			$user->fcm = $this->params->fcm;
@@ -88,7 +88,7 @@ class Auth extends ApiController {
 
 		Validator::validateData($this->params, [
 			'user' => ['required' => true],
-			'fcm' => ['type' => 'string', 'length' => [50, 100]],
+			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
@@ -99,10 +99,10 @@ class Auth extends ApiController {
 
 		$users = new Users;
 		if($ex = $users->findOneBy('tel', $data['tel']))
-			throw new \Exception('Phone number already registered', 40001);
+			throw new \Exception('Телефон уже зарегистрирован', 40001);
 
 		if($ex = $users->findOneBy('email', $data['email']))
-			throw new \Exception('Email already registered', 40002);
+			throw new \Exception('E-mail уже зарегистрирован', 40002);
 
 		$user = new User;
 		$user->setData($data);
