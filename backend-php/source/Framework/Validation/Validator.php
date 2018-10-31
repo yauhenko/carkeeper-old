@@ -2,7 +2,9 @@
 
 namespace Framework\Validation;
 
+use Framework\Annotations\Validations;
 use Framework\DB\Entity;
+use Framework\Patterns\DI;
 
 class Validator {
 
@@ -12,9 +14,12 @@ class Validator {
 		return $this->errors;
 	}
 
-	public static function validateEntity(Entity $entity, array $rules, bool $silent = false): ?array {
+	public static function validateEntity(Entity $entity, bool $silent = false): ?array {
+		/** @var Validations $validations */
+		$validations = DI::getInstance()->get('validations');
+		$rules = $validations->getRules($entity);
 		$validator = new self;
-		$validator->validate($entity->getData(), $rules, $silent);
+		$validator->validate($entity->getData() ?: [], $rules ?: [], $silent);
 		return $validator->getErrors() ?: null;
 	}
 

@@ -4,6 +4,7 @@ namespace Controllers\Garage;
 
 use Controllers\ApiController;
 use Entities\Car;
+use Framework\Validation\Validator;
 
 class Cars extends ApiController {
 
@@ -47,6 +48,17 @@ class Cars extends ApiController {
 	 */
 	public function add() {
 		$this->auth();
+
+		Validator::validateData($this->params, [
+			'car' => [
+				'required' => true,
+				'sub' => [
+					'mark' => ['required' => true, 'type' => 'int'],
+					'model' => ['required' => true, 'type' => 'int'],
+					'year' => ['required' => true, 'type' => 'int', 'min' => 1990, 'max' => (int)date('Y')],
+				]
+			]
+		]);
 
 		$car = new Car;
 		$car->setData((array)$this->params->car);

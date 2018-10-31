@@ -8,52 +8,54 @@ use Framework\DB\Entity;
 class User extends Entity {
 
 	/**
-	 * @caption Id
-	 * @required
 	 * @var int|null
 	 */
 	public $id;
 
-//	/**
-//	 * @caption Role
-//	 * @validate required; in: seller, buyer, admin
-//	 * @var string
-//	 */
-//	public $role = 'buyer';
-
+	/**
+	 * @var bool
+	 */
 	public $active = true;
 
 	/**
-	 * @caption Mobile phone
-	 * @validate match: /^375(25|29|33|44)[0-9]{7}$/
+	 * @validate required; match: /^375(25|29|33|44)[0-9]{7}$/
 	 * @var int
 	 */
 	public $tel;
 
 	/**
-	 * @caption E-mail
-	 * @validate email
+	 * @validate required; email
 	 * @var string
 	 */
 	public $email;
 
-	/** @var string|null */
+	/**
+	 * @validate match: /^[a-z][a-z0-9\.\-\_]{2,20}$/i
+	 * @var string|null
+	 */
 	public $username = null;
 
-	/** @var string */
+	/**
+	 * @validate required
+	 * @var string
+	 */
 	public $password;
 
-	/** @var string */
+	/**
+	 * @validate required; length: [2, 30]
+	 * @var string
+	 */
 	public $name;
 
 	/**
-	 * @caption Avatar
+	 * @validate uuid
 	 * @ref Entities\Upload
 	 * @var string|null
 	 */
 	public $avatar = null;
 
 	/**
+	 * @validate type: int
 	 * @ref Entities\Geo\City
 	 * @var int|null
 	 */

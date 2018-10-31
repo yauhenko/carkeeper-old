@@ -179,16 +179,24 @@ class Parser {
 
 	protected function parsePairs(string $data) {
 		$props = [];
-		foreach (explode(' ', $data) as $arg) {
-			[$key, $val] = explode('=', $arg, 2);
+		foreach (explode(';', $data) as $arg) {
+			[$key, $val] = explode(':', $arg, 2);
 			$key = trim($key);
+			$val = trim($val);
 			if(!$key) continue;
 			if($val === 'true') $val = true;
 			elseif($val === 'false') $val = false;
 			elseif($val === 'null') $val = null;
 			elseif(is_numeric($val)) $val = (float)$val;
 			elseif($val === null) $val = true;
-			$props[$key] = trim($val);
+			elseif($val{0} === '[') {
+				$val = str_replace(['[', ']'], '', $val);
+				$val = explode(',', $val);
+				foreach ($val as &$v) {
+					$v = trim($v);
+				}
+			} elseif ($val === '') $val = true;
+			$props[$key] = $val;
 		}
 		return $props;
 	}

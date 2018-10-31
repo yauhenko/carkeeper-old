@@ -4,6 +4,7 @@ namespace Framework\DB;
 
 use Framework\Patterns\DI;
 use Framework\DB\Errors\{CommonError, ConstraintError};
+use Framework\Validation\Validator;
 
 /**
  * Class Collection
@@ -29,6 +30,7 @@ abstract class Collection {
 	 */
 	public function add(Entity $entity): bool {
 		$this->checkEntity($entity);
+		Validator::validateEntity($entity);
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
 		$entity->id = $db->insert($this->_table, $entity->getData());
@@ -46,6 +48,7 @@ abstract class Collection {
 	 */
 	public function update(Entity $entity) {
 		$this->checkEntity($entity);
+		Validator::validateEntity($entity);
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
 		return $db->update($this->_table, $entity->getData(), 'id', $entity->id);

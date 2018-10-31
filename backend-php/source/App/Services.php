@@ -4,6 +4,7 @@ namespace App;
 
 use Framework\Annotations\Parser;
 use Framework\Annotations\Routes;
+use Framework\Annotations\Validations;
 use Framework\DB\Client;
 use Framework\Cache\{File, Redis};
 use Framework\Patterns\DI;
@@ -80,6 +81,10 @@ class Services {
 		        __DIR__ . '/../Controllers/Garage',
 		        __DIR__ . '/../Collections/Geo',
 	        ]);
+
+        })->set('validations', function () {
+
+			return new Validations;
 
         })->set('cache', function (DI $di) {
 

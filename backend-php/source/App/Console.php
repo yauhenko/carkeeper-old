@@ -22,6 +22,7 @@ class Console extends AbstractConsoleApplication {
 		} elseif($cmd === 'warm') {
 			$this->cacheFlush();
 			$this->di->get('annotations');
+			$this->di->get('validations');
 			$this->di->get('routes');
 			$this->println('<b><green>[OK]<n> Cache warmed</>');
 
