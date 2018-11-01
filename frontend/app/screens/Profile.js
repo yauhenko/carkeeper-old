@@ -76,6 +76,7 @@ export default class Profile extends React.Component {
 
   render() {
     let {user, refs} = this.profile;
+    let cars = Cars.cars;
 
     return (
       <Container>
@@ -101,7 +102,7 @@ export default class Profile extends React.Component {
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
-              <TouchableOpacity onPressIn={()=>{this.avatarMenu = true}}>
+              <TouchableOpacity onPressIn={() => {this.avatarMenu = true}}>
                 <Thumbnail style={customStyles.avatar} source={refs.avatar ? {uri: cdn + refs.avatar.path} : thumb} />
                 <Icon style={customStyles.camera} name="camera"/>
               </TouchableOpacity>
@@ -109,9 +110,9 @@ export default class Profile extends React.Component {
 
             <View>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.user.name}`}</Text>
-              {Cars.cars.length
+              {cars.cars.length
                 ?
-                <Text style={{color: "#fff", marginTop: 5}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+                <Text style={{color: "#fff", marginTop: 5}}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
                 :
                 <Text style={{color: "#fff", marginTop: 5, width: 180}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
               }
@@ -154,7 +155,7 @@ export default class Profile extends React.Component {
                 </ListItem>
 
                 <ListItem onPress={() => {this.avatarMenu = false}}>
-                  <Text>Удалить</Text>
+                  <Text>Отмена</Text>
                 </ListItem>
               </List>
             </ModalMenu>

@@ -7,10 +7,6 @@ class Cars {
     refs: {}
   };
 
-  @observable marks = [];
-
-
-
   /**
    * Получение списка машин в гараже
    * @returns {Promise<*>}
@@ -26,6 +22,55 @@ class Cars {
    */
   @action getMarks = async (data = {}) => {
     return await Api('directory/cars/marks', data)
+  };
+
+  /**
+   * Получение моделей автомобиля
+   * @param mark
+   * @returns {Promise<*>}
+   */
+  @action getModels = async (mark = null) => {
+    return await Api('directory/cars/models', mark);
+  };
+
+  /**
+   * Получение поколений автомобиля
+   * @param model
+   * @returns {Promise<*>}
+   */
+  @action getGenerations = async (model = null) => {
+    return await Api('directory/cars/generations', model);
+  };
+
+  /**
+   * Получение серий автомобиля
+   * @param generation
+   * @returns {Promise<*>}
+   */
+  @action getSeries = async (generation = null) => {
+    return await Api('directory/cars/series', generation);
+  };
+
+  /**
+   * Получение модификаций автомобиля
+   * @param serie
+   * @returns {Promise<*>}
+   */
+  @action getModifications = async (serie) => {
+    return await Api('directory/cars/modifications', serie)
+  };
+
+  /**
+   * Добавление автомобиля в гараж
+   * @param obj
+   * @returns {Promise<*>}
+   */
+  @action addCar = async (obj) => {
+    return await Api('garage/cars/add', {car: obj})
+  };
+
+  @action getCar = async id => {
+    return await Api('garage/cars/get', {id: id});
   };
 
   // @observable initialCar = Object.freeze({
@@ -76,41 +121,9 @@ class Cars {
   //   return Api('garage/cars/delete', {id}).then((response) => {
   //   }).catch(Notification);
   // };
-  //
-  // @action getMarks = () => {
-  //   return Api('directory/cars/marks', {}).then((response) => {
-  //     this.marks = response;
-  //   }).catch(Notification);
-  // };
-  //
-  // @action getModels = () => {
-  //   if(!this.car.mark) return;
-  //   return Api('directory/cars/models', {mark: this.car.mark}).then((response) => {
-  //     this.models = response;
-  //   }).catch(Notification);
-  // };
-  //
-  // @action getGenerations = () => {
-  //   if(!this.car.model || this.car.year.length !== 4) return;
-  //   return Api('directory/cars/generations', {model: this.car.model, year: this.car.year }).then((response) => {
-  //     this.generations = response || [];
-  //   }).catch(Notification);
-  // };
-  //
-  // @action getSeries = () => {
-  //   if(!this.car.generation) return;
-  //   return Api('directory/cars/series', {generation: this.car.generation}).then((response) => {
-  //     this.series = response || [];
-  //   }).catch(Notification);
-  // };
-  //
-  // @action getModifications = () => {
-  //   if(!this.car.serie) return;
-  //   return Api('directory/cars/modifications', {serie: this.car.serie}).then((response) => {
-  //     this.modifications = response || [];
-  //   }).catch(Notification);
-  // };
-  //
+
+
+
   // @action checkupUpdate = async (data = {}) => {
   //   return Api('garage/cars/checkup/update', data).then((response) => {
   //   }).catch(Notification);

@@ -1,12 +1,17 @@
 import React from 'react';
-import {Text, RefreshControl, Modal, View, Picker} from 'react-native';
+import {Text, RefreshControl, Modal, View, Dimensions, Image} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Input, Form} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, ActionSheet, Form} from 'native-base';
 import styles from "../../styles"
 import Cars from "../../store/Cars";
-import Uploader from "../../store/Uploader";
 import { observable, action} from 'mobx';
 import Notification from "../../components/Notification";
+import Select from "../../components/Form/Select";
+import Input from "../../components/Form/Input";
+import ModalMenu from "../../components/ModalMenu";
+import Cropper from "../../modules/Cropper";
+import {cdn} from "../../modules/Url";
+
 
 @observer
 export default class Garage extends React.Component {
@@ -16,14 +21,117 @@ export default class Garage extends React.Component {
 
   @observable loading = false;
 
+  @observable photoMenu = false;
+  @observable photo = false;
+
+  @observable car = {};
+
+  @action changeCar = (key, value) => {
+    this.car[key] = value;
+
+    if(key === "mark") {
+      this.car.model = null;
+      this.car.generation = null;
+      this.car.serie = null;
+      this.car.modification = null;
+    }
+
+    if(key === "model") {
+      this.car.generation = null;
+      this.car.serie = null;
+      this.car.modification = null;
+    }
+
+    if(key === "generation") {
+      this.car.serie = null;
+      this.car.modification = null;
+    }
+
+    if(key === "serie") {
+      this.car.modification = null;
+    }
+  };
+
+
   @observable modal = false;
   @action toggleModal = bool => {this.modal = bool};
 
   @action cars = async () => {
     this.loading = true;
-
     try {
       Cars.cars = await Cars.getCars();
+    } catch (e) {
+      Notification(e)
+    }
+    this.loading = false;
+  };
+
+  @observable marksButtons = [];
+  @action getMarks = async () => {
+    const marks = await Cars.getMarks();
+    this.marksButtons = marks.map(item => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+  };
+
+  @observable modelsButtons = [];
+  @action getModels = async (id) => {
+    try {
+      const models = await Cars.getModels({mark: Number(id)});
+      this.modelsButtons = models.map(item => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+    } catch (e) {
+      Notification(e)
+    }
+  };
+
+  @observable generationsButtons = [];
+  @action getGenerations = async (id) => {
+    try {
+      const generations = await Cars.getGenerations({model: Number(id)});
+      this.generationsButtons = generations.map(item => {return {id: item.id, text: item.name + " (" + item.year_begin + (item.year_end ? ` - ${item.year_end}` : "") + ")", icon: "radio-button-off"}});
+    } catch (e) {
+      Notification(e)
+    }
+  };
+
+  @observable seriesButtons = [];
+  @action getSeries = async (id) => {
+    try {
+      const series = await Cars.getSeries({generation: Number(id)});
+      this.seriesButtons = series.map(item => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+    } catch (e) {
+      Notification(e)
+    }
+  };
+
+  @observable modificationsButtons = [];
+  @action getModifications = async (id) => {
+    try {
+      const modifications = await Cars.getModifications({serie: Number(id)});
+      this.modificationsButtons = modifications.map(item => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+    } catch (e) {
+      Notification(e)
+    }
+  };
+
+  @action addCar = async () => {
+    try {
+      await Cars.addCar(this.car);
+      this.toggleModal(false);
+      this.car = {};
+      this.photo = null;
+      this.cars();
+    } catch (e) {
+      Notification(e)
+    }
+  };
+
+  @action changePhoto = async type => {
+    this.photoMenu = false;
+    this.loading = true;
+
+    try {
+      const image = await Cropper[type]({cropperCircleOverlay: false});
+      this.car.image = image.id;
+      this.photo = image.path;
     } catch (e) {
       Notification(e)
     }
@@ -46,20 +154,20 @@ export default class Garage extends React.Component {
             <Title><Text style={styles.headerTitle}>Гараж</Text></Title>
           </Body>
           <Right>
-            <Button title={"Добавить"} onPress={()=>this.toggleModal(true)} transparent>
+            <Button title={"Добавить"} onPress={()=>{this.toggleModal(true)}} transparent>
               <Icon name='add' />
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={this.cars}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.container}>
           <List>
             {cars && cars.map(car => {
               return(
-                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id})} thumbnail key={car.id}>
+                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark], model: refs.model[car.model].name, })} thumbnail key={car.id}>
                   <Left>
                     {car.image ?
-                      <Thumbnail source={{uri: Uploader.get(car.image)}}/>
+                      <Thumbnail source={{uri:  cdn + refs.image[car.image].path}}/>
                       :
                       <Thumbnail source={require('../../assets/images/car_stub.png')}/>
                     }
@@ -67,8 +175,8 @@ export default class Garage extends React.Component {
 
                   <Body>
                     <Text>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
-                    <Text style={styles.textNote}>{refs.serie[car.serie].name} {refs.generation[car.generation].name}</Text>
-                    <Text style={styles.textNote}>{refs.modification[car.modification].name}</Text>
+                    <Text style={styles.textNote}>{Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name}</Text>
+                    <Text style={styles.textNote}>{Boolean(car.modification) && refs.modification[car.modification].name}</Text>
                   </Body>
 
                   <Right style={{paddingLeft: 10}}>
@@ -81,8 +189,7 @@ export default class Garage extends React.Component {
 
           {!this.loading && !Cars.cars.cars.length && <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text>}
 
-
-          <Modal animationType="slide" onShow={Cars.getMarks} transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
+          <Modal animationType="slide" onShow={()=>this.getMarks()} transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
             <Container>
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
                 <Left>
@@ -94,76 +201,69 @@ export default class Garage extends React.Component {
                   <Title><Text style={styles.headerTitle}>Добавить автомобиль</Text></Title>
                 </Body>
                 <Right>
-                  <Button onPress={()=>{}} title={"Сохранить"} transparent>
+                  <Button onPress={()=>{this.addCar()}} title={"Сохранить"} transparent>
                     <Icon name='checkmark'/>
                   </Button>
                 </Right>
               </Header>
-              
 
-              <Content>
-                <Form>
-                  {/*{Cars.marks.length*/}
-                    {/*?*/}
-                    {/*<View style={styles.pickerWrapper}>*/}
-                      {/*<Picker textStyle={{fontSize: 6}} selectedValue={Cars.car.mark} onValueChange={(value)=>{Cars.car.mark = value; Cars.getModels()}}>*/}
-                        {/*<Picker.Item label="Марка автомобиля" value="" />*/}
-                        {/*{Cars.marks.map((car)=>{*/}
-                          {/*return <Picker.Item key={car.id} label={car.name} value={car.id} />*/}
-                        {/*})}*/}
-                      {/*</Picker>*/}
-                    {/*</View>*/}
-                    {/*:*/}
-                    {/*null*/}
-                  {/*}*/}
+              <Content refreshControl={<RefreshControl refreshing={this.loading}/>}>
+                <List>
+                  <ListItem itemDivider>
+                    <Text>Какой у Вас автомобиль?</Text>
+                  </ListItem>
+                </List>
 
-                  {/*{Cars.models.length*/}
-                    {/*?*/}
-                    {/*<View style={styles.pickerWrapper}>*/}
-                      {/*<Picker style={Boolean(Cars.car.mark) ? {} : styles.pickerDisabled} enabled={Boolean(Cars.car.mark)} selectedValue={Cars.car.model} onValueChange={(value)=>{Cars.car.model = value}}>*/}
-                        {/*<Picker.Item label="Модель автомобиля" value=""/>*/}
-                        {/*{Cars.models.map(model => <Picker.Item key={model.id} label={model.name} value={model.id} />)}*/}
-                      {/*</Picker>*/}
-                    {/*</View>*/}
-                    {/*:*/}
-                    {/*null*/}
-                  {/*}*/}
+                <Select onChange={selected=>{this.changeCar("mark", selected.id); this.getModels(selected.id)}} value={this.car.mark} buttons={this.marksButtons} actionName="Выберите марку автомобиля" title="Марка"/>
+                <Select disabled={!Boolean(this.car.mark)} onChange={selected=>{this.changeCar("model", selected.id); this.getGenerations(selected.id)}} value={this.car.model} buttons={this.modelsButtons} actionName="Выберите модель автомобиля" title="Модель"/>
+                <Select disabled={!Boolean(this.car.model)} onChange={selected=>{this.changeCar("generation", selected.id); this.getSeries(selected.id)}} value={this.car.generation} buttons={this.generationsButtons} actionName="Выберите поколение автомобиля" title="Поколение"/>
+                <Select disabled={!Boolean(this.car.generation)} onChange={selected=>{this.changeCar("serie", selected.id); this.getModifications(selected.id)}} value={this.car.serie} buttons={this.seriesButtons} actionName="Выберите серию автомобиля" title="Серия"/>
+                <Select disabled={!Boolean(this.car.serie)} onChange={selected=>{this.changeCar("modification", selected.id)}} value={this.car.modification} buttons={this.modificationsButtons} actionName="Выберите модификацию автомобиля" title="Модификация"/>
 
-                  {/*<Item style={styles.itemInput}>*/}
-                    {/*<Input keyboardType="numeric" maxLength={4} placeholderTextColor={"#d6d7da"} disabled={!Boolean(Cars.car.model)} placeholder={"Год автомобиля"} onChangeText={(text)=>{Cars.car.year = text; Cars.getGenerations()}} value={Cars.car.year} />*/}
-                  {/*</Item>*/}
+                <List style={{paddingTop: 40}}>
+                  <ListItem itemDivider>
+                    <Text>Когда был выпущен?</Text>
+                  </ListItem>
+                </List>
 
-                  {/*<View style={styles.pickerWrapper}>*/}
-                    {/*<Picker style={Boolean(Cars.car.year.length === 4) ? {} : styles.pickerDisabled} enabled={Boolean(Cars.car.year.length === 4)} selectedValue={Cars.car.generation} onValueChange={(value)=>{Cars.car.generation = value; Cars.getSeries();}}>*/}
-                      {/*<Picker.Item label="Поколение" value=""/>*/}
-                      {/*{Cars.generations.map((generation) => {*/}
-                        {/*return <Picker.Item key={generation.id} label={`${generation.name} (${generation.year_begin} ... ${generation.year_end})`} value={generation.id} />*/}
-                      {/*})}*/}
-                    {/*</Picker>*/}
-                  {/*</View>*/}
+                <Input value={this.car.year} onChange={value => {this.changeCar("year", Number(value))}} title="Год выпуска"/>
 
-                  {/*<View style={styles.pickerWrapper}>*/}
-                    {/*<Picker style={Boolean(Cars.car.generation) ? {} : styles.pickerDisabled} enabled={Boolean(Cars.car.generation)} selectedValue={Cars.car.serie} onValueChange={(value)=>{Cars.car.serie = value; Cars.getModifications()}}>*/}
-                      {/*<Picker.Item label="Серия" value=""/>*/}
-                      {/*{Cars.series.map((serie) => {*/}
-                        {/*return <Picker.Item key={serie.id} label={`${serie.name}`} value={serie.id} />*/}
-                      {/*})}*/}
-                    {/*</Picker>*/}
-                  {/*</View>*/}
+                <List style={{paddingTop: 40}}>
+                  <ListItem itemDivider>
+                    <Text>Есть фотография автомобиля?</Text>
+                  </ListItem>
+                </List>
 
-                  {/*<View style={styles.pickerWrapper}>*/}
-                    {/*<Picker style={Boolean(Cars.car.serie) ? {} : styles.pickerDisabled} enabled={Boolean(Cars.car.serie)} selectedValue={Cars.car.modification} onValueChange={(value)=>{Cars.car.modification = value}}>*/}
-                      {/*<Picker.Item label="Модификация" value=""/>*/}
-                      {/*{Cars.modifications.map((modification) => {*/}
-                        {/*return <Picker.Item key={modification.id} label={`${modification.name}`} value={modification.id} />*/}
-                      {/*})}*/}
-                    {/*</Picker>*/}
-                  {/*</View>*/}
-                </Form>
+                {this.photo
+                  ?
+                  <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}} source={{uri: cdn + this.photo}}/>
+                  :
+                  <Button block light style={{marginTop: 10, marginLeft: 12, marginRight: 12, marginBottom: 12}} disabled={this.loading} title="Добавить фотографию" onPress={()=>{this.photoMenu = true}}><Text>Добавить фотографию</Text></Button>
+                }
               </Content>
+
+              {this.photoMenu
+                ?
+                <ModalMenu onClose={()=>{this.photoMenu = false}}>
+                  <List>
+                    <ListItem onPress={() => {this.changePhoto("gallery")}}>
+                      <Text>Загрузить из галереи</Text>
+                    </ListItem>
+
+                    <ListItem onPress={() => {this.changePhoto("camera")}}>
+                      <Text>Сделать снимок</Text>
+                    </ListItem>
+
+                    <ListItem onPress={() => {this.photoMenu = false}}>
+                      <Text>Отмена</Text>
+                    </ListItem>
+                  </List>
+                </ModalMenu>
+                :
+                null
+              }
             </Container>
           </Modal>
-
         </Content>
       </Container>
     );

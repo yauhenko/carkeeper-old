@@ -1,18 +1,18 @@
 [
     {
-        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_btn_colored_material.xml",
-        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.0.1.aar\\a757c837da24644bc4faf8374e853412\\res\\drawable-v21\\abc_btn_colored_material.xml"
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable-v21/abc_btn_colored_material.xml"
     },
     {
-        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_action_bar_item_background_material.xml",
-        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.0.1.aar\\a757c837da24644bc4faf8374e853412\\res\\drawable-v21\\abc_action_bar_item_background_material.xml"
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable-v21/abc_edit_text_material.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable-v21/abc_edit_text_material.xml"
     },
     {
-        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.0.1.aar\\a757c837da24644bc4faf8374e853412\\res\\drawable-v21\\abc_edit_text_material.xml"
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/appcompat-v7-26.0.1.aar/d9f85cfb85d92c7551ec9da307f4b983/res/drawable-v21/abc_action_bar_item_background_material.xml"
     },
     {
-        "merged": "D:\\auto\\frontend\\app\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
-        "source": "C:\\Users\\imbal\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-26.0.1.aar\\9d02c9f6bc0fbfca95f118504fb0993e\\res\\drawable-v21\\notification_action_background.xml"
+        "merged": "/home/elfexor/WORK/auto/frontend/app/android/app/build/intermediates/res/merged/debug/drawable-v21/notification_action_background.xml",
+        "source": "/home/elfexor/.gradle/caches/transforms-1/files-1.1/support-compat-26.0.1.aar/6d9986c7c5c384103316ef67bf15444a/res/drawable-v21/notification_action_background.xml"
     }
 ]

@@ -38,6 +38,7 @@ export default class Navigation extends Component {
 
   render () {
     const {user, refs} = User.profile;
+    let cars = Cars.cars;
 
     return (
       <Container style={{backgroundColor: "#f5f5f5"}}>
@@ -54,8 +55,8 @@ export default class Navigation extends Component {
 
             <View>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name}`}</Text>
-              {Cars.cars.length ?
-                <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+              {cars.cars.length ?
+                <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
                 :
                 <Text style={{fontSize: 12, color: "#fff", width: 150}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
               }

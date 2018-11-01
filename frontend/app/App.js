@@ -1,5 +1,6 @@
 import React from 'react';
 import {NetInfo} from 'react-native';
+import {Root} from 'native-base';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
 import Login from "./screens/Login";
@@ -7,7 +8,7 @@ import Registration from "./screens/Registration";
 import User from "./store/User";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage/Garage";
-import Car from "./screens/Car";
+import Car from "./screens/Garage/Car";
 import Profile from "./screens/Profile";
 import SplashScreen from 'react-native-splash-screen';
 import Reminders from "./screens/Garage/Reminders";
@@ -60,7 +61,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    return(<ConnectError>{User.ready ? (User.auth ? <Navigator/>: <Auth/>) : null}</ConnectError> )
+    return(<ConnectError>{User.ready ? (User.auth ? <Root><Navigator/></Root>: <Auth/>) : null}</ConnectError>)
+
   }
 }
 
