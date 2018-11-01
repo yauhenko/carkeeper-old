@@ -9,7 +9,7 @@ cd bin && \
 rm -rf ${dst} ${tmp} && \
 mkdir -p ${dst} && \
 git clone -l -s ../../ ${tmp} -b master > /dev/null 2>&1 && \
-cp -r ${tmp}/backend-php/* ${dst} && \
+cp -r ${tmp}/backend/* ${dst} && \
 cd ${dst} && \
 composer install --no-dev -o > /dev/null 2>&1 && \
 cd bin && \
