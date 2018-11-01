@@ -4,6 +4,8 @@ namespace Controllers;
 
 use App\Sessions;
 use Entities\User;
+use Framework\DB\Client;
+use Framework\DB\Entity;
 use Framework\MVC\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -64,6 +66,29 @@ abstract class ApiController extends AbstractController {
 		if(!$this->user)
 			throw new \Exception('Invalid token', 403);
 
+	}
+
+	protected function checkAccess(string $table, int $id, string $key = 'id'): void {
+		/** @var Client $db */
+		$db = $this->di->db;
+		if(!$entry = $db->findOneBy($table, $key, $id, ['user']))
+			throw new \Exception("Объект {$table} не существует ({$key}: {$id})", 400);
+		if($entry['user'] !== $this->user->id)
+			throw new \Exception('В доступе отказано', 403);
+	}
+
+	protected function checkDataAccess(array $data = null): void {
+		if(!$data)
+			throw new \Exception('Объект не существует', 404);
+		if($data['user'] !== $this->user->id)
+			throw new \Exception('В доступе отказано', 403);
+	}
+
+	protected function checkEntityAccess(Entity $entity = null): void {
+		if(!$entity)
+			throw new \Exception('Объект не существует', 404);
+		if($entity->user !== $this->user->id)
+			throw new \Exception('В доступе отказано', 403);
 	}
 
 }

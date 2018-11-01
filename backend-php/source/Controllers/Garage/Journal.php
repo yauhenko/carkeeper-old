@@ -4,6 +4,7 @@ namespace Controllers\Garage;
 
 use Controllers\ApiController;
 use Entities\JournalRecord;
+use Framework\Validation\Validator;
 
 class Journal extends ApiController {
 
@@ -11,7 +12,14 @@ class Journal extends ApiController {
 	 * @route /garage/journal
 	 */
 	public function index() {
+
 		$this->auth();
+
+		Validator::validateData($this->params, [
+			'car' => ['required' => true, 'type' => 'int']
+		]);
+
+		$this->checkAccess('cars', $this->params->car);
 
 		$journal = new \Collections\Journal;
 		$records = $journal->find('user = {$user} AND car = {$car} ORDER BY `date` DESC, `id` DESC', [
@@ -30,16 +38,13 @@ class Journal extends ApiController {
 	 * @route /garage/journal/get
 	 */
 	public function get() {
+
 		$this->auth();
 
 		$journal = new \Collections\Journal();
 		$record = $journal->findOneBy('id', $this->params->id);
 
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
+		$this->checkEntityAccess($record);
 
 		return [
 			'record' => $record,
@@ -72,11 +77,7 @@ class Journal extends ApiController {
 		$journal = new \Collections\Journal;
 		$record = $journal->findOneBy('id', $this->params->id);
 
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
+		$this->checkEntityAccess($record);
 
 		$record->setData((array)$this->params->record);
 
@@ -95,11 +96,7 @@ class Journal extends ApiController {
 		$journal = new \Collections\Journal();
 		$record = $journal->findOneBy('id', $this->params->id);
 
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
+		$this->checkEntityAccess($record);
 
 		return [
 			'deleted' => $record->delete()

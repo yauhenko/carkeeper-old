@@ -19,6 +19,8 @@ class Checkup extends ApiController {
 			'car' => ['required' => true, 'type' => 'int']
 		]);
 
+		$this->checkAccess('cars', $this->params->car);
+
 		/** @var Client $db */
 		$db = $this->di->db;
 
@@ -55,6 +57,8 @@ class Checkup extends ApiController {
 				]
 			]
 		]);
+
+		$this->checkAccess('cars', $this->params->car);
 
 		/** @var Client $db */
 		$db = $this->di->db;
