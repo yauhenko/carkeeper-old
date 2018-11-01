@@ -2,9 +2,8 @@
 
 namespace Controllers\Garage;
 
-use Controllers\ApiController;
 use Framework\DB\Client;
-use Framework\Validation\Validator;
+use Controllers\ApiController;
 
 class Insurance extends ApiController {
 
@@ -15,7 +14,7 @@ class Insurance extends ApiController {
 
 		$this->auth();
 
-		Validator::validateData($this->params, [
+		$this->validate([
 			'car' => ['required' => true, 'type' => 'int']
 		]);
 
@@ -56,7 +55,7 @@ class Insurance extends ApiController {
 
 		$this->auth();
 
-		Validator::validateData($this->params, [
+		$this->validate([
 			'car' => ['required' => true, 'type' => 'int'],
 			'insurance' => [
 				'required' => true,

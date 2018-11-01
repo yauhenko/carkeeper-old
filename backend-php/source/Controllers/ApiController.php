@@ -7,6 +7,7 @@ use Entities\User;
 use Framework\DB\Client;
 use Framework\DB\Entity;
 use Framework\MVC\AbstractController;
+use Framework\Validation\Validator;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -89,6 +90,10 @@ abstract class ApiController extends AbstractController {
 			throw new \Exception('Объект не существует', 404);
 		if($entity->user !== $this->user->id)
 			throw new \Exception('В доступе отказано', 403);
+	}
+
+	protected function validate(array $rules, string $prefix = null): void {
+		Validator::validateData($this->params, $rules, false, $prefix);
 	}
 
 }
