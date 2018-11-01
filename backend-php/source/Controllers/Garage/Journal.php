@@ -45,7 +45,7 @@ class Journal extends ApiController {
 		]);
 
 		$journal = new \Collections\Journal();
-		$record = $journal->findOneBy('id', $this->params->id);
+		$record = $journal->get($this->params->id);
 
 		$this->checkEntityAccess($record);
 
@@ -112,7 +112,7 @@ class Journal extends ApiController {
 		]);
 
 		$journal = new \Collections\Journal;
-		$record = $journal->findOneBy('id', $this->params->id);
+		$record = $journal->get($this->params->id);
 		$this->checkEntityAccess($record);
 		$record->setData((array)$this->params->record);
 
@@ -133,7 +133,7 @@ class Journal extends ApiController {
 		]);
 
 		$journal = new \Collections\Journal();
-		$record = $journal->findOneBy('id', $this->params->id);
+		$record = $journal->get($this->params->id);
 		$this->checkEntityAccess($record);
 
 		return [

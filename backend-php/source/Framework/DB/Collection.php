@@ -117,12 +117,11 @@ abstract class Collection {
 	 *
 	 * @param string|null $query
 	 * @param array $data
+	 * @param bool $silent
 	 * @return Entity|null
-	 * @throws ConstraintError
-	 * @throws CommonError
 	 * @throws \Exception
 	 */
-	public function findOne(string $query = null, array $data = []): ?Entity {
+	public function findOne(string $query = null, array $data = [], bool $silent = false): ?Entity {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
 		if(preg_match('/^SELECT/i', $query)) {
@@ -130,12 +129,16 @@ abstract class Collection {
 		} else {
 			$sql = $db->prepare('SELECT * FROM {&table} WHERE ' . ($query ?: 'TRUE'), ['table' => $this->_table]);
 		}
-		$data = $db->findOne($sql, $data);
-		if(!$data) return null;
-		/** @var Entity $entity */
-		$entity = new $this->_entity;
-		$entity->setData($data);
-		return $entity;
+		if($data = $db->findOne($sql, $data)) {
+			/** @var Entity $entity */
+			$entity = new $this->_entity;
+			$entity->setData($data);
+			return $entity;
+		} elseif ($silent) {
+			return null;
+		} else {
+			throw new \Exception('Entity does not exists', 404);
+		}
 	}
 
 	/**
@@ -143,22 +146,42 @@ abstract class Collection {
 	 *
 	 * @param string $field
 	 * @param $value
+	 * @param bool $silent
 	 * @return Entity|null
-	 * @throws ConstraintError
-	 * @throws CommonError
 	 * @throws \Exception
 	 */
-	public function findOneBy(string $field, $value): ?Entity {
+	public function findOneBy(string $field, $value, bool $silent = false): ?Entity {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
-		$data = $db->findOneBy($this->_table, $field, $value);
-		if(!$data) return null;
-		/** @var Entity $entity */
-		$entity = new $this->_entity;
-		$entity->setData($data);
-		return $entity;
+		if($data = $db->findOneBy($this->_table, $field, $value)) {
+			/** @var Entity $entity */
+			$entity = new $this->_entity;
+			$entity->setData($data);
+			return $entity;
+		} elseif ($silent) {
+			return null;
+		} else {
+			throw new \Exception('Entity does not exists', 404);
+		}
 	}
 
+	/**
+	 * Get Entity by id
+	 *
+	 * @param int $id
+	 * @param bool $silent
+	 * @return Entity|null
+	 * @throws \Exception
+	 */
+	public function get(int $id, bool $silent = false): ?Entity {
+		return $this->findOneBy('id', $id, $silent);
+	}
+
+	/**
+	 * @param Entity $entity
+	 * @return bool
+	 * @throws \Exception
+	 */
 	public function exists(Entity $entity): bool {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
