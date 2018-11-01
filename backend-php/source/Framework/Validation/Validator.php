@@ -117,9 +117,11 @@ class Validator {
 			throw new Error('Неверный тип данных. Ожидался: ' . implode(', ', $type));
 	}
 
-	protected function checkIn($value, $variants): void {
-		if(!in_array($value, $variants))
-			throw new Error('Неверное значение. Ожидается одно из: ' . implode(', ', $variants));
+	protected function checkIn(): void {
+		$args = func_get_args();
+		$value = array_shift($args);
+		if(!in_array($value, $args))
+			throw new Error('Неверное значение. Ожидается одно из: ' . implode(', ', $args));
 	}
 
 	protected function checkMatch($value, $pattern): void {
