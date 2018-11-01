@@ -158,7 +158,6 @@ class Validator {
 	 * @throws Error
 	 */
 	protected function checkType($value, $type): void {
-		$test = strtolower(gettype($value));
 		if(!is_array($type)) $type = [$type];
 		foreach ($type as &$t) {
 			$t = strtolower($t);
@@ -167,7 +166,7 @@ class Validator {
 			elseif($t === 'float') $t = 'double';
 			if($t === 'boolean' && in_array($value, [0, 1])) $value = (bool)$value;
 		}
-		if(!in_array($test, $type))
+		if(!in_array(strtolower(gettype($value)), $type))
 			throw new Error('Неверный тип данных. Ожидался: ' . implode(', ', $type));
 	}
 

@@ -146,14 +146,21 @@ class Client {
      */
 	public function update(string $table, array $data, string $key, $value, bool $ignore = false): bool {
 		if(!count($data)) return false;
+		$where = $this->prepare('{&key} = {$value}', [
+			'key' => $key,
+			'value' => $value
+		]);
+		return $this->updateWhere($table, $data, $where, $ignore);
+	}
+
+	public function updateWhere(string $table, array $data, string $where, bool $ignore = false): bool {
+		if(!count($data)) return false;
 		$sql = 'UPDATE {#ignore} {&table} SET ';
 		$pairs = [];
 		foreach ($data as $k => $v) $pairs[] = $this->escapeId($k) . ' = ' . $this->escape($v);
-		$sql .= implode(', ', $pairs) . ' WHERE {&key} = {$value}';
+		$sql .= implode(', ', $pairs) . ' WHERE ' . $where;
 		$res = $this->query($sql, [
 			'table' => $table,
-			'key' => $key,
-			'value' => $value,
 			'ignore' => $ignore ? 'IGNORE' : ''
 		]);
 		return (bool)$res['affected_rows'];
