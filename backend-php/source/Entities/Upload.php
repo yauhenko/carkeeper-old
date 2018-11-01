@@ -4,7 +4,6 @@ namespace Entities;
 
 use Collections\Uploads;
 use Framework\DB\Entity;
-use Framework\Types\UUID;
 
 class Upload extends Entity {
 

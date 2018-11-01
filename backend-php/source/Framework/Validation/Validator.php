@@ -2,11 +2,13 @@
 
 namespace Framework\Validation;
 
-use Framework\Annotations\Validations;
 use Framework\DB\Entity;
 use Framework\Patterns\DI;
+use Framework\Annotations\Validations;
 
 class Validator {
+
+	public static $names = [];
 
 	protected $errors = [];
 
@@ -19,7 +21,8 @@ class Validator {
 		$validations = DI::getInstance()->get('validations');
 		$rules = $validations->getRules($entity);
 		$validator = new self;
-		$validator->validate($entity->getData() ?: [], $rules ?: [], $silent);
+		$prefix = strtolower(end(explode('\\', get_class($entity))));
+		$validator->validate($entity->getData() ?: [], $rules ?: [], $silent, $prefix);
 		return $validator->getErrors() ?: null;
 	}
 
@@ -27,50 +30,62 @@ class Validator {
 	 * @param object|array $data
 	 * @param array $rules
 	 * @param bool $silent
+	 * @param string $prefix
 	 * @return array|null
 	 * @throws Error
 	 */
-	public static function validateData($data, array $rules, bool $silent = false): ?array {
+	public static function validateData($data, array $rules, bool $silent = false, string $prefix = ''): ?array {
 		$data = json_decode(json_encode($data), true);
 		$validator = new self;
-		$validator->validate($data, $rules, $silent);
+		$validator->validate($data, $rules, $silent, $prefix);
 		return $validator->getErrors() ?: null;
 	}
 
-	public function validate(array $data, array $rules, bool $silent = false, string $prefix = null): bool {
+	public function validate(array $data, array $rules, bool $silent = false, string $prefix = null, bool $sub = false): bool {
+		if($prefix) $prefix .= '.';
 		foreach ($rules as $key => $validation) {
 			$val = $data[$key];
+			$name = 'custom';
 			try {
 				if(is_callable($validation)) {
 					call_user_func($validation, $val);
 				} else {
-					if($val === null && !$validation['required']) continue;
+					if(($val === null || $val === '') && !$validation['required']) continue;
 					foreach ($validation as $name => $params) {
 						if(is_callable($params)) {
 							call_user_func($params, $val);
 						} elseif($name === 'sub') {
-							$this->validate($val, $params, true, $key . '.');
+							$this->validate($val, $params, true, $key, true);
 						} else {
-							call_user_func([$this, 'check' . $name], $val, $params);
+							call_user_func_array([$this, 'check' . $name], array_merge([$val], is_array($params) ? $params : [$params]));
 						}
 					}
 				}
 			} catch (Error $e) {
 				$this->errors[] = [
-					'message' => $e->getMessage(),
 					'key' => $prefix . $key,
+					'value' => $val,
+					'rule' => $name,
+					'message' => $e->getMessage(),
 				];
 			}
-
 		}
-		if(!$prefix) {
-			if(!$silent && $this->errors) throw new Error($this->errors[0]['key'] . ': ' . $this->errors[0]['message']);
+		if(!$sub) {
+			$key = $this->errors[0]['key'];
+			if(!$name = self::$names[$key]) {
+				$name = explode('.', $key);
+				if(!$name = self::$names[end($name)]) {
+					$name = mb_convert_case(str_replace('.', ' ', $key), MB_CASE_TITLE, 'UTF-8');
+				}
+			}
+			$message = $this->errors[0]['message'];
+			if(!$silent && $this->errors) throw new Error($name . ' — ' . mb_strtolower($message, 'UTF-8'), 400, $this->errors);
 		}
 		return empty($this->errors);
 	}
 
 	protected function checkRequired($value, bool $required = true) {
-		if($value === null && $required) throw new Error('Обязательное поле');
+		if(($value === null || $value === '') && $required) throw new Error('Обязательное поле');
 	}
 
 	protected function checkMin($value, $min) {
@@ -81,47 +96,48 @@ class Validator {
 		if($value > $max) throw new Error('Значение должно быть меньше ' . $max);
 	}
 
-	protected function checkLength($value, $params) {
-		if(is_array($params)) {
-			[$min, $max] = $params;
-		} else {
-			$min = $max = $params;
-		}
+	protected function checkLength($value, $min, $max) {
+		if(!$max) $max = $min;
 		$len = mb_strlen($value);
 		if($min !== null && $len < $min) throw new Error('Длина должна быть не менее ' . $min);
 		if($max !== null && $len > $max) throw new Error('Длина должна быть не более ' . $max);
 	}
 
-	protected function checkType($value, $type): void  {
-		$type = trim(strtolower($type));
-		if($type === 'int') $type = 'integer';
-		elseif($type === 'bool') $type = 'boolean';
-		elseif($type === 'float') $type = 'double';
-		if(gettype($value) !== $type)
-			throw new Error('Invalid type. Expected ' . $type);
+	protected function checkType($value, $type): void {
+		$test = strtolower(gettype($value));
+		if(!is_array($type)) $type = [$type];
+		foreach ($type as &$t) {
+			$t = strtolower($t);
+			if($t === 'int') $t = 'integer';
+			elseif($t === 'bool') $t = 'boolean';
+			elseif($t === 'float') $t = 'double';
+			if($t === 'boolean' && in_array($value, [0, 1])) $value = (bool)$value;
+		}
+		if(!in_array($test, $type))
+			throw new Error('Неверный тип данных. Ожидался: ' . implode(', ', $type));
 	}
 
-	protected function checkIn($value, $variants): void  {
+	protected function checkIn($value, $variants): void {
 		if(!in_array($value, $variants))
 			throw new Error('Неверное значение. Ожидается одно из: ' . implode(', ', $variants));
 	}
 
-	protected function checkMatch($value, $pattern): void  {
+	protected function checkMatch($value, $pattern): void {
 		if(!preg_match($pattern, $value))
 			throw new Error('Неверный формат');
 	}
 
-	protected function checkEmail($email): void  {
+	protected function checkEmail($email): void {
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-			throw new Error('Неверный формат e-mail');
+			throw new Error('Неверный формат E-mail');
 	}
 
-	protected function checkIP($ip): void  {
+	protected function checkIP($ip): void {
 		if(!filter_var($ip, FILTER_VALIDATE_IP))
 			throw new Error('Неверный формат IP');
 	}
 
-	protected function checkDomain($domain): void  {
+	protected function checkDomain($domain): void {
 		if(!filter_var($domain, FILTER_VALIDATE_DOMAIN))
 			throw new Error('Неверный формат домена');
 	}

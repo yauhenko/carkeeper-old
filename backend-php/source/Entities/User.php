@@ -42,7 +42,7 @@ class User extends Entity {
 	public $password;
 
 	/**
-	 * @validate required; length: [2, 30]
+	 * @validate required; length: 2, 30
 	 * @var string
 	 */
 	public $name;
@@ -62,7 +62,7 @@ class User extends Entity {
 	public $city = null;
 
 	/**
-	 * @validate type: string; length: [100, 255]
+	 * @validate type: string; length: 100, 255
 	 * @var string|null
 	 */
 	public $fcm = null;

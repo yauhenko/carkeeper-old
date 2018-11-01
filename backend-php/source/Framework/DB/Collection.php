@@ -20,7 +20,7 @@ abstract class Collection {
 	protected $_entity;
 
 	/**
-	 * Add new Entity to Collection
+	 * Insert new Entity to Collection
 	 *
 	 * @param Entity $entity
 	 * @return bool
@@ -28,7 +28,7 @@ abstract class Collection {
 	 * @throws CommonError
 	 * @throws \Exception
 	 */
-	public function add(Entity $entity): bool {
+	public function insert(Entity $entity): bool {
 		$this->checkEntity($entity);
 		Validator::validateEntity($entity);
 		/** @var Client $db */
