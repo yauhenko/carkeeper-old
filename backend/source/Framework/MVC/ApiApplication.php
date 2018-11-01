@@ -68,6 +68,9 @@ class ApiApplication {
 				'code' => $e->getCode()
 			];
 
+			if($this->di->config->debug)
+				$error['trace'] = $e->getTrace();
+
 			if($e instanceof Error)
 				$error['details'] = $e->getErrors();
 

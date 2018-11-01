@@ -4,6 +4,8 @@ namespace Controllers\Garage;
 
 use Entities\JournalRecord;
 use Controllers\ApiController;
+use Framework\DB\Client;
+use Framework\Utils\Time;
 
 class Journal extends ApiController {
 
@@ -85,6 +87,15 @@ class Journal extends ApiController {
 		$record->user = $this->user->id;
 		$record->insert();
 
+		if($record->type === 'odo' && $record->odo) {
+			/** @var Client $db */
+			$db = $this->di->db;
+			$db->update('cars', [
+				'odo' => $record->odo,
+				'mdate' => Time::dateTime()
+			], 'id', $record->car);
+		}
+
 		return ['id' => $record->id];
 
 	}
@@ -112,9 +123,19 @@ class Journal extends ApiController {
 		]);
 
 		$journal = new \Collections\Journal;
+		/** @var JournalRecord $record */
 		$record = $journal->get($this->params->id);
 		$this->checkEntityAccess($record);
 		$record->setData((array)$this->params->record);
+
+		if($record->type === 'odo' && $record->odo) {
+			/** @var Client $db */
+			$db = $this->di->db;
+			$db->update('cars', [
+				'odo' => $record->odo,
+				'mdate' => Time::dateTime()
+			], 'id', $record->car);
+		}
 
 		return [
 			'updated' => $record->save()

@@ -92,8 +92,8 @@ abstract class ApiController extends AbstractController {
 			throw new \Exception('В доступе отказано', 403);
 	}
 
-	protected function validate(array $rules, string $prefix = null): void {
-		Validator::validateData($this->params, $rules, false, $prefix);
+	protected function validate(array $rules, string $prefix = ''): void {
+		Validator::validateData($this->params ?: [], $rules, false, $prefix);
 	}
 
 }

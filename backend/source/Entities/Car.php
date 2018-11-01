@@ -59,6 +59,24 @@ class Car extends Entity {
 	 */
 	public $image = null;
 
+	/**
+	 * @validate type: int
+	 * @var int|null
+	 */
+	public $odo = null;
+
+	/**
+	 * @validate required; in: km, m
+	 * @var string
+	 */
+	public $odo_unit = 'km';
+
+	/**
+	 * @validate date
+	 * @var string|null
+	 */
+	public $odo_mdate = null;
+
 	/** @var string */
 	protected $_collection = Cars::class;
 

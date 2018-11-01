@@ -4,6 +4,8 @@ namespace Controllers\Garage;
 
 use Entities\Car;
 use Controllers\ApiController;
+use Entities\JournalRecord;
+use Framework\Utils\Time;
 
 class Cars extends ApiController {
 
@@ -27,13 +29,15 @@ class Cars extends ApiController {
 	 * @route /garage/cars/get
 	 */
 	public function get() {
+
 		$this->auth();
 
-		$cars = new \Collections\Cars;
-		$car = $cars->findOneBy('id', $this->params->id);
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int']
+		]);
 
-		if(!$car)
-			throw new \Exception('Car not found', 404);
+		$cars = new \Collections\Cars;
+		$car = $cars->get($this->params->id);
 
 		return [
 			'car' => $car,
@@ -46,6 +50,7 @@ class Cars extends ApiController {
 	 * @route /garage/cars/add
 	 */
 	public function add() {
+
 		$this->auth();
 
 		$this->validate([
@@ -64,7 +69,9 @@ class Cars extends ApiController {
 		$car->user = $this->user->id;
 		$car->save();
 
-		return ['id' => $car->id];
+		return [
+			'id' => $car->id
+		];
 
 	}
 
@@ -72,18 +79,33 @@ class Cars extends ApiController {
 	 * @route /garage/cars/update
 	 */
 	public function update() {
+
 		$this->auth();
 
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int'],
+			'car' => ['required' => true]
+		]);
+
 		$cars = new \Collections\Cars;
+		/** @var Car $car */
 		$car = $cars->findOneBy('id', $this->params->id);
+		$this->checkEntityAccess($car);
 
-		if(!$car)
-			throw new \Exception('Car not found', 404);
-
-		if($this->user->id !== $car->user)
-			throw new \Exception('Access denied', 403);
+		$snapshot = clone $car;
 
 		$car->setData((array)$this->params->car);
+
+		if($car->odo !== $snapshot->odo) {
+			$car->odo_mdate = Time::date();
+			$record = new JournalRecord;
+			$record->user = $car->user;
+			$record->car = $car->id;
+			$record->type = 'odo';
+			$record->odo = $car->odo;
+			$record->date = Time::dateTime();
+			$record->insert();
+		}
 
 		return [
 			'updated' => $car->save()
@@ -95,16 +117,17 @@ class Cars extends ApiController {
 	 * @route /garage/cars/delete
 	 */
 	public function delete() {
+
 		$this->auth();
 
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int'],
+		]);
+
 		$cars = new \Collections\Cars;
-		$car = $cars->findOneBy('id', $this->params->id);
+		$car = $cars->get($this->params->id);
 
-		if(!$car)
-			throw new \Exception('Car not found', 404);
-
-		if($this->user->id !== $car->user)
-			throw new \Exception('Access denied', 403);
+		$this->checkEntityAccess($car);
 
 		return [
 			'deleted' => $car->delete()

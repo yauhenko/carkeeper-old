@@ -59,7 +59,7 @@ class Sessions {
 			INNER JOIN users u ON u.id = s.user AND s.token = {$token}
 			WHERE u.active = 1 AND s.edate > NOW()
 			AND (s.ip IS NULL OR s.ip = {$ip})
-		', ['token' => $token, 'ip' => $ip]);
+		', ['token' => $token, 'ip' => $ip], true);
 
 		if($entity) {
 
