@@ -33,8 +33,29 @@ abstract class Entity {
 		if($collection->exists($this)) {
 			return $collection->update($this);
 		} else {
-			return $collection->add($this);
+			return $collection->insert($this);
 		}
+	}
+
+	/**
+	 * Insert new Entity to Collection
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function insert(): bool {
+		$collection = $this->getCollection();
+		return $collection->insert($this);
+	}
+
+	/**
+	 * Update Entity in Collection
+	 *
+	 * @return bool
+	 * @throws \Exception
+	 */
+	public function update(): bool {
+		$collection = $this->getCollection();
+		return $collection->update($this);
 	}
 
 	/**
@@ -102,7 +123,7 @@ abstract class Entity {
 	 * @throws \Exception
 	 */
 	public function __get(string $name) {
-		throw new \Exception('Unknown property: ' . $name);
+		throw new \Exception('Unknown property: ' . $name, 400);
 	}
 
 	/**
@@ -113,7 +134,7 @@ abstract class Entity {
 	 * @throws \Exception
 	 */
 	public function __set(string $name, $value) {
-		throw new \Exception('Unknown property: ' . $name);
+		throw new \Exception('Unknown property: ' . $name, 400);
 	}
 
 	/**
@@ -142,7 +163,7 @@ abstract class Entity {
 		$ann = DI::getInstance()->annotations;
 
 		if(!$ref = $ann->getProperties($this)[$field]['ref'])
-			throw new \Exception('Referrence ' . $field . ' does not exists on ' . get_class($this));
+			throw new \Exception('Referrence ' . $field . ' does not exists on ' . get_class($this), 500);
 
 		/** @var Entity $obj */
 		$obj = new $ref['class'];

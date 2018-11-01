@@ -182,23 +182,29 @@ class Parser {
 		foreach (explode(';', $data) as $arg) {
 			[$key, $val] = explode(':', $arg, 2);
 			$key = trim($key);
-			$val = trim($val);
 			if(!$key) continue;
-			if($val === 'true') $val = true;
-			elseif($val === 'false') $val = false;
-			elseif($val === 'null') $val = null;
-			elseif(is_numeric($val)) $val = (float)$val;
-			elseif($val === null) $val = true;
-			elseif($val{0} === '[') {
-				$val = str_replace(['[', ']'], '', $val);
+			$val = $this->val($val);
+			if($val{0} !== '/' && strpos($val, ',') !== false) {
 				$val = explode(',', $val);
-				foreach ($val as &$v) {
-					$v = trim($v);
+				foreach ($val as $k => $v) {
+					$val[$k] = $this->val($v);
 				}
-			} elseif ($val === '') $val = true;
+			}
 			$props[$key] = $val;
 		}
 		return $props;
+	}
+
+	protected function val($val) {
+		$val = trim($val);
+		if($val === 'true') $val = true;
+		elseif($val === 'false') $val = false;
+		elseif($val === 'null') $val = null;
+		elseif(is_numeric($val) && strpos($val, '.') !== false) $val = (float)$val;
+		elseif(is_numeric($val)) $val = (int)$val;
+		elseif($val === null) $val = true;
+		elseif($val === '') $val = true;
+		return $val;
 	}
 
 }

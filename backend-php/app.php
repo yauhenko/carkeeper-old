@@ -9,6 +9,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = new ApiApplication();
 
+Services::locale();
 Services::register();
 
 return $app->run();

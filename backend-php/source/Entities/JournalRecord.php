@@ -12,25 +12,46 @@ class JournalRecord extends Entity {
 	 */
 	public $id;
 
-	/** @var int */
+	/**
+	 * @validate required; type: int
+	 * @ref Entities\User
+     * @var int
+	 */
 	public $user;
 
-	/** @var int */
+	/**
+	 * @validate required; type: int
+	 * @ref Entities\Car
+     * @var int
+	 */
 	public $car;
 
-	/** @var string|null */
+	/**
+	 * @validate datetime
+	 * @var string|null
+	 */
 	public $date = null;
 
-	/** @var int|null */
+	/**
+	 * @validate type: int
+     * @var int|null
+	 */
 	public $odo = null;
 
-	/** @var string */
+	/**
+	 * @validate required; type: string; length: 1, 20
+     * @var string
+	 */
 	public $type = 'other';
 
-	/** @var string|null  */
+	/**
+	 * @validate length: 1, 255
+     * @var string|null
+	 */
 	public $comment = null;
 
 	/**
+	 * @validate uuid
 	 * @ref Entities\Upload
 	 * @var string|null
 	 */

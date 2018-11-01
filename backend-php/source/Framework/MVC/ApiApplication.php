@@ -3,8 +3,9 @@
 namespace Framework\MVC;
 
 use Framework\Patterns\DI;
+use Framework\Validation\Error;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\{RequestContext, RouteCollection};
+use Symfony\Component\Routing\{Exception\ResourceNotFoundException, RequestContext, RouteCollection};
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 class ApiApplication {
@@ -38,9 +39,14 @@ class ApiApplication {
 			$routes = $this->di->routes;
 			$context = new RequestContext;
 			$matcher = new UrlMatcher($routes, $context);
-			$parameters = $matcher->match($req->getPathInfo());
-			$this->di->params = $parameters;
 
+			try {
+				$parameters = $matcher->match($req->getPathInfo());
+			} catch (ResourceNotFoundException $e) {
+				throw new \Error('Not found', 404);
+			}
+
+			$this->di->params = $parameters;
 			[$class, $method] = explode('::', $parameters['_controller']);
 
 			/** @var AbstractController $controller */
@@ -57,10 +63,15 @@ class ApiApplication {
 
 			if($e instanceof \Error) $res->setStatusCode(500);
 
-			$res->setContent(json_encode(['error' => [
+			$error = [
 				'message' => $e->getMessage(),
 				'code' => $e->getCode()
-			]]));
+			];
+
+			if($e instanceof Error)
+				$error['details'] = $e->getErrors();
+
+			$res->setContent(json_encode(['error' => $error], JSON_UNESCAPED_UNICODE));
 
         }
 

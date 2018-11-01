@@ -5,9 +5,6 @@ namespace Controllers;
 use App\Tools;
 use App\Sessions;
 use Entities\User;
-use Entities\Geo\City;
-use Entities\Geo\Region;
-use Entities\Geo\District;
 use Collections\Users;
 use Framework\DB\Client;
 use Framework\Security\Password;
@@ -67,17 +64,12 @@ class Auth extends ApiController {
 	 */
 	public function logout() {
 		$this->auth();
-
 		$this->user->fcm = null;
 		$this->user->save();
-
 		/** @var Client $db */
 		$db = $this->di->db;
-
 		$db->delete('sessions', 'token', $this->params->token);
-
 		return true;
-
 	}
 
 	/**
@@ -85,9 +77,13 @@ class Auth extends ApiController {
 	 * @throws \Exception
 	 */
 	public function register() {
-
 		Validator::validateData($this->params, [
-			'user' => ['required' => true],
+			'user' => [
+				'required' => true,
+				'sub' => [
+					'tel' => ['required' => true],
+				]
+			],
 			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
@@ -128,6 +124,9 @@ class Auth extends ApiController {
 	 */
 	public function update() {
 		$this->auth();
+		Validator::validateData($this->params, [
+			'user' => ['required' => true]
+		]);
 		$update = (array)$this->params->user;
 		if($update['password']) $update['password'] = Password::getHash($update['password']);
 		$this->user->setData($update);

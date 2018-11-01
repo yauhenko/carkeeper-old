@@ -8,6 +8,7 @@ use Framework\Annotations\Validations;
 use Framework\DB\Client;
 use Framework\Cache\{File, Redis};
 use Framework\Patterns\DI;
+use Framework\Validation\Validator;
 use Symfony\Component\HttpFoundation\{Request, Response};
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
@@ -109,5 +110,34 @@ class Services {
         });
 
     }
+
+    public static function locale() {
+	    Validator::$names = [
+
+	    	'tel' => 'Телефон',
+		    'email' => 'E-mail',
+		    'password' => 'Пароль',
+		    'user.name' => 'Имя',
+		    'city' => 'Город',
+		    'fcm' => 'FCM',
+
+		    'journal.car' => 'Идентификатор автомобиля',
+		    'journal.date' => 'Дата события',
+		    'journal.odo' => 'Показания одометра',
+		    'journal.type' => 'Тип записи',
+		    'journal.comment' => 'Комментарий',
+
+		    'mark' => 'Марка',
+		    'model' => 'Модель',
+		    'year' => 'Год',
+		    'generation' => 'Поколение',
+		    'serie' => 'Серия',
+		    'modification' => 'Модификация',
+
+		    'image' => 'Изображение',
+		    'avatar' => 'Аватар'
+	    ];
+    }
+
 
 }

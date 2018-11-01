@@ -32,7 +32,7 @@ class Uploads extends ApiController {
 		$upload->id = $id;
 		$upload->name = $this->params->name;
 		$upload->path = $d . '/' . $n;
-		$upload->save();
+		$upload->insert();
 
 		return $upload->getData();
 
