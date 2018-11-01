@@ -164,7 +164,7 @@ export default class Garage extends React.Component {
           <List>
             {cars && cars.map(car => {
               return(
-                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark], model: refs.model[car.model].name, })} thumbnail key={car.id}>
+                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name, })} thumbnail key={car.id}>
                   <Left>
                     {car.image ?
                       <Thumbnail source={{uri:  cdn + refs.image[car.image].path}}/>

@@ -69,9 +69,25 @@ class Cars {
     return await Api('garage/cars/add', {car: obj})
   };
 
+  /**
+   * Получение машины
+   * @param id
+   * @returns {Promise<*>}
+   */
   @action getCar = async id => {
-    return await Api('garage/cars/get', {id: id});
+    return await Api('garage/cars/get', {id});
   };
+
+  /**
+   * Удаление машины
+   * @param id
+   * @returns {Promise<*>}
+   */
+  @action deleteCar = async id => {
+    return await Api('garage/cars/delete', {id})
+  };
+
+
 
   // @observable initialCar = Object.freeze({
   //   mark: String(),
