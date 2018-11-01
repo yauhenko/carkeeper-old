@@ -8,19 +8,19 @@ use Framework\DB\Entity;
 class Upload extends Entity {
 
 	/**
-	 * @caption Id
+	 * @validate required; uuid
 	 * @var string
 	 */
 	public $id;
 
 	/**
-	 * @caption Name
+	 * @validate required; type: string; length: 1, 100; match: /\.(jpe?g|png)$/
 	 * @var string
 	 */
 	public $name;
 
 	/**
-	 * @caption Path
+	 * @validate required; type: string; length: 1, 256
 	 * @var string
 	 */
 	public $path;

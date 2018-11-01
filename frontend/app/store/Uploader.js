@@ -10,8 +10,7 @@ class Uploader {
 
   @action save = async (obj = {}) => {
     try {
-      let response = await Api('uploads/upload', obj);
-      return response.id
+      return await Api('uploads/upload', obj);
     } catch (e) {
       Notification(e);
     }

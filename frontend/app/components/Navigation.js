@@ -1,62 +1,80 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, TouchableHighlight} from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {Container, Content, Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
 import User from "../store/User";
-import Uploader from "../store/Uploader";
 import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
+import {cdn} from "../modules/Url";
 
 @observer
 export default class Navigation extends Component {
+  routes = [
+    {
+      title: "Гараж",
+      icon: "car",
+      path: "Garage",
+      action: null
+    },
+    {
+      title: "Лента",
+      icon: "paper",
+      path: "Garage",
+      action: null
+    },
+    {
+      title: "Профиль",
+      icon: "person",
+      path: "Profile",
+      action: null
+    },
+    {
+      title: "Выход",
+      icon: "exit",
+      path: null,
+      action: User.logout
+    }
+  ];
+
   render () {
+    const {user, refs} = User.profile;
+
     return (
       <Container style={{backgroundColor: "#f5f5f5"}}>
         <Content>
-          <List>
-            <View style={styles.top}>
-              <View style={{marginRight: 15}}>
-                {User.profile.avatar
-                  ? <Thumbnail large source={{uri: Uploader.get(User.profile.avatar)}}/>
+          <View style={styles.top}>
+            <View style={{marginRight: 15}}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
+                {user.avatar
+                  ? <Thumbnail large source={{uri: cdn + refs.avatar.path}}/>
                   : <Thumbnail large source={thumb}/>
                 }
-              </View>
-              <View>
-                <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${User.profile.name}`}</Text>
-                {Cars.cars.length ?
-                  <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
-                  :
-                  <Text style={{fontSize: 12, color: "#fff", width: 150}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
-                }
-              </View>
+              </TouchableOpacity>
             </View>
 
-            <ListItem icon style={styles.listItem} onPress={() => this.props.navigation.navigate('Garage')}>
-              <Left style={{alignItems: "flex-end"}}>
-                <Icon style={{color: "#f13f3f"}} name={'car'}/>
-              </Left>
-              <Body>
-              <Text style={styles.link}>Гараж</Text>
-              </Body>
-            </ListItem>
+            <View>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name}`}</Text>
+              {Cars.cars.length ?
+                <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {Cars.cars[0].mark.name} {Cars.cars[0].model.name}</Text>
+                :
+                <Text style={{fontSize: 12, color: "#fff", width: 150}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
+              }
+            </View>
+          </View>
 
-            <ListItem icon style={styles.listItem} onPress={() => this.props.navigation.navigate('Profile')}>
-              <Left style={{alignItems: "flex-end"}}>
-                <Icon style={{color: "#f13f3f"}} name={'person'}/>
-              </Left>
-              <Body>
-              <Text style={styles.link}>Профиль</Text>
-              </Body>
-            </ListItem>
-
-            <ListItem icon style={styles.listItem} onPress={() => User.logout()}>
-              <Left style={{alignItems: "flex-end"}}>
-                <Icon style={{color: "#f13f3f"}} name={'exit'}/>
-              </Left>
-              <Body>
-                <Text style={styles.link}>Выход</Text>
-              </Body>
-            </ListItem>
+          <List>
+            {this.routes.map((route, key)=>{
+              return (
+                <ListItem key={key} icon style={styles.listItem} onPress={() => {route.action ? route.action() : this.props.navigation.navigate(route.path)}}>
+                  <Left style={{alignItems: "flex-end"}}>
+                    <Icon style={{color: "#f13f3f"}} name={route.icon}/>
+                  </Left>
+                  <Body>
+                    <Text style={styles.link}>{route.title}</Text>
+                  </Body>
+                </ListItem>
+              )
+            })}
           </List>
         </Content>
       </Container>

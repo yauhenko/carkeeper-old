@@ -16,7 +16,10 @@ class User {
   @observable ready = false;
   @observable fcm = null;
 
-  @observable profile = {};
+  @observable profile = {
+    user: {},
+    refs: {}
+  };
 
   /**
    * Регистрация пользователя
@@ -91,13 +94,15 @@ class User {
     this.ready = true;
   };
 
+  /**
+   * Обновление профиля пользователя
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
   @action update = async (data = {}) => {
-    Api('account/update', {user: data}).then(async () => {
-      if(data.avatar) {this.profile.avatar = data.avatar}
-      if(data.name) {this.profile.name = data.name}
-      if(data.city) {this.profile.name = data.city}
-    }).catch(Notification);
+    return await Api('account/update', data);
   };
+
 
   @action ping = async (silent = false) => {
     if(!App.connect) return false;
