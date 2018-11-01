@@ -6,16 +6,35 @@ use Framework\DB\Entity;
 use Framework\Patterns\DI;
 use Framework\Annotations\Validations;
 
+/**
+ * Class Validator
+ * @package Framework\Validation
+ */
 class Validator {
 
+	/**
+	 * @var array
+	 */
 	public static $names = [];
 
+	/**
+	 * @var array
+	 */
 	protected $errors = [];
 
+	/**
+	 * @return array
+	 */
 	public function getErrors(): array {
 		return $this->errors;
 	}
 
+	/**
+	 * @param Entity $entity
+	 * @param bool $silent
+	 * @return array|null
+	 * @throws Error
+	 */
 	public static function validateEntity(Entity $entity, bool $silent = false): ?array {
 		/** @var Validations $validations */
 		$validations = DI::getInstance()->get('validations');
@@ -41,6 +60,15 @@ class Validator {
 		return $validator->getErrors() ?: null;
 	}
 
+	/**
+	 * @param array $data
+	 * @param array $rules
+	 * @param bool $silent
+	 * @param string|null $prefix
+	 * @param bool $sub
+	 * @return bool
+	 * @throws Error
+	 */
 	public function validate(array $data, array $rules, bool $silent = false, string $prefix = null, bool $sub = false): bool {
 		if($prefix) $prefix .= '.';
 		foreach ($rules as $key => $validation) {
@@ -84,18 +112,39 @@ class Validator {
 		return empty($this->errors);
 	}
 
+	/**
+	 * @param $value
+	 * @param bool $required
+	 * @throws Error
+	 */
 	protected function checkRequired($value, bool $required = true) {
 		if(($value === null || $value === '') && $required) throw new Error('Обязательное поле');
 	}
 
+	/**
+	 * @param $value
+	 * @param $min
+	 * @throws Error
+	 */
 	protected function checkMin($value, $min) {
 		if($value < $min) throw new Error('Значение должно быть больше ' . $min);
 	}
 
+	/**
+	 * @param $value
+	 * @param $max
+	 * @throws Error
+	 */
 	protected function checkMax($value, $max) {
 		if($value > $max) throw new Error('Значение должно быть меньше ' . $max);
 	}
 
+	/**
+	 * @param $value
+	 * @param $min
+	 * @param $max
+	 * @throws Error
+	 */
 	protected function checkLength($value, $min, $max) {
 		if(!$max) $max = $min;
 		$len = mb_strlen($value);
@@ -103,6 +152,11 @@ class Validator {
 		if($max !== null && $len > $max) throw new Error('Длина должна быть не более ' . $max);
 	}
 
+	/**
+	 * @param $value
+	 * @param $type
+	 * @throws Error
+	 */
 	protected function checkType($value, $type): void {
 		$test = strtolower(gettype($value));
 		if(!is_array($type)) $type = [$type];
@@ -117,6 +171,9 @@ class Validator {
 			throw new Error('Неверный тип данных. Ожидался: ' . implode(', ', $type));
 	}
 
+	/**
+	 * @throws Error
+	 */
 	protected function checkIn(): void {
 		$args = func_get_args();
 		$value = array_shift($args);
@@ -124,46 +181,83 @@ class Validator {
 			throw new Error('Неверное значение. Ожидается одно из: ' . implode(', ', $args));
 	}
 
+	/**
+	 * @param $value
+	 * @param $pattern
+	 * @throws Error
+	 */
 	protected function checkMatch($value, $pattern): void {
 		if(!preg_match($pattern, $value))
 			throw new Error('Неверный формат');
 	}
 
+	/**
+	 * @param $email
+	 * @throws Error
+	 */
 	protected function checkEmail($email): void {
 		if(!filter_var($email, FILTER_VALIDATE_EMAIL))
 			throw new Error('Неверный формат E-mail');
 	}
 
+	/**
+	 * @param $ip
+	 * @throws Error
+	 */
 	protected function checkIP($ip): void {
 		if(!filter_var($ip, FILTER_VALIDATE_IP))
 			throw new Error('Неверный формат IP');
 	}
 
+	/**
+	 * @param $domain
+	 * @throws Error
+	 */
 	protected function checkDomain($domain): void {
 		if(!filter_var($domain, FILTER_VALIDATE_DOMAIN))
 			throw new Error('Неверный формат домена');
 	}
 
+	/**
+	 * @param $url
+	 * @throws Error
+	 */
 	protected function checkURL($url): void {
 		if(!filter_var($url, FILTER_VALIDATE_URL))
 			throw new Error('Неверный формат URL');
 	}
 
+	/**
+	 * @param $date
+	 * @throws Error
+	 */
 	protected function checkDate($date): void {
 		if(!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $date))
 			throw new Error('Неверный формат даты');
 	}
 
+	/**
+	 * @param $value
+	 * @throws Error
+	 */
 	protected function checkDateTime($value): void {
 		if(!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$/', $value))
 			throw new Error('Неверный формат даты и времени');
 	}
 
+	/**
+	 * @param $value
+	 * @throws Error
+	 */
 	protected function checkUUID($value): void {
 		if(!preg_match('/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i', $value))
 			throw new Error('Неверный формат UUID');
 	}
 
+	/**
+	 * @param $value
+	 * @param $filter
+	 */
 	protected function checkFilter($value, $filter): void {
 		$this->{"check{$filter}"}($value);
 	}
