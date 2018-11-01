@@ -2,8 +2,8 @@
 
 namespace Controllers\Garage;
 
-use Controllers\ApiController;
 use Entities\JournalRecord;
+use Controllers\ApiController;
 
 class Journal extends ApiController {
 
@@ -11,7 +11,14 @@ class Journal extends ApiController {
 	 * @route /garage/journal
 	 */
 	public function index() {
+
 		$this->auth();
+
+		$this->validate([
+			'car' => ['required' => true, 'type' => 'int']
+		]);
+
+		$this->checkAccess('cars', $this->params->car);
 
 		$journal = new \Collections\Journal;
 		$records = $journal->find('user = {$user} AND car = {$car} ORDER BY `date` DESC, `id` DESC', [
@@ -30,16 +37,17 @@ class Journal extends ApiController {
 	 * @route /garage/journal/get
 	 */
 	public function get() {
+
 		$this->auth();
 
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int']
+		]);
+
 		$journal = new \Collections\Journal();
-		$record = $journal->findOneBy('id', $this->params->id);
+		$record = $journal->get($this->params->id);
 
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
+		$this->checkEntityAccess($record);
 
 		return [
 			'record' => $record,
@@ -52,12 +60,30 @@ class Journal extends ApiController {
 	 * @route /garage/journal/add
 	 */
 	public function add() {
+
 		$this->auth();
+
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int'],
+			'record' => [
+				'required' => true,
+				'sub' => [
+					'car' => ['required' => true, 'type' => 'int'],
+					'date' => ['required' => true, 'datetime' => true],
+					'odo' => ['type' => 'int', 'min' => 0, 'max' => 1000000],
+					'type' => ['required' => true, 'type' => 'string', 'length' => [1, 20]],
+					'comment' => ['type' => 'string', 'length' => [1, 255]],
+					'image' => ['uuid' => true],
+				]
+			]
+		]);
+
+		$this->checkAccess('cars', $this->params->record->car);
 
 		$record = new JournalRecord;
 		$record->setData((array)$this->params->record);
 		$record->user = $this->user->id;
-		$record->save();
+		$record->insert();
 
 		return ['id' => $record->id];
 
@@ -67,17 +93,27 @@ class Journal extends ApiController {
 	 * @route /garage/journal/update
 	 */
 	public function update() {
+
 		$this->auth();
 
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int'],
+			'record' => [
+				'required' => true,
+				'sub' => [
+					'car' => ['required' => true, 'type' => 'int'],
+					'date' => ['required' => true, 'datetime' => true],
+					'odo' => ['type' => 'int', 'min' => 0, 'max' => 1000000],
+					'type' => ['required' => true, 'type' => 'string', 'length' => [1, 20]],
+					'comment' => ['type' => 'string', 'length' => [1, 255]],
+					'image' => ['uuid' => true],
+				]
+			]
+		]);
+
 		$journal = new \Collections\Journal;
-		$record = $journal->findOneBy('id', $this->params->id);
-
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
-
+		$record = $journal->get($this->params->id);
+		$this->checkEntityAccess($record);
 		$record->setData((array)$this->params->record);
 
 		return [
@@ -92,14 +128,13 @@ class Journal extends ApiController {
 	public function delete() {
 		$this->auth();
 
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int']
+		]);
+
 		$journal = new \Collections\Journal();
-		$record = $journal->findOneBy('id', $this->params->id);
-
-		if(!$record)
-			throw new \Exception('Record not found', 404);
-
-		if($this->user->id !== $record->user)
-			throw new \Exception('Access denied', 403);
+		$record = $journal->get($this->params->id);
+		$this->checkEntityAccess($record);
 
 		return [
 			'deleted' => $record->delete()
