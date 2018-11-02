@@ -9,6 +9,7 @@ use Framework\Mutex\FileMutex;
 use Framework\Cache\CacheInterface;
 use Framework\MVC\AbstractConsoleApplication;
 use Framework\Patterns\DI;
+use Services\FinesService;
 
 class Console extends AbstractConsoleApplication {
 
@@ -78,6 +79,7 @@ class Console extends AbstractConsoleApplication {
 			(int)$this->params['limit'] ?: 10,
 			function() use($mutex) {
 				$mutex->update();
+				return true;
 			}
 		);
 		$mutex->free();
@@ -161,6 +163,27 @@ class Console extends AbstractConsoleApplication {
 			Sessions::cleanup();
 			$this->println("<green><b>[OK]</> <yellow>Sessions cleaned</>");
 		}
+	}
+
+	public function fines() {
+
+		try {
+			$mutex = new FileMutex($this->params['worker'] ?: 'default-fines-worker');
+		} catch (\Exception $e) {
+			if(!$this->params['silent'])
+				$this->error($e->getMessage());
+			return;
+		}
+
+		$srv = new FinesService;
+		$srv->check((int)$this->params['limit'] ?: 10,
+			function() use($mutex) {
+				$mutex->update();
+			}
+		);
+
+		$mutex->free();
+
 	}
 
 }

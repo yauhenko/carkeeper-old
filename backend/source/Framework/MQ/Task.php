@@ -42,8 +42,7 @@ class Task {
 	 * @param array $data
 	 */
 	public function __construct(array $data) {
-		foreach ($data as $key => $value)
-			$this->{$key} = $value;
+		$this->_data = $data;
 	}
 
 	/**
@@ -56,7 +55,7 @@ class Task {
 	public static function get(int $id): self {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
-		if($data = $db->findOneBy('mq_tasks', 'id', $id))
+		if(!$data = $db->findOneBy('mq_tasks', 'id', $id))
 			throw new Exception('Task not found: #' . $id);
 		return new self($data);
 	}
@@ -230,7 +229,7 @@ class Task {
 		$name = strtolower($name);
 		$value = $this->_data[$name];
 		if(in_array($name, ['data', 'data_trigger', 'result']))
-			$value = unserialize($value);
+			$value = $value ? unserialize($value) : null;
 		return $value;
 	}
 
@@ -251,7 +250,7 @@ class Task {
 		}
 		if(in_array($name, ['data', 'data_trigger', 'result']))
 			$value = serialize($value);
-		$this->_data[$name] = $value;
+		$this->_data[$name] = $this->_buffer[$name] = $value;
 	}
 
 	/**
