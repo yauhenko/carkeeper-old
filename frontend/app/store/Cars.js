@@ -88,6 +88,10 @@ class Cars {
   };
 
 
+  @action updateCar = async (data = {}) => {
+    return await Api('garage/cars/update', data);
+  };
+
 
   // @observable initialCar = Object.freeze({
   //   mark: String(),
@@ -108,21 +112,8 @@ class Cars {
   //
   // @observable carDetail = {};
   //
-  // @action getCar = async id => {
-  //   this.loading = true;
-  //   try {
-  //     this.carDetail = await Api('garage/cars/get', {id: id});
-  //   } catch (e) {
-  //     Notification(e)
-  //   }
-  //   this.loading = false;
-  //   return this.carDetail;
-  // };
-  //
-  // @action updateCar = async (data = {}) => {
-  //   return await Api('garage/cars/update', data);
-  // };
-  //
+
+
 
   //
   // @action addCar = async () => {

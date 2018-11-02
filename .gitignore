@@ -1,2 +1,3 @@
 .idea/
-frontend/app/android/app/build
+frontend/app/android/app/build/
+frontend/app/android/.gradle
