@@ -53,7 +53,7 @@ class References {
 					$refs[$key][] = $value;
 				}
 			}
-			$refs[$key] = array_unique($refs[$key]);
+			$refs[$key] = array_unique($refs[$key] ?: []);
 		}
 
 		/** @var Client $db */
