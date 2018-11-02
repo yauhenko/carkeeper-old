@@ -167,7 +167,7 @@ class Validator {
 			if($t === 'boolean' && in_array($value, [0, 1])) $value = (bool)$value;
 		}
 		if(!in_array(strtolower(gettype($value)), $type))
-			throw new Error('Неверный тип данных. Ожидался: ' . implode(', ', $type));
+			throw new Error('Неверный тип данных. Ожидается: ' . implode(', ', $type));
 	}
 
 	/**
