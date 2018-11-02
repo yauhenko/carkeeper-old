@@ -153,6 +153,15 @@ class Client {
 		return $this->updateWhere($table, $data, $where, $ignore);
 	}
 
+	/**
+	 * Update by custom $where
+	 *
+	 * @param string $table
+	 * @param array $data
+	 * @param string $where
+	 * @param bool $ignore
+	 * @return bool
+	 */
 	public function updateWhere(string $table, array $data, string $where, bool $ignore = false): bool {
 		if(!count($data)) return false;
 		$sql = 'UPDATE {#ignore} {&table} SET ';
@@ -164,6 +173,25 @@ class Client {
 			'ignore' => $ignore ? 'IGNORE' : ''
 		]);
 		return (bool)$res['affected_rows'];
+	}
+
+	/**
+	 * Smart save
+	 *
+	 * @param string $table
+	 * @param array $data
+	 * @param string $key
+	 * @param $value
+	 * @param bool $ignore
+	 * @return bool
+	 */
+	public function save(string $table, array $data, string $key, $value, bool $ignore = false): bool {
+		if($this->findOneBy($table, $key, $value, [$key])) {
+			return $this->update($table, $data, $key, $value, $ignore);
+		} else {
+			$this->insert($table, $data, $ignore);
+			return true;
+		}
 	}
 
     /**

@@ -145,7 +145,7 @@ class Validator {
 	 * @param $max
 	 * @throws Error
 	 */
-	protected function checkLength($value, $min, $max) {
+	protected function checkLength($value, $min, $max = null) {
 		if(!$max) $max = $min;
 		$len = mb_strlen($value);
 		if($min !== null && $len < $min) throw new Error('Длина должна быть не менее ' . $min);
