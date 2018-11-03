@@ -2,8 +2,11 @@
 
 namespace Controllers\Garage;
 
-use Entities\JournalRecord;
+use Entities\Car;
+use Entities\Journal\Record;
 use Controllers\ApiController;
+use Framework\DB\Client;
+use Framework\Utils\Time;
 
 class Journal extends ApiController {
 
@@ -20,7 +23,7 @@ class Journal extends ApiController {
 
 		$this->checkAccess('cars', $this->params->car);
 
-		$journal = new \Collections\Journal;
+		$journal = new \Collections\Journal\Journal;
 		$records = $journal->find('car = {$car} ORDER BY `date` DESC, `id` DESC', [
 			'car' => $this->params->car
 		]);
@@ -43,7 +46,7 @@ class Journal extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$journal = new \Collections\Journal();
+		$journal = new \Collections\Journal\Journal;
 		$record = $journal->get($this->params->id);
 
 		$this->checkEntityAccess($record);
@@ -68,9 +71,9 @@ class Journal extends ApiController {
 				'type' => 'struct',
 				'sub' => [
 					'car' => ['required' => true, 'type' => 'int'],
-					'date' => ['required' => true, 'datetime' => true],
+					'type' => ['required' => true, 'type' => 'int'],
+					'date' => ['required' => true, 'date' => true],
 					'odo' => ['type' => 'int', 'min' => 0, 'max' => 1000000],
-					'type' => ['required' => true, 'type' => 'string', 'length' => [1, 20]],
 					'comment' => ['type' => 'string', 'length' => [1, 255]],
 					'image' => ['uuid' => true],
 				]
@@ -79,10 +82,20 @@ class Journal extends ApiController {
 
 		$this->checkAccess('cars', $this->params->record->car);
 
-		$record = new JournalRecord;
+		$record = new Record;
 		$record->setData((array)$this->params->record);
 		$record->user = $this->user->id;
 		$record->insert();
+
+		if($record->odo) {
+			/** @var Car $car */
+			$car = \Collections\Cars::factory()->get($this->params->record->car);
+			if($record->odo > $car->odo) {
+				$car->odo = $record->odo;
+				$car->odo_mdate = Time::date();
+				$car->save();
+			}
+		}
 
 		return [
 			'created' => true,
@@ -103,9 +116,9 @@ class Journal extends ApiController {
 			'record' => ['required' => true]
 		]);
 
-		$journal = new \Collections\Journal;
+		$journal = new \Collections\Journal\Journal;
 
-		/** @var JournalRecord $record */
+		/** @var Record $record */
 		$record = $journal->get($this->params->id);
 
 		$this->checkEntityAccess($record);
@@ -129,15 +142,32 @@ class Journal extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$journal = new \Collections\Journal();
+		$journal = new \Collections\Journal\Journal;
 
-		/** @var JournalRecord $record */
+		/** @var Record $record */
 		$record = $journal->get($this->params->id);
 
 		$this->checkEntityAccess($record);
 
 		return [
 			'deleted' => $record->delete()
+		];
+
+	}
+
+	/**
+	 * @route /garage/journal/types
+	 */
+	public function types() {
+
+		/** @var Client $db */
+		$db = $this->di->db;
+
+		$types = $db->query('SELECT id, name FROM journal_types ORDER BY `order` ASC');
+		//$types = Types::factory()->find('TRUE ORDER BY `order` ASC');
+
+		return [
+			'types' => $types
 		];
 
 	}

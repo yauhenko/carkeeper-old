@@ -3,7 +3,7 @@
 namespace App;
 
 use Entities\Car;
-use Entities\JournalRecord;
+use Entities\Journal\Record;
 use Entities\User;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
@@ -23,7 +23,8 @@ class References {
 			'image' => ['table' => 'uploads']
 		];
 
-		$this->rules[JournalRecord::class] = [
+		$this->rules[Record::class] = [
+			'type' => ['table' => 'journal_types', 'fields' => ['id', 'name']],
 			'image' => ['table' => 'uploads']
 		];
 

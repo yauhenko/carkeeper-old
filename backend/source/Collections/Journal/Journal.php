@@ -1,8 +1,8 @@
 <?php
 
-namespace Collections;
+namespace Collections\Journal;
 
-use Entities\JournalRecord;
+use Entities\Journal\Record;
 use Framework\DB\Collection;
 
 /**
@@ -20,6 +20,6 @@ class Journal extends Collection {
 	/**
 	 * @var string
 	 */
-	protected $_entity = JournalRecord::class;
+	protected $_entity = Record::class;
 
 }

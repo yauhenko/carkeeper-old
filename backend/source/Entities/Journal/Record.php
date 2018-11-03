@@ -1,11 +1,11 @@
 <?php
 
-namespace Entities;
+namespace Entities\Journal;
 
-use Collections\Journal;
+use Collections\Journal\Journal;
 use Framework\DB\Entity;
 
-class JournalRecord extends Entity {
+class Record extends Entity {
 
 	/**
 	 * @var int
@@ -27,7 +27,7 @@ class JournalRecord extends Entity {
 	public $car;
 
 	/**
-	 * @validate datetime
+	 * @validate date
 	 * @var string|null
 	 */
 	public $date = null;
@@ -39,10 +39,11 @@ class JournalRecord extends Entity {
 	public $odo = null;
 
 	/**
-	 * @validate required; type: string; length: 1, 20
+	 * @validate required; type: int
+	 * @ref Entities\Journal\Type
      * @var string
 	 */
-	public $type = 'other';
+	public $type;
 
 	/**
 	 * @validate length: 1, 255
