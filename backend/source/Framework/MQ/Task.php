@@ -165,15 +165,15 @@ class Task {
 		$db = DI::getInstance()->db;
 		if(!$db->update('mq_tasks', ['status' => 'working'], 'id', $this->id)) return;
 		try {
-			$handler = $this->getHandler();
+			$handler = new $this->class($this);
 			$method = $this->method;
-			$result = $handler->$method($this->data, $this->data_trigger);
+			$result = call_user_func([$handler, $method], $this->data, $this->data_trigger);
 			if($result instanceof self) return;
 			$this->result = $result;
 			$this->status = 'done';
 		} catch (Throwable $error) {
 			$this->errors++;
-			$this->result = $error;
+			$this->result = $error->getMessage();
 			if(isset($handler) && $handler::MAX_ERRORS > $this->errors) {
 				$delay = $handler::RETRY_DELAYS[$this->errors - 1] ?: max($handler::RETRY_DELAYS);
 				$this->startDelay($delay);
@@ -182,16 +182,6 @@ class Task {
 			}
 		}
 		$this->save();
-	}
-
-	/**
-	 * Get task handler object
-	 *
-	 * @return Handler
-	 */
-	public function getHandler(): Handler {
-		$class = $this->class;
-		return new $class($this);
 	}
 
 	/**
@@ -214,7 +204,9 @@ class Task {
 	 * @throws Exception
 	 */
 	public function delete(): void {
-		$this->db->delete('mq_tasks', 'id', $this->id);
+		/** @var Client $db */
+		$db = DI::getInstance()->db;
+		$db->delete('mq_tasks', 'id', $this->id);
 		$this->id = null;
 		$this->_data = $this->_buffer = [];
 	}

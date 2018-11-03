@@ -2,9 +2,9 @@
 
 namespace Framework\Utils;
 
-class FCM {
+use Framework\Patterns\DI;
 
-	protected static $key = 'AAAAl7VqnrU:APA91bGe3PcWhZWhs6hkJgamkY2TVawBEASMFrn9eql-c2h3YxV79oe4sxgAYZJ-EgOBNy_11Gpsw9DdkD-KnoBbIV8i1oW4HDC1kVJKRjGmHPQhV0w2jVIjoeCqj6kkTmp2aQOOZjwP';
+class FCM {
 
 	public static function send($to, string $platform, string $title, string $message, array $extra = [], bool $vibrate = true, bool $sound = true) {
 
@@ -34,8 +34,10 @@ class FCM {
 			];
 		}
 
+		$key = DI::getInstance()->config->fcm->key;
+
 		$headers = [
-			'Authorization: key=' . self::$key,
+			'Authorization: key=' . $key,
 			'Content-Type: application/json'
 		];
 
@@ -50,19 +52,7 @@ class FCM {
 		curl_close($ch);
 
 		return json_decode($result, true);
+
 	}
 
 }
-
-if(!$_REQUEST['to']) return false;
-
-echo '<pre>';
-
-
-$r = FCM::send($_GET['to'], 'android', $_REQUEST['title'] ?: 'CarKeeper', $_REQUEST['body'] ?: 'Новый штраф', $_REQUEST['data'] ?: [
-	'event_type' => 'Штраф',
-	'штраф_id' => 213,
-	'car_id' => 123
-]);
-
-print_r($r);

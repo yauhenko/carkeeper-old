@@ -30,5 +30,8 @@
 		}
 	},
 	"static_regexp": "/\\.(html|jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
-	"cdn": "https://cdn.carkeeper.pro"
+	"cdn": "https://cdn.carkeeper.pro",
+	"fcm": {
+		"key": "AAAAl7VqnrU:APA91bGe3PcWhZWhs6hkJgamkY2TVawBEASMFrn9eql-c2h3YxV79oe4sxgAYZJ-EgOBNy_11Gpsw9DdkD-KnoBbIV8i1oW4HDC1kVJKRjGmHPQhV0w2jVIjoeCqj6kkTmp2aQOOZjwP"
+	}
 }

@@ -6,12 +6,11 @@ use Collections\Cars;
 use Collections\Fines;
 use Entities\Car;
 use Entities\Fine;
-use Framework\Annotations\Parser;
 use Framework\DB\Client as DB;
 use Framework\MQ\Task;
 use Framework\Patterns\DI;
 use Framework\Utils\Time;
-use GuzzleHttp\Client as HttpClient;
+//use GuzzleHttp\Client as HttpClient;
 use Tasks\Push;
 
 class FinesService {
@@ -20,7 +19,6 @@ class FinesService {
 
 		/** @var DB $db */
 		$db = DI::getInstance()->db;
-
 
 		$passList = $db->find('SELECT * FROM cars_pass WHERE udate IS NULL 
 			OR TIMESTAMPDIFF(HOUR, udate, NOW()) >= 24 LIMIT ' . $limit);
@@ -76,13 +74,11 @@ class FinesService {
 				'car' => $car->id
 			])['cnt'];
 
-			//print "CNT {$cnt}";
-
 			if($cnt > 0) {
 				Task::create(Push::class, [
 					'user' => $car->user,
-					'title' => $new ? 'Новый штраф!' : 'Штрафы ждут оплаты',
-					'message' => 'Неоплаченых штрафов: ' . $cnt
+					'title' => $new ? 'Ура! Новый штраф!' : 'Любите быструю езду?',
+					'message' => 'Извольте оплатить штрафы: ' . $cnt . ' шт.',
 				])->start();
 			}
 

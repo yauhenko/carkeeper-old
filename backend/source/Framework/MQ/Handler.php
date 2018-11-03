@@ -4,7 +4,8 @@ namespace Framework\MQ;
 
 /**
  * Class Handler
- * @package RS\MQ
+ *
+ * @package Framework\MQ
  */
 abstract class Handler {
 
@@ -25,9 +26,10 @@ abstract class Handler {
 
 	/**
 	 * Handler constructor
+	 *
 	 * @param Task $task
 	 */
-	public function __construct(Task &$task) {
+	public function __construct(Task $task) {
 		$this->task = $task;
 	}
 
