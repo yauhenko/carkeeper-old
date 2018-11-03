@@ -45,7 +45,10 @@ class Insurance extends ApiController {
 			$item['notify'] = (bool)$item['notify'];
 			$result[$type] = $item;
 		}
-		return $result;
+
+		return [
+			'insurance' => $result
+		];
 	}
 
 	/**
@@ -59,6 +62,7 @@ class Insurance extends ApiController {
 			'car' => ['required' => true, 'type' => 'int'],
 			'insurance' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'type' => ['required' => true, 'in' => ['regular', 'casco']],
 					'notify' => ['required' => true, 'type' => 'bool'],
@@ -77,7 +81,11 @@ class Insurance extends ApiController {
 			'type' => $this->params->insurance->type
 		]);
 
-		return $db->updateWhere('cars_insurance', (array)$this->params->insurance, $where);
+		$res = $db->updateWhere('cars_insurance', (array)$this->params->insurance, $where);
+
+		return [
+			'updated' => $res
+		];
 
 	}
 

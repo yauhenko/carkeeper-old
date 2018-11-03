@@ -165,6 +165,10 @@ class Validator {
 			elseif($t === 'bool') $t = 'boolean';
 			elseif($t === 'float') $t = 'double';
 			if($t === 'boolean' && in_array($value, [0, 1])) $value = (bool)$value;
+			if($t === 'struct') {
+				$type[] = 'object';
+				$type[] = 'array';
+			}
 		}
 		if(!in_array(strtolower(gettype($value)), $type))
 			throw new Error('Неверный тип данных. Ожидается: ' . implode(', ', $type));

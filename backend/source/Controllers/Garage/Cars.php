@@ -4,8 +4,6 @@ namespace Controllers\Garage;
 
 use Entities\Car;
 use Controllers\ApiController;
-use Entities\JournalRecord;
-use Framework\Utils\Time;
 
 class Cars extends ApiController {
 
@@ -16,7 +14,7 @@ class Cars extends ApiController {
 		$this->auth();
 
 		$cars = new \Collections\Cars;
-		$list = $cars->find('user = {$user}', ['user' => $this->user->id]);
+		$list = $cars->find('user = {$user} ORDER BY id', ['user' => $this->user->id]);
 
 		return [
 			'cars' => $list,
@@ -37,6 +35,8 @@ class Cars extends ApiController {
 		]);
 
 		$cars = new \Collections\Cars;
+
+		/** @var Car $car */
 		$car = $cars->get($this->params->id);
 
 		return [
@@ -56,10 +56,11 @@ class Cars extends ApiController {
 		$this->validate([
 			'car' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'mark' => ['required' => true, 'type' => 'int'],
 					'model' => ['required' => true, 'type' => 'int'],
-					'year' => ['required' => true, 'type' => 'int', 'min' => 1990, 'max' => (int)date('Y')],
+					'year' => ['required' => true, 'type' => 'int', 'min' => 1980, 'max' => (int)date('Y')],
 				]
 			]
 		]);
@@ -70,6 +71,7 @@ class Cars extends ApiController {
 		$car->save();
 
 		return [
+			'created' => true,
 			'id' => $car->id
 		];
 
@@ -84,28 +86,17 @@ class Cars extends ApiController {
 
 		$this->validate([
 			'id' => ['required' => true, 'type' => 'int'],
-			'car' => ['required' => true]
+			'car' => ['required' => true, 'type' => 'struct']
 		]);
 
 		$cars = new \Collections\Cars;
+
 		/** @var Car $car */
 		$car = $cars->findOneBy('id', $this->params->id);
+
 		$this->checkEntityAccess($car);
 
-		$snapshot = clone $car;
-
 		$car->setData((array)$this->params->car);
-
-		if($car->odo !== $snapshot->odo) {
-			$car->odo_mdate = Time::date();
-			$record = new JournalRecord;
-			$record->user = $car->user;
-			$record->car = $car->id;
-			$record->type = 'odo';
-			$record->odo = $car->odo;
-			$record->date = Time::dateTime();
-			$record->insert();
-		}
 
 		return [
 			'updated' => $car->save()
@@ -125,6 +116,8 @@ class Cars extends ApiController {
 		]);
 
 		$cars = new \Collections\Cars;
+
+		/** @var Car $car */
 		$car = $cars->get($this->params->id);
 
 		$this->checkEntityAccess($car);

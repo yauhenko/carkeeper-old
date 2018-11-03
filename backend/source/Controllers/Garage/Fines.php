@@ -47,9 +47,12 @@ class Fines extends ApiController {
 		]);
 
 		$fines = new \Collections\Fines;
+
 		/** @var Fine $fine */
 		$fine = $fines->get($this->params->id);
+
 		$this->checkEntityAccess($fine);
+
 		$fine->status = 1;
 
 		return [
@@ -70,6 +73,8 @@ class Fines extends ApiController {
 		]);
 
 		$fines = new \Collections\Fines;
+
+		/** @var Fine $fine */
 		$fine = $fines->get($this->params->id);
 
 		$this->checkEntityAccess($fine);

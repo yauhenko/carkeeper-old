@@ -36,7 +36,9 @@ class Pass extends ApiController {
 
 		unset($item['car'], $item['udate']);
 
-		return $item;
+		return [
+			'pass' => $item
+		];
 	}
 
 	/**
@@ -50,6 +52,7 @@ class Pass extends ApiController {
 			'car' => ['required' => true, 'type' => 'int'],
 			'pass' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'firstname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'middlename' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
@@ -66,7 +69,11 @@ class Pass extends ApiController {
 
 		/** @var Client $db */
 		$db = $this->di->db;
-		return $db->save('cars_pass', (array)$this->params->pass, 'car', $this->params->car);
+		$res = $db->save('cars_pass', (array)$this->params->pass, 'car', $this->params->car);
+
+		return [
+			'updated' => $res
+		];
 
 	}
 

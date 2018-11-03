@@ -29,7 +29,7 @@ class Car extends Entity {
 	public $model;
 
 	/**
-	 * @validate required; type: int; min: 1990; max: 2019
+	 * @validate required; type: int; min: 1980; max: 2019
 	 * @var int
 	 */
 	public $year;

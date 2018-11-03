@@ -4,8 +4,6 @@ namespace Controllers\Garage;
 
 use Entities\JournalRecord;
 use Controllers\ApiController;
-use Framework\DB\Client;
-use Framework\Utils\Time;
 
 class Journal extends ApiController {
 
@@ -23,8 +21,7 @@ class Journal extends ApiController {
 		$this->checkAccess('cars', $this->params->car);
 
 		$journal = new \Collections\Journal;
-		$records = $journal->find('user = {$user} AND car = {$car} ORDER BY `date` DESC, `id` DESC', [
-			'user' => $this->user->id,
+		$records = $journal->find('car = {$car} ORDER BY `date` DESC, `id` DESC', [
 			'car' => $this->params->car
 		]);
 
@@ -66,9 +63,9 @@ class Journal extends ApiController {
 		$this->auth();
 
 		$this->validate([
-			'id' => ['required' => true, 'type' => 'int'],
 			'record' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'car' => ['required' => true, 'type' => 'int'],
 					'date' => ['required' => true, 'datetime' => true],
@@ -87,16 +84,10 @@ class Journal extends ApiController {
 		$record->user = $this->user->id;
 		$record->insert();
 
-		if($record->type === 'odo' && $record->odo) {
-			/** @var Client $db */
-			$db = $this->di->db;
-			$db->update('cars', [
-				'odo' => $record->odo,
-				'mdate' => Time::dateTime()
-			], 'id', $record->car);
-		}
-
-		return ['id' => $record->id];
+		return [
+			'created' => true,
+			'id' => $record->id
+		];
 
 	}
 
@@ -109,36 +100,20 @@ class Journal extends ApiController {
 
 		$this->validate([
 			'id' => ['required' => true, 'type' => 'int'],
-			'record' => [
-				'required' => true,
-				'sub' => [
-					'car' => ['required' => true, 'type' => 'int'],
-					'date' => ['required' => true, 'datetime' => true],
-					'odo' => ['type' => 'int', 'min' => 0, 'max' => 1000000],
-					'type' => ['required' => true, 'type' => 'string', 'length' => [1, 20]],
-					'comment' => ['type' => 'string', 'length' => [1, 255]],
-					'image' => ['uuid' => true],
-				]
-			]
+			'record' => ['required' => true]
 		]);
 
 		$journal = new \Collections\Journal;
+
 		/** @var JournalRecord $record */
 		$record = $journal->get($this->params->id);
+
 		$this->checkEntityAccess($record);
+
 		$record->setData((array)$this->params->record);
 
-		if($record->type === 'odo' && $record->odo) {
-			/** @var Client $db */
-			$db = $this->di->db;
-			$db->update('cars', [
-				'odo' => $record->odo,
-				'mdate' => Time::dateTime()
-			], 'id', $record->car);
-		}
-
 		return [
-			'updated' => $record->save()
+			'updated' => $record->update()
 		];
 
 	}
@@ -147,6 +122,7 @@ class Journal extends ApiController {
 	 * @route /garage/journal/delete
 	 */
 	public function delete() {
+
 		$this->auth();
 
 		$this->validate([
@@ -154,7 +130,10 @@ class Journal extends ApiController {
 		]);
 
 		$journal = new \Collections\Journal();
+
+		/** @var JournalRecord $record */
 		$record = $journal->get($this->params->id);
+
 		$this->checkEntityAccess($record);
 
 		return [

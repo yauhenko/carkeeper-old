@@ -47,13 +47,14 @@ class Notes extends ApiController {
 		]);
 
 		$notes = new \Collections\Notes;
+
+		/** @var Note $note */
 		$note = $notes->get($this->params->id);
 
 		$this->checkEntityAccess($note);
 
 		return [
 			'note' => $note,
-			//'refs' => (object)$this->di->refs->single($car)
 		];
 
 	}
@@ -68,10 +69,11 @@ class Notes extends ApiController {
 		$this->validate([
 			'note' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'car' => ['required' => true, 'type' => 'int'],
-					'name' => ['required' => true, 'type' => 'string'],
-					'content' => ['type' => 'string', 'length' => [1, 20000]],
+					'name' => ['required' => true, 'type' => 'string', 'length' => [1, 100]],
+					'content' => ['required' => true, 'type' => 'string', 'length' => [1, 20000]],
 				]
 			]
 		]);
@@ -84,6 +86,7 @@ class Notes extends ApiController {
 		$note->insert();
 
 		return [
+			'created' => true,
 			'id' => $note->id
 		];
 
@@ -98,12 +101,14 @@ class Notes extends ApiController {
 
 		$this->validate([
 			'id' => ['required' => true, 'type' => 'int'],
-			'note' => ['required' => true]
+			'note' => ['required' => true, 'type' => 'struct']
 		]);
 
 		$notes = new \Collections\Notes;
+
 		/** @var Note $note */
 		$note = $notes->get($this->params->id);
+
 		$this->checkEntityAccess($note);
 
 		$note->setData((array)$this->params->note);
@@ -126,6 +131,8 @@ class Notes extends ApiController {
 		]);
 
 		$notes = new \Collections\Notes;
+
+		/** @var Note $note */
 		$note = $notes->get($this->params->id);
 
 		$this->checkEntityAccess($note);

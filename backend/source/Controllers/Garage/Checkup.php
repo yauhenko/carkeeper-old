@@ -34,9 +34,13 @@ class Checkup extends ApiController {
 		}
 
 		unset($item['car']);
+
 		$item['notify'] = (bool)$item['notify'];
 
-		return $item;
+		return [
+			'checkup' => $item
+		];
+
 	}
 
 	/**
@@ -50,6 +54,7 @@ class Checkup extends ApiController {
 			'car' => ['required' => true, 'type' => 'int'],
 			'checkup' => [
 				'required' => true,
+				'type' => 'struct',
 				'sub' => [
 					'notify' => ['required' => true, 'type' => 'bool'],
 					'edate' => ['date' => true],
@@ -61,7 +66,12 @@ class Checkup extends ApiController {
 
 		/** @var Client $db */
 		$db = $this->di->db;
-		return $db->update('cars_checkup', (array)$this->params->checkup, 'car', $this->params->car);
+
+		$res = $db->update('cars_checkup', (array)$this->params->checkup, 'car', $this->params->car);
+
+		return [
+			'updated' => $res
+		];
 
 	}
 
