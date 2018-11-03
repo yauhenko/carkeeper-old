@@ -17,8 +17,8 @@ class Push extends Handler {
 		$user = $users->get($data['user']);
 
 		if(!$user->fcm) {
-			$this->task->delete();
-			return false;
+			//$this->task->delete();
+			return 'No FCM';
 		}
 
 		$res = FCM::send($user->fcm, 'android', $data['title'], $data['message'], $data['extra'] ?: []);
@@ -26,11 +26,13 @@ class Push extends Handler {
 		if($res['failure']) {
 			$user->fcm = null;
 			$user->save();
-			$this->task->delete();
+			return 'FAIL!';
+			//$this->task->delete();
 
 		} elseif($res['success']) {
-			$this->task->delete();
-			return true;
+			//$this->task->delete();
+			return 'SUCCESS!';
+			//return true;
 
 		}
 
