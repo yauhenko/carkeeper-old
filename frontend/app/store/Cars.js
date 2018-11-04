@@ -15,6 +15,7 @@ class Cars {
     return await Api('garage/cars', {});
   };
 
+
   /**
    * Получение марок автомобилей
    * @param data
@@ -80,6 +81,7 @@ class Cars {
 
   /**
    * Удаление машины
+   *
    * @param id
    * @returns {Promise<*>}
    */
@@ -87,9 +89,31 @@ class Cars {
     return await Api('garage/cars/delete', {id})
   };
 
-
+  /**
+   * Обновить данные по машине
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action updateCar = async (data = {}) => {
     return await Api('garage/cars/update', data);
+  };
+
+  /**
+   * Получить журнал по машине
+   * @param id {number}
+   * @returns {Promise<*>}
+   */
+  @action getJournal = async (id) => {
+    return await Api('garage/journal', {car: id});
+  };
+
+  /**
+   * Добавить запись в журнал
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action journalAdd = async (data = {}) => {
+    return await Api('garage/journal/add', data);
   };
 
 

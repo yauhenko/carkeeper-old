@@ -117,7 +117,7 @@ export default class Car extends React.Component {
           }
         </Content>
 
-        <Footer><CarMenu {...this.props} car={this.car}/></Footer>
+        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
 
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
