@@ -9,6 +9,9 @@ ALTER TABLE `journal_types`
   ADD KEY `pid` (`pid`);
 
 ALTER TABLE `journal_types`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `journal_types`
   ADD CONSTRAINT `journal_types_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `journal_types` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 DELETE FROM `journal`;
