@@ -30,7 +30,6 @@ class User extends Entity {
 	public $email;
 
 	/**
-	 * @validate match: /^[a-z][a-z0-9\.\-\_]{2,20}$/i
 	 * @var string|null
 	 */
 	public $username = null;

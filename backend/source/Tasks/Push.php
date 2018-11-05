@@ -26,11 +26,11 @@ class Push extends Handler {
 		if($res['failure']) {
 			$user->fcm = null;
 			$user->save();
-			return 'FAIL!';
+			return $res;
 			//$this->task->delete();
 
 		} elseif($res['success']) {
-			//$this->task->delete();
+			$this->task->delete();
 			return 'SUCCESS!';
 			//return true;
 
