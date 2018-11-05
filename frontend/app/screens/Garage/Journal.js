@@ -11,6 +11,7 @@ import {observable, action, toJS} from 'mobx';
 import Notification from "../../components/Notification";
 import Select from "../../components/Form/Select";
 import Input from "../../components/Form/Input";
+import InputDate from "../../components/Form/InputDate";
 
 @observer
 export default class Journal extends React.Component {
@@ -175,6 +176,7 @@ export default class Journal extends React.Component {
             <Content refreshControl={<RefreshControl refreshing={this.loading} />}>
               <Form>
                 <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={this.types} title={"Тип записи"}/>
+                <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title={"Показания одометра"}/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
               </Form>
