@@ -59,6 +59,7 @@ class FinesService {
 			$car = $cars->get($pass['car']);
 
 			$new = 0;
+			$sum = 0;
 			foreach ($ms as $m) {
 				$fines = new Fines;
 				if(!$fine = $fines->findOneBy('regid', $m[5], true)) {
@@ -71,7 +72,8 @@ class FinesService {
 					$fine->rdate = $d->format('Y-m-d H:i:s');
 					$fine->insert();
 				}
-				$this->getFineDetails($fine);
+				$det = $this->getFineDetails($fine);
+				if($det['amount']) $sum += $det['amount'];
 				if(!$fine->status) $new++;
 			}
 
@@ -83,7 +85,7 @@ class FinesService {
 				Task::create(Push::class, [
 					'user' => $car->user,
 					'title' => $new ? 'Ура! Новый штраф!' : 'Любите быструю езду?',
-					'message' => 'Извольте оплатить штрафы: ' . $cnt . ' шт.',
+					'message' => 'Извольте оплатить штрафы: ' . $cnt . ' шт.' . ($sum ? ' на ' . $sum . ' руб' : ''),
 				])->start();
 			}
 
