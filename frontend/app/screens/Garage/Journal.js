@@ -12,32 +12,32 @@ import Notification from "../../components/Notification";
 import Select from "../../components/Form/Select";
 import Input from "../../components/Form/Input";
 
-const dataArray = [
-  { title: "Замена масла", content: "Lorem ipsum dolor sit amet" },
-  { title: "Замена воздушного фильтра и прочей хуйни такой дилнной", content: "Lorem ipsum dolor sit amet" },
-  { title: "Замена маслянного фильтра", content: "Lorem ipsum dolor sit amet" }
-];
-
 @observer
 export default class Journal extends React.Component {
   @observable car = this.props.navigation.state.params.car;
-
   @observable modal = false;
-
+  @observable types = [];
   @observable loading = true;
 
   initialRecord = {
     id: this.car.car.id,
     record : {
       car: this.car.car.id,
-      date: moment().format("YYYY-MM-DD HH:mm:ss"),
+      date: moment().format("YYYY-MM-DD"),
       type: null,
       comment: null
     }
   };
 
-  @observable record = {...this.initialRecord};
-
+  @observable record = {
+    id: this.car.car.id,
+    record : {
+      car: this.car.car.id,
+      date: moment().format("YYYY-MM-DD"),
+      type: null,
+      comment: null
+    }
+  };
 
   @observable journal = {
     records: [],
@@ -66,7 +66,7 @@ export default class Journal extends React.Component {
       await Cars.journalAdd(obj);
       this.journal = await Cars.getJournal(this.car.car.id);
       this.toggleModal(false);
-      this.record = this.initialRecord;
+      this.record = Object.assign({}, this.initialRecord);
     } catch (e) {
       Notification(e)
     }
@@ -77,30 +77,43 @@ export default class Journal extends React.Component {
     this.record.record[key] = value;
   };
 
+  @action getTypes = async () => {
+    let tmp = await Cars.getJournalTypes();
+    this.types = tmp.types.map((item) => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+  };
+
   componentDidMount() {
      this.getJournal();
   }
 
-  renderHeader({date, type}, expanded) {
+  renderHeader = ({date, type}, expanded) =>  {
     return (
-      <View style={{flexDirection: "row", alignItems: "center", padding: 10,  backgroundColor: "#fff", borderBottomWidth: 0.5, borderBottomColor: "#d6d7da"}}>
+      <View style={{flexDirection: "row", alignItems: "center", paddingLeft: 10,  backgroundColor: "#fff", borderBottomWidth: expanded ? 0 : 0.5, borderBottomColor: "#d6d7da"}}>
         <View>
-          <Text style={{fontSize: 14}}>{moment(date).format("DD.MM.YYYY HH:mm")}</Text>
+          <Text style={{fontSize: 14}}>{moment(date).format("DD.MM.YYYY")}</Text>
         </View>
         <View style={{flex: 1, paddingLeft: 10, paddingRight: 10}}>
-          <Text style={{fontSize: 14}}>{type}</Text>
+          <Text style={{fontSize: 14}}>{this.journal.refs.type[type].name}</Text>
         </View>
-        <View style={{padding: 5}}>
-          {expanded ? <Icon style={{ fontSize: 18 }} name="arrow-up" /> : <Icon style={{ fontSize: 18 }} name="arrow-down" />}
+        <View>
+          <Button style={{padding: 10}} transparent={true}>
+            <Icon style={{fontSize: 18, color: "#d6d7da"}} name="more" />
+          </Button>
         </View>
       </View>
     );
-  }
+  };
 
   renderContent({comment}) {
-
     return (
-      <Text style={{padding: 10}}>{comment}</Text>
+      <View style={{borderBottomWidth: 0.5, borderBottomColor: "#d6d7da"}}>
+        {comment
+          ?
+          <Text style={{padding: 10, fontStyle: "italic"}}>Комментарий: {comment}</Text>
+          :
+          null
+        }
+      </View>
     );
   }
 
@@ -122,7 +135,7 @@ export default class Journal extends React.Component {
               <Title><Text style={styles.headerTitle}>Журнал: {carRefs.mark.name} {carRefs.model.name}</Text></Title>
             </Body>
             <Right>
-              <Button onPress={()=>{this.toggleModal(true)}} transparent>
+              <Button transparent>
                 <Icon name='options'/>
               </Button>
               <Button onPress={()=>{this.toggleModal(true)}} transparent>
@@ -141,7 +154,7 @@ export default class Journal extends React.Component {
         </Container>
 
 
-        <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
+        <Modal onShow={()=>this.getTypes()} animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
               <Left>
@@ -161,7 +174,7 @@ export default class Journal extends React.Component {
 
             <Content refreshControl={<RefreshControl refreshing={this.loading} />}>
               <Form>
-                <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={[{id: "other", text: "Другое", icon: "radio-button-off"}]} title={"Тип записи"}/>
+                <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={this.types} title={"Тип записи"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title={"Показания одометра"}/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
               </Form>

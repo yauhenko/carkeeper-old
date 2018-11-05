@@ -116,6 +116,10 @@ class Cars {
     return await Api('garage/journal/add', data);
   };
 
+  @action getJournalTypes = async (data = {}) => {
+    return await Api('garage/journal/types', data);
+  };
+
 
   // @observable initialCar = Object.freeze({
   //   mark: String(),

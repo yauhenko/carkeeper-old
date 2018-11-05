@@ -22,16 +22,16 @@ export default class CarMenu extends React.Component {
           <Text style={{color: "#fff"}}>Бортжурнал</Text>
         </Button>
 
-        <Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders", {car: this.props.car})} active={this.activeButton("Reminders")}>
-          <Icon style={styles.footerBadge} name={"watch"} />
-          <Text style={{color: "#fff"}}>Напоминания</Text>
-        </Button>
+        {/*<Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders", {car: this.props.car})} active={this.activeButton("Reminders")}>*/}
+          {/*<Icon style={styles.footerBadge} name={"watch"} />*/}
+          {/*<Text style={{color: "#fff"}}>Напоминания</Text>*/}
+        {/*</Button>*/}
 
-        <Button badge vertical style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines", {car: this.props.car})} active={this.activeButton("Fines")}>
-          <Badge><Text>1</Text></Badge>
-          <Icon style={styles.footerBadge} name={"speedometer"} />
-          <Text style={{color: "#fff"}}>Штрафы</Text>
-        </Button>
+        {/*<Button badge vertical style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines", {car: this.props.car})} active={this.activeButton("Fines")}>*/}
+          {/*<Badge><Text>1</Text></Badge>*/}
+          {/*<Icon style={styles.footerBadge} name={"speedometer"} />*/}
+          {/*<Text style={{color: "#fff"}}>Штрафы</Text>*/}
+        {/*</Button>*/}
       </React.Fragment>
     );
   }
