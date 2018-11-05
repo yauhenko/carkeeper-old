@@ -20,7 +20,8 @@
         "ext-json": "*",
         "ext-redis": "*",
 	    "ext-fileinfo": "*",
-        "ext-curl": "^7.2",
-        "guzzlehttp/guzzle": "^6.3"
+        "ext-curl": "*",
+	    "ext-iconv": "*",
+	    "guzzlehttp/guzzle": "^6.3"
     }
 }
