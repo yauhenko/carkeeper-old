@@ -163,7 +163,7 @@ class Journal extends ApiController {
 		/** @var Client $db */
 		$db = $this->di->db;
 
-		$types = $db->query('SELECT id, name FROM journal_types ORDER BY `order` ASC');
+		$types = $db->query('SELECT id, name FROM journal_types ORDER BY `order` ASC, name');
 		//$types = Types::factory()->find('TRUE ORDER BY `order` ASC');
 
 		return [
