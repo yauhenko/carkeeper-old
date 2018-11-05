@@ -46,6 +46,12 @@ class Fine extends Entity {
 	 */
 	public $status = 0;
 
+	/**
+	 * @validate required; type: float
+	 * @var float|null
+	 */
+	public $amount = null;
+
 	/** @var string */
 	protected $_collection = Fines::class;
 
