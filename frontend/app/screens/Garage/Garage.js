@@ -226,7 +226,7 @@ export default class Garage extends React.Component {
                   </ListItem>
                 </List>
 
-                <Input value={this.car.year} onChange={value => {this.changeCar("year", Number(value))}} title="Год выпуска"/>
+                <Input keyboardType="numeric" value={this.car.year} onChange={value => {this.changeCar("year", Number(value))}} title="Год выпуска"/>
 
                 <List style={{paddingTop: 40}}>
                   <ListItem itemDivider>
