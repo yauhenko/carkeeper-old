@@ -32,7 +32,7 @@ export default class Select extends Component {
       <View style={styles.wrapper}>
         <View style={styles.title}><Text>{title}</Text></View>
         <TouchableOpacity style={styles.select} onPress={()=>{this.open()}}>
-          <Text style={this.props.disabled ? styles.disabled : {}}>{this.props.value ? this.getName(this.props.value) : "Не выбрано"}</Text>
+          <Text style={this.props.disabled ? styles.disabled : {flex: 1}}>{this.props.value ? this.getName(this.props.value) : "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
         </TouchableOpacity>
       </View>
@@ -51,20 +51,20 @@ const styles = StyleSheet.create({
 
   wrapper: {
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "row"
   },
 
   select: {
     display: "flex",
+    flex: 1,
+    flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingTop: 15,
-    paddingLeft: 12,
+    paddingLeft: 0,
     paddingBottom: 15,
-    flexGrow: 2,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#ccc",
-    flexDirection: "row"
+    borderBottomColor: "#ccc"
   },
 
   disabled : {
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     color: "#ccc",
     marginRight: 12,
     marginLeft: 15,
-    fontSize: 16
+    fontSize: 16,
+    width: 15
   }
 });
