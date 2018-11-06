@@ -49,14 +49,15 @@ class FinesService {
 				return;
 			}
 
-			if(preg_match('/По заданным критериям поиска информация не найдена/u', $data))
+			/** @var Car $car */
+			$car = Cars::factory()->get($pass['car']);
+
+			if(preg_match('/По заданным критериям поиска информация не найдена/u', $data)) {
+				$db->update('cars_fines', ['status' => 1], 'car', $car->id);
 				goto finish;
+			}
 
 			preg_match_all('/<tr>.+<td>(.+)<\/td>.+<td>(.{3})<\/td>.+<td>([0-9]{6})<\/td>.+<td>([0-9\.\s\:]+)<\/td>.+<td>([0-9]+)<\/td>.+<\/tr>/isU', $data, $ms, PREG_SET_ORDER);
-
-			$cars = new Cars;
-			/** @var Car $car */
-			$car = $cars->get($pass['car']);
 
 			$new = 0;
 			$sum = 0;
