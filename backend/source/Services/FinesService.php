@@ -76,6 +76,7 @@ class FinesService {
 				$det = $this->getFineDetails($fine);
 				if($det['amount']) $sum += $det['amount'];
 				if(!$fine->status) $new++;
+				if($tick) $tick($idx);
 			}
 
 			$cnt = $db->findOne('SELECT COUNT(*) AS cnt FROM cars_fines WHERE car = {$car} AND status = 0', [
