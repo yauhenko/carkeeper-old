@@ -73,7 +73,7 @@ class Journal extends ApiController {
 					'car' => ['required' => true, 'type' => 'int'],
 					'type' => ['required' => true, 'type' => 'int'],
 					'date' => ['required' => true, 'date' => true],
-					'odo' => ['type' => 'int', 'min' => 0, 'max' => 1000000],
+					'odo' => ['type' => 'int', 'min' => 0, 'max' => 10000000],
 					'comment' => ['type' => 'string', 'length' => [1, 255]],
 					'image' => ['uuid' => true],
 				]

@@ -60,7 +60,7 @@ class Car extends Entity {
 	public $image = null;
 
 	/**
-	 * @validate type: int
+	 * @validate type: int; min: 0; max: 10000000
 	 * @var int|null
 	 */
 	public $odo = null;
