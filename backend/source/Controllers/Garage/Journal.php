@@ -5,6 +5,8 @@ namespace Controllers\Garage;
 use Entities\Car;
 use Entities\Journal\Record;
 use Controllers\ApiController;
+use Collections\Cars as CarsCollection;
+use Collections\Journal\Journal as JournalCollection;
 use Framework\DB\Client;
 use Framework\Utils\Time;
 
@@ -23,8 +25,7 @@ class Journal extends ApiController {
 
 		$this->checkAccess('cars', $this->params->car);
 
-		$journal = new \Collections\Journal\Journal;
-		$records = $journal->find('car = {$car} ORDER BY `date` DESC, `id` DESC', [
+		$records = JournalCollection::factory()->find('car = {$car} ORDER BY `date` DESC, `id` DESC', [
 			'car' => $this->params->car
 		]);
 
@@ -46,8 +47,7 @@ class Journal extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$journal = new \Collections\Journal\Journal;
-		$record = $journal->get($this->params->id);
+		$record = JournalCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($record);
 
@@ -82,14 +82,13 @@ class Journal extends ApiController {
 
 		$this->checkAccess('cars', $this->params->record->car);
 
-		$record = new Record;
-		$record->setData((array)$this->params->record);
-		$record->user = $this->user->id;
-		$record->insert();
+		$data = (array)$this->params->record;
+		$data['user'] = $this->user->id;
+		$record = Record::createFromData($data);
 
 		if($record->odo) {
 			/** @var Car $car */
-			$car = \Collections\Cars::factory()->get($this->params->record->car);
+			$car = CarsCollection::factory()->get($this->params->record->car);
 			if($record->odo > $car->odo) {
 				$car->odo = $record->odo;
 				$car->odo_mdate = Time::date();
@@ -116,10 +115,8 @@ class Journal extends ApiController {
 			'record' => ['required' => true]
 		]);
 
-		$journal = new \Collections\Journal\Journal;
-
 		/** @var Record $record */
-		$record = $journal->get($this->params->id);
+		$record = JournalCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($record);
 
@@ -142,10 +139,8 @@ class Journal extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$journal = new \Collections\Journal\Journal;
-
 		/** @var Record $record */
-		$record = $journal->get($this->params->id);
+		$record = JournalCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($record);
 

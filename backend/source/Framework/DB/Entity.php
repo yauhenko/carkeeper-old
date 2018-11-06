@@ -172,4 +172,13 @@ abstract class Entity {
 		return $obj;
 	}
 
+	public static function createFromData(array $data, bool $insert = true): self {
+		$class = get_called_class();
+		/** @var Entity $entity */
+		$entity = new $class;
+		$entity->setData($data);
+		if($insert) $entity->insert();
+		return $entity;
+	}
+
 }

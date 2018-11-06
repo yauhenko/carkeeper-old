@@ -5,6 +5,8 @@ namespace Controllers\Garage;
 use Entities\Car;
 use Entities\Note;
 use Controllers\ApiController;
+use Collections\Cars as CarsCollection;
+use Collections\Notes as NotesCollection;
 
 class Notes extends ApiController {
 
@@ -19,14 +21,12 @@ class Notes extends ApiController {
 			'car' => ['required' => true, 'type' => 'int']
 		]);
 
-		$cars = new \Collections\Cars;
-
 		/** @var Car $car */
-		$car = $cars->get($this->params->car);
+		$car = CarsCollection::factory()->get($this->params->car);
 
 		$this->checkEntityAccess($car);
 
-		$notes = new \Collections\Notes;
+		$notes = new NotesCollection;
 		$list = $notes->getList($car);
 
 		return [
@@ -46,10 +46,8 @@ class Notes extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$notes = new \Collections\Notes;
-
 		/** @var Note $note */
-		$note = $notes->get($this->params->id);
+		$note = NotesCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($note);
 
@@ -80,10 +78,10 @@ class Notes extends ApiController {
 
 		$this->checkAccess('cars', $this->params->note->car);
 
-		$note = new Note;
-		$note->setData((array)$this->params->note);
-		$note->user = $this->user->id;
-		$note->insert();
+		$data = (array)$this->params->note;
+		$data['user'] = $this->user->id;
+
+		$note = Note::createFromData($data);
 
 		return [
 			'created' => true,
@@ -104,10 +102,8 @@ class Notes extends ApiController {
 			'note' => ['required' => true, 'type' => 'struct']
 		]);
 
-		$notes = new \Collections\Notes;
-
 		/** @var Note $note */
-		$note = $notes->get($this->params->id);
+		$note = NotesCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($note);
 
@@ -130,10 +126,8 @@ class Notes extends ApiController {
 			'id' => ['required' => true, 'type' => 'int'],
 		]);
 
-		$notes = new \Collections\Notes;
-
 		/** @var Note $note */
-		$note = $notes->get($this->params->id);
+		$note = NotesCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($note);
 

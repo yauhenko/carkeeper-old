@@ -3,6 +3,7 @@
 namespace Controllers\Garage;
 
 use Entities\Car;
+use Collections\Cars as CarsCollection;
 use Controllers\ApiController;
 
 class Cars extends ApiController {
@@ -11,10 +12,10 @@ class Cars extends ApiController {
 	 * @route /garage/cars
 	 */
 	public function index() {
+
 		$this->auth();
 
-		$cars = new \Collections\Cars;
-		$list = $cars->find('user = {$user} ORDER BY id', ['user' => $this->user->id]);
+		$list = CarsCollection::factory()->find('user = {$user} ORDER BY id', ['user' => $this->user->id]);
 
 		return [
 			'cars' => $list,
@@ -34,10 +35,8 @@ class Cars extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		$cars = new \Collections\Cars;
-
 		/** @var Car $car */
-		$car = $cars->get($this->params->id);
+		$car = CarsCollection::factory()->get($this->params->id);
 
 		return [
 			'car' => $car,
@@ -65,10 +64,11 @@ class Cars extends ApiController {
 			]
 		]);
 
-		$car = new Car;
-		$car->setData((array)$this->params->car);
-		$car->user = $this->user->id;
-		$car->save();
+		$data = (array)$this->params->car;
+		$data['user'] = $this->user->id;
+
+		/** @var Car $car */
+		$car = Car::createFromData($data);
 
 		return [
 			'created' => true,
@@ -89,10 +89,8 @@ class Cars extends ApiController {
 			'car' => ['required' => true, 'type' => 'struct']
 		]);
 
-		$cars = new \Collections\Cars;
-
 		/** @var Car $car */
-		$car = $cars->findOneBy('id', $this->params->id);
+		$car = CarsCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($car);
 
@@ -115,10 +113,8 @@ class Cars extends ApiController {
 			'id' => ['required' => true, 'type' => 'int'],
 		]);
 
-		$cars = new \Collections\Cars;
-
 		/** @var Car $car */
-		$car = $cars->get($this->params->id);
+		$car = CarsCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($car);
 

@@ -5,6 +5,8 @@ namespace Controllers\Garage;
 use Entities\Car;
 use Entities\Fine;
 use Controllers\ApiController;
+use Collections\Cars as CarsCollection;
+use Collections\Fines as FinesCollection;
 
 class Fines extends ApiController {
 
@@ -19,14 +21,12 @@ class Fines extends ApiController {
 			'car' => ['required' => true, 'type' => 'int']
 		]);
 
-		$cars = new \Collections\Cars;
-
 		/** @var Car $car */
-		$car = $cars->get($this->params->car);
+		$car = CarsCollection::factory()->get($this->params->car);
 
 		$this->checkEntityAccess($car);
 
-		$fines = new \Collections\Fines;
+		$fines = new FinesCollection;
 		$list = $fines->getList($car);
 
 		return [
@@ -46,10 +46,8 @@ class Fines extends ApiController {
 			'id' => ['required' => true, 'type' => 'int'],
 		]);
 
-		$fines = new \Collections\Fines;
-
 		/** @var Fine $fine */
-		$fine = $fines->get($this->params->id);
+		$fine = FinesCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($fine);
 
@@ -72,10 +70,8 @@ class Fines extends ApiController {
 			'id' => ['required' => true, 'type' => 'int'],
 		]);
 
-		$fines = new \Collections\Fines;
-
 		/** @var Fine $fine */
-		$fine = $fines->get($this->params->id);
+		$fine = FinesCollection::factory()->get($this->params->id);
 
 		$this->checkEntityAccess($fine);
 
