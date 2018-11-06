@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, RefreshControl, Modal} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Accordion, View, Form, Label, Item, Picker} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Accordion, View, Form, Card, CardItem} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import Cars from "../../store/Cars";
@@ -146,7 +146,12 @@ export default class Journal extends React.Component {
           </Header>
 
           <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getJournal()}}/>} contentContainerStyle={styles.container}>
-            <Accordion renderHeader={this.renderHeader} renderContent={this.renderContent} dataArray={records}/>
+            {records && records.length
+              ?
+              <Accordion renderHeader={this.renderHeader} renderContent={this.renderContent} dataArray={records}/>
+              :
+              <Text>Вы еще не добавляли записи в журнал.</Text>
+            }
           </Content>
 
           <Footer>
