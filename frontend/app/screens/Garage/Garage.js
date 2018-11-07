@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl, Modal, Dimensions, Image} from 'react-native';
+import {Text, RefreshControl, Modal, TouchableWithoutFeedback, Image, View} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
 import styles from "../../styles"
@@ -236,9 +236,15 @@ export default class Garage extends React.Component {
 
                 {this.photo
                   ?
-                  <Image style={{width: Dimensions.get('window').width, height: Dimensions.get('window').width}} source={{uri: cdn + this.photo}}/>
+                  <TouchableWithoutFeedback onPress={()=>{this.photoMenu = true}}>
+                    <Image style={{width: "100%", aspectRatio: 1}} source={{uri: cdn + this.photo}}/>
+                  </TouchableWithoutFeedback>
                   :
-                  <Button block light style={{marginTop: 10, marginLeft: 12, marginRight: 12, marginBottom: 12}} disabled={this.loading} title="Добавить фотографию" onPress={()=>{this.photoMenu = true}}><Text>Добавить фотографию</Text></Button>
+                  <TouchableWithoutFeedback onPress={()=>{this.photoMenu = true}}>
+                    <View style={{alignItems: "center",  backgroundColor: "#f4f4f4", marginTop: 5}}>
+                      <Image style={{width: 100, height: 100, marginTop:50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
+                    </View>
+                  </TouchableWithoutFeedback>
                 }
               </Content>
 
