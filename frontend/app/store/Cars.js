@@ -120,6 +120,13 @@ class Cars {
     return await Api('garage/journal/types', data);
   };
 
+  @action journalDelete = async (data = {}) => {
+    return await Api('garage/journal/delete', data);
+  };
+
+  @action journalUpdate = async (data = {}) => {
+    return await Api('garage/journal/update', data);
+  };
 
   // @observable initialCar = Object.freeze({
   //   mark: String(),

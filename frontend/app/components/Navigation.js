@@ -17,12 +17,6 @@ export default class Navigation extends Component {
       action: null
     },
     {
-      title: "Лента",
-      icon: "paper",
-      path: "Garage",
-      action: null
-    },
-    {
       title: "Профиль",
       icon: "person",
       path: "Profile",

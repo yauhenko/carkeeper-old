@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     paddingTop: 12,
     borderBottomWidth: .5,
-    borderBottomColor: "#ccc"
+    borderBottomColor: "#d6d7da"
   },
 });

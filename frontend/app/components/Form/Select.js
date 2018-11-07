@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingBottom: 15,
     borderBottomWidth: 0.5,
-    borderBottomColor: "#ccc"
+    borderBottomColor: "#d6d7da"
   },
 
   disabled : {

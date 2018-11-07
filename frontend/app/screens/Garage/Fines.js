@@ -1,17 +1,22 @@
 import React from 'react';
 import {Text, RefreshControl} from 'react-native';
+import {observable} from "mobx";
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
-import Cars from "../../store/Cars";
 import CarMenu from "../../components/CarMenu";
 
 @observer
 export default class Fines extends React.Component {
-  render() {
-    const car = Cars.carDetail;
+  @observable car = this.props.navigation.state.params.car;
+  @observable loading = false;
 
+  componentDidMount() {
+    console.log(this.car);
+  }
+
+  render() {
     return (
       <Container>
 
@@ -23,15 +28,15 @@ export default class Fines extends React.Component {
           </Left>
 
           <Body style={{flexGrow: 2}}>
-            <Title><Text style={styles.headerTitle}>Штрафы: {car.mark.name} {car.model.name}</Text></Title>
+            <Title><Text style={styles.headerTitle}>Штрафы: {this.car.refs.mark.name} {this.car.refs.model.name}</Text></Title>
           </Body>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
-          <Text>Штрафы по скорости</Text>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
+          <Text style={{padding: 20, textAlign: "center"}}>Штрафы не найдены.</Text>
         </Content>
 
-        <Footer><CarMenu {...this.props}/></Footer>
+        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
       </Container>
     );
   }

@@ -89,30 +89,6 @@ export default class Car extends React.Component {
               <View style={{alignItems: "center"}}>
                 <Thumbnail square style={{width: Dimensions.get('window').width, height: 200}} large source={car.image ? {uri: cdn + refs.image.path} : require('../../assets/images/car_stub_square.png')} />
               </View>
-
-              <List>
-                <ListItem itemDivider first>
-                  <Text>ПОСЛЕДНЯЯ АКТИВНОСТЬ</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Замена масла</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Замена правого ступичного подшипника</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Получен штраф на сумму 20р.</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Замена каленвала</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Замена тормозных колодок</Text>
-                </ListItem>
-                <ListItem>
-                  <Text>08.16.1550 - Замена масла</Text>
-                </ListItem>
-              </List>
             </React.Fragment>
           }
         </Content>
