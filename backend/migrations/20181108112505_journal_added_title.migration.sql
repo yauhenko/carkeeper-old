@@ -1,0 +1,1 @@
+ALTER TABLE `journal` ADD `title` VARCHAR(100) NULL DEFAULT NULL AFTER `type`;

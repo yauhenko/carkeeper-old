@@ -46,6 +46,12 @@ class Record extends Entity {
 	public $type;
 
 	/**
+	 * @validate length: 1, 100
+	 * @var string|null
+	 */
+	public $title = null;
+
+	/**
 	 * @validate length: 1, 255
      * @var string|null
 	 */

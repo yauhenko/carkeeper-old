@@ -74,6 +74,7 @@ class Journal extends ApiController {
 					'type' => ['required' => true, 'type' => 'int'],
 					'date' => ['required' => true, 'date' => true],
 					'odo' => ['type' => 'int', 'min' => 0, 'max' => 10000000],
+					'title' => ['type' => 'string', 'length' => [1, 100]],
 					'comment' => ['type' => 'string', 'length' => [1, 255]],
 					'image' => ['uuid' => true],
 				]
@@ -112,7 +113,7 @@ class Journal extends ApiController {
 
 		$this->validate([
 			'id' => ['required' => true, 'type' => 'int'],
-			'record' => ['required' => true]
+			'record' => ['required' => true, 'type' => 'struct']
 		]);
 
 		/** @var Record $record */
