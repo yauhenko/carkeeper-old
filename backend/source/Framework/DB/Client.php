@@ -309,21 +309,29 @@ class Client {
 		$this->depth--;
 	}
 
-    /**
-     * Query SQL
-     *
-     * @param string $sql
-     * @param array $data
-     * @return array
-     *
-     * @throws ConstraintError
-     * @throws CommonError
-     */
-    public function query(string $sql, array $data = []) {
+	/**
+	 * Query SQL
+	 *
+	 * @param string $sql
+	 * @param array $data
+	 * @param callable|null $handler
+	 * @return array
+	 *
+	 */
+    public function query(string $sql, array $data = [], callable $handler = null) {
         $sql = $this->prepare($sql, $data);
         if($this->verbose > 0) echo str_repeat('-', 30), PHP_EOL;
         if($this->verbose >= 1) echo $sql, PHP_EOL;
-        $res = $this->driver->query($sql);
+	    $res = $this->driver->query($sql);
+	    if($res === false) {
+		    /** @var string $error */
+		    $error = $this->driver->error;
+		    /** @var int $errno */
+		    $errno = $this->driver->errno;
+		    if($errno === 1451 || $errno === 1452) throw new ConstraintError($error, $errno, $sql);
+		    throw new CommonError($error, $errno, $sql);
+	    }
+        if($handler) return $handler($res, $this, $this->driver);
         if($res === true) {
             $result = [
                 'insert_id' => $this->driver->insert_id,
@@ -331,19 +339,12 @@ class Client {
             ];
             if($this->verbose >= 2) echo print_r($result, true), PHP_EOL;
             return $result;
-        } elseif($res) {
+        } else {
             $items = $res->fetch_all(MYSQLI_ASSOC);
             if($this->verbose >= 2) echo print_r($items, true), PHP_EOL;
             return $items;
         }
 
-        /** @var string $error */
-        $error = $this->driver->error;
-        /** @var int $errno */
-        $errno = $this->driver->errno;
-
-        if($errno === 1451 || $errno === 1452) throw new ConstraintError($error, $errno, $sql);
-        throw new CommonError($error, $errno, $sql);
     }
 
 }
