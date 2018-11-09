@@ -7,7 +7,6 @@ use App\Sessions;
 use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
-//use Framework\DB\Pager;
 use Framework\MQ\Task;
 use Framework\Security\Password;
 use Framework\Validation\Validator;
@@ -24,25 +23,6 @@ class Auth extends ApiController {
 	 * @route /account/login
 	 */
 	public function login() {
-
-//		/** @var Client $db */
-//		$db = $this->di->db;
-//
-//		$db->query('USE mobico');
-//
-//		$start = microtime(true);
-//
-//		$data = Pager::create()->sql('SELECT ** FROM session_log')->order('ORDER BY id')->exec();
-//
-//		$stop = microtime(true);
-//
-//
-//		echo sprintf('%.5f', $stop-$start) . PHP_EOL;
-//
-//		print_r($data->getRaw());
-//
-//
-//		exit;
 
 		Validator::validateData($this->params, [
 			'tel' => ['required' => true],
