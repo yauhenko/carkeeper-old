@@ -264,7 +264,9 @@ class Client {
 			$result =  '`' . $this->driver->real_escape_string($key) . '`';
 		}
 		$result = str_replace(['.', '`*`'], ['`.`', '*'], $result);
-		return str_ireplace(' AS ', '` AS `', $result);
+		$result = str_ireplace(' AS ', '` AS `', $result);
+		$result = str_replace(['``'], ['`'], $result);
+		return $result;
 	}
 
 	/**
