@@ -15,7 +15,6 @@ class Cars {
     return await Api('garage/cars', {});
   };
 
-
   /**
    * Получение марок автомобилей
    * @param data
@@ -128,56 +127,17 @@ class Cars {
     return await Api('garage/journal/update', data);
   };
 
-  // @observable initialCar = Object.freeze({
-  //   mark: String(),
-  //   year: String(),
-  //   model: String(),
-  //   generation: String(),
-  //   serie: String(),
-  //   modification: String()
-  // });
-  //
-  // @observable car = Object.assign({}, this.initialCar);
-  //
-  // @observable marks = [];
-  // @observable models = [];
-  // @observable generations = [];
-  // @observable series = [];
-  // @observable modifications = [];
-  //
-  // @observable carDetail = {};
-  //
+  @action getFines = async (data = {}) => {
+    return await Api('garage/fines', data);
+  };
 
+  @action getPass = async (data = {}) => {
+    return await Api('garage/pass', data);
+  };
 
-
-  //
-  // @action addCar = async () => {
-  //   try {
-  //     return await Api('garage/cars/add', this.car)
-  //   } catch (e) {
-  //     Notification(e)
-  //   }
-  // };
-  //
-  // @action deleteCar = id => {
-  //   return Api('garage/cars/delete', {id}).then((response) => {
-  //   }).catch(Notification);
-  // };
-
-
-
-  // @action checkupUpdate = async (data = {}) => {
-  //   return Api('garage/cars/checkup/update', data).then((response) => {
-  //   }).catch(Notification);
-  // };
-  //
-  // @action insuranceUpdate = async (data = {}) => {
-  //   try {
-  //     return await Api('garage/cars/insurance/update', data)
-  //   } catch (e) {
-  //     Notification(e);
-  //   }
-  // };
+  @action updatePass = async (data = {}) => {
+    return await Api('garage/pass/update', data);
+  };
 }
 
 export default new Cars();
