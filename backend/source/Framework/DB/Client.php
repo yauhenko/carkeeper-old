@@ -180,18 +180,21 @@ class Client {
 	 *
 	 * @param string $table
 	 * @param array $data
-	 * @param string $key
-	 * @param $value
-	 * @param bool $ignore
 	 * @return bool
 	 */
-	public function save(string $table, array $data, string $key, $value, bool $ignore = false): bool {
-		if($this->findOneBy($table, $key, $value, [$key])) {
-			return $this->update($table, $data, $key, $value, $ignore);
-		} else {
-			$this->insert($table, $data, $ignore);
-			return true;
+	public function save(string $table, array $data): bool {
+		$keys = array_keys($data);
+		$vals = array_values($data);
+		$pairs = [];
+		foreach ($data as $k => $v) {
+			$pairs[] = $this->escapeId($k) . ' = ' . $this->escape($v);
 		}
+		$this->query('INSERT INTO {&table} ({&keys}) VALUES {$vals} ON DUPLICATE KEY UPDATE ' . implode(', ', $pairs), [
+			'table' => $table,
+			'keys' => $keys,
+			'vals' => $vals,
+		]);
+		return true;
 	}
 
     /**
