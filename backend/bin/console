@@ -1,15 +1,22 @@
 #!/usr/bin/env php
 <?php
 
-use App\Console;
-use App\Services;
-
 error_reporting(E_ALL ^ E_NOTICE);
-
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = new Console;
+use Symfony\Component\Console\Application;
+use App\Services;
 
 Services::register();
+
+$app = new Application('CarKeeper CLI', '1.0');
+
+$app->add(new \App\Console\MigrationsCreate);
+$app->add(new \App\Console\MigrationsMigrate);
+$app->add(new \App\Console\CacheFlush);
+$app->add(new \App\Console\CacheWarm);
+$app->add(new \App\Console\MQ);
+$app->add(new \App\Console\Fines);
+$app->add(new \App\Console\Cleanup());
 
 $app->run();
