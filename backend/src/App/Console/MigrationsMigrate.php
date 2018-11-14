@@ -30,32 +30,30 @@ class MigrationsMigrate extends Command {
 		/** @var Client $db */
 		$db = DI::getInstance()->db;
 		if (!$db->query('SHOW TABLES LIKE "versions"')[0]) {
-			$io->write('<info>Creating versions table... ');
+			$io->text('<info>Creating versions table</>');
 			$db->query('CREATE TABLE `versions` (`id` bigint(20) UNSIGNED NOT NULL, `cdate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP) ENGINE=InnoDB DEFAULT CHARSET=utf8');
 			$db->query('ALTER TABLE `versions` ADD PRIMARY KEY (`id`)');
-			$io->writeln('<fg=green;options=bold>[OK]</>');
 		}
 
 		chdir($dir);
-		$io->write('<fg=yellow>[i] Fetching versions list... ');
+		$io->text('<info>Fetching versions list</>');
 		$versions = $db->enum('SELECT id, cdate FROM versions ORDER BY id') ?: [];
-		$io->writeln('<fg=green;options=bold>[OK]</>');
 
-		$io->writeln('<fg=green>[*] Starting migration process...</>');
+		$io->text('<info>Starting migration process</>');
 		foreach (glob('*.migration.sql') as $fn) {
 			[$id] = explode('_', $fn, 2);
 			if (!$versions[$id]) {
-				$io->writeln("<fg=green>[+] Applying migration: <fg=green;options=bold>{$fn}</>");
+				$io->text("<fg=green>Applying migration: <fg=green;options=bold>{$fn}</>");
 				$data = file_get_contents($fn);
 				foreach (explode(';', $data) as $query) {
 					if ($query = trim($query)) {
 						if($input->getOption('verbose')) {
-							$io->writeln("<fg=yellow>[>] <fg=yellow;options=bold>{$query}</>");
+							$io->text("<fg=yellow>{$query}</>");
 						}
 						try {
 							$db->query($query);
 						} catch (CommonError $e) {
-							$io->error(['Migration {$fn} failed', $e->getMessage()]);
+							$io->error(['Migration failed', $fn, $e->getMessage(), $e->getSql()]);
 							return;
 						}
 					}
@@ -63,10 +61,12 @@ class MigrationsMigrate extends Command {
 				$db->insert('versions', ['id' => $id]);
 				$db->query('COMMIT');
 			} else {
-				$io->writeln("<fg=blue>[-] Skipping migration: <fg=blue;options=bold>{$fn}</>");
+				$io->text("<fg=blue>Skipping migration: <fg=blue;options=bold>{$fn}</>");
 			}
 		}
+
 		$io->success('All migrations has been applied');
+
 	}
 
 }
