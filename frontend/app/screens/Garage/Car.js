@@ -97,9 +97,9 @@ export default class Car extends React.Component {
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
           <List>
-            <ListItem onPress={() => this.menu = false}>
-              <Text>Редактировать</Text>
-            </ListItem>
+            {/*<ListItem onPress={() => this.menu = false}>*/}
+              {/*<Text>Редактировать</Text>*/}
+            {/*</ListItem>*/}
             <ListItem onPress={() => {
               this.menu = false;
               Alert.alert('Удалить автомобиль', `${this.mark} ${this.model}`,

@@ -13,9 +13,11 @@ export default styles = {
   container: {
     backgroundColor: '#fff',
   },
+
   primaryButton: {
     backgroundColor: "#f13f3f"
   },
+
   primaryButtonText: {
     color: "#fff"
   },
