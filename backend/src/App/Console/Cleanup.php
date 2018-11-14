@@ -3,10 +3,7 @@
 namespace App\Console;
 
 use App\Sessions;
-use Framework\Cache\CacheInterface;
-use Framework\Patterns\DI;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
