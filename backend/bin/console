@@ -13,8 +13,8 @@ $app = new Application('CarKeeper CLI', '1.0');
 
 $app->add(new \App\Console\MigrationsCreate);
 $app->add(new \App\Console\MigrationsMigrate);
-$app->add(new \App\Console\CacheFlush);
-$app->add(new \App\Console\CacheWarm);
+$app->add(new \App\Console\CacheClear);
+$app->add(new \App\Console\CacheWarmup);
 $app->add(new \App\Console\MQ);
 $app->add(new \App\Console\Fines);
 $app->add(new \App\Console\Cleanup());

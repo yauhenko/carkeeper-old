@@ -12,5 +12,5 @@ src=`pwd`
 cd ${src}/build/ && \
 echo 'Uploading...' && \
 rsync -a --delete ${src}/build/* --exclude="uploads" --exclude="/log" --exclude="backup" -e "ssh -p ${port}" ${user}@${host}:${path} && \
-ssh ${user}@${host} "${path}/bin/console --ansi migrations:migrate && ${path}/bin/console --ansi cache:warm" && \
+ssh ${user}@${host} "${path}/bin/console --ansi migrations:migrate && ${path}/bin/console --ansi cache:warmup" && \
 echo "Done in ${SECONDS} sec."

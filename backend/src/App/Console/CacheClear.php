@@ -2,20 +2,18 @@
 
 namespace App\Console;
 
-use Framework\Cache\CacheInterface;
 use Framework\Patterns\DI;
+use Framework\Cache\CacheInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CacheFlush extends Command {
+class CacheClear extends Command {
 
 	protected function configure(): void {
-		$this->setName('cache:flush');
-		$this->setDescription('Flushes cache');
-		$this->addOption('silent', null, InputOption::VALUE_OPTIONAL, 'Silent mode');
+		$this->setName('cache:clear');
+		$this->setDescription('Clears cache');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): void {
@@ -31,8 +29,8 @@ class CacheFlush extends Command {
 		$fci = $di->get('cache:file');
 		$fci->flush();
 
-		if(!$input->getOption('silent'))
-			$io->success('Cache flushed');
+		if(!$input->getOption('quiet'))
+			$io->success('Cache cleared');
 
 	}
 
