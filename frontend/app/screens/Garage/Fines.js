@@ -1,20 +1,8 @@
 import React from 'react';
-import {Text, RefreshControl, View, Modal, TouchableWithoutFeedback, Image, Alert} from 'react-native';
+import {Text, RefreshControl, View, Modal} from 'react-native';
 import {observable, action, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {
-  Container,
-  Button,
-  Content,
-  Icon,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  List,
-  ListItem
-} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -118,14 +106,15 @@ export default class Fines extends React.Component {
           {this.fines.length
             ?
             <List>
-              {this.fines.map(({id, cdate, regid}) => (
+              {this.fines.map(({id, cdate, regid, amount}) => (
                   <ListItem key={id}>
                     <Left>
                       <Text>{moment(cdate).format("DD.MM.YYYY")}</Text>
                     </Left>
-                    <Body style={{flexGrow: 2}}>
+                    <Body>
                       <Text>Номер: {regid}</Text>
                     </Body>
+                    {amount ? <Right><Text>{amount} р.</Text></Right> : null}
                   </ListItem>
               ))}
             </List>
