@@ -25,6 +25,7 @@
         "symfony/console": "^4.1",
         "guzzlehttp/guzzle": "^6.3",
         "mailgun/mailgun-php": "^2.6",
-        "php-http/curl-client": "^1.7"
+        "php-http/curl-client": "^1.7",
+        "twilio/sdk": "^5.25"
     }
 }
