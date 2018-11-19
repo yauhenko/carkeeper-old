@@ -14,6 +14,9 @@ class Sidebar extends Component {
           <li>
             <Link to="/login">Login</Link>
           </li>
+          <li>
+            <Link to="/hui">404</Link>
+          </li>
         </ul>
       </div>
     );

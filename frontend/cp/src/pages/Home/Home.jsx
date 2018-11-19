@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {observable, action} from 'mobx';
 import "./Home.css";
 
+@inject("app")
 @observer
 class Home extends Component {
   @observable value;
@@ -15,6 +16,11 @@ class Home extends Component {
   @action inc = () => {
     this.value++;
   };
+
+  componentDidMount() {
+    console.log(this.props);
+    console.log(this.props.app.auth);
+  }
 
   render() {
     return (

@@ -7,7 +7,9 @@ class App {
     this.auth = false;
   }
 
-
+  @action login = () => {
+    this.auth = true;
+  }
 }
 
 export default new App();
