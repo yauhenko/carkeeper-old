@@ -7,11 +7,8 @@ use App\Sessions;
 use Entities\User;
 use Collections\Users;
 use Framework\DB\Client;
-use Framework\MQ\Task;
 use Framework\Security\Password;
 use Framework\Validation\Validator;
-use Tasks\Mail;
-use Tasks\Push;
 
 /**
  * Class Auth
@@ -50,18 +47,6 @@ class Auth extends ApiController {
 			$user->fcm = $this->params->fcm;
 			$user->save();
 		}
-
-		Task::create(Push::class, [
-			'user' => $user->id,
-			'title' => 'CarKeeper',
-			'message' => 'Добро пожаловать!'
-		])->start();
-
-		Task::create([Mail::class, 'send'], [
-			'to' => "{$user->name} <{$user->email}>",
-			'subj' => 'Добро пожаловать',
-			'html' => "<p>Привет, {$user->name}</p>"
-		])->start();
 
 		$ip = $this->params->noip ? null : $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
