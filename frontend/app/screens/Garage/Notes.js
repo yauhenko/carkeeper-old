@@ -136,7 +136,7 @@ export default class Notes extends React.Component {
                 </ListItem>
               ))
               :
-              this.loading ? null : <Text style={{padding: 20}}>Вы еще не добавляли заметки.</Text>
+              this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли заметки</Text>
             }
           </List>
 

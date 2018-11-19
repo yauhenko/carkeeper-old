@@ -65,13 +65,13 @@ export default class Registration extends React.Component {
             </Item>
 
             <Item style={customStyles.item} fixedLabel>
-              <Label style={customStyles.label}>Пароль:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
+              <Label style={customStyles.label}>E-mail:</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
             </Item>
 
             <Item style={customStyles.item} fixedLabel>
-              <Label style={customStyles.label}>E-mail:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={(text)=>{this.change('email', text)}} value={this.email} />
+              <Label style={customStyles.label}>Пароль:</Label>
+              <Input style={customStyles.input} selectionColor={styles.selectionColor} secureTextEntry onChangeText={(text)=>{this.change('password', text)}} value={this.password} />
             </Item>
 
             <Button title="Зарегистрироваться" disabled={this.loading} onPress={this.submitHandler} style={customStyles.button} block><Text style={{color: "#000"}}>Зарегистрироваться</Text></Button>

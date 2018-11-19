@@ -17,6 +17,10 @@ export default class CarMenu extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <Button vertical style={this.activeStyle("Car")} onPress={()=>this.props.navigation.navigate("Car", {car: this.props.car})} active={this.activeButton("Car")}>
+          <Icon style={styles.footerBadge} name={"car"} />
+        </Button>
+
         <Button vertical style={this.activeStyle("Journal")} onPress={()=>this.props.navigation.navigate("Journal", {car: this.props.car})} active={this.activeButton("Journal")}>
           <Icon style={styles.footerBadge} name={"clipboard"} />
         </Button>

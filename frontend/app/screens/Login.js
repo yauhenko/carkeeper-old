@@ -11,7 +11,7 @@ import Notification from "../components/Notification";
 
 @observer
 export default class Login extends React.Component {
-  @observable tel = "";
+  @observable tel = "375";
   @observable password = "";
   @observable loading = false;
 
