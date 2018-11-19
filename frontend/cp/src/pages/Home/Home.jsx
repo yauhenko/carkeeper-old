@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {observer} from 'mobx-react';
 import {observable, action} from 'mobx';
 import "./Home.css";
-import Sidebar from "../../components/Sidebar/Sidebar";
 
 @observer
 class Home extends Component {
