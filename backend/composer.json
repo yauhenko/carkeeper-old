@@ -22,7 +22,9 @@
 	    "ext-fileinfo": "*",
         "ext-curl": "*",
 	    "ext-iconv": "*",
-	    "guzzlehttp/guzzle": "^6.3",
-        "symfony/console": "^4.1"
+        "symfony/console": "^4.1",
+        "guzzlehttp/guzzle": "^6.3",
+        "mailgun/mailgun-php": "^2.6",
+        "php-http/curl-client": "^1.7"
     }
 }

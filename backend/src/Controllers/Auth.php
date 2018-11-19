@@ -10,6 +10,7 @@ use Framework\DB\Client;
 use Framework\MQ\Task;
 use Framework\Security\Password;
 use Framework\Validation\Validator;
+use Tasks\Mail;
 use Tasks\Push;
 
 /**
@@ -54,6 +55,12 @@ class Auth extends ApiController {
 			'user' => $user->id,
 			'title' => 'CarKeeper',
 			'message' => 'Добро пожаловать!'
+		])->start();
+
+		Task::create([Mail::class, 'send'], [
+			'to' => "{$user->name} <{$user->email}>",
+			'subj' => 'Добро пожаловать',
+			'html' => "<p>Привет, {$user->name}</p>"
 		])->start();
 
 		$ip = $this->params->noip ? null : $this->req->getClientIp();

@@ -29,6 +29,12 @@
 			"debug": true
 		}
 	},
+	"mailgun": {
+		"domain": "notify.carkeeper.pro",
+		"sender": "CarKeeper <no-reply@carkeeper.pro>",
+		"key": "key-47594814bf3e22a4f58aad5a438ab6b5",
+		"endpoint": "https://api.eu.mailgun.net"
+	},
 	"static_regexp": "/\\.(html|jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
 	"cdn": "https://cdn.carkeeper.pro",
 	"fcm": {
