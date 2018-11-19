@@ -1,19 +1,80 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, RefreshControl} from 'react-native';
+import {observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch, Separator} from 'native-base';
+import {
+  Container,
+  Button,
+  Content,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  View,
+  ListItem,
+  Switch,
+  Separator,
+  DatePicker,
+  Form
+} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
-import Cars from "../../store/Cars";
 import CarMenu from "../../components/CarMenu";
+import Cars from "../../store/Cars";
 import moment from "moment";
-import DatePicker from "../../modules/DatePicker";
+import InputDate from "../../components/Form/InputDate";
 
 @observer
 export default class Reminders extends React.Component {
+  @observable car = this.props.navigation.state.params.car;
+  @observable loading = true;
+  @observable insurance = {casco: {}, regular: {}};
+  @observable checkup = {notify: false, edate: null};
+
+  componentDidMount() {
+    this.initial();
+  }
+
+  initial = async () => {
+     this.checkup = (await Cars.getCheckup({car: this.car.car.id})).checkup;
+     this.insurance = (await Cars.getInsurance({car: this.car.car.id})).insurance;
+     this.loading = false;
+     console.log(toJS(this.insurance))
+  };
+
+  checkupHandler = (bool) => {
+    this.checkup.notify = bool;
+    this.updateCheckup();
+  };
+
+  checkupDate = (date) => {
+    this.checkup.edate = moment(date).format("YYYY-MM-DD");
+    this.updateCheckup();
+  };
+
+  updateCheckup = () => {
+    Cars.updateCheckup({car: this.car.car.id, checkup: this.checkup})
+  };
+
+  insuranceHandler = (type, bool) => {
+    console.log(type, bool)
+    this.insurance[type].notify = bool;
+    this.updateInsurance(type);
+  };
+
+  insuranceDate = (type, date) => {
+    this.insurance[type].edate = moment(date).format("YYYY-MM-DD");
+    this.updateInsurance(type);
+  };
+
+  updateInsurance = (type) => {
+    Cars.updateInsurance({car: this.car.car.id, insurance: {type, ...this.insurance[type]}})
+  };
 
   render() {
-    const checkup = Cars.carDetail.checkup, insurance = Cars.carDetail.insurance, car = Cars.carDetail;
+    const {refs} = this.car;
 
     return (
       <Container>
@@ -24,69 +85,79 @@ export default class Reminders extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title><Text style={styles.headerTitle}>Напоминания: {car.mark.name} {car.model.name}</Text></Title>
+            <Title><Text style={styles.headerTitle}>Напоминания: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
-          <Right>
-            <Button onPress={()=>{}} transparent>
-              <Icon name='add'/>
-            </Button>
-          </Right>
+          {/*<Right>*/}
+            {/*<Button onPress={()=>{}} transparent>*/}
+              {/*<Icon name='add'/>*/}
+            {/*</Button>*/}
+          {/*</Right>*/}
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={Cars.loading} onRefresh={()=>{Cars.getCars()}}/>} opacity={Cars.loading ? 0.5 : 1} contentContainerStyle={styles.container}>
-          <ListItem>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
+          <ListItem last>
             <Body>
-            <Text>Напоминать о техосмотре</Text>
+              <Text>Напоминать о техосмотре</Text>
             </Body>
             <Right>
-              <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{checkup.notify = value; Cars.checkupUpdate({car: car.id, notify: value, edate: checkup.edate ? moment(checkup.edate).format("YYYY-MM-DD") : checkup.edate})}} value={Boolean(checkup.notify)} />
+              <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.checkupHandler(value)}} value={this.checkup.notify} />
             </Right>
           </ListItem>
 
-          {checkup.notify ?
-            <React.Fragment>
-              <ListItem last onPress={()=>DatePicker(checkup.edate).then(value => {
-                if(!value) return;
-                Cars.checkupUpdate({car: car.id, notify: true, edate: moment(value).format("YYYY-MM-DD")});
-                checkup.edate = value.format("YYYY-MM-DD")})}>
-                  <Text>Дата: {checkup.edate ? moment(checkup.edate).format("DD.MM.YYYY") : "Выберите дату"}</Text>
-              </ListItem>
-              <Separator bordered/>
-            </React.Fragment>
+          {this.checkup.notify ?
+            <Fragment>
+              <View style={{paddingBottom: 10}}>
+                <InputDate onChange={(value)=>{this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
+              </View>
+            </Fragment>
+          : null}
+
+          <Separator bordered/>
+
+          <ListItem last>
+            <Body>
+            <Text>Напоминать о страховке</Text>
+            </Body>
+            <Right>
+              <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.insuranceHandler("regular", value)}} value={this.insurance.regular.notify} />
+            </Right>
+          </ListItem>
+
+          {this.insurance.regular.notify ?
+            <Fragment>
+              <View style={{paddingBottom: 10}}>
+                <InputDate onChange={(value)=>{this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
+              </View>
+            </Fragment>
             :
-            null
-          }
+            null}
 
-          {insurance.map((item)=>{
-              return(
-                <React.Fragment key={item.id}>
-                  <ListItem>
-                    <Body>
-                    <Text>Напоминать о страховке {item.type === "casco" && "КАСКО"}</Text>
-                    </Body>
-                    <Right>
-                      <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{item.notify = value; Cars.insuranceUpdate({id: item.id, notify: value, edate: item.edate ? moment(item.edate).format("YYYY-MM-DD") : item.edate})}} value={Boolean(item.notify)} />
-                    </Right>
-                  </ListItem>
+          <Separator bordered/>
 
-                  {item.notify ?
-                  <React.Fragment>
-                    <ListItem last onPress={()=>DatePicker(item.edate).then((value)=>{
-                      if(!value) return;
-                      Cars.insuranceUpdate({id: item.id, notify: true, edate: moment(value).format("YYYY-MM-DD")});
-                      item.edate = value.format("YYYY-MM-DD")})}>
-                      <Text>Дата: {item.edate ? moment(item.edate).format("DD.MM.YYYY") : "Выберите дату"}</Text>
-                    </ListItem>
-                    <Separator bordered/>
-                  </React.Fragment>
-                  :
-                  null}
-                </React.Fragment>
-              )
-            })}
+          <ListItem last>
+            <Body>
+            <Text>Напоминать о КАСКО</Text>
+            </Body>
+            <Right>
+              <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.insuranceHandler("casco", value)}} value={this.insurance.casco.notify} />
+            </Right>
+          </ListItem>
+
+          {this.insurance.casco.notify ?
+            <Fragment>
+              <View style={{paddingBottom: 10}}>
+                <InputDate onChange={(value)=>{this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
+              </View>
+            </Fragment>
+            :
+            null}
+
+          <Separator bordered/>
+
         </Content>
 
-        <Footer><CarMenu {...this.props}/></Footer>
+        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
+
       </Container>
     );
   }

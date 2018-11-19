@@ -21,7 +21,7 @@ const style = {
   modal: {
     position: "absolute",
     right: 20,
-    width: 150,
+    width: 170,
     top: 20,
     zIndex: 20,
     backgroundColor: "#fff",

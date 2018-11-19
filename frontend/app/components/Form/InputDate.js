@@ -21,10 +21,8 @@ export default class InputDate extends Component {
     return (
       <View style={styles.wrapper}>
         <View style={styles.title}><Text>{this.props.title || ""}</Text></View>
-        <TouchableOpacity style={styles.date} onPress={() => {
-          this.open(this.props.value)
-        }}>
-          <Text>{moment(this.props.value).format("DD.MM.YYYY")}</Text>
+        <TouchableOpacity style={styles.date} onPress={() => {this.open(this.props.value)}}>
+          <Text>{this.props.value ? moment(this.props.value).format("DD.MM.YYYY") : "Выберите дату"}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -35,8 +33,6 @@ const styles = StyleSheet.create({
   wrapper: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: 10
   },
 
@@ -51,8 +47,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 12,
     paddingBottom: 12,
-    paddingTop: 12,
     borderBottomWidth: .5,
     borderBottomColor: "#d6d7da"
-  },
+  }
 });

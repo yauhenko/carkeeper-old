@@ -1,8 +1,21 @@
-import React from 'react';
-import {Text, RefreshControl, View, Modal} from 'react-native';
+import React, {Fragment} from 'react';
+import {Text, RefreshControl, View, Modal, Clipboard, Alert} from 'react-native';
 import {observable, action, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem} from 'native-base';
+import {
+  Container,
+  Button,
+  Content,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  List,
+  ListItem,
+  ActionSheet
+} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -56,12 +69,52 @@ export default class Fines extends React.Component {
   };
 
   @action fillPass = (key, value) => {
-    this.passport[key] = value.toUpperCase().trim();
+    this.passport[key] = value.trim();
   };
 
   @action toggleModal = (bool = false) => {
       this.modal = bool;
   };
+
+  action = (id, regid, status) => {
+    let options = [];
+
+    if(status === 0) {
+      options.push({ text: "Отметить как оплаченный", icon: "checkmark", hidden: true, iconColor: "#b9babd"})
+    }
+
+    options = [...options, ...[
+      { text: "Скопировать номер", icon: "document", iconColor: "#b9babd"},
+      { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
+      { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+    ]];
+
+    ActionSheet.show(
+      {
+        options: options,
+        cancelButtonIndex: 3
+      },
+      index => {
+        if(status === 1) {
+          index = index + 1
+        }
+
+        if(index === 0) {
+            Cars.payFines({id: id}).then(this.getFines)
+        }
+
+        if(index === 1) {
+          Clipboard.setString(String(regid));
+        }
+
+        if(index === 2) {
+          Alert.alert(null, 'Подтвердите удаление', [
+              {text: 'Отмена', onPress: () => {}, style: 'cancel'},
+              {text: 'Удалить', onPress: () => {Cars.deleteFines({id: id}).then(this.getFines)}}],
+            {cancelable: false })
+        }
+      }
+    )};
 
   render() {
     const {refs} = this.car;
@@ -75,7 +128,7 @@ export default class Fines extends React.Component {
             </Button>
           </Left>
 
-          <Body style={{flexGrow: 2}}>
+          <Body>
             <Title><Text style={styles.headerTitle}>Штрафы: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
 
@@ -106,15 +159,22 @@ export default class Fines extends React.Component {
           {this.fines.length
             ?
             <List>
-              {this.fines.map(({id, cdate, regid, amount}) => (
-                  <ListItem key={id}>
-                    <Left>
-                      <Text>{moment(cdate).format("DD.MM.YYYY")}</Text>
-                    </Left>
-                    <Body>
-                      <Text>Номер: {regid}</Text>
-                    </Body>
-                    {amount ? <Right><Text>{amount} р.</Text></Right> : null}
+              {this.fines.map(({id, cdate, regid, amount, status}) => (
+                  <ListItem onPress={()=>this.action(id, regid, status)} key={id}>
+                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                      <View style={{width: 55, paddingLeft: 5}}>
+                        <Icon style={status === 0 ? {color: "#f13f3f"} : {color: "green"}} name={status === 0 ? "alert" : "checkmark-circle"}/>
+                      </View>
+                      <View style={{flex: 1}}>
+                        <Text>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
+                        <Text>Номер: {regid}</Text>
+                      </View>
+                      {amount ?
+                        <View style={{alignItems: "center"}}>
+                          <Text>Сумма</Text>
+                          <Text><Text style={{fontWeight: "bold"}}>{amount}</Text> руб.</Text>
+                        </View> : null}
+                    </View>
                   </ListItem>
               ))}
             </List>
@@ -141,11 +201,13 @@ export default class Fines extends React.Component {
               </Header>
 
               <Content>
-                <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Фамилия"/>
-                <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Имя"/>
-                <Input value={this.passport.lastname} onChange={value => {this.fillPass("lastname", value)}} title="Отчество"/>
-                <Input value={this.passport.serie} onChange={value => {this.fillPass("serie", value)}} title="Серия"/>
-                <Input value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
+                <View style={{paddingTop: 10}}>
+                  <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Фамилия"/>
+                  <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Имя"/>
+                  <Input value={this.passport.lastname} onChange={value => {this.fillPass("lastname", value)}} title="Отчество"/>
+                  <Input value={this.passport.serie} onChange={value => {this.fillPass("serie", value)}} title="Серия"/>
+                  <Input value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
+                </View>
               </Content>
             </Container>
           </Modal>

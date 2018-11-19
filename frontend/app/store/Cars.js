@@ -115,6 +115,11 @@ class Cars {
     return await Api('garage/journal/add', data);
   };
 
+  /**
+   * Получить типы записей журнала
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action getJournalTypes = async (data = {}) => {
     return await Api('garage/journal/types', data);
   };
@@ -123,21 +128,97 @@ class Cars {
     return await Api('garage/journal/delete', data);
   };
 
+  /**
+   * Обновить запись в журнале
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action journalUpdate = async (data = {}) => {
     return await Api('garage/journal/update', data);
   };
 
+  /**
+   * Получить список штрафов
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action getFines = async (data = {}) => {
     return await Api('garage/fines', data);
   };
 
+  /**
+   * Отметить штраф как оплаченный
+   * @param data
+   * @returns {Promise<*>}
+   */
+  @action payFines = async (data = {}) => {
+    return await Api('garage/fines/pay', data);
+  };
+
+  /**
+   * Удалить штраф
+   * @param data
+   * @returns {Promise<*>}
+   */
+  @action deleteFines = async (data = {}) => {
+    return await Api('garage/fines/delete', data);
+  };
+
+  /**
+   * Получение паспорта автомобиля
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action getPass = async (data = {}) => {
     return await Api('garage/pass', data);
   };
 
+  /**
+   * Обновление пасспорта автомобиля
+   * @param data
+   * @returns {Promise<*>}
+   */
   @action updatePass = async (data = {}) => {
     return await Api('garage/pass/update', data);
   };
+
+  /**
+   * Получить информацио о техосмотре
+   * @param data
+   * @returns {Promise<*>}
+   */
+  @action getCheckup = async (data = {}) => {
+    return await Api('garage/checkup', data);
+  };
+
+  /**
+   * Обновление информации о техосмотре
+   * @param data
+   * @returns {Promise<*>}
+   */
+  @action updateCheckup = async (data = {}) => {
+    return await Api('garage/checkup/update', data);
+  };
+
+  /**
+   * Получить список страховок
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action getInsurance = async (data = {}) => {
+    return await Api('garage/insurance', data);
+  };
+
+  /**
+   * Обновить страховку
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action updateInsurance = async (data = {}) => {
+    return await Api('garage/insurance/update', data);
+  };
+
+
 }
 
 export default new Cars();

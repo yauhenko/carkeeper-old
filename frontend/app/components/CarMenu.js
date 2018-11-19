@@ -24,8 +24,13 @@ export default class CarMenu extends React.Component {
 
         {/*<Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders", {car: this.props.car})} active={this.activeButton("Reminders")}>*/}
           {/*<Icon style={styles.footerBadge} name={"watch"} />*/}
-          {/*<Text style={{color: "#fff"}}>Напоминания</Text>*/}
+          {/*<Text style={{color: "#fff"}}>Заметки</Text>*/}
         {/*</Button>*/}
+
+        <Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders", {car: this.props.car})} active={this.activeButton("Reminders")}>
+          <Icon style={styles.footerBadge} name={"watch"} />
+          <Text style={{color: "#fff"}}>Напоминания</Text>
+        </Button>
 
         <Button style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines", {car: this.props.car})} active={this.activeButton("Fines")}>
           <Icon style={styles.footerBadge} name={"speedometer"} />

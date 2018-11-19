@@ -183,7 +183,7 @@ export default class Journal extends React.Component {
                   return (
                     <ListItem onPress={()=>{this.action(record)}} thumbnail key={id}>
                       <Left>
-                        <Text>{moment(record.date).format("DD.MM")}</Text>
+                        <Text>{moment(record.date).format("DD.MM.YYYY")}</Text>
                       </Left>
                       <Body>
                         <View style={{paddingRight: 5, flexDirection: "row", alignItems: "center"}}>
