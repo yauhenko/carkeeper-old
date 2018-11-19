@@ -199,7 +199,7 @@ export default class Journal extends React.Component {
                   )
                 })
                 :
-                this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли записи в журнал.</Text>
+                this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли записи в журнал</Text>
               }
             </List>
           </Content>

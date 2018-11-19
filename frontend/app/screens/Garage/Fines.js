@@ -144,8 +144,7 @@ export default class Fines extends React.Component {
           {this.passportLoaded && !this.passport.serie
             ?
             <View style={{padding: 20, borderBottomColor: "#b9babd", borderBottomWidth: 0.5}}>
-              <Text style={{textAlign: "center"}}>Для получения уведомлений и списка штрафов необходимо заполнить техпаспорт.</Text>
-
+              <Text style={{textAlign: "center"}}>Для получения уведомлений о штрафах необходимо ввести данные техпаспорта</Text>
               <Text style={{textDecorationLine: "underline",
                 textAlign: "center",
                 marginTop: 10,
@@ -172,14 +171,14 @@ export default class Fines extends React.Component {
                       {amount ?
                         <View style={{alignItems: "center"}}>
                           <Text>Сумма</Text>
-                          <Text><Text style={{fontWeight: "bold"}}>{amount}</Text> руб.</Text>
+                          <Text style={{fontWeight: "bold"}}>{amount.toFixed(2)} руб.</Text>
                         </View> : null}
                     </View>
                   </ListItem>
               ))}
             </List>
             :
-            this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Штрафы не найдены.</Text>
+            this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Штрафы не найдены</Text>
           }
 
           <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
