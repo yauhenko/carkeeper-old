@@ -172,7 +172,7 @@ export default class Fines extends React.Component {
                       {amount ?
                         <View style={{alignItems: "center"}}>
                           <Text>Сумма</Text>
-                          <Text><Text style={{fontWeight: "bold"}}>{amount}</Text> руб.</Text>
+                          <Text style={{fontWeight: "bold"}}>{amount.toFixed(2)} руб.</Text>
                         </View> : null}
                     </View>
                   </ListItem>

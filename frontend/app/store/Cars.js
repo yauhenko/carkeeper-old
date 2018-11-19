@@ -219,6 +219,41 @@ class Cars {
   };
 
 
+  /**
+   * Получить заметки
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action getNotes = async (data = {}) => {
+    return await Api('garage/notes', data);
+  };
+
+  /**
+   * Удалить заметку
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action deleteNotes = async (data = {}) => {
+    return await Api('garage/notes/delete', data);
+  };
+
+  /**
+   * Добавть заметку
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action addNote = async (data = {}) => {
+    return await Api('garage/notes/add', data);
+  };
+
+  /**
+   * Обновить заметку
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action updateNote = async (data = {}) => {
+    return await Api('garage/notes/update', data);
+  };
 }
 
 export default new Cars();

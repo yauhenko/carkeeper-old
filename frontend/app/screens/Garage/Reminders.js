@@ -84,7 +84,7 @@ export default class Reminders extends React.Component {
               <Icon name='arrow-back'/>
             </Button>
           </Left>
-          <Body>
+          <Body style={{flexGrow: 2}}>
             <Title><Text style={styles.headerTitle}>Напоминания: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
           {/*<Right>*/}
