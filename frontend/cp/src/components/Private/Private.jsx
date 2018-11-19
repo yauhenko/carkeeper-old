@@ -4,6 +4,9 @@ import Sidebar from "../Sidebar/Sidebar";
 
 @observer
 class Private extends Component {
+  componentDidMount() {
+    console.log(1);
+  }
   render() {
     return (
       <div className="container">

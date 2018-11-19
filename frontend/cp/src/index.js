@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Private from "./components/Private/Private";
+import NotFound from "./pages/NotFound/NotFound";
 
 @observer
 class App extends Component {
@@ -14,10 +15,9 @@ class App extends Component {
       <div className="app">
         <Router>
           <Switch>
-            <Route path="/login" component={Login} />
-            <Private>
-              <Route render={(props)=><Home {...props}/>} exact path="/"/>
-            </Private>
+            <Route exact path="/login" component={Login} />
+            <Route render={(props)=><Private {...props}><Home {...props}/></Private>} exact path="/"/>
+            <Route component={NotFound}/>
           </Switch>
         </Router>
       </div>
