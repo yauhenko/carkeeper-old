@@ -9,7 +9,7 @@ export default class Input extends Component {
     return (
       <View style={styles.wrapper}>
         <View style={styles.title}><Text>{this.props.title || ""}</Text></View>
-        <TextInput value={this.props.value ? String(this.props.value) : ""} onChangeText={this.props.onChange} selectionColor="#a23737" autoCorrect={false} underlineColorAndroid="transparent" multiline={this.props.multiline || false} keyboardType={this.props.keyboardType || "default"}  style={styles.input}/>
+        <TextInput value={this.props.value ? String(this.props.value) : ""} onChange={(a)=>{console.log(a.target)}} onChangeText={this.props.onChange} selectionColor="#a23737" autoCorrect={false} underlineColorAndroid="transparent" multiline={this.props.multiline || false} keyboardType={this.props.keyboardType || "default"}  style={styles.input}/>
       </View>
     )
   }
