@@ -2,8 +2,8 @@
 
 namespace Tasks;
 
-use Collections\Users;
 use Entities\User;
+use Collections\Users;
 use Framework\MQ\Handler;
 use Framework\Utils\FCM;
 
@@ -11,28 +11,31 @@ class Push extends Handler {
 
 	public function work(array $data) {
 
-		$users = new Users;
+		$user = null;
 
-		/** @var User $user */
-		$user = $users->get($data['user']);
+		if($data['user']) {
+			/** @var User $user */
+			$user = Users::factory()->get($data['user']);
+			$data['fcm'] = $user->fcm;
+		}
 
-		if(!$user->fcm) {
-			//$this->task->delete();
+		if(!$data['fcm']) {
 			return 'No FCM';
 		}
 
-		$res = FCM::send($user->fcm, 'android', $data['title'], $data['message'], $data['extra'] ?: []);
+		$res = FCM::send($data['fcm'], 'android', $data['title'], $data['body'], $data['extra'] ?: []);
 
 		if($res['failure']) {
+
+			if(!$user) $user = Users::factory()->findOneBy('fcm', $data['fcm']);
 			$user->fcm = null;
 			$user->save();
+
 			return $res;
-			//$this->task->delete();
 
 		} elseif($res['success']) {
-			$this->task->delete();
-			return 'SUCCESS!';
-			//return true;
+
+			return $res;
 
 		}
 

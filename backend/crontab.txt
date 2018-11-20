@@ -1,5 +1,8 @@
-@hourly ~/app-php/bin/console cleanup sessions
+@hourly ~/app-php/bin/console cleanup:sessions -q
 
-* * * * * ~/app-php/bin/console mq car-mq-worker-1 --limit=50
-* * * * * ~/app-php/bin/console mq car-mq-worker-2 --limit=500
-* * * * * ~/app-php/bin/console fines car-fines-worker --limit=10
+* * * * * ~/app-php/bin/console mq car-mq-worker-1 --limit=50 -q
+* * * * * ~/app-php/bin/console mq car-mq-worker-2 --limit=500 -q
+* * * * * ~/app-php/bin/console fines car-fines-worker --limit=10 -q
+
+00 12 * * * ~/app-php/bin/console notify:insurance -q
+30 12 * * * ~/app-php/bin/console notify:checkup -q

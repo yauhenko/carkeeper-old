@@ -25,7 +25,7 @@ class Mail extends Handler {
 		return $mg->messages()->send($cfg->mailgun->domain, [
 			'from' => $cfg->mailgun->sender,
 			'to' => $data['to'],
-			'subject' => $data['subj'],
+			'subject' => $data['subject'],
 			'html' => $data['html']
 		]);
 	}

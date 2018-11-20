@@ -17,6 +17,8 @@ $app->add(new \App\Console\CacheClear);
 $app->add(new \App\Console\CacheWarmup);
 $app->add(new \App\Console\MQ);
 $app->add(new \App\Console\Fines);
-$app->add(new \App\Console\Cleanup());
+$app->add(new \App\Console\Cleanup);
+$app->add(new \App\Console\NotifyInsurance);
+$app->add(new \App\Console\NotifyCheckup);
 
 $app->run();
