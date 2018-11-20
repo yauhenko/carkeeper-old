@@ -17,6 +17,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class ApiController extends AbstractController {
 
+	/** @var bool */
+	protected $admin = false;
+
 	/** @var Request req */
 	protected $req;
 
@@ -63,13 +66,20 @@ abstract class ApiController extends AbstractController {
 		$token = $this->req->headers->get('Token') ?: $this->params->token;
 
 		if(!$token)
-			throw new \Exception('Token is not specified', 401);
+			throw new \Exception('Token is not specified', 50);
 
 		$this->user = Sessions::get($token, $this->req->getClientIp());
 
 		if(!$this->user)
-			throw new \Exception('Invalid token', 403);
+			throw new \Exception('Invalid token', 51);
 
+		$this->admin = in_array($this->user->id, [1, 3]);
+
+	}
+
+	protected function authAdmin(): void {
+		$this->auth();
+		if(!$this->admin) throw new \Exception('Insufficient Privileges', 403);
 	}
 
 	protected function checkAccess(string $table, int $id, string $key = 'id'): void {

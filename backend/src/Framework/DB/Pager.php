@@ -2,6 +2,7 @@
 
 namespace Framework\DB;
 
+use App\References;
 use Framework\Patterns\DI;
 
 /**
@@ -20,6 +21,8 @@ class Pager implements \Iterator {
 	 * Count items using $result->num_rows of full SELECT TRUE query
 	 */
 	public const METHOD_RESULT = 1;
+
+	public const OPTION_OBJECT_REFS = 1 << 0;
 
 	/** @var string */
 	protected $sql = '';
@@ -47,6 +50,15 @@ class Pager implements \Iterator {
 
 	/** @var array */
 	protected $fields = ['*'];
+
+	/** @var array */
+	protected $refs = [];
+
+	/**@var array */
+	protected $rules = [];
+
+	/** @var null */
+	protected $collection = null;
 
 	/**
 	 * Get current MetaData
@@ -208,7 +220,28 @@ class Pager implements \Iterator {
 		if($this->page < 1) $this->page = 1;
 		$sql = str_replace('**', $this->db->escapeId($this->fields), $this->sql) . ' ' . $this->orderSql;
 		$sql .= ' LIMIT ' . $this->limit . ' OFFSET ' . (($this->page - 1) * $this->limit);
-		$this->data = $this->db->query($sql);
+
+		$this->data = [];
+		$data = $this->db->query($sql);
+
+		if($this->collection) {
+			/** @var Collection $collection */
+			$collection = new $this->collection;
+			$entityClass = $collection->getEntityClass();
+			foreach ($data as $d) {
+				/** @var Entity $entity */
+				$entity = new $entityClass;
+				$entity->setData($d);
+				$this->data[] = $entity;
+			}
+		} else {
+			$this->data = $data;
+		}
+
+		/** @var References $refs */
+		$refs = DI::getInstance()->refs;
+		$this->refs = $refs->get($this->data, $this->rules);
+
 		return $this;
 	}
 
@@ -236,14 +269,25 @@ class Pager implements \Iterator {
 	}
 
 	/**
-	 * Get meta-data
-	 *
 	 * @return array
 	 */
-	public function getMetaData(): array {
+	public function getRefs(): array {
+		return $this->refs;
+	}
+
+	/**
+	 * Get meta-data
+	 *
+	 * @param int $options
+	 * @return array
+	 */
+	public function getMetaData(int $options = 0): array {
+		$refs = $this->getRefs();
+		if($options & self::OPTION_OBJECT_REFS) $refs = (object)$refs;
 		return [
 			'meta' => $this->getMeta(),
-			'data' => $this->getData()
+			'data' => $this->getData(),
+			'refs' => $refs
 		];
 	}
 
@@ -328,12 +372,58 @@ class Pager implements \Iterator {
 	}
 
 	/**
+	 * Set refs rules
+	 *
+	 * @param array $rules
+	 */
+	public function setRules(array $rules): void {
+		$this->rules = $rules;
+	}
+
+	/**
+	 * Set collection class
+	 *
+	 * @param string $collection
+	 */
+	public function setCollection(string $collection): void {
+		$this->collection = $collection;
+	}
+
+	/**
 	 * Set limit (shortcut)
+	 *
 	 * @param int $limit
 	 * @return Pager
 	 */
 	public function limit(int $limit): self {
 		$this->setLimit($limit);
+		return $this;
+	}
+
+	/**
+	 * Set collection class (shortcut)
+	 *
+	 * @param string $class
+	 * @return Pager
+	 */
+	public function collection(string $class): self {
+		$this->collection = $class;
+		if(!$this->sql) {
+			/** @var Collection $collection */
+			$collection = new $class;
+			$this->sql = 'SELECT ** FROM ' . $collection->getTable();
+		}
+		return $this;
+	}
+
+	/**
+	 * Set refs rules (shortcut)
+	 *
+	 * @param array $rules
+	 * @return Pager
+	 */
+	public function rules(array $rules): self {
+		$this->rules = $rules;
 		return $this;
 	}
 

@@ -188,9 +188,25 @@ abstract class Collection {
 		return (bool)$db->findOneBy($this->_table, 'id', $entity->id, ['id']);
 	}
 
+	/**
+	 * Collection factory
+	 *
+	 * @return Collection
+	 */
 	public static function factory(): self {
 		$class = get_called_class();
 		return new $class;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getEntityClass(): string {
+		return $this->_entity;
+	}
+
+	public function getTable(): string {
+		return $this->_table;
 	}
 
 }

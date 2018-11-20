@@ -50,7 +50,7 @@ class References {
 
 		foreach ($rules as $key => $rule) {
 			foreach ($list as $item) {
-				if($value = $item->{$key}) {
+				if($value = ((array)$item)[$key]) {
 					$refs[$key][] = $value;
 				}
 			}
@@ -71,7 +71,7 @@ class References {
 			]);
 
 			foreach ($buff as $item) {
-				$result[$key][$item['id']] = $item;
+				$result[$key][$item['id']] = $rule['single'] ? $item[$rule['single']] : $item;
 			}
 
 		}
@@ -93,7 +93,7 @@ class References {
 		$refs = $result = [];
 
 		foreach ($rules as $key => $rule) {
-			if($value = $item->{$key}) {
+			if($value = ((array)$item)[$key]) {
 				$refs[$key] = $value;
 			}
 		}
@@ -112,7 +112,7 @@ class References {
 			]);
 
 			foreach ($buff as $item) {
-				$result[$key] = $item;
+				$result[$key] = $rule['single'] ? $item[$rule['single']] : $item;
 			}
 		}
 

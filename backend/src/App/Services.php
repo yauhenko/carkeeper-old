@@ -75,13 +75,9 @@ class Services {
         })->set('annotations', function () {
 
         	return new Parser([
-		        __DIR__ . '/../Collections',
 		        __DIR__ . '/../Entities',
-		        __DIR__ . '/../Entities/Geo',
+		        __DIR__ . '/../Collections',
 		        __DIR__ . '/../Controllers',
-		        __DIR__ . '/../Controllers/Garage',
-		        __DIR__ . '/../Controllers/Directory',
-		        __DIR__ . '/../Collections/Geo',
 	        ]);
 
         })->set('validations', function () {

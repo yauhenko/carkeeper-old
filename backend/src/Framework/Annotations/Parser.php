@@ -4,6 +4,8 @@ namespace Framework\Annotations;
 
 use Framework\Patterns\DI;
 use Framework\Cache\CacheInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 /**
@@ -82,30 +84,29 @@ class Parser {
 	protected function parse(): array {
 		$result = [];
 		foreach ($this->dirs as $dir) {
-			chdir($dir);
-			foreach (glob('*.php') as $file) {
-				$data = file_get_contents($file);
-				preg_match('/namespace[\t\s]+([A-z\_]+).+;/s', $data, $ns);
-				preg_match('/class[\t\s]+([A-z\_]+).*\{/s', $data, $nm);
-				$class = ($ns[1] ? $ns[1] . '\\' : '') . $nm[1];
-
-				$ref = new ReflectionClass($class);
-				$props = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
-				foreach ($props as $p) {
-					if($doc = $p->getDocComment()) {
-						$result[$class]['properties'][$p->getName()] = $this->parseBlock($doc);
+			$di = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
+			$it = new RecursiveIteratorIterator($di);
+			foreach($it as $file) {
+				if(pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+					$data = file_get_contents($file);
+					preg_match('/namespace[\t\s]+([A-z\_]+).+;/s', $data, $ns);
+					preg_match('/class[\t\s]+([A-z\_]+).*\{/s', $data, $nm);
+					$class = ($ns[1] ? $ns[1] . '\\' : '') . $nm[1];
+					$ref = new ReflectionClass($class);
+					$props = $ref->getProperties(ReflectionProperty::IS_PUBLIC);
+					foreach ($props as $p) {
+						if($doc = $p->getDocComment()) {
+							$result[$class]['properties'][$p->getName()] = $this->parseBlock($doc);
+						}
+					}
+					$props = $ref->getMethods(ReflectionMethod::IS_PUBLIC);
+					foreach ($props as $p) {
+						if($doc = $p->getDocComment()) {
+							$result[$class]['methods'][$p->getName()] = $this->parseBlock($doc);
+						}
 					}
 				}
-
-				$props = $ref->getMethods(ReflectionMethod::IS_PUBLIC);
-				foreach ($props as $p) {
-					if($doc = $p->getDocComment()) {
-						$result[$class]['methods'][$p->getName()] = $this->parseBlock($doc);
-					}
-				}
-
 			}
-
 		}
 		return $result;
 	}
