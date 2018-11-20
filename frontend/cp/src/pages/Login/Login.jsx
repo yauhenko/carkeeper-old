@@ -10,7 +10,7 @@ class Login extends Component {
 		e.preventDefault();
 		try {
 			await this.props.app.login(e.target.username.value, e.target.password.value);
-			alert('OK');
+			this.props.history.replace("/");
 		} catch (e) {
 			alert(e.message);
 		}
