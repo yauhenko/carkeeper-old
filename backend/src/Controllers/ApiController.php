@@ -49,8 +49,9 @@ abstract class ApiController extends AbstractController {
 		if(!$this->params = json_decode($data))
 			throw new \Exception('Invalid JSON-data', 400);
 
-		if($this->params->token)
-			$this->auth();
+		$token = $this->req->headers->get('Token') ?: $this->params->token;
+
+		if($token) $this->auth();
 
 	}
 
@@ -59,10 +60,12 @@ abstract class ApiController extends AbstractController {
 	 */
 	protected function auth(): void {
 
-		if(!$this->params->token)
+		$token = $this->req->headers->get('Token') ?: $this->params->token;
+
+		if(!$token)
 			throw new \Exception('Token is not specified', 401);
 
-		$this->user = Sessions::get($this->params->token, $this->req->getClientIp());
+		$this->user = Sessions::get($token, $this->req->getClientIp());
 
 		if(!$this->user)
 			throw new \Exception('Invalid token', 403);

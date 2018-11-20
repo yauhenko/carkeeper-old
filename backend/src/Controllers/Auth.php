@@ -68,7 +68,8 @@ class Auth extends ApiController {
 		$this->user->save();
 		/** @var Client $db */
 		$db = $this->di->db;
-		$db->delete('sessions', 'token', $this->params->token);
+		$token = $this->req->headers->get('Token') ?: $this->params->token;
+		$db->delete('sessions', 'token', $token);
 		return true;
 	}
 

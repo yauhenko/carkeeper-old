@@ -29,6 +29,13 @@ class ApiApplication {
 		$res->headers->set('Content-Type', 'application/json; charset: utf-8', true);
 		$res->headers->set('Access-Control-Allow-Origin', '*', true);
 
+		if($req->getMethod() === 'OPTIONS') {
+			$res->headers->set('Access-Control-Allow-Methods', 'POST', true);
+			$res->headers->set('Access-Control-Allow-Headers', '*', true);
+			$res->send();
+			exit;
+		}
+
 		$uri = $req->getRequestUri();
 
         if(preg_match($this->di->config->static_regexp, $uri)) return false;
