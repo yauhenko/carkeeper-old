@@ -17,6 +17,11 @@ const stores = {
 @observer
 class App extends Component {
   render() {
+
+    if(AppStore.auth === null) return (
+        <div>Loading...</div>
+    );
+
     return (
       <div className="app">
         <Provider {...stores}>

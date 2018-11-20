@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
-import "./Login.css";
+import './Login.css';
 
-@inject("app")
+@inject('app')
 @observer
 class Login extends Component {
 
@@ -10,7 +10,7 @@ class Login extends Component {
 		e.preventDefault();
 		try {
 			await this.props.app.login(e.target.username.value, e.target.password.value);
-			this.props.history.replace("/");
+			this.props.history.replace('/');
 		} catch (e) {
 			alert(e.message);
 		}

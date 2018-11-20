@@ -3,11 +3,15 @@ import api from '../utils/api';
 
 class App {
 
-	@observable auth = false;
+	@observable auth = null;
 	pingInterval = null;
 
 	constructor() {
-		if(localStorage.token) this.startPing(true);
+		if(localStorage.token) {
+			this.startPing(true);
+		} else {
+			this.auth = false;
+		}
 	}
 
 	@action login = async (tel, password, ttl = 3600, noip = false) => {
@@ -16,6 +20,7 @@ class App {
 		localStorage.username = tel;
 		this.auth = true;
 		this.startPing();
+		return res.token;
 	};
 
 	@action logout = async (remote = true) => {
@@ -24,19 +29,18 @@ class App {
 		delete localStorage.token;
 		this.auth = false;
 		clearInterval(this.pingInterval);
+		return true;
 	};
 
 	@action ping = async () => {
 		const res = await api('account/ping', {}, true);
-		if(res) return res;
-		this.logout(false);
+		if(res) return true;
+		await this.logout(false);
 		return false;
 	};
 
-	startPing = async (check = false) => {
-		if(check) {
-			if(!await this.ping()) return false;
-		}
+	@action startPing = async (check = false) => {
+		if(check) this.auth = Boolean(await this.ping());
 		this.pingInterval = setInterval(this.ping, 10000);
 	}
 
