@@ -95,10 +95,10 @@ class Auth extends ApiController {
 		$data['password'] = Password::getHash((string)$data['password']);
 
 		$users = new Users;
-		if($ex = $users->findOneBy('tel', $data['tel']))
+		if($ex = $users->findOneBy('tel', $data['tel'], true))
 			throw new \Exception('Телефон уже зарегистрирован', 40001);
 
-		if($ex = $users->findOneBy('email', $data['email']))
+		if($ex = $users->findOneBy('email', $data['email'], true))
 			throw new \Exception('E-mail уже зарегистрирован', 40002);
 
 		$user = new User;
