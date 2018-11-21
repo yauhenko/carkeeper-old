@@ -9,7 +9,7 @@ class Users {
 	@observable page = 1;
 
 	@action fetchList = async () => {
-		const res = await api('admin/users', { page: this.page, limit: 1 });
+		const res = await api('admin/users', { page: this.page, limit: 5 });
 		this.meta = res.meta;
 		this.data = res.data;
 		this.refs = res.refs;
@@ -28,6 +28,13 @@ class Users {
 			alert(e.message);
 		}
 	};
+
+	@action clear = () => {
+		this.meta = null;
+		this.data = null;
+		this.refs = null;
+		this.page = 1;
+	}
 
 }
 

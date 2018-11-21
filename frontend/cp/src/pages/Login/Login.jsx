@@ -20,13 +20,14 @@ class Login extends Component {
 			this.props.history.replace('/');
 		} catch (e) {
 			alert(e.message);
+			this.setState({ loading: false });
 		}
-		this.setState({ loading: false });
+
 	};
 
 	render() {
 		return (
-			<div className="">
+			<div className="container-fluid">
 			<form className="login-form" onSubmit={this.login}>
 				{this.test}
 				<div className="form-group">
@@ -37,13 +38,10 @@ class Login extends Component {
 					<label>Password</label>
 					<input disabled={this.state.loading} type="password" autoFocus={Boolean(localStorage.username)} required={true} name="password" className="form-control"/>
 				</div>
-
 				<button disabled={this.state.loading} type="submit" className="btn btn-primary">
 					<Icon icon="sign-in" fixed={true}/>
 					Login
 				</button>
-
-
 			</form>
 			</div>
 		);

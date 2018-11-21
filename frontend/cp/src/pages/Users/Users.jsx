@@ -13,6 +13,10 @@ class Users extends Component {
 		this.props.users.fetchList()
 	}
 
+	componentWillUnmount() {
+		this.props.users.clear();
+	}
+
 	delete = async (id) => {
 		if(!window.confirm('Точно?')) return;
 		await this.props.users.delete(id);
@@ -27,11 +31,12 @@ class Users extends Component {
 				:
 
 					<div>
-					<table className="table">
+					<table className="table table-striped">
 					<thead>
 					<tr>
 						<th>Id</th>
 						<th>Имя</th>
+						<th>E-mail</th>
 						<th>Телефон</th>
 						<th/>
 					</tr>
@@ -40,8 +45,9 @@ class Users extends Component {
 						{this.props.users.data.map((user) => {
 						return (
 							<tr key={user.id}>
-								<td>{user.id}</td>
+								<td><span className="badge badge-primary">#{user.id}</span></td>
 								<td>{user.name}</td>
+								<td>{user.email}</td>
 								<td>{user.tel}</td>
 								<td style={{textAlign: 'right'}}>
 									<button className="btn btn-sm btn-danger" onClick={()=>this.delete(user.id)}>
@@ -54,7 +60,7 @@ class Users extends Component {
 					</tbody>
 					</table>
 
-					{this.props.users.meta.pages > 0 &&
+					{this.props.users.meta.pages > 1 &&
 						<nav>
 							<ul className="pagination">
 							{range(this.props.users.meta.pages).map((page) => {
