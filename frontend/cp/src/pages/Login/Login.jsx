@@ -22,34 +22,32 @@ class Login extends Component {
 			alert(e.message);
 			this.setState({ loading: false });
 		}
-
 	};
 
 	render() {
 		return (
 			<div className="container-fluid">
-			<form className="login-form" onSubmit={this.login}>
-				{this.test}
-				<div className="form-group">
-					<label>Телефон</label>
-					<input disabled={this.state.loading} type="text" required={true} autoFocus={!localStorage.username} defaultValue={localStorage.username || ''} name="username" className="form-control"/>
-				</div>
-				<div className="form-group">
-					<label>Пароль</label>
-					<input disabled={this.state.loading} type="password" autoFocus={Boolean(localStorage.username)} required={true} name="password" className="form-control"/>
-				</div>
-				<div className="form-group">
-					<label>
-						<input type="checkbox" name="noip"/>
-						&nbsp;
-						Отвязать сессию от IP-адреса
-					</label>
-				</div>
-				<button disabled={this.state.loading} type="submit" className="btn btn-primary">
-					<Icon icon="sign-in" fixed={true}/>
-					Войти
-				</button>
-			</form>
+				<form className="login-form" onSubmit={this.login}>
+					<div className="form-group">
+						<label>Телефон</label>
+						<input disabled={this.state.loading} type="text" required={true} autoFocus={!localStorage.username} defaultValue={localStorage.username || ''} name="username" className="form-control"/>
+					</div>
+					<div className="form-group">
+						<label>Пароль</label>
+						<input disabled={this.state.loading} type="password" autoFocus={Boolean(localStorage.username)} required={true} name="password" className="form-control"/>
+					</div>
+					<div className="form-group">
+						<label>
+							<input type="checkbox" name="noip"/>
+							&nbsp;
+							Отвязать сессию от IP-адреса
+						</label>
+					</div>
+					<button disabled={this.state.loading} type="submit" className="btn btn-primary">
+						<Icon icon="sign-in" fixed={true}/>
+						Войти
+					</button>
+				</form>
 			</div>
 		);
 	}
