@@ -36,6 +36,7 @@ class Sessions {
 			'token' => $token,
 			'user' => $user->id,
 			'edate' => Time::dateTimeOffset($ttl),
+			'ttl' => $ttl,
 			'ip' => $ip
 		]);
 
