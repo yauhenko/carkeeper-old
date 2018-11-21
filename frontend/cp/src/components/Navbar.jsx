@@ -17,7 +17,7 @@ class Navbar extends Component {
 				<Link to="/" className="navbar-brand">CarKeeper</Link>
 				<ul className="nav">
 					<li className="nav-item">
-						<NavLink to="/" className="nav-link">
+						<NavLink to="/" className="nav-link" exact={true}>
 							<Icon icon="home"/>
 							Home
 						</NavLink>

@@ -9,7 +9,7 @@ class Users {
 	@observable page = 1;
 
 	@action fetchList = async () => {
-		const res = await api('admin/users', { page: this.page, limit: 5 });
+		const res = await api('admin/users', { page: this.page, limit: 1 });
 		this.meta = res.meta;
 		this.data = res.data;
 		this.refs = res.refs;

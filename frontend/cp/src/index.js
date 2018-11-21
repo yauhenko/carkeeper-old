@@ -23,9 +23,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="app">
-				{AppStore.auth === null ?
-					<Loader/>
-				:
+				{AppStore.auth === null ? <Loader text="Проверка учетной записи..."/> :
 					<Provider {...stores}>
 						<Router>
 							<Switch>
