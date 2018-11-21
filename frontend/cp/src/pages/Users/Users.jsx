@@ -4,6 +4,7 @@ import Modal from 'react-responsive-modal';
 import Loader from '../../components/Loader';
 import Icon from '../../components/Icon';
 import Pager from '../../components/Pager';
+import {formToObject} from '../../utils/tools';
 import './Users.css';
 
 @inject("users")
@@ -34,11 +35,7 @@ class Users extends Component {
 
 	update = async (e) => {
 		e.preventDefault();
-		if(await this.props.users.updateItem({
-			name: e.target.name.value,
-			email: e.target.email.value,
-			tel: e.target.tel.value,
-		})) this.closeEditModal();
+		if(await this.props.users.updateItem(formToObject(e.target))) this.closeEditModal();
 	};
 
 	delete = async (id) => {
@@ -64,8 +61,9 @@ class Users extends Component {
 							</thead>
 							<tbody>
 							{this.props.users.data.map((user) => {
+								const admin = [1, 3].indexOf(user.id) > -1;
 								return (
-									<tr key={user.id}>
+									<tr key={user.id} className={admin ? 'text-danger' : null}>
 										<td><span className="badge badge-primary">#{user.id}</span></td>
 										<td>{user.name}</td>
 										<td>{user.email}</td>
@@ -74,10 +72,14 @@ class Users extends Component {
 											<button className="btn btn-sm btn-primary" onClick={() => this.openEditModal(user.id)}>
 												<Icon icon="edit"/>
 											</button>
-											&nbsp;
-											<button className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
-												<Icon icon="times"/>
-											</button>
+											{admin ? null :
+												<Fragment>
+													&nbsp;
+													<button className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
+													<Icon icon="times"/>
+													</button>
+												</Fragment>
+											}
 										</td>
 									</tr>
 								)

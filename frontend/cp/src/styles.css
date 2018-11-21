@@ -3,3 +3,6 @@ a.nav-link.active {
     color: #fff;
     border-radius: 3px;
 }
+body {
+    min-width: 800px;
+}
