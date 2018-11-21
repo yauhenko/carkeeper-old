@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {observer, inject} from 'mobx-react';
 import {Redirect} from 'react-router-dom';
 import Navbar from "../Navbar";
@@ -8,10 +8,13 @@ import Navbar from "../Navbar";
 class Private extends Component {
 	render() {
 		if (!this.props.app.auth) return <Redirect to="/login"/>;
-		return [
-			<Navbar/>,
-			<div className="container-fluid">{this.props.children}</div>
-		];
+
+		return (
+      <Fragment>
+        <Navbar/>
+        <div className="container-fluid">{this.props.children}</div>
+      </Fragment>
+		);
 	}
 }
 
