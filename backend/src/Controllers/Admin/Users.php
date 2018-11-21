@@ -2,6 +2,7 @@
 
 namespace Controllers\Admin;
 
+use App\References;
 use Controllers\ApiController;
 use Collections\Users as UsersCollection;
 use Framework\DB\Pager;
@@ -19,6 +20,31 @@ class Users extends ApiController {
 			->limit($this->params->limit ?: 50)
 			->exec()
 			->getMetaData(Pager::OPTION_OBJECT_REFS);
+	}
+
+	/**
+	 * @route /admin/users/get
+	 */
+	public function get(): array {
+		$this->authAdmin();
+		$user = UsersCollection::factory()->get($this->params->id);
+		$data = $user->getData();
+		unset($data['password'], $data['fcm']);
+		return [
+			'user' => $data
+		];
+	}
+
+	/**
+	 * @route /admin/users/update
+	 */
+	public function update(): array {
+		$this->authAdmin();
+		$user = UsersCollection::factory()->get($this->params->id);
+		$user->setData((array)$this->params->user);
+		return [
+			'updated' => $user->save()
+		];
 	}
 
 	/**

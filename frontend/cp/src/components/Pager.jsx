@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {range} from "../utils/tools";
+import {range} from '../utils/tools';
 
 class Pager extends Component {
 

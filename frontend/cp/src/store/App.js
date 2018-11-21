@@ -41,7 +41,7 @@ class App {
 
 	@action startPing = async (check = false) => {
 		if(check) this.auth = Boolean(await this.ping());
-		this.pingInterval = setInterval(this.ping, 10000);
+		this.pingInterval = setInterval(this.ping, 60000);
 	}
 
 }
