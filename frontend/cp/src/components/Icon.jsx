@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class Icon extends Component {
 
 	static defaultProps = {
-		fixed: false,
+		fixed: true,
 		spin: false,
 		flip: null,
 		zoom: null,
