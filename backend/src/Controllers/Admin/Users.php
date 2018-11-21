@@ -21,4 +21,17 @@ class Users extends ApiController {
 			->getMetaData(Pager::OPTION_OBJECT_REFS);
 	}
 
+	/**
+	 * @route /admin/users/delete
+	 */
+	public function delete(): array {
+		$this->authAdmin();
+		if(in_array($this->params->id, [1, 3])) throw new \Exception('Нельзя удалять супер админов!');
+		$user = UsersCollection::factory()->get($this->params->id);
+		$user->delete();
+		return [
+			'deleted' => true
+		];
+	}
+
 }
