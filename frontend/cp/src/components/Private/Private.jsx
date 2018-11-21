@@ -10,7 +10,7 @@ class Private extends Component {
 		if (!this.props.app.auth) return <Redirect to="/login"/>;
 		return (
 			<Fragment>
-				<Navbar/>
+				<Navbar history={this.props.history} match={this.props.match} location={this.props.location} />
 				<div className="container-fluid">{this.props.children}</div>
 			</Fragment>
 		);
