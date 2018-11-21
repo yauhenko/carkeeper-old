@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {observer, Provider} from 'mobx-react';
-import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/Home/Home";
-import Login from "./pages/Login/Login";
-import Private from "./components/Private/Private";
-import NotFound from "./pages/NotFound/NotFound";
-import AppStore from "./store/App";
-import UsersStore from "./store/Users";
-import Loader from "./components/Loader";
-import Users from "./pages/Users/Users";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import Private from './components/Private/Private';
+import NotFound from './pages/NotFound/NotFound';
+import AppStore from './store/App';
+import UsersStore from './store/Users';
+import Loader from './components/Loader';
+import Users from './pages/Users/Users';
 import './styles.css';
 
 const stores = {

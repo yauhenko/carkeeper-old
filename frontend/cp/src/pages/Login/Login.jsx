@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {inject, observer} from 'mobx-react';
 import './Login.css';
-import Icon from "../../components/Icon";
+import Icon from '../../components/Icon';
 
 @inject('app')
 @observer

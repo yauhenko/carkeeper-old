@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {observer, inject} from 'mobx-react';
-import "./Users.css";
-import Loader from "../../components/Loader";
-import Icon from "../../components/Icon";
-import {range} from "../../utils/tools";
+import './Users.css';
+import Loader from '../../components/Loader';
+import Icon from '../../components/Icon';
+import {range} from '../../utils/tools';
 
 @inject("users")
 @observer

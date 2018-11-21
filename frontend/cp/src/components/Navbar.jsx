@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
-import Icon from "./Icon";
+import Icon from './Icon';
 
 @inject('app')
 @observer
