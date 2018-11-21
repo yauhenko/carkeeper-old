@@ -1,30 +1,12 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Text, RefreshControl, Clipboard, Alert, Modal} from 'react-native';
 import {action, observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {
-  Container,
-  Button,
-  Content,
-  Icon,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  View,
-  ListItem,
-  Switch,
-  Separator,
-  DatePicker,
-  Form, List, ActionSheet
-} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem,  List, ActionSheet} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
 import Cars from "../../store/Cars";
-import moment from "moment";
-import InputDate from "../../components/Form/InputDate";
 import Input from "../../components/Form/Input";
 
 @observer
@@ -81,19 +63,24 @@ export default class Notes extends React.Component {
       {
         options: [
           { text: "Редактировать", icon: "create", iconColor: "#b9babd"},
+          { text: "Скопировать содержание", icon: "document", iconColor: "#b9babd"},
           { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
           { text: "Отмена", icon: "close", iconColor: "#b9babd" }
         ],
-        cancelButtonIndex: 2
+        cancelButtonIndex: 3
       },
       index => {
 
         if(index === 0) {
-            this.note = Object.assign({}, note)
+            this.note = Object.assign({}, note);
             this.toggleModal(true);
         }
 
         if(index === 1) {
+          Clipboard.setString(String(note.content));
+        }
+
+        if(index === 2) {
           Alert.alert(null, 'Подтвердите удаление', [
               {text: 'Отмена', onPress: () => {}, style: 'cancel'},
               {text: 'Удалить', onPress: () => {this.deleteNote(note.id)}}],

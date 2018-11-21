@@ -26,7 +26,7 @@ class User {
    * @param user {object}
    * @returns {Promise<*>}
    */
-  @action register = async (user) => {
+  @action register = async user => {
     return await Api('account/register', {user: {...user, fcm: this.fcm}, ttl: 3600 * 24 * 7, noip: true});
   };
 

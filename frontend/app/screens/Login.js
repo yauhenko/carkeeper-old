@@ -78,7 +78,7 @@ const customStyles = StyleSheet.create({
     ...styles.container,
     justifyContent: "center",
     flex: 1,
-    padding: 20,
+    padding: 17,
     backgroundColor: "#f13f3f"
   },
 

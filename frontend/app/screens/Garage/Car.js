@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Picker, RefreshControl, Alert, Dimensions, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, Picker, RefreshControl, Alert, Dimensions} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Thumbnail, List, ListItem} from 'native-base';
 import styles from "../../styles"
@@ -9,9 +9,8 @@ import Footer from "../../components/Footer";
 import HeaderMenu from "../../components/HeaderMenu";
 import CarMenu from "../../components/CarMenu";
 import Notification from "../../components/Notification";
-import ModalMenu from "../../components/ModalMenu";
-import Cropper from "../../modules/Cropper";
 import {cdn} from "../../modules/Url";
+import AddOrEditCar from "./AddOrEditCar";
 
 @observer
 export default class Car extends React.Component {
@@ -20,14 +19,20 @@ export default class Car extends React.Component {
   @observable model = this.props.navigation.state.params.model;
 
   @observable loading = true;
+
   @observable car = {};
 
   @observable menu = false;
+
+  @observable edit = false;
 
   @action getCar = async () => {
     this.loading = true;
     try {
       this.car = await Cars.getCar(this.id);
+      this.mark = this.car.refs.mark.name;
+      this.model = this.car.refs.model.name;
+      console.log(this.car.refs.mark);
     } catch (e) {
       Notification(e);
       this.props.navigation.navigate('Garage');
@@ -36,23 +41,26 @@ export default class Car extends React.Component {
   };
 
   @action deleteCar = async () => {
-    this.loading = true;
-    try {
-      this.car = await Cars.deleteCar(this.id);
-      this.props.navigation.navigate('Garage')
-    } catch (e) {
-      Notification(e);
-    }
-    this.loading = false;
+    this.menu = false;
+
+    Alert.alert('Удалить автомобиль', `${this.mark} ${this.model}`, [
+      {text: 'Отмена', style: 'cancel'},
+      {text: 'Удалить', onPress: async () => {
+          this.loading = true;
+          try {
+            this.car = await Cars.deleteCar(this.id);
+            this.props.navigation.navigate('Garage');
+          } catch (e) {
+            Notification(e);
+          }
+          this.loading = false;
+      }}
+    ]);
   };
 
-  @action deleteImage = async (data = {}) => {
-    try {
-      await Cars.updateCar(data);
-      this.car.car.image = null;
-    } catch (e) {
-      Notification(e)
-    }
+  @action toggleEditCarModal = (bool = true) => {
+      this.menu = false;
+      this.edit = bool;
   };
 
   componentDidMount() {
@@ -71,7 +79,7 @@ export default class Car extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title><Text style={styles.headerTitle}>{this.mark} {this.model}</Text></Title>
+            <Title><Text style={styles.headerTitle}>Обзор: {this.mark} {this.model}</Text></Title>
           </Body>
           <Right>
             <Button onPress={() => {this.menu = true}} transparent>
@@ -97,19 +105,17 @@ export default class Car extends React.Component {
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
           <List>
-            {/*<ListItem onPress={() => this.menu = false}>*/}
-              {/*<Text>Редактировать</Text>*/}
-            {/*</ListItem>*/}
-            <ListItem onPress={() => {
-              this.menu = false;
-              Alert.alert('Удалить автомобиль', `${this.mark} ${this.model}`,
-                [{text: 'Отмена', style: 'cancel'},{text: 'Удалить', onPress: () => {this.deleteCar(this.id)}}],
-                {cancelable: true })
-              }} last={true}>
+            <ListItem onPress={()=>{this.toggleEditCarModal(true)}}>
+              <Text>Редактировать</Text>
+            </ListItem>
+            <ListItem onPress={() => {this.deleteCar()}} last={true}>
               <Text>Удалить</Text>
             </ListItem>
           </List>
         </HeaderMenu>
+
+        {this.loading ? null : <AddOrEditCar cb={()=>{this.getCar()}} edit={true} onClose={()=>{this.toggleEditCarModal(false)}} car={this.car} show={this.edit}/>}
+
       </Container>
     );
   }
