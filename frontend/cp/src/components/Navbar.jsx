@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import {observer, inject} from 'mobx-react';
 import Icon from './Icon';
 
@@ -14,24 +14,23 @@ class Navbar extends Component {
 	render() {
 		return (
 			<nav className="navbar navbar-light bg-light">
-				<Link to="/" className="navbar-brand">Admin</Link>
+				<Link to="/" className="navbar-brand">CarKeeper</Link>
 				<ul className="nav">
 					<li className="nav-item">
-						<Link to="/" className="nav-link">
+						<NavLink to="/" className="nav-link">
 							<Icon icon="home"/>
 							Home
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
-						<Link to="/users" className="nav-link">
+						<NavLink to="/users" className="nav-link">
 							<Icon icon="users"/>
 							Users
-						</Link>
+						</NavLink>
 					</li>
 					<li className="nav-item">
 						<button onClick={this.btnLogoutClick} className="btn btn-link text-danger">
-							<Icon icon="power-off" fixed/>
-							Logout
+							<Icon icon="sign-out" fixed/>
 						</button>
 					</li>
 				</ul>
