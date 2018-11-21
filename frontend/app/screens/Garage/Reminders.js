@@ -2,23 +2,7 @@ import React, {Fragment} from 'react';
 import {Text, RefreshControl} from 'react-native';
 import {observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {
-  Container,
-  Button,
-  Content,
-  Icon,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  View,
-  ListItem,
-  Switch,
-  Separator,
-  DatePicker,
-  Form
-} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch, Separator} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
