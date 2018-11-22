@@ -84,7 +84,7 @@ export default class Fines extends React.Component {
     }
 
     options = [...options, ...[
-      { text: "Скопировать номер", icon: "document", iconColor: "#b9babd"},
+      { text: "Скопировать номер", icon: "copy", iconColor: "#b9babd"},
       { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
       { text: "Отмена", icon: "close", iconColor: "#b9babd" }
     ]];

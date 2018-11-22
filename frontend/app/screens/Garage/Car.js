@@ -94,7 +94,7 @@ export default class Car extends React.Component {
             null
             :
             <React.Fragment>
-              <View style={{alignItems: "center"}}>
+              <View style={{alignItems: "center", borderBottomWidth: 4, borderBottomColor: "#d6d7da"}}>
                 <Thumbnail square style={{width: Dimensions.get('window').width, height: 200}} large source={car.image ? {uri: cdn + refs.image.path} : require('../../assets/images/car_stub_square.png')} />
               </View>
             </React.Fragment>

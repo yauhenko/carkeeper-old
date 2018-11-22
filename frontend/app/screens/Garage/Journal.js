@@ -188,7 +188,7 @@ export default class Journal extends React.Component {
                       <Body>
                         <View style={{paddingRight: 5, flexDirection: "row", alignItems: "center"}}>
                           <View style={{flex: 1}}>
-                            <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{this.journal.refs.type[record.type].name}</Text>
+                            <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{(record.type === 1 && record.title) ? record.title : this.journal.refs.type[record.type].name}</Text>
                             {record.odo ? <Text style={styles.textNote}>Одометр: {record.odo}</Text> : null}
                             {record.comment ? <Text style={styles.textNote}>Комментарий: {record.comment}</Text> : null}
                           </View>
@@ -229,6 +229,13 @@ export default class Journal extends React.Component {
             <Content refreshControl={<RefreshControl refreshing={this.loading} />}>
               <Form>
                 <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={this.types} title={"Тип записи"}/>
+
+                {record.type === 1
+                ?
+                <Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>
+                :
+                null}
+
                 <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title={"Показания одометра"}/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
