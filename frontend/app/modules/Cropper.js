@@ -4,8 +4,8 @@ import Uploader from "../store/Uploader";
 export default class Cropper {
   static params = {
     cropperToolbarTitle: "",
-    width: 1000,
-    height: 1000,
+    width: 2000,
+    height: 2000,
     cropperToolbarColor: "#f13f3f",
     includeBase64: true,
     mediaType: "photo",

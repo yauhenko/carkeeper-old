@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
-import {Text, RefreshControl} from 'react-native';
-import {observable, toJS} from "mobx";
+import {Text, RefreshControl, StyleSheet} from 'react-native';
+import {observable} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch, Separator} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -80,8 +80,7 @@ export default class Reminders extends React.Component {
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
           {this.loading ? null :
             <Fragment>
-
-              <ListItem last>
+              <ListItem style={componentStyle.header} itemDivider>
                 <Body>
                 <Text>Напоминать о техосмотре</Text>
                 </Body>
@@ -91,16 +90,12 @@ export default class Reminders extends React.Component {
               </ListItem>
 
               {this.checkup.notify ?
-                <Fragment>
-                  <View style={{paddingBottom: 10}}>
-                    <InputDate onChange={(value)=>{this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
-                  </View>
-                </Fragment>
-                : null}
+                <View style={componentStyle.content}>
+                  <InputDate onChange={(value)=>{this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
+                </View>
+              : null}
 
-              <Separator bordered/>
-
-              <ListItem last>
+              <ListItem style={componentStyle.header} itemDivider>
                 <Body>
                 <Text>Напоминать о страховке</Text>
                 </Body>
@@ -110,17 +105,13 @@ export default class Reminders extends React.Component {
               </ListItem>
 
               {this.insurance.regular.notify ?
-                <Fragment>
-                  <View style={{paddingBottom: 10}}>
-                    <InputDate onChange={(value)=>{this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
-                  </View>
-                </Fragment>
+                <View style={componentStyle.content}>
+                  <InputDate onChange={(value)=>{this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
+                </View>
                 :
                 null}
 
-              <Separator bordered/>
-
-              <ListItem last>
+              <ListItem style={componentStyle.header} itemDivider>
                 <Body>
                 <Text>Напоминать о КАСКО</Text>
                 </Body>
@@ -130,23 +121,28 @@ export default class Reminders extends React.Component {
               </ListItem>
 
               {this.insurance.casco.notify ?
-                <Fragment>
-                  <View style={{paddingBottom: 10}}>
-                    <InputDate onChange={(value)=>{this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
-                  </View>
-                </Fragment>
+                <View style={componentStyle.content}>
+                  <InputDate onChange={(value)=>{this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
+                </View>
                 :
                 null}
-
-              <Separator bordered/>
-
             </Fragment>
           }
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
-
       </Container>
     );
   }
 }
+
+const componentStyle = StyleSheet.create({
+  header: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: "#d6d7da"
+  },
+  content: {
+    paddingBottom: 20,
+    paddingTop: 10
+  }
+});

@@ -59,21 +59,16 @@ export default class Journal extends React.Component {
 
   @action getJournal = async () => {
       this.loading = true;
-
       try {
         this.journal = await Cars.getJournal(this.car.car.id);
       } catch (e) {
         Notification(e)
       }
-
       this.loading = false;
   };
 
   @action addRecord = async (obj) => {
     this.loading = true;
-
-    console.log(toJS(obj));
-
     try {
       await Cars.journalAdd(obj);
       this.journal = await Cars.getJournal(this.car.car.id);
@@ -152,8 +147,8 @@ export default class Journal extends React.Component {
 
 
   render() {
-    const {car, refs : carRefs} = this.car;
-    const {records, refs : recordsRefs} = this.journal;
+    const {refs : carRefs} = this.car;
+    const {records} = this.journal;
     const record = this.record.record;
 
     return (
@@ -239,7 +234,7 @@ export default class Journal extends React.Component {
                 <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title={"Показания одометра"}/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
-                <Photo path={record.image ? ((this.journal.refs.image &&this.journal.refs.image[record.image]) ? this.journal.refs.image[record.image].path : null) : null} onChange={(image) => {this.changeRecord("image", image.id)}} title={"Изображение"} />
+                <Photo path={record.image ? ((this.journal.refs.image && this.journal.refs.image[record.image]) ? this.journal.refs.image[record.image].path : null) : null} onChange={(image) => {this.changeRecord("image", image.id)}} title={"Изображение"} />
               </Form>
             </Content>
           </Container>

@@ -37,7 +37,7 @@ export default class Photo extends Component {
                 ?
                 <Image style={{width: "100%", aspectRatio: 1}} source={{uri: cdn + this.image.path}}/>
                 :
-                <Image style={{width: 100, height: 100, marginTop:50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
+                <Image style={{width: 100, height: 100, marginTop: 50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
             }
           </View>
         </TouchableWithoutFeedback>
