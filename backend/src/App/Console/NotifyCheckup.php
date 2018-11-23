@@ -2,8 +2,9 @@
 
 namespace App\Console;
 
-use Framework\DB\Client;
+use App\Tools;
 use Framework\MQ\Task;
+use Framework\DB\Client;
 use Framework\Patterns\DI;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -52,7 +53,7 @@ class NotifyCheckup extends Command {
 
 		foreach ($list as $item) {
 
-			$msg = "Через {$item['days']} дн. истекает срок техосмотра";
+			$msg = "Через {$item['days']} " . Tools::plural($item['days'], ',день,дня,дней') . " истекает срок техосмотра";
 			if($msg === 30) $msg = "Через месяц истекает срок техосмотра";
 			elseif($msg === 14) $msg = "Через две недели истекает срок техосмотра";
 			elseif($msg === 7) $msg = "Через неделю истекает срок техосмотра";

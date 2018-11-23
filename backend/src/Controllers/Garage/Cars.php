@@ -35,12 +35,16 @@ class Cars extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
+		/** @var \Collections\Cars $cars */
+		$cars = CarsCollection::factory();
+
 		/** @var Car $car */
-		$car = CarsCollection::factory()->get($this->params->id);
+		$car = $cars->get($this->params->id);
 
 		return [
 			'car' => $car,
-			'refs' => (object)$this->di->refs->single($car)
+			'refs' => (object)$this->di->refs->single($car),
+			'notifications' => $cars->getNotifications($car),
 		];
 
 	}

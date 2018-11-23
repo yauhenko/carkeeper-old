@@ -92,13 +92,13 @@ class Tools {
 	public static function zerofill(int $val, int $padding = 4): string {
 		return sprintf("%0{$padding}d", $val);
 	}
-
-	public static function plural(int $value, string $string): string {
-		$v = abs($value) % 100; $n = $v % 10;
-		$p = (!$n || $n >= 5 || ($v >= 5 && $v <= 20)) ? 3 : (($n > 1 && $n < 5) ? 2 : 1);
-		$s = explode(',', $string);
-		return $s[0] . $s[$p];
-	}
+//
+//	public static function plural(int $value, string $string): string {
+//		$v = abs($value) % 100; $n = $v % 10;
+//		$p = (!$n || $n >= 5 || ($v >= 5 && $v <= 20)) ? 3 : (($n > 1 && $n < 5) ? 2 : 1);
+//		$s = explode(',', $string);
+//		return $s[0] . $s[$p];
+//	}
 
 	public static function sex(string $str, string $sex = null): string {
 		$str = explode(',', $str);
@@ -181,6 +181,16 @@ class Tools {
 		$tel = preg_replace('/^80/', $code, $tel);
 		$tel = preg_replace('/^8/', $code, $tel);
 		return $tel ?: null;
+	}
+
+	public static function plural(int $n, string $source): string {
+		$result = [];
+		foreach (explode(' ', $source) as $text) {
+			$text = explode(',', $text);
+			$forms = [$text[1], $text[2], $text[3]];
+			$result[] = $text[0] . ($n%10==1&&$n%100!=11?$forms[0]:($n%10>=2&&$n%10<=4&&($n%100<10||$n%100>=20)?$forms[1]:$forms[2]));
+		}
+		return implode(' ', $result);
 	}
 
 }

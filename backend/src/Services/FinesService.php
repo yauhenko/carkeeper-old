@@ -2,6 +2,7 @@
 
 namespace Services;
 
+use App\Tools;
 use Collections\Cars;
 use Collections\Fines;
 use Entities\Car;
@@ -86,8 +87,8 @@ class FinesService {
 			if($cnt > 0) {
 				Task::create(Push::class, [
 					'user' => $car->user,
-					'title' => $new ? 'Ура! Новый штраф!' : 'Любите быструю езду?',
-					'message' => 'Извольте оплатить штрафы: ' . $cnt . ' шт.' . ($sum ? ' на ' . $sum . ' руб' : ''),
+					'title' => $new ? 'Новый штраф!' : 'Любите быструю езду?',
+					'message' => 'Извольте оплатить ' . $cnt . ' ' . Tools::plural($cnt, 'штраф,,а,ов') . ($sum ? ' на ' . $sum . ' руб' : ''),
 				])->start();
 			}
 

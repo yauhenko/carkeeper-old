@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Tools;
 use Framework\DB\Client;
 use Framework\MQ\Task;
 use Framework\Patterns\DI;
@@ -55,7 +56,7 @@ class NotifyInsurance extends Command {
 
 			$type = $item['type'] === 'casco' ? ' КАСКО' : '';
 
-			$msg = "Через {$item['days']} дн. истекает страховка";
+			$msg = "Через {$item['days']} " . Tools::plural($item['days'], ',день,дня,дней') . " истекает страховка";
 			if($msg === 30) $msg = "Через месяц истекает страховка";
 			elseif($msg === 14) $msg = "Через две недели истекает страховка";
 			elseif($msg === 7) $msg = "Через неделю истекает страховка";
