@@ -87,7 +87,7 @@ export default class Car extends React.Component {
   };
 
   render() {
-    const {car, refs} = this.car;
+    const {car, refs, notifications} = this.car;
 
     return (
       <Container>
@@ -123,6 +123,35 @@ export default class Car extends React.Component {
                 </View>
                 <Button style={componentStyle.odo_button} small onPress={()=>this.odoModal = true}><Icon name="create"/></Button>
               </View>
+
+
+              <List>
+                {notifications.map((item, key) => {
+                  let route = null;
+
+                  switch (item.type) {
+                    case "fines" : route = "Fines";
+                    break;
+                    case "checkup" : route = "Reminders";
+                    break;
+                    case "insurance" : route = "Reminders";
+                    break;
+                  }
+
+                  return <ListItem onPress={()=>{Boolean(route) && this.props.navigation.navigate(route, {car: this.car})}} last={key === (notifications.length - 1)} key={key} icon>
+                    <Left>
+                      {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
+                      {item.level === "danger" && <Icon style={{color: "#f13f3f"}} name="alert" />}
+                      {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
+                    </Left>
+                    <Body>
+                    <Text>{item.text}</Text>
+                    </Body>
+                  </ListItem>
+                })}
+
+              </List>
+
             </Fragment>
           }
         </Content>
@@ -180,7 +209,8 @@ const componentStyle = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: "#d6d7da",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 10
   },
   odo_value: {
     marginBottom: 10
