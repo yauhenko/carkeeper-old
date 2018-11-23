@@ -118,17 +118,20 @@ export default class Car extends React.Component {
               </View>
               <View style={componentStyle.odo}>
                 <View style={{flex: 1}}>
-                  <Text style={componentStyle.odo_value}>Пробег: <Text style={{fontSize: 18}}>{car.odo}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                  {car.odo
+                    ?
+                    <Text style={componentStyle.odo_value}>Пробег: <Text style={{fontSize: 18}}>{car.odo}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                    :
+                    <Text style={componentStyle.odo_value}>Пробег не указан</Text>
+                  }
                   <Text style={styles.textNote}>Регулярно обновляйте показания одометра, чтобы получать рекомендации по обслуживанию автомобиля</Text>
                 </View>
                 <Button style={componentStyle.odo_button} small onPress={()=>this.odoModal = true}><Icon name="create"/></Button>
               </View>
 
 
-              <List>
                 {notifications.map((item, key) => {
                   let route = null;
-
                   switch (item.type) {
                     case "fines" : route = "Fines";
                     break;
@@ -138,20 +141,17 @@ export default class Car extends React.Component {
                     break;
                   }
 
-                  return <ListItem onPress={()=>{Boolean(route) && this.props.navigation.navigate(route, {car: this.car})}} last={key === (notifications.length - 1)} key={key} icon>
+                  return <ListItem style={{height: null}} onPress={()=>{Boolean(route) && this.props.navigation.navigate(route, {car: this.car})}} last={key === (notifications.length - 1)} key={key} icon>
                     <Left>
                       {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
                       {item.level === "danger" && <Icon style={{color: "#f13f3f"}} name="alert" />}
                       {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
                     </Left>
-                    <Body>
-                    <Text>{item.text}</Text>
+                    <Body style={{height: null, paddingBottom: 10, paddingTop: 10}}>
+                      <Text>{item.text}</Text>
                     </Body>
                   </ListItem>
                 })}
-
-              </List>
-
             </Fragment>
           }
         </Content>

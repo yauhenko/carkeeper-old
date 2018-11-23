@@ -109,7 +109,6 @@ export default class AddOrEditCar extends React.Component {
       this.close();
       this.props.cb && this.props.cb();
     } catch (e) {
-      alert(1);
       Notification(e)
     }
   };
