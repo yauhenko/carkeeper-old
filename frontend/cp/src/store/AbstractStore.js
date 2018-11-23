@@ -27,7 +27,19 @@ class AbstractStore {
 	@action fetchItem = async (id) => {
 		try {
 			const res = await api(this.endpoint + '/get', {id});
-			this.item = res.user;
+			this.item = res.item;
+			return true;
+		} catch (e) {
+			alert(e.message);
+			return false;
+		}
+	};
+
+	@action createItem = async (data = {}) => {
+		this.item = {...this.item, ... data};
+		try {
+			await api(this.endpoint + '/create', { item: this.item });
+			await this.fetchList();
 			return true;
 		} catch (e) {
 			alert(e.message);
@@ -38,7 +50,7 @@ class AbstractStore {
 	@action updateItem = async (data = {}) => {
 		this.item = {...this.item, ... data};
 		try {
-			await api(this.endpoint + '/update', { id: this.item.id, user: this.item });
+			await api(this.endpoint + '/update', { id: this.item.id, item: this.item });
 			await this.fetchList();
 			return true;
 		} catch (e) {

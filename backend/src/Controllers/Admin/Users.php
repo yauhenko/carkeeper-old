@@ -31,7 +31,7 @@ class Users extends ApiController {
 		$data = $user->getData();
 		unset($data['password'], $data['fcm']);
 		return [
-			'user' => $data
+			'item' => $data
 		];
 	}
 
@@ -41,7 +41,7 @@ class Users extends ApiController {
 	public function update(): array {
 		$this->authAdmin();
 		$user = UsersCollection::factory()->get($this->params->id);
-		$user->setData((array)$this->params->user);
+		$user->setData((array)$this->params->item);
 		return [
 			'updated' => $user->save()
 		];

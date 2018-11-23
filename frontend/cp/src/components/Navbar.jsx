@@ -23,6 +23,12 @@ class Navbar extends Component {
 						</NavLink>
 					</li>
 					<li className="nav-item">
+						<NavLink to="/news" className="nav-link">
+							<Icon icon="list"/>
+							News
+						</NavLink>
+					</li>
+					<li className="nav-item">
 						<NavLink to="/users" className="nav-link">
 							<Icon icon="users"/>
 							Users
