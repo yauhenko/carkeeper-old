@@ -84,8 +84,11 @@ class Validator {
 							call_user_func($params, $val);
 						} elseif($name === 'sub') {
 							$this->validate($val, $params, true, $key, true);
-						} else {
+						} elseif(method_exists($this, 'check' . $name)) {
+							echo "{$name} ({$val})\n";
 							call_user_func_array([$this, 'check' . $name], array_merge([$val], is_array($params) ? $params : [$params]));
+						} else {
+							throw new Error('Unknown validation filter: ' . $name);
 						}
 					}
 				}

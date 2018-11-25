@@ -78,13 +78,13 @@ class Car extends Entity {
 	public $odo_mdate = null;
 
 	/**
-	 * @validate required; in: manual, automatic
+	 * @validate in: manual, automatic
 	 * @var string|null
 	 */
 	public $transmission = null;
 
 	/**
-	 * @validate required; in: gasoline, diesel
+	 * @validate in: gasoline, diesel
 	 * @var string|null
 	 */
 	public $fuel = null;
