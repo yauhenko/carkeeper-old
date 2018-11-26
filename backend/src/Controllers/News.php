@@ -11,9 +11,9 @@ class News extends ApiController {
 	 * @route /news
 	 */
 	public function index(): array {
-		return Pager::create()
+		$res = Pager::create()
 			->sql('SELECT ** FROM news WHERE published = 1')
-			->fields(['id', 'title', 'image', 'channel', 'date_begin', 'date_end', 'pinned'])
+			->fields(['id', 'title', 'content', 'image', 'channel', 'date_begin', 'date_end', 'pinned'])
 			->order('ORDER BY pinned = 1 DESC, id DESC')
 			->page($this->params->page ?: 1)
 			->limit($this->params->limit ?: 50)
@@ -22,6 +22,12 @@ class News extends ApiController {
 				'image' => ['table' => 'uploads'],
 			])->exec()
 			->getMetaData(Pager::OPTION_OBJECT_REFS);
+
+		foreach ($res['data'] as &$item) {
+			$item['content'] = json_decode($item['content']);
+		}
+
+		return $res;
 	}
 
 	/**
