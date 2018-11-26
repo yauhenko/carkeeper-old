@@ -132,6 +132,7 @@ export default class Car extends React.Component {
 
                 {notifications.map((item, key) => {
                   let route = null;
+
                   switch (item.type) {
                     case "fines" : route = "Fines";
                     break;
@@ -147,7 +148,7 @@ export default class Car extends React.Component {
                       {item.level === "danger" && <Icon style={{color: "#f13f3f"}} name="alert" />}
                       {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
                     </Left>
-                    <Body style={{height: null, paddingBottom: 10, paddingTop: 10}}>
+                    <Body style={{height: null, paddingBottom: 15, paddingTop: 15}}>
                       <Text>{item.text}</Text>
                     </Body>
                   </ListItem>
