@@ -50,7 +50,6 @@ class Users extends Component {
 			channel: e.target.channel.value,
 			date_begin: e.target.date_begin.value || null,
 			date_end: e.target.date_end.value || null,
-			content: e.target.content.value,
 			published: e.target.published.checked,
 			pinned: e.target.pinned.checked,
 		};
@@ -68,6 +67,9 @@ class Users extends Component {
 		await this.props.news.delete(id);
 	};
 
+	addElement(element) {
+		this.props.news.item.content.push(element);
+	}
 
 	render() {
 		const news = this.props.news.item;
@@ -123,7 +125,7 @@ class Users extends Component {
 					{news === null || this.channels === null ? <Loader text="Загрузка данных новости..."/> :
 						<Fragment>
 
-							<form className="card" style={{ minWidth: '800px' }} onSubmit={this.update}>
+							<form className="card" style={{ width: '1000px' }} onSubmit={this.update}>
 
 								<div className="card-body">
 
@@ -157,7 +159,55 @@ class Users extends Component {
 
 									<div className="form-group">
 										<label>Контент</label>
-										<textarea name="content"  defaultValue={news.content} className="form-control" rows={10}/>
+										<br/>
+										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'p', text: '', screen: 'any'})}>
+											<Icon icon="font"/>
+										</button>
+										&nbsp;
+										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'img', src: '', screen: 'any'})}>
+											<Icon icon="picture-o"/>
+										</button>
+										&nbsp;
+										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'a', href: '', screen: 'any'})}>
+											<Icon icon="link"/>
+										</button>
+
+										<div style={{background: '#efefef', height: '500px', overflowY: 'auto'}}>
+											{news.content.map((e, idx) => {
+												if(e === null) return null;
+												return <div key={idx} className="row">
+													<div className="col-1">{e.type.toUpperCase()}</div>
+													<div className="col-9">
+														{e.type === 'p' ? <textarea className="form-control" required={true} defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Текст"/> : null }
+														{e.type === 'img' ? <input type="url" className="form-control" required={true} defaultValue={e.src} onChange={(e)=>this.props.news.item.content[idx].src=e.target.value} placeholder="http://domain.com/img.jpg" /> : null }
+														{e.type === 'a' ?
+															<div className="row">
+																<div className="col-6">
+																	<input type="url" className="form-control" required={true} defaultValue={e.href} onChange={(e)=>this.props.news.item.content[idx].href=e.target.value} placeholder="http://domain.com/page.html" />
+																</div>
+																<div className="col-6">
+																	<input type="text" className="form-control" defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Текст ссылки" />
+																</div>
+															</div>
+														: null }
+													</div>
+													<div className="col-2" style={{textAlign: 'right'}}>
+														<select className="form-control" defaultValue={e.screen} onChange={(e)=>this.props.news.item.content[idx].screen=e.target.value}>
+															<option value="main">Главная</option>
+															<option value="inner">Внутр.</option>
+															<option value="any">Везде</option>
+														</select>
+														<button type="button" className="btn btn-danger btn-sm" onClick={()=>{delete this.props.news.item.content[idx];this.forceUpdate()}}>
+															<Icon icon="times"/>
+														</button>
+													</div>
+
+
+												</div>
+											})}
+										</div>
+
+
 									</div>
 
 									<div>

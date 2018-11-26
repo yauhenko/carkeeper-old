@@ -32,7 +32,7 @@ class News extends ApiController {
 		$db = $this->di->db;
 
 		$news = $db->findOneBy('news', 'id', $this->params->id);
-		//$news['content'] = json_decode($news['content']);
+		$news['content'] = json_decode($news['content']);
 
 		return [
 			'item' => $news
@@ -48,7 +48,7 @@ class News extends ApiController {
 		/** @var Client $db */
 		$db = $this->di->db;
 
-		//$this->params->item->content = json_encode($this->params->item->content);
+		$this->params->item->content = json_encode($this->params->item->content);
 		$id = $db->insert('news', (array)$this->params->item);
 
 		return [
@@ -67,7 +67,7 @@ class News extends ApiController {
 		/** @var Client $db */
 		$db = $this->di->db;
 
-		//$this->params->item->content = json_encode($this->params->item->content);
+		$this->params->item->content = json_encode($this->params->item->content);
 		$res = $db->update('news', (array)$this->params->item, 'id', $this->params->id);
 
 		return [
