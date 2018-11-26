@@ -19,7 +19,7 @@ import Journal from "./screens/Garage/Journal";
 import Logger from "./modules/Logger";
 import Notifications from "./modules/Notifications";
 import Notes from "./screens/Garage/Notes";
-import News from "./screens/News/News";
+import List from "./screens/News/List";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -29,7 +29,7 @@ const Navigator = createDrawerNavigator({
     Profile: {screen: Profile},
     Reminders: {screen: Reminders},
     Notes: {screen: Notes},
-    News: {screen: News}
+    News: {screen: List}
 }, {
   initialRouteName: 'Garage',
   headerMode: 'none',

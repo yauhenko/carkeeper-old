@@ -16,7 +16,7 @@ import {cdn} from "../../modules/Url";
 export default class AddOrEditCar extends React.Component {
   @observable loading = false;
   @observable image = null;
-  @observable car = this.props.car ? Object.assign({}, toJS(this.props.car.car)) : {odo_unit: "km"};
+  @observable car = this.props.car ? Object.assign({}, toJS(this.props.car.car)) : {odo_unit: "km", transmission: "automatic", fuel: "gasoline"};
 
   @action close = () => {
       this.car = this.props.car ? this.props.car.car : {};
@@ -109,7 +109,6 @@ export default class AddOrEditCar extends React.Component {
       this.close();
       this.props.cb && this.props.cb();
     } catch (e) {
-      alert(1);
       Notification(e)
     }
   };
@@ -211,6 +210,17 @@ export default class AddOrEditCar extends React.Component {
               {id: "km", text: "Километры", icon: "radio-button-off"},
               {id: "m", text: "Мили", icon: "radio-button-off"}
             ]} actionName="Едиица измерения одометра" title="Км/Мили"/>
+
+
+            <Select onChange={selected => {this.changeCar("transmission", selected.id)}} value={this.car.transmission} buttons={[
+              {id: "automatic", text: "Автоматическая", icon: "radio-button-off"},
+              {id: "manual", text: "Ручная", icon: "radio-button-off"}
+            ]} actionName="Трансмиссия" title="Трансмиссия"/>
+
+            <Select onChange={selected => {this.changeCar("fuel", selected.id)}} value={this.car.fuel} buttons={[
+              {id: "gasoline", text: "Бензин", icon: "radio-button-off"},
+              {id: "diesel", text: "Дизель", icon: "radio-button-off"}
+            ]} actionName="Вид топлива" title="Вид топлива"/>
 
             <List style={{paddingTop: 40}}>
               <ListItem itemDivider>
