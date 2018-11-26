@@ -48,6 +48,8 @@ class Users extends Component {
 		let item = {
 			title: e.target.title.value,
 			channel: e.target.channel.value,
+			date_begin: e.target.date_begin.value || null,
+			date_end: e.target.date_end.value || null,
 			content: e.target.content.value,
 			published: e.target.published.checked,
 			pinned: e.target.pinned.checked,
@@ -121,7 +123,7 @@ class Users extends Component {
 					{news === null || this.channels === null ? <Loader text="Загрузка данных новости..."/> :
 						<Fragment>
 
-							<form className="card" style={{ minWidth: '500px' }} onSubmit={this.update}>
+							<form className="card" style={{ minWidth: '800px' }} onSubmit={this.update}>
 
 								<div className="card-body">
 
@@ -130,31 +132,44 @@ class Users extends Component {
 										<input type="text" name="title" required defaultValue={news.title} className="form-control" />
 									</div>
 
-									<div className="form-group">
-										<label>Канал</label>
-										<select name="channel" required defaultValue={news.channel} className="form-control">
-											{this.channels.map((ch) => { return <option key={ch.id} value={ch.id}>{ch.name}</option>})}
-										</select>
+									<div className="row">
+										<div className="col-6">
+											<div className="form-group">
+												<label>Канал</label>
+												<select name="channel" required defaultValue={news.channel} className="form-control">
+													{this.channels.map((ch) => { return <option key={ch.id} value={ch.id}>{ch.name}</option>})}
+												</select>
+											</div>
+										</div>
+										<div className="col-3">
+											<div className="form-group">
+												<label>Начало</label>
+												<input type="date" name="date_begin" defaultValue={news.date_begin} className="form-control" />
+											</div>
+										</div>
+										<div className="col-3">
+											<div className="form-group">
+												<label>Конец</label>
+												<input type="date" name="date_end" defaultValue={news.date_end} className="form-control" />
+											</div>
+										</div>
 									</div>
 
 									<div className="form-group">
 										<label>Контент</label>
-										<textarea name="content"  defaultValue={news.content} className="form-control" />
+										<textarea name="content"  defaultValue={news.content} className="form-control" rows={10}/>
 									</div>
 
-									<div className="form-group">
+									<div>
 										<label>
 											<input type="checkbox" name="published" defaultChecked={news.published}/>
 											&nbsp; Опубликовать
 										</label>
-									</div>
-									<div className="form-group">
-										<label>
+										<label style={{marginLeft:'20px'}}>
 											<input type="checkbox" name="pinned" defaultChecked={news.pinned}/>
 											&nbsp; Закрепить
 										</label>
 									</div>
-
 
 								</div>
 								<div className="card-footer">
