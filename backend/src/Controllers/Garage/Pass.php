@@ -69,7 +69,7 @@ class Pass extends ApiController {
 
 		/** @var Client $db */
 		$db = $this->di->db;
-		$res = $db->update('cars_pass', (array)$this->params->pass, 'car', $this->params->car);
+		$res = $db->save('cars_pass', (array)$this->params->pass);
 
 		return [
 			'updated' => $res
