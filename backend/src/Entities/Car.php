@@ -77,6 +77,18 @@ class Car extends Entity {
 	 */
 	public $odo_mdate = null;
 
+	/**
+	 * @validate in: manual, automatic
+	 * @var string|null
+	 */
+	public $transmission = null;
+
+	/**
+	 * @validate in: gasoline, diesel
+	 * @var string|null
+	 */
+	public $fuel = null;
+
 	/** @var string */
 	protected $_collection = Cars::class;
 

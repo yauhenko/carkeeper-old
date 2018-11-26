@@ -92,39 +92,32 @@ class Users extends Component {
 				<Modal styles={{modal:{padding:'0',borderRadius:'5px'}}} open={this.state.editModalOpen} onClose={this.closeEditModal} showCloseIcon={false}>
 					{user === null ? <Loader text="Загрузка данных учетной записи..."/> :
 						<Fragment>
-
-
 							<form className="card" style={{ minWidth: '500px' }} onSubmit={this.update}>
-
 								<div className="card-body">
-
-								<div className="form-group">
-									<label>Имя</label>
-									<input type="text" name="name" required defaultValue={user.name} className="form-control" />
-								</div>
-								<div className="form-group">
-									<label>Телефон</label>
-									<input type="tel" name="tel" required defaultValue={user.tel} className="form-control" />
-								</div>
-								<div className="form-group">
-									<label>E-mail</label>
-									<input type="email" name="email" required defaultValue={user.email} className="form-control" />
-								</div>
-
+									<div className="form-group">
+										<label>Имя</label>
+										<input type="text" name="name" required defaultValue={user.name} className="form-control" />
+									</div>
+									<div className="form-group">
+										<label>Телефон</label>
+										<input type="tel" name="tel" required defaultValue={user.tel} className="form-control" />
+									</div>
+									<div className="form-group">
+										<label>E-mail</label>
+										<input type="email" name="email" required defaultValue={user.email} className="form-control" />
+									</div>
 								</div>
 								<div className="card-footer">
-
-								<button type="submit" className="btn btn-success">
-									<Icon icon="save"/>
-									Сохранить
-								</button>
-								&nbsp;
-								<button type="button" className="btn" onClick={this.closeEditModal}>
-									<Icon icon="times"/>
-									Закрыть
-								</button>
+									<button type="submit" className="btn btn-success">
+										<Icon icon="save"/>
+										Сохранить
+									</button>
+									&nbsp;
+									<button type="button" className="btn" onClick={this.closeEditModal}>
+										<Icon icon="times"/>
+										Закрыть
+									</button>
 								</div>
-
 							</form>
 						</Fragment>
 					}

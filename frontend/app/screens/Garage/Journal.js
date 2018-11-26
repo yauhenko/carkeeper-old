@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl, Modal, Alert} from 'react-native';
+import {Text, RefreshControl, Modal, Alert, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, Form, List, ListItem, ActionSheet, Thumbnail} from 'native-base';
 import styles from "../../styles"
@@ -14,6 +14,9 @@ import Input from "../../components/Form/Input";
 import InputDate from "../../components/Form/InputDate";
 import Photo from "../../components/Form/Photo";
 import {cdn} from "../../modules/Url";
+import {number_format} from "../../modules/Utils";
+import PhotoModal from "../../components/PhotoModal";
+
 
 @observer
 export default class Journal extends React.Component {
@@ -22,6 +25,11 @@ export default class Journal extends React.Component {
   @observable types = [];
   @observable loading = true;
   @observable update = false;
+
+  @observable photo = {
+    modal: false,
+    url: null
+  };
 
   initialRecord = {
     id: this.car.car.id,
@@ -147,7 +155,7 @@ export default class Journal extends React.Component {
 
 
   render() {
-    const {refs : carRefs} = this.car;
+    const {refs : carRefs, car} = this.car;
     const {records} = this.journal;
     const record = this.record.record;
 
@@ -170,24 +178,24 @@ export default class Journal extends React.Component {
             </Right>
           </Header>
 
-          <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getJournal()}}/>} contentContainerStyle={styles.container}>
+          <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.getJournal()}/>} contentContainerStyle={styles.container}>
             <List>
               {records && records.length
                 ?
                 records.map((record, id)=>{
                   return (
                     <ListItem onPress={()=>{this.action(record)}} thumbnail key={id}>
-                      <Left>
+                      <Left style={{flexDirection: "column", alignItems: "center"}}>
                         <Text>{moment(record.date).format("DD.MM.YYYY")}</Text>
+                        {record.odo ? <Text style={[styles.textNote, {marginTop: 5}]}>{number_format(record.odo, 0, "", " ")} {car.odo_unit === "m" ? "миль" : "км"}</Text> : null}
                       </Left>
                       <Body>
                         <View style={{paddingRight: 5, flexDirection: "row", alignItems: "center"}}>
                           <View style={{flex: 1}}>
                             <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{(record.type === 1 && record.title) ? record.title : this.journal.refs.type[record.type].name}</Text>
-                            {record.odo ? <Text style={styles.textNote}>Одометр: {record.odo}</Text> : null}
-                            {record.comment ? <Text style={styles.textNote}>Комментарий: {record.comment}</Text> : null}
+                            {record.comment ? <Text style={styles.textNote}>{record.comment}</Text> : null}
                           </View>
-                          {record.image ? <View style={{width: 40, marginLeft: 10, marginRight: 5}}><Thumbnail style={{width: 40, height: 40}} source={{uri: cdn + this.journal.refs.image[record.image].path}}/></View>: null}
+                          {record.image ? <TouchableOpacity onPress={()=>{this.photo = {modal: true, url: cdn + this.journal.refs.image[record.image].path}}} style={{width: 40, marginLeft: 10, marginRight: 5}}><Thumbnail square style={{width: 40, height: 40}} source={{uri: cdn + this.journal.refs.image[record.image].path}}/></TouchableOpacity>: null}
                         </View>
                       </Body>
                     </ListItem>
@@ -198,10 +206,10 @@ export default class Journal extends React.Component {
               }
             </List>
           </Content>
-
           <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
         </Container>
 
+        <PhotoModal animationType="none" image={this.photo.url} onRequestClose={()=>{this.photo.modal = false}} visible={this.photo.modal}/>
 
         <Modal onShow={()=>this.getTypes()} animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container>
@@ -225,14 +233,12 @@ export default class Journal extends React.Component {
               <Form>
                 <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={this.types} title={"Тип записи"}/>
 
-                {record.type === 1
-                ?
+                {record.type === 1 ?
                 <Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>
-                :
-                null}
+                : null}
 
                 <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
-                <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title={"Показания одометра"}/>
+                <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title="Пробег"/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
                 <Photo path={record.image ? ((this.journal.refs.image && this.journal.refs.image[record.image]) ? this.journal.refs.image[record.image].path : null) : null} onChange={(image) => {this.changeRecord("image", image.id)}} title={"Изображение"} />
               </Form>

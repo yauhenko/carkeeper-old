@@ -101,7 +101,7 @@ class Cars extends ApiController {
 		$car->setData((array)$this->params->car);
 
 		return [
-			'updated' => $car->save()
+			'updated' => $car->update()
 		];
 
 	}

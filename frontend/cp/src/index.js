@@ -9,13 +9,16 @@ import Private from './components/Private/Private';
 import NotFound from './pages/NotFound/NotFound';
 import AppStore from './store/App';
 import UsersStore from './store/Users';
+import NewsStore from './store/News';
 import Loader from './components/Loader';
 import Users from './pages/Users/Users';
+import News from './pages/News/News';
 import './styles.css';
 
 const stores = {
 	app: AppStore,
 	users: UsersStore,
+	news: NewsStore,
 };
 
 @observer
@@ -30,6 +33,7 @@ class App extends Component {
 								<Route exact path="/login" component={Login}/>
 								<Route render={(props) => <Private {...props}><Home {...props}/></Private>} exact path="/"/>
 								<Route render={(props) => <Private {...props}><Users {...props}/></Private>} exact path="/users"/>
+								<Route render={(props) => <Private {...props}><News {...props}/></Private>} exact path="/news"/>
 								<Route component={NotFound}/>
 							</Switch>
 						</Router>
