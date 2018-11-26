@@ -28,7 +28,7 @@ class Users extends Component {
 	}
 
 	create = () => {
-		this.props.news.item = {};
+		this.props.news.item = {content:[]};
 		this.setState({ editModalOpen: true });
 	};
 
@@ -68,7 +68,13 @@ class Users extends Component {
 	};
 
 	addElement(element) {
+		element.id = Math.random();
 		this.props.news.item.content.push(element);
+	}
+
+	deleteElement(idx) {
+		this.props.news.item.content.splice(idx, 1);
+		this.forceUpdate();
 	}
 
 	render() {
@@ -121,11 +127,11 @@ class Users extends Component {
 						<Pager store={this.props.news}/>
 					</Fragment>
 				}
-				<Modal styles={{modal:{padding:'0',borderRadius:'5px'}}} open={this.state.editModalOpen} onClose={this.closeEditModal} showCloseIcon={false}>
+				<Modal styles={{modal:{padding:'0',borderRadius:'5px', width: '1200px', maxWidth:'1200px'}}} open={this.state.editModalOpen} onClose={this.closeEditModal} showCloseIcon={false}>
 					{news === null || this.channels === null ? <Loader text="Загрузка данных новости..."/> :
 						<Fragment>
 
-							<form className="card" style={{ width: '1000px' }} onSubmit={this.update}>
+							<form className="card" onSubmit={this.update}>
 
 								<div className="card-body">
 
@@ -139,7 +145,7 @@ class Users extends Component {
 											<div className="form-group">
 												<label>Канал</label>
 												<select name="channel" required defaultValue={news.channel} className="form-control">
-													{this.channels.map((ch) => { return <option key={ch.id} value={ch.id}>{ch.name}</option>})}
+													{this.channels.map((ch)=>{return <option key={ch.id} value={ch.id}>{ch.name}</option>})}
 												</select>
 											</div>
 										</div>
@@ -159,25 +165,26 @@ class Users extends Component {
 
 									<div className="form-group">
 										<label>Контент</label>
-										<br/>
-										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'p', text: '', screen: 'any'})}>
-											<Icon icon="font"/>
-										</button>
-										&nbsp;
-										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'img', src: '', screen: 'any'})}>
-											<Icon icon="picture-o"/>
-										</button>
-										&nbsp;
-										<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'a', href: '', screen: 'any'})}>
-											<Icon icon="link"/>
-										</button>
+										<div className="form-group">
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'p', text: '', screen: 'any'})}>
+												<Icon icon="font"/>
+											</button>
+											&nbsp;
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'img', src: '', screen: 'any'})}>
+												<Icon icon="picture-o"/>
+											</button>
+											&nbsp;
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'a', href: '', screen: 'any'})}>
+												<Icon icon="link"/>
+											</button>
 
-										<div style={{background: '#efefef', height: '500px', overflowY: 'auto'}}>
+										</div>
+
+										<div>
 											{news.content.map((e, idx) => {
 												if(e === null) return null;
-												return <div key={idx} className="row">
-													<div className="col-1">{e.type.toUpperCase()}</div>
-													<div className="col-9">
+												return <div key={e.id || Math.random()} className="row form-group">
+													<div className="col-10">
 														{e.type === 'p' ? <textarea className="form-control" required={true} defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Текст"/> : null }
 														{e.type === 'img' ? <input type="url" className="form-control" required={true} defaultValue={e.src} onChange={(e)=>this.props.news.item.content[idx].src=e.target.value} placeholder="http://domain.com/img.jpg" /> : null }
 														{e.type === 'a' ?
@@ -192,12 +199,12 @@ class Users extends Component {
 														: null }
 													</div>
 													<div className="col-2" style={{textAlign: 'right'}}>
-														<select className="form-control" defaultValue={e.screen} onChange={(e)=>this.props.news.item.content[idx].screen=e.target.value}>
+														<select className="float-left form-control w-75" defaultValue={e.screen} onChange={(e)=>this.props.news.item.content[idx].screen=e.target.value}>
 															<option value="main">Главная</option>
 															<option value="inner">Внутр.</option>
 															<option value="any">Везде</option>
 														</select>
-														<button type="button" className="btn btn-danger btn-sm" onClick={()=>{delete this.props.news.item.content[idx];this.forceUpdate()}}>
+														<button type="button" className="float-right btn btn-danger btn-sm" onClick={()=>this.deleteElement(idx)}>
 															<Icon icon="times"/>
 														</button>
 													</div>
