@@ -151,13 +151,13 @@ class Users extends Component {
 										</div>
 										<div className="col-3">
 											<div className="form-group">
-												<label>Начало</label>
-												<input type="date" name="date_begin" defaultValue={news.date_begin} className="form-control" />
+												<label>Дата публикации</label>
+												<input type="date" name="date_begin" required={true} defaultValue={news.date_begin || (new Date()).toISOString().substr(0,10)} className="form-control" />
 											</div>
 										</div>
 										<div className="col-3">
 											<div className="form-group">
-												<label>Конец</label>
+												<label>Скрыть публикацию</label>
 												<input type="date" name="date_end" defaultValue={news.date_end} className="form-control" />
 											</div>
 										</div>
