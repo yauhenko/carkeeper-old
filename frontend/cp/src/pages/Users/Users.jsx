@@ -5,6 +5,8 @@ import Loader from '../../components/Loader';
 import Icon from '../../components/Icon';
 import Pager from '../../components/Pager';
 import {formToObject} from '../../utils/tools';
+import api from '../../utils/api';
+
 import './Users.css';
 
 @inject("users")
@@ -12,7 +14,9 @@ import './Users.css';
 class Users extends Component {
 
 	state = {
-		editModalOpen: false
+		fcm: null,
+		pushModalOpen: false,
+		editModalOpen: false,
 	};
 
 	componentDidMount() {
@@ -29,8 +33,30 @@ class Users extends Component {
 		this.setState({ editModalOpen: true });
 	};
 
+	closePushModal = () => {
+		this.setState({ pushModalOpen: false });
+	};
+
 	closeEditModal = () => {
 		this.setState({ editModalOpen: false });
+	};
+
+	openPushModal = (fcm) => {
+		this.setState({ fcm, pushModalOpen: true });
+	};
+
+	sendPush = async (e) => {
+		e.preventDefault();
+		try {
+			const form = e.target;
+			const res = await api('admin/users/push', { fcm: this.state.fcm, ...formToObject(form), extra: JSON.parse(form.extra.value) });
+			console.log(res);
+			form.reset();
+			this.closePushModal();
+		} catch (e) {
+			console.error(e);
+			alert(e.message);
+		}
 	};
 
 	update = async (e) => {
@@ -69,17 +95,21 @@ class Users extends Component {
 										<td>{user.email}</td>
 										<td>{user.tel}</td>
 										<td style={{textAlign: 'right'}}>
+											<div className="btn-group">
+											{user.fcm ?
+												<button className="btn btn-sm btn-warning" onClick={() => this.openPushModal(user.fcm)}>
+													<Icon icon="envelope"/>
+												</button>
+												: null }
 											<button className="btn btn-sm btn-primary" onClick={() => this.openEditModal(user.id)}>
 												<Icon icon="edit"/>
 											</button>
-											{admin ? null :
-												<Fragment>
-													&nbsp;
-													<button className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
+											{!admin ?
+												<button className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
 													<Icon icon="times"/>
-													</button>
-												</Fragment>
-											}
+												</button>
+											: null }
+											</div>
 										</td>
 									</tr>
 								)
@@ -121,6 +151,35 @@ class Users extends Component {
 							</form>
 						</Fragment>
 					}
+				</Modal>
+				<Modal styles={{modal:{padding:'0',borderRadius:'5px'}}} open={this.state.pushModalOpen} onClose={this.closePushModal} >
+					<form className="card" style={{ minWidth: '500px' }} onSubmit={this.sendPush}>
+						<div className="card-body">
+							<div className="form-group">
+								<label>Заголовок</label>
+								<input type="text" name="title" required defaultValue="CarKeeper" className="form-control" />
+							</div>
+							<div className="form-group">
+								<label>Сообщение</label>
+								<input type="text" name="body" required defaultValue="" className="form-control" />
+							</div>
+							<div className="form-group">
+								<label>Extra (JSON)</label>
+								<textarea name="extra" defaultValue="{}" className="form-control" />
+							</div>
+						</div>
+						<div className="card-footer">
+							<button type="submit" className="btn btn-success">
+								<Icon icon="check"/>
+								Отправить
+							</button>
+							&nbsp;
+							<button type="button" className="btn" onClick={this.closePushModal}>
+								<Icon icon="times"/>
+								Закрыть
+							</button>
+						</div>
+					</form>
 				</Modal>
 			</Fragment>
 		);
