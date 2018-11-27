@@ -38,7 +38,7 @@ class Auth extends ApiController {
 		$Users = new Users;
 
 		/** @var User $user */
-		$user = $Users->findOneBy('tel', $this->params->tel);
+		$user = $Users->findOneBy('tel', $this->params->tel, true);
 
 		if(!$user)
 			throw new \Exception('Пользователь не существует', 400);
@@ -173,10 +173,10 @@ class Auth extends ApiController {
 
 		if($this->params->email) {
 			/** @var User $user */
-			$user = Users::factory()->findOneBy('email', $this->params->email);
+			$user = Users::factory()->findOneBy('email', $this->params->email, true);
 		} elseif($this->params->tel) {
 			/** @var User $user */
-			$user = Users::factory()->findOneBy('tel', $this->params->tel);
+			$user = Users::factory()->findOneBy('tel', $this->params->tel, true);
 		} else {
 			throw new \Exception('Укажите E-mail или телефон');
 		}
