@@ -3,8 +3,8 @@ import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import Modal from "react-responsive-modal";
 import Icon from "./Icon";
-import api, {cdn} from "../utils/api";
 import PropTypes from "prop-types";
+import api, {cdn} from "../utils/api";
 
 class Image extends Component {
 
@@ -12,16 +12,17 @@ class Image extends Component {
 		onUpload: PropTypes.func.isRequired
 	};
 
-	state = {
+	static defaultState = {
 		url: null,
 		dataUrl: null,
-		modalOpen: false
+		modalOpen: false,
+		filename: false
 	};
 
-	filename = null;
+	state = Image.defaultState;
 
 	closeModal = () => {
-		this.setState({ modalOpen: false });
+		this.setState(Image.defaultState);
 	};
 
 	openModal = () => {
@@ -30,18 +31,14 @@ class Image extends Component {
 
 	selectFile = (event) => {
 		const reader = new FileReader();
-		reader.onload = (event) => {
-			this.setState({ dataUrl: event.target.result })
-		};
 		const file = event.target.files[0];
-		console.log(file);
+		reader.onload = (event) => this.setState({ dataUrl: event.target.result, filename: file.name });
 		reader.readAsDataURL(file);
-		this.filename = file.name;
 	};
 
 	upload = async () => {
 		const data = this.refs.cropper.getCroppedCanvas().toDataURL().split(',')[1];
-		let res = await api('uploads/upload', { data, name: this.filename });
+		let res = await api('uploads/upload', { data, name: this.state.filename });
 		this.closeModal();
 		res.url = cdn + res.path;
 		this.props.onUpload(res);
@@ -57,21 +54,20 @@ class Image extends Component {
 					</div>
 					{this.state.dataUrl ?
 						<Fragment>
-						<Cropper ref="cropper" src={this.state.dataUrl} guides={true}
-								 aspectRatio={1} style={{height: 400, width: 500}} />
-						<hr/>
-						<button type="button" className="btn btn-success" onClick={this.upload}>
-							<Icon icon="save"/>
-							Сохранить
-						</button>
-						&nbsp;
-						<button type="button" className="btn" onClick={this.closeModal}>
-							<Icon icon="times"/>
-							Закрыть
-						</button>
+							<Cropper ref="cropper" src={this.state.dataUrl} guides={true}
+								aspectRatio={16/9} style={{ width: 500, height: 500 }} />
+							<hr/>
+							<button type="button" className="btn btn-success" onClick={this.upload}>
+								<Icon icon="save"/>
+								Сохранить
+							</button>
+							&nbsp;
+							<button type="button" className="btn" onClick={this.closeModal}>
+								<Icon icon="times"/>
+								Закрыть
+							</button>
 						</Fragment>
 					: null}
-
 				</Modal>
 			</Fragment>
 		);
