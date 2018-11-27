@@ -3,8 +3,8 @@ import {NetInfo} from 'react-native';
 import {Root} from 'native-base';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
-import Login from "./screens/Login";
-import Registration from "./screens/Registration";
+import Login from "./screens/User/Login";
+import Registration from "./screens/User/Registration";
 import User from "./store/User";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage/Garage";
@@ -20,6 +20,7 @@ import Logger from "./modules/Logger";
 import Notifications from "./modules/Notifications";
 import Notes from "./screens/Garage/Notes";
 import List from "./screens/News/List";
+import Restore from "./screens/User/Restore";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -38,7 +39,8 @@ const Navigator = createDrawerNavigator({
 
 const Auth = createStackNavigator({
     Login: {screen: Login, path: 'login'},
-    Registration: {screen: Registration, path: 'registration'}
+    Registration: {screen: Registration, path: 'registration'},
+    Restore: {screen: Restore, path: 'restore'},
   }, {
     headerMode: "none"
   }
@@ -65,7 +67,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    return(<ConnectError>{User.ready ? (User.auth ? <Root><Navigator/></Root>: <Auth/>) : null}</ConnectError>)
+    return(User.ready ? (User.auth ? <Root><ConnectError/><Navigator/></Root>: <Auth/>) : null)
 
   }
 }

@@ -2,13 +2,13 @@ import React from 'react';
 import {AsyncStorage, StyleSheet, Text, StatusBar, RefreshControl, Image, View} from 'react-native';
 import {observer} from 'mobx-react';
 import { Container, Button, Content, Form, Item, Label } from 'native-base';
-import User from "../store/User";
+import User from "../../store/User";
 import { observable, action} from 'mobx';
-import styles from "../styles";
-import Logo from "../assets/images/logo.png";
-import Logger from "../modules/Logger";
-import Notification from "../components/Notification";
-import Input from "../components/Form/Input";
+import styles from "../../styles";
+import Logo from "../../assets/images/logo.png";
+import Logger from "../../modules/Logger";
+import Notification from "../../components/Notification";
+import Input from "../../components/Form/Input";
 
 @observer
 export default class Login extends React.Component {
@@ -62,7 +62,11 @@ export default class Login extends React.Component {
 
             <Button disabled={this.loading} onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={{color: "#000"}}>Войти</Text></Button>
           </Form>
-          <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Регистрация</Text>
+
+          <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
+            <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Registration')}>Регистрация</Text>
+            <Text style={customStyles.link} onPress={()=>this.props.navigation.navigate('Restore')}>Забыли пароль?</Text>
+          </View>
         </Content>
       </Container>
     );

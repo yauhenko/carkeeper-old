@@ -11,7 +11,6 @@ class User {
   }
 
   @observable auth = false;
-  @observable loading = false; // Удалить?!
   @observable token = null;
   @observable ready = false;
   @observable fcm = null;
@@ -56,9 +55,7 @@ class User {
   @action logout = async () => {
     try {
       await Api('account/logout');
-    } catch (e) {
-      // Скромно молчим
-    }
+    } catch (e) {/* Скромно молчим */}
 
     this.token = null;
     this.auth = false;
@@ -104,6 +101,21 @@ class User {
   };
 
 
+  /**
+   * Восстановление пароля пользователя
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action recovery = async (data = {}) => {
+    return await Api('account/recovery', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
+  };
+
+
+  /**
+   * Пинг
+   * @param silent
+   * @returns {Promise<*>}
+   */
   @action ping = async (silent = false) => {
     if(!App.connect) return false;
     if(!this.token) return false;
