@@ -12,6 +12,7 @@ use Framework\MQ\Task;
 use Framework\Security\Password;
 use Framework\Validation\Validator;
 use Tasks\Mail;
+use Tasks\Push;
 
 /**
  * Class Auth
@@ -266,6 +267,16 @@ class Auth extends ApiController {
 		$token = Sessions::start($user, $ip, $ttl);
 
 		$ci->set($recovery['ticket'], $token, 3600);
+
+		Task::create([Push::class], [
+			'fcm' => $user->fcm,
+			'title' => 'CarKeeper',
+			'body' => 'Доступ к приложению восстановлен',
+			'extra' => [
+				'type' => 'recovery',
+				'token' => $token
+			]
+		])->start();
 
 		return [
 			'token' => $token
