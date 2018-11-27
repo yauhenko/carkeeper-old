@@ -15,6 +15,7 @@ class News extends ApiController {
 		$this->authAdmin();
 		return Pager::create()
 			->sql('SELECT ** FROM news')
+			->order('ORDER BY date_begin DESC, id DESC')
 			->page($this->params->page ?: 1)
 			->limit($this->params->limit ?: 50)
 			->exec()
