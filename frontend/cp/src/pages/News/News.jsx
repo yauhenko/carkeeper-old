@@ -77,6 +77,13 @@ class Users extends Component {
 		this.forceUpdate();
 	}
 
+	moveElement(idxFrom, idxTo) {
+		const itemFrom = Object.assign({}, this.props.news.item.content[idxFrom]);
+		const itemTo = Object.assign({}, this.props.news.item.content[idxTo]);
+		this.props.news.item.content[idxFrom] = itemTo;
+		this.props.news.item.content[idxTo] = itemFrom;
+	}
+
 	render() {
 		const news = this.props.news.item;
 		return (
@@ -166,15 +173,19 @@ class Users extends Component {
 									<div className="form-group">
 										<label>Контент</label>
 										<div className="form-group">
-											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'p', text: '', screen: 'any'})}>
-												<Icon icon="font"/>
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'h', text: '', screen: 'inner'})}>
+												<Icon icon="header"/>
 											</button>
 											&nbsp;
-											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'img', src: '', screen: 'any'})}>
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'p', text: '', screen: 'inner'})}>
+												<Icon icon="paragraph"/>
+											</button>
+											&nbsp;
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'img', src: '', screen: 'inner'})}>
 												<Icon icon="picture-o"/>
 											</button>
 											&nbsp;
-											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'a', href: '', screen: 'any'})}>
+											<button type="button" className="btn btn-sm" onClick={()=>this.addElement({ type: 'a', href: '', screen: 'inner'})}>
 												<Icon icon="link"/>
 											</button>
 
@@ -184,7 +195,15 @@ class Users extends Component {
 											{news.content.map((e, idx) => {
 												if(e === null) return null;
 												return <div key={e.id || Math.random()} className="row form-group">
-													<div className="col-10">
+													<div className="col-1">
+														<span className="badge badge-info">{{
+															p: 'Текст',
+															h: 'Заголовок',
+															img: 'Картинка',
+															a: 'Ссылка'
+														}[e.type]}</span>
+													</div>
+													<div className="col-8">
 														{e.type === 'p' ? <textarea className="form-control" required={true} defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Текст"/> : null }
 														{e.type === 'img' ? <input type="url" className="form-control" required={true} defaultValue={e.src} onChange={(e)=>this.props.news.item.content[idx].src=e.target.value} placeholder="http://domain.com/img.jpg" /> : null }
 														{e.type === 'a' ?
@@ -197,16 +216,40 @@ class Users extends Component {
 																</div>
 															</div>
 														: null }
+														{e.type === 'h' ?
+															<div className="row">
+																<div className="col-2">
+																	<select className="form-control" defaultValue={e.size || 2} onChange={(e)=>this.props.news.item.content[idx].size=e.target.value}>
+																		<option value={1}>H1</option>
+																		<option value={2}>H2</option>
+																		<option value={3}>H3</option>
+																		<option value={4}>H4</option>
+																	</select>
+																</div>
+																<div className="col-10">
+																	<input type="text" className="form-control" defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Заголовок" />
+																</div>
+															</div>
+															: null }
 													</div>
-													<div className="col-2" style={{textAlign: 'right'}}>
-														<select className="float-left form-control w-75" defaultValue={e.screen} onChange={(e)=>this.props.news.item.content[idx].screen=e.target.value}>
+													<div className="col-3" style={{textAlign: 'right'}}>
+														<select className="form-control float-left w-50" defaultValue={e.screen} onChange={(e)=>this.props.news.item.content[idx].screen=e.target.value}>
 															<option value="main">Главная</option>
 															<option value="inner">Внутр.</option>
 															<option value="any">Везде</option>
 														</select>
-														<button type="button" className="float-right btn btn-danger btn-sm" onClick={()=>this.deleteElement(idx)}>
-															<Icon icon="times"/>
-														</button>
+														<div className="btn-group float-right">
+															<button disabled={idx >= news.content.length - 1} type="button" className="btn btn-primary btn-sm" onClick={()=>this.moveElement(idx, idx + 1)}>
+																<Icon icon="arrow-down"/>
+															</button>
+															<button disabled={!idx} type="button" className="btn btn-primary btn-sm" onClick={()=>this.moveElement(idx, idx - 1)}>
+																<Icon icon="arrow-up"/>
+															</button>
+
+															<button type="button" className="btn btn-danger btn-sm" onClick={()=>this.deleteElement(idx)}>
+																<Icon icon="times"/>
+															</button>
+														</div>
 													</div>
 
 
