@@ -22,7 +22,6 @@ class News extends ApiController {
 			->getMetaData(Pager::OPTION_OBJECT_REFS);
 	}
 
-
 	/**
 	 * @route /admin/news/get
 	 */
