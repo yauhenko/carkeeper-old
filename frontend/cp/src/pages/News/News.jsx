@@ -1,12 +1,14 @@
 import React, {Component, Fragment} from 'react';
 import {observer, inject} from 'mobx-react';
 import Modal from 'react-responsive-modal';
+
 import Loader from '../../components/Loader';
 import Icon from '../../components/Icon';
 import Pager from '../../components/Pager';
 import api from '../../utils/api';
 
 import './News.css';
+import Image from "../../components/Image";
 
 @inject("news")
 @observer
@@ -205,7 +207,12 @@ class Users extends Component {
 													</div>
 													<div className="col-8">
 														{e.type === 'p' ? <textarea className="form-control" required={true} defaultValue={e.text} onChange={(e)=>this.props.news.item.content[idx].text=e.target.value} placeholder="Текст"/> : null }
-														{e.type === 'img' ? <input type="url" className="form-control" required={true} defaultValue={e.src} onChange={(e)=>this.props.news.item.content[idx].src=e.target.value} placeholder="http://domain.com/img.jpg" /> : null }
+														{e.type === 'img' ?
+															<div className="input-group">
+																<input ref={`image-${e.id}`} type="url" className="form-control" required={true} defaultValue={e.src} onChange={(e)=>this.props.news.item.content[idx].src=e.target.value} placeholder="http://domain.com/img.jpg" />
+																<Image onUpload={(res)=>this.refs[`image-${e.id}`].value=this.props.news.item.content[idx].src=res.url}/>
+															</div>
+														: null }
 														{e.type === 'a' ?
 															<div className="row">
 																<div className="col-6">
@@ -245,7 +252,6 @@ class Users extends Component {
 															<button disabled={!idx} type="button" className="btn btn-primary btn-sm" onClick={()=>this.moveElement(idx, idx - 1)}>
 																<Icon icon="arrow-up"/>
 															</button>
-
 															<button type="button" className="btn btn-danger btn-sm" onClick={()=>this.deleteElement(idx)}>
 																<Icon icon="times"/>
 															</button>

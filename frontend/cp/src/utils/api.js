@@ -21,3 +21,5 @@ export default function api(method, args = {}, silent = false) {
 		});
 	});
 }
+
+export const cdn = window.location.host.match(/^(localhost|192)/) ? 'http://192.168.1.223:9090' : 'https://cdn.carkeeper.pro';
