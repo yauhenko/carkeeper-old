@@ -2,10 +2,11 @@
 
 namespace Controllers\Admin;
 
-use App\References;
 use Controllers\ApiController;
 use Collections\Users as UsersCollection;
 use Framework\DB\Pager;
+use Framework\MQ\Task;
+use Tasks\Push;
 
 class Users extends ApiController {
 
@@ -59,5 +60,25 @@ class Users extends ApiController {
 			'deleted' => true
 		];
 	}
+
+	/**
+	 * @route /admin/users/push
+	 */
+	public function push(): array {
+		$this->authAdmin();
+
+		$task = Task::create([Push::class], [
+			'fcm' => $this->params->fcm,
+			'title' => $this->params->title,
+			'body' => $this->params->body,
+			'extra' => $this->params->extra
+		])->start();
+
+		return [
+			'queued' => true,
+			'task' => $task->id
+		];
+	}
+
 
 }
