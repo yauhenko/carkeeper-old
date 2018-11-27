@@ -1,13 +1,13 @@
 import React from 'react';
 import {AsyncStorage, Image, RefreshControl, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {observer} from 'mobx-react';
-import { Container, Button, Content, Form, Item, Label, Segment } from 'native-base';
-import UserStore from "../store/User";
+import { Container, Button, Content} from 'native-base';
+import UserStore from "../../store/User";
 import { observable, action} from 'mobx';
-import styles from "../styles";
-import Logo from "../assets/images/logo.png";
-import Notification from "../components/Notification";
-import Input from "../components/Form/Input";
+import styles from "../../styles";
+import Logo from "../../assets/images/logo.png";
+import Notification from "../../components/Notification";
+import Input from "../../components/Form/Input";
 
 @observer
 export default class Registration extends React.Component {

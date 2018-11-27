@@ -94,7 +94,7 @@ export default class List extends React.Component {
               </Right>
             </Header>
 
-            <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getList()}}/>} contentContainerStyle={styles.container}>
+            <Content contentContainerStyle={styles.container}>
                   <View>
                     <View>
                       <Text style={componentStyle.title}>{this.item.title}</Text>

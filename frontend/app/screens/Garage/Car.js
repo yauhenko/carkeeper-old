@@ -193,7 +193,7 @@ export default class Car extends React.Component {
             </Header>
 
             <Content>
-              <Input value={this.odoValue} onChange={value => {this.odoValue = value}} keyboardType={"numeric"} title={"Показания одометра"}/>
+              <Input value={this.odoValue} onChange={value => {this.odoValue = value}} keyboardType={"numeric"} title={"Пробег"}/>
             </Content>
           </Container>
         </Modal>}

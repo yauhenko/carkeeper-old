@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, Text} from 'react-native';
+import {View, Text, Modal, StyleSheet} from 'react-native';
 import { Spinner } from 'native-base';
 import App from "../store/App";
 import {observer} from 'mobx-react';
@@ -8,19 +8,23 @@ import {observer} from 'mobx-react';
 export default class ConnectError extends Component {
   render () {
     return (
-      <React.Fragment>
-        {this.props.children}
-
-        {App.connect
-          ?
-          null
-          :
-          <View style={{position: "absolute", display: "flex", alignItems: "center", justifyContent: "center", left: 0, right: 0, top: 0, bottom: 0, zIndex: 100, backgroundColor: "rgba(241, 63, 63, 0.8)"}}>
-            <Spinner color='white'/>
-            <Text style={{color: "#fff", textAlign: "center"}}>Нет подключения к интернету</Text>
-          </View>
-        }
-      </React.Fragment>
+      <Modal animationType="none" transparent={true} visible={!App.connect} onRequestClose={() => {}}>
+        <View style={componentStyle.overlay}>
+          <Spinner color='white'/>
+          <Text style={{color: "#fff", textAlign: "center"}}>Нет подключения к интернету</Text>
+        </View>
+      </Modal>
     )
   }
 }
+
+const componentStyle = StyleSheet.create({
+  overlay: {
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(241, 63, 63, 0.8)",
+  }
+});

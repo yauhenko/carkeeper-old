@@ -16,9 +16,11 @@ export default async (path, params = {}) => {
 
     let data = await result.json();
 
-    if (data.error) {
-      if(data.error.code === 403) {User.logout()}
+  console.log({["response: " + path]: data});
 
+
+  if (data.error) {
+      if(data.error.code === 403) {User.logout()}
       const error = data.error.message || data.error.sql || "Внутренняя ошибка";
       Notification(error);
       Logger.error("Ошибка от сервера", data.error);
