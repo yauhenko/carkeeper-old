@@ -6,9 +6,12 @@ use App\Tools;
 use App\Sessions;
 use Entities\User;
 use Collections\Users;
+use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
+use Framework\MQ\Task;
 use Framework\Security\Password;
 use Framework\Validation\Validator;
+use Tasks\Mail;
 
 /**
  * Class Auth
@@ -161,6 +164,113 @@ class Auth extends ApiController {
 	public function ping() {
 		$this->auth();
 		return 'pong';
+	}
+
+	/**
+	 * @route /account/recovery
+	 */
+	public function recovery() {
+
+		if($this->params->email) {
+			/** @var User $user */
+			$user = Users::factory()->findOneBy('email', $this->params->email);
+		} elseif($this->params->tel) {
+			/** @var User $user */
+			$user = Users::factory()->findOneBy('tel', $this->params->tel);
+		} else {
+			throw new \Exception('Укажите E-mail или телефон');
+		}
+
+		if(!$user)
+			throw new \Exception('Пользователь не существует', 400);
+
+		$ticket = Password::getMedium(64);
+		$secret = Password::getMedium(64);
+
+		$ip = $this->params->noip ? null : $this->req->getClientIp();
+		$ttl = $this->params->ttl ?: 3600;
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+
+		$ci->set($secret, [
+			'user' => $user->id,
+			'ticket' => $ticket,
+			'ip' => $ip,
+			'ttl' => $ttl,
+			'fcm' => $this->params->fcm
+		], 3600);
+
+		$ci->set($ticket, 'sent', 3600);
+
+		$link = "https://carkeeper.pro/recovery?secret={$secret}";
+
+		Task::create([Mail::class, 'send'], [
+			'to' => "{$user->name} <{$user->email}>",
+			'subject' => 'Восстановление доступа',
+			'body' => "Перейдите по ссылке: <a href='{$link}'>{$link}</a>"
+		])->start();
+
+		return [
+			'ticket' => $ticket
+		];
+
+	}
+
+	/**
+	 * @route /account/recovery/ticket
+	 */
+	public function recoveryTicket() {
+
+		$this->validate([
+			'ticket' => ['required' => true, 'type' => 'string', 'length' => [64, 64]]
+		]);
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+
+		if(!$token = $ci->get($this->params->ticket))
+			throw new \Exception('Ticket invalid or expired', 400);
+
+		if($token === 'sent') return ['status' => 'wait'];
+
+		return [
+			'token' => $token
+		];
+
+	}
+
+	/**
+	 * @route /account/recovery/secret
+	 */
+	public function recoverySecret() {
+
+		$this->validate([
+			'secret' => ['required' => true, 'type' => 'string', 'length' => [64, 64]]
+		]);
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+
+		if(!$recovery = $ci->get($this->params->secret))
+			throw new \Exception('Secret invalid or expired', 400);
+
+		$ip = $this->params->noip ? null : $this->req->getClientIp();
+		$ttl = $this->params->ttl ?: 3600;
+
+		/** @var User $user */
+		$user = Users::factory()->get($recovery['user']);
+		$user->fcm = $recovery['fcm'];
+		$user->update();
+
+		$token = Sessions::start($user, $ip, $ttl);
+
+		$ci->set($recovery['ticket'], $token, 3600);
+
+		return [
+			'token' => $token
+		];
+
 	}
 
 }
