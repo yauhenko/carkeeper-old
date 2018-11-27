@@ -208,7 +208,7 @@ class Auth extends ApiController {
 		Task::create([Mail::class, 'send'], [
 			'to' => "{$user->name} <{$user->email}>",
 			'subject' => 'Восстановление доступа',
-			'body' => "Перейдите по ссылке: <a href='{$link}'>{$link}</a>"
+			'html' => "Перейдите по ссылке: <a href='{$link}'>{$link}</a>"
 		])->start();
 
 		return [
