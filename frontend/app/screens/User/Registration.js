@@ -56,7 +56,7 @@ export default class Registration extends React.Component {
           <View style={{marginRight: 20, paddingBottom: 15}}>
             <Input onChange={text => {this.change('name', text)}} value={this.name} light={true} title="Имя"/>
             <Input onChange={text => {this.change('tel', text)}} value={this.tel} keyboardType="numeric" light={true} title="Телефон"/>
-            <Input onChange={text => {this.change('email', text)}} value={this.email} light={true} title="E-mail"/>
+            <Input onChange={text => {this.change('email', text)}} keyboardType="email-address" value={this.email} light={true} title="E-mail"/>
             <Input onChange={text => {this.change('password', text)}} value={this.password} secureTextEntry light={true} title="Пароль"/>
           </View>
 

@@ -23,7 +23,7 @@ class Notifications {
         .android.setChannelId('test-channel');
 
       firebase.notifications().displayNotification(notification);
-      firebase.notifications().onNotificationOpened(()=>{
+      firebase.notifications().onNotificationOpened(() => {
         firebase.notifications().removeDeliveredNotification(notification._notificationId);
       })
     });

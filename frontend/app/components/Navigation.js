@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component, Fragment} from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {Container, Content, Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
 import User from "../store/User";
@@ -41,8 +41,8 @@ export default class Navigation extends Component {
     let cars = Cars.cars;
 
     return (
-      <Container style={{backgroundColor: "#f5f5f5"}}>
-        <Content>
+      <View style={{justifyContent: "space-between", flex: 1}}>
+        <View>
           <View style={styles.top}>
             <View style={{marginRight: 15}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
@@ -71,14 +71,20 @@ export default class Navigation extends Component {
                     <Icon style={{color: "#f13f3f"}} name={route.icon}/>
                   </Left>
                   <Body>
-                    <Text style={styles.link}>{route.title}</Text>
+                  <Text style={styles.link}>{route.title}</Text>
                   </Body>
                 </ListItem>
               )
             })}
           </List>
-        </Content>
-      </Container>
+        </View>
+
+        <View style={styles.callback}>
+          <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Support")}}>
+            <Text style={styles.callbackLink}>Обратная связь</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     )
   }
 }
@@ -102,5 +108,15 @@ const styles = StyleSheet.create({
   listItem : {
     height: 60,
     alignItems: "flex-end"
+  },
+  callback: {
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingBottom: 15
+  },
+  callbackLink: {
+    textDecorationLine: "underline",
+    color: "#f13f3f",
+    fontSize: 14
   }
 });

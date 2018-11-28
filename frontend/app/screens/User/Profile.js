@@ -1,17 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, RefreshControl, View, Alert} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Label, Input, Form} from 'native-base';
-import styles from "../styles"
-import User from "../store/User";
-import Cropper from "../modules/Cropper";
-import ModalMenu from "../components/ModalMenu";
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Label, Form} from 'native-base';
+import styles from "../../styles"
+import User from "../../store/User";
+import Cropper from "../../modules/Cropper";
+import ModalMenu from "../../components/ModalMenu";
 import {observable, action, toJS} from 'mobx';
-import Cars from "../store/Cars";
-import thumb from "../assets/images/avatar_thumb.png";
-import {cdn} from "../modules/Url";
-import Notification from "../components/Notification";
-
+import Cars from "../../store/Cars";
+import thumb from "../../assets/images/avatar_thumb.png";
+import {cdn} from "../../modules/Url";
+import Notification from "../../components/Notification";
+import Input from "../../components/Form/Input";
 
 @observer
 export default class Profile extends React.Component {
@@ -120,25 +120,10 @@ export default class Profile extends React.Component {
           </View>
 
           <Form>
-            <Item fixedLabel>
-              <Label style={customStyles.label}>Имя:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={value => {this.change("name", value)}} value={user.name || ""} />
-            </Item>
-
-            <Item fixedLabel>
-              <Label style={customStyles.label}>Телефон:</Label>
-              <Input style={customStyles.input} keyboardType="numeric" onChangeText={value => {this.change("tel", value)}} value={String(user.tel || "")} />
-            </Item>
-
-            <Item fixedLabel>
-              <Label style={customStyles.label}>Пароль:</Label>
-              <Input placeholder="Новый пароль" secureTextEntry style={customStyles.input} onChangeText={value => {this.change("password", value)}} value={String(user.password || "")} />
-            </Item>
-
-            <Item fixedLabel>
-              <Label style={customStyles.label}>E-mail:</Label>
-              <Input style={customStyles.input} selectionColor={styles.selectionColor} onChangeText={value => {this.change("email", value)}} value={user.email || ""} />
-            </Item>
+            <Input onChange={value => {this.change("name", value)}} value={user.name || ""}  title="Имя"/>
+            <Input keyboardType="numeric" onChange={value => {this.change("tel", value)}} value={String(user.tel || "")}  title="Телефон"/>
+            <Input secureTextEntry style={customStyles.input} onChange={value => {this.change("password", value)}} value={String(user.password || "")} title="Новый пароль"/>
+            <Input keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
           </Form>
         </Content>
 
@@ -180,11 +165,6 @@ const customStyles = StyleSheet.create({
     marginBottom: 30
   },
 
-  label : {
-    fontSize: 14,
-    marginBottom: 1
-  },
-
   avatar : {
     height: 100,
     width: 100,
@@ -200,10 +180,6 @@ const customStyles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     borderRadius: 50,
-  },
-
-  input: {
-    fontSize: 14
   }
 
 });

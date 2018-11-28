@@ -112,6 +112,15 @@ class User {
 
 
   /**
+   * Отправка сообщения в поддержку
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action feedback = async (data = {}) => {
+    return await Api('feedback', data);
+  };
+
+  /**
    * Пинг
    * @param silent
    * @returns {Promise<*>}

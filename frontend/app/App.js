@@ -9,7 +9,7 @@ import User from "./store/User";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage/Garage";
 import Car from "./screens/Garage/Car";
-import Profile from "./screens/Profile";
+import Profile from "./screens/User/Profile";
 import SplashScreen from 'react-native-splash-screen';
 import Reminders from "./screens/Garage/Reminders";
 import AppStore from "./store/App";
@@ -21,6 +21,7 @@ import Notifications from "./modules/Notifications";
 import Notes from "./screens/Garage/Notes";
 import List from "./screens/News/List";
 import Restore from "./screens/User/Restore";
+import Support from "./screens/User/Support";
 
 const Navigator = createDrawerNavigator({
     Garage: {screen: Garage},
@@ -30,7 +31,8 @@ const Navigator = createDrawerNavigator({
     Profile: {screen: Profile},
     Reminders: {screen: Reminders},
     Notes: {screen: Notes},
-    News: {screen: List}
+    News: {screen: List},
+    Support: {screen: Support},
 }, {
   initialRouteName: 'Garage',
   headerMode: 'none',

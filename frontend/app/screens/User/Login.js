@@ -56,7 +56,7 @@ export default class Login extends React.Component {
 
           <Form>
             <View style={{paddingRight: 17}}>
-              <Input onChange={text => {this.change('tel', text)}} value={this.tel} light={true} title="Телефон"/>
+              <Input keyboardType="numeric" onChange={text => {this.change('tel', text)}} value={this.tel} light={true} title="Телефон"/>
               <Input onChange={text => {this.change('password', text)}} value={this.password} secureTextEntry light={true} title="Пароль"/>
             </View>
 

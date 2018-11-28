@@ -5,7 +5,7 @@ import { Container, Content} from 'native-base';
 import styles from "../styles";
 
 @observer
-export default class Preview extends React.Component {
+export default class Rm_Preview extends React.Component {
   render() {
     return (
       <Container>

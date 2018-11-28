@@ -125,7 +125,7 @@ const componentStyle = StyleSheet.create({
     fontSize: 16,
     padding: 17,
     fontWeight: "bold",
-    lineHeight: 24
+    lineHeight: 22
   },
 
   footer : {

@@ -1,8 +1,8 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import styles from "../styles";
-import {Badge, Button, Icon, Text} from "native-base";
-import {observable, action} from 'mobx';
+import {Button, Icon} from "native-base";
+import {action} from 'mobx';
 
 @observer
 export default class CarMenu extends React.Component {
@@ -24,6 +24,10 @@ export default class CarMenu extends React.Component {
         <Button vertical style={this.activeStyle("Journal")} onPress={()=>this.props.navigation.navigate("Journal", {car: this.props.car})} active={this.activeButton("Journal")}>
           <Icon style={styles.footerBadge} name={"clipboard"} />
         </Button>
+
+        {/*<Button vertical style={this.activeStyle("Journal")} onPress={()=>this.props.navigation.navigate("Journal", {car: this.props.car})} active={this.activeButton("Journal")}>*/}
+          {/*<Icon style={styles.footerBadge} name={"build"} />*/}
+        {/*</Button>*/}
 
         <Button vertical style={this.activeStyle("Notes")} onPress={()=>this.props.navigation.navigate("Notes", {car: this.props.car})} active={this.activeButton("Notes")}>
           <Icon style={styles.footerBadge} name={"list-box"} />

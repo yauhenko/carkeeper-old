@@ -79,7 +79,7 @@ export default class Restore extends React.Component {
               :
               <Form>
                 <View style={{paddingRight: 17}}>
-                  <Input onChange={value => {this.change(value)}} value={this.email} light={true} title="E-mail"/>
+                  <Input keyboardType="email-address" onChange={value => {this.change(value)}} value={this.email} light={true} title="E-mail"/>
                 </View>
                 <Button disabled={this.loading} onPress={this.submitHandler} style={customStyles.primaryButton} block><Text style={{color: "#000"}}>Восстановить пароль</Text></Button>
               </Form>

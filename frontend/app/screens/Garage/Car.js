@@ -12,6 +12,7 @@ import Notification from "../../components/Notification";
 import {cdn} from "../../modules/Url";
 import AddOrEditCar from "./AddOrEditCar";
 import Input from "../../components/Form/Input";
+import {number_format} from "../../modules/Utils";
 
 @observer
 export default class Car extends React.Component {
@@ -120,7 +121,7 @@ export default class Car extends React.Component {
                 <View style={{flex: 1}}>
                   {car.odo
                     ?
-                    <Text style={componentStyle.odo_value}>Пробег: <Text style={{fontSize: 18}}>{car.odo}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                    <Text style={componentStyle.odo_value}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
                     :
                     <Text style={componentStyle.odo_value}>Пробег не указан</Text>
                   }

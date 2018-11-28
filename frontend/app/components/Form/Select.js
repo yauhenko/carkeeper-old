@@ -9,8 +9,13 @@ export default class Select extends Component {
   @action open = () => {
     if(this.props.disabled) return;
 
-    ActionSheet.show(
-      {options: this.props.buttons, title: this.props.actionName},
+    const options = this.props.buttons.map(item => {
+      item.icon = (this.props.value === item.id) ? "radio-button-on" : "radio-button-off";
+      return item;
+    });
+
+    ActionSheet.show (
+      {options: options, title: this.props.actionName},
       selected => {
         if(selected !== undefined) {
           this.selected = this.props.buttons[selected];
@@ -20,7 +25,7 @@ export default class Select extends Component {
     )
   };
 
-  @action getName = (id) => {
+  @action getName = id => {
     const elem = this.props.buttons.find((elem)=>{return elem.id === id});
     return elem ? elem.text : "";
   };
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   },
 
   disabled : {
-    color: "#ccc"
+    color: "#d6d7da"
   },
 
   icon: {
