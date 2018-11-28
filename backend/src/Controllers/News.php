@@ -12,7 +12,7 @@ class News extends ApiController {
 	 */
 	public function index(): array {
 		$res = Pager::create()
-			->sql('SELECT ** FROM news WHERE published = 1 AND (date_begin IS NULL OR date_begin >= NOW()) AND (date_end IS NULL OR date_end <= NOW())')
+			->sql('SELECT ** FROM news WHERE published = 1 AND (date_begin IS NULL OR date_begin <= NOW()) AND (date_end IS NULL OR date_end >= NOW())')
 			->fields(['id', 'title', 'content', 'channel', 'date_begin', 'date_end', 'pinned'])
 			->order('ORDER BY pinned = 1 DESC, id DESC')
 			->page($this->params->page ?: 1)
