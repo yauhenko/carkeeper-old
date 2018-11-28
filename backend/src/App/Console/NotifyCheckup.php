@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Tools;
+use Collections\Users;
 use Framework\MQ\Task;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
@@ -29,7 +30,7 @@ class NotifyCheckup extends Command {
 		$db = $di->db;
 
 		$sql = 'SELECT
-		
+			u.id,
 			u.name, 
 			u.fcm,
 			u.email,
@@ -54,17 +55,19 @@ class NotifyCheckup extends Command {
 		foreach ($list as $item) {
 
 			$msg = "Через {$item['days']} " . Tools::plural($item['days'], ',день,дня,дней') . " истекает срок техосмотра";
-			if($msg === 30) $msg = "Через месяц истекает срок техосмотра";
-			elseif($msg === 14) $msg = "Через две недели истекает срок техосмотра";
-			elseif($msg === 7) $msg = "Через неделю истекает срок техосмотра";
-			elseif($msg === 2) $msg = "Послезавтра истекает срок техосмотра";
-			elseif($msg === 1) $msg = "Завтра истекает срок техосмотра";
-			elseif($msg === 0) $msg = "Сегодня истекает срок техосмотра";
-			elseif($msg < 0) $msg = "Истек срок техосмотра";
+			if($item['days'] === 30) $msg = "Через месяц истекает срок техосмотра";
+			elseif($item['days'] === 14) $msg = "Через две недели истекает срок техосмотра";
+			elseif($item['days'] === 7) $msg = "Через неделю истекает срок техосмотра";
+			elseif($item['days'] === 2) $msg = "Послезавтра истекает срок техосмотра";
+			elseif($item['days'] === 1) $msg = "Завтра истекает срок техосмотра";
+			elseif($item['days'] === 0) $msg = "Сегодня истекает срок техосмотра";
+			elseif($item['days'] < 0) $msg = "Истек срок техосмотра";
 
 			if($item['email']) {
-				Task::create([Mail::class, 'send'], [
+				Task::create([Mail::class, 'sendTpl'], [
+					'tpl' => 'mail/simple.twig',
 					'to' => $item['email'],
+					'user' => Users::factory()->get($item['id']),
 					'subject' => "Необходимо пройти техосмотр",
 					'html' => "<p>{$msg} вашего автомобиля <b>{$item['car']}</b></p>"
 				])->start();

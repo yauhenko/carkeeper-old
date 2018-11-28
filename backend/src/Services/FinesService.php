@@ -5,13 +5,16 @@ namespace Services;
 use App\Tools;
 use Collections\Cars;
 use Collections\Fines;
+use Collections\Users;
 use Entities\Car;
 use Entities\Fine;
+use Entities\User;
 use Framework\DB\Client as DB;
 use Framework\MQ\Task;
 use Framework\Patterns\DI;
 use Framework\Utils\Time;
 use GuzzleHttp\Client as HttpClient;
+use Tasks\Mail;
 use Tasks\Push;
 
 class FinesService {
@@ -85,11 +88,24 @@ class FinesService {
 			])['cnt'];
 
 			if($cnt > 0) {
+
+				/** @var User $user */
+				$user = Users::factory()->get($car->user);
+
+				Task::create([Mail::class, 'sendTpl'], [
+					'tpl' => 'mail/simple.twig',
+					'to' => $user->email,
+					'user' => $user,
+					'subject' => $new ? 'Новый штраф!' : 'Любите быструю езду?',
+					'html' => '<p>Извольте оплатить <b>' . $cnt . ' ' . Tools::plural($cnt, 'штраф,,а,ов') . '</b>' . ($sum ? ' на <b>' . $sum . ' руб</b>' : '') . '</p>',
+				])->start();
+
 				Task::create(Push::class, [
 					'user' => $car->user,
 					'title' => $new ? 'Новый штраф!' : 'Любите быструю езду?',
 					'message' => 'Извольте оплатить ' . $cnt . ' ' . Tools::plural($cnt, 'штраф,,а,ов') . ($sum ? ' на ' . $sum . ' руб' : ''),
 				])->start();
+
 			}
 
 			finish:

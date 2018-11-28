@@ -1,0 +1,8 @@
+{% extends 'mail/template.twig' %}
+
+{% block content %}
+
+	<p>Отправитель: <b>{{ user.name }}</b> ({{ user.tel }}, {{ user.email }})</p>
+	<p>{{ message }}</p>
+
+{% endblock %}

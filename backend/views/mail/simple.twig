@@ -1,0 +1,12 @@
+{% extends 'mail/template.twig' %}
+
+{% block content %}
+
+	{% if user %}
+	<p>Здравствуйте, <b>{{ user.name }}</b>!</p>
+	{% endif %}
+
+	{% if html %}{{ html|raw }}{% endif %}
+	{% if text %}<p>{{ text }}</p>{% endif %}
+
+{% endblock %}

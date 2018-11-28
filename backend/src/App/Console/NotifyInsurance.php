@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Tools;
+use Collections\Users;
 use Framework\DB\Client;
 use Framework\MQ\Task;
 use Framework\Patterns\DI;
@@ -30,6 +31,7 @@ class NotifyInsurance extends Command {
 
 		$sql = 'SELECT
 		
+			u.id,
 			u.name, 
 			u.fcm,
 			u.email,
@@ -57,17 +59,19 @@ class NotifyInsurance extends Command {
 			$type = $item['type'] === 'casco' ? ' КАСКО' : '';
 
 			$msg = "Через {$item['days']} " . Tools::plural($item['days'], ',день,дня,дней') . " истекает страховка";
-			if($msg === 30) $msg = "Через месяц истекает страховка";
-			elseif($msg === 14) $msg = "Через две недели истекает страховка";
-			elseif($msg === 7) $msg = "Через неделю истекает страховка";
-			elseif($msg === 2) $msg = "Послезавтра истекает страховка";
-			elseif($msg === 1) $msg = "Завтра истекает страховка";
-			elseif($msg === 0) $msg = "Сегодня истекает страховка";
-			elseif($msg < 0) $msg = "Истекла страховка";
+			if($item['days'] === 30) $msg = "Через месяц истекает страховка";
+			elseif($item['days'] === 14) $msg = "Через две недели истекает страховка";
+			elseif($item['days'] === 7) $msg = "Через неделю истекает страховка";
+			elseif($item['days'] === 2) $msg = "Послезавтра истекает страховка";
+			elseif($item['days'] === 1) $msg = "Завтра истекает страховка";
+			elseif($item['days'] === 0) $msg = "Сегодня истекает страховка";
+			elseif($item['days'] < 0) $msg = "Истекла страховка";
 
 			if($item['email']) {
-				Task::create([Mail::class, 'send'], [
+				Task::create([Mail::class, 'sendTpl'], [
+					'tpl' => 'mail/simple.twig',
 					'to' => $item['email'],
+					'user' => Users::factory()->get($item['id']),
 					'subject' => "Необходимо продлить страховку" . $type,
 					'html' => "<p>{$msg}{$type} вашего автомобиля <b>{$item['car']}</b></p>"
 				])->start();

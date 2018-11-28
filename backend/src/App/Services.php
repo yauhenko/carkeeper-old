@@ -65,7 +65,6 @@ class Services {
             $loader = new FilesystemLoader($di->root . '/' . ($di->config->twig->path ?: 'views'));
             $twig = new Environment($loader, (array)$di->config->twig->options ?: []);
             $twig->mergeGlobals([
-                'app', $di->app,
                 'request', $di->request,
                 'routes', $di->routes
             ]);

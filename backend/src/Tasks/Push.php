@@ -13,7 +13,12 @@ class Push extends Handler {
 
 		$user = null;
 
-		if($data['user']) {
+		if(is_object($data['user'])) {
+			/** @var User $user */
+			$user = $data['user'];
+			$data['fcm'] = $user->fcm;
+
+		} elseif (is_numeric($data['user'])) {
 			/** @var User $user */
 			$user = Users::factory()->get($data['user']);
 			$data['fcm'] = $user->fcm;

@@ -206,10 +206,12 @@ class Auth extends ApiController {
 
 		$link = "https://carkeeper.pro/recovery?secret={$secret}";
 
-		Task::create([Mail::class, 'send'], [
+		Task::create([Mail::class, 'sendTpl'], [
+			'tpl' => 'mail/recovery.twig',
 			'to' => "{$user->name} <{$user->email}>",
 			'subject' => 'Восстановление доступа',
-			'html' => "Перейдите по ссылке: <a href='{$link}'>{$link}</a>"
+			'user' => $user,
+			'link' => $link
 		])->start();
 
 		return [
@@ -296,12 +298,12 @@ class Auth extends ApiController {
 			'message' => ['required' => true],
 		]);
 
-		Task::create([Mail::class, 'send'], [
+		Task::create([Mail::class, 'sendTpl'], [
+			'tpl' => 'mail/feedback.twig',
 			'to' => 'kirienkov@gmail.com, imbalance777@gmail.com',
-			'subject' => 'Обратная связь',
-			'html' => "<p>Тема: <b>{$this->params->subject}</b></p>
-				<p>Отправитель: <b>{$this->user->name}</b> ({$this->user->email})</p><hr>
-				<p>Сообщение: {$this->params->message}</p>"
+			'subject' => $this->params->subject,
+			'message' => $this->params->message,
+			'user' => $this->user
 		])->start();
 
 		return [
