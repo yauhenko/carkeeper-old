@@ -284,4 +284,30 @@ class Auth extends ApiController {
 
 	}
 
+	/**
+	 * @route /feedback
+	 */
+	public function feedback() {
+
+		$this->auth();
+
+		$this->validate([
+			'subject' => ['required' => true],
+			'message' => ['required' => true],
+		]);
+
+		Task::create([Mail::class, 'send'], [
+			'to' => 'kirienkov@gmail.com, imbalance777@gmail.com',
+			'subject' => 'Обратная связь',
+			'html' => "<p>Тема: <b>{$this->params->subject}</b></p>
+				<p>Отправитель: <b>{$this->user->name}</b> ({$this->user->email})</p><hr>
+				<p>Сообщение: {$this->params->message}</p>"
+		])->start();
+
+		return [
+			'sent' => true
+		];
+
+	}
+
 }
