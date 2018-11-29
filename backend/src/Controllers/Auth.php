@@ -335,8 +335,8 @@ class Auth extends ApiController {
 	 */
 	public function geo() {
 		$code = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
-		$geos = json_decode(file_get_contents(__DIR__ . '/../../data/geos.json'), true);
-		return $geos[$code] + ['code' => $code];
+		$geos = json_decode(file_get_contents($this->di->root . '/data/geos.json'), true);
+		return (array)$geos[$code] + ['code' => $code];
 	}
 
 	/**
