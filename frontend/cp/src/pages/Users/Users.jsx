@@ -91,24 +91,23 @@ class Users extends Component {
 								return (
 									<tr key={user.id} className={admin ? 'text-danger' : null}>
 										<td><span className="badge badge-primary">#{user.id}</span></td>
-										<td>{user.name}</td>
+										<td>
+											<Icon icon="user"/>
+											{user.name}
+										</td>
 										<td>{user.email}</td>
 										<td>{user.tel}</td>
 										<td style={{textAlign: 'right'}}>
 											<div className="btn-group">
-											{user.fcm ?
-												<button className="btn btn-sm btn-warning" onClick={() => this.openPushModal(user.fcm)}>
+												<button disabled={!user.fcm} className="btn btn-sm btn-warning" onClick={() => this.openPushModal(user.fcm)}>
 													<Icon icon="envelope"/>
 												</button>
-												: null }
-											<button className="btn btn-sm btn-primary" onClick={() => this.openEditModal(user.id)}>
-												<Icon icon="edit"/>
-											</button>
-											{!admin ?
-												<button className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
+												<button className="btn btn-sm btn-primary" onClick={() => this.openEditModal(user.id)}>
+													<Icon icon="edit"/>
+												</button>
+												<button  disabled={admin} className="btn btn-sm btn-danger" onClick={() => this.delete(user.id)}>
 													<Icon icon="times"/>
 												</button>
-											: null }
 											</div>
 										</td>
 									</tr>
