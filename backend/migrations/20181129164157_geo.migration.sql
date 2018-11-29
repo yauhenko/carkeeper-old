@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `geo` CHAR(2) NULL DEFAULT NULL AFTER `city`;

@@ -39,11 +39,17 @@ class Record extends Entity {
 	public $odo = null;
 
 	/**
-	 * @validate required; type: int
+	 * @validate type: int
 	 * @ref Entities\Journal\Type
-     * @var string
+     * @var int|null
 	 */
 	public $type;
+
+	/**
+	 * @validate type: int
+	 * @var int|null
+	 */
+	public $maintenance;
 
 	/**
 	 * @validate length: 1, 100

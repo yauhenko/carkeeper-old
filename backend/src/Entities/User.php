@@ -18,13 +18,13 @@ class User extends Entity {
 	public $active = true;
 
 	/**
-	 * @validate required; match: /^375(25|29|33|44)[0-9]{7}$/
+	 * @validate required; match: /^[0-9]+$/
 	 * @var int
 	 */
 	public $tel;
 
 	/**
-	 * @validate required; email
+	 * @validate email
 	 * @var string
 	 */
 	public $email;
@@ -41,7 +41,7 @@ class User extends Entity {
 	public $password;
 
 	/**
-	 * @validate required; length: 2, 30
+	 * @validate length: 2, 30
 	 * @var string
 	 */
 	public $name;
@@ -52,6 +52,12 @@ class User extends Entity {
 	 * @var string|null
 	 */
 	public $avatar = null;
+
+	/**
+	 * @validate type: string; length: 2, 2
+	 * @var string|null
+	 */
+	public $geo = null;
 
 	/**
 	 * @validate type: int

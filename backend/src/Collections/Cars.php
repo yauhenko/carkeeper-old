@@ -103,6 +103,24 @@ class Cars extends Collection {
 				'text' => 'У вас ' . $cnt . ' ' . Tools::plural($cnt, 'неоплаченны,й,х,х штраф,,а,ов')
 			];
 		}
+
+		$ms = $db->find('SELECT * FROM maintenance WHERE car = {$car} AND
+			( 
+				(next_date IS NULL OR next_date <= NOW())
+				OR
+				(next_odo IS NULL OR next_odo <= {$odo})
+			)
+			ORDER BY (next_date OR next_odo) DESC, next_odo ASC, next_date ASC
+		', ['car' => $car->id, 'odo' => $car->odo]);
+		foreach ($ms as $m) {
+			$notifications[] = [
+				'level' => ($m['last_odo'] || $m['last_date']) ? 'warning' : 'info',
+				'type' => 'maintenance',
+				'text' => ($m['last_odo'] || $m['last_date']) ? 'Требуется ' . mb_convert_case($m['name'], MB_CASE_LOWER) : $m['name'],
+				'maintenance' => $m['id']
+			];
+		}
+
 		return $notifications;
 
 	}

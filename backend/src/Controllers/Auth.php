@@ -28,18 +28,20 @@ class Auth extends ApiController {
 
 		Validator::validateData($this->params, [
 			'tel' => ['required' => true],
-			'password' => ['required' => true],
 			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
 
-		$this->params->tel = Tools::tel($this->params->tel, 375);
+		$this->params->tel = Tools::tel($this->params->tel);
 
 		$Users = new Users;
 
 		/** @var User $user */
 		$user = $Users->findOneBy('tel', $this->params->tel, true);
+
+		if(!$this->params->password)
+			return ['exists' => (bool)$user];
 
 		if(!$user)
 			throw new \Exception('Пользователь не существует', 400);
@@ -87,15 +89,17 @@ class Auth extends ApiController {
 				'required' => true,
 				'sub' => [
 					'tel' => ['required' => true],
+					'password' => ['required' => true],
 				]
 			],
+			'code' => ['required' => true],
 			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
 
 		$data = (array)$this->params->user;
-		$data['tel'] = Tools::tel($data['tel'], 375);
+		$data['tel'] = Tools::tel($data['tel']);
 		$data['password'] = Password::getHash((string)$data['password']);
 
 		$users = new Users;
@@ -104,6 +108,20 @@ class Auth extends ApiController {
 
 		if($ex = $users->findOneBy('email', $data['email'], true))
 			throw new \Exception('E-mail уже зарегистрирован', 40002);
+
+		$data['geo'] = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
+		if(preg_match('/^375/', $data['tel'])) $data['geo'] = 'BY';
+		elseif(preg_match('/^77/', $data['tel'])) $data['geo'] = 'KZ';
+		elseif(preg_match('/^7/', $data['tel'])) $data['geo'] = 'RU';
+		elseif(preg_match('/^38/', $data['tel'])) $data['geo'] = 'UA';
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+		if(!$code = $ci->get('tel:' . $data['tel']))
+			throw new \Exception('Срок действия кода истек. Запросите новый', 40010);
+
+		if($code != $this->params->code)
+			throw new \Exception('Указан неверный код', 40011);
 
 		$user = new User;
 		$user->setData($data);
@@ -311,5 +329,42 @@ class Auth extends ApiController {
 		];
 
 	}
+
+	/**
+	 * @route /account/geo
+	 */
+	public function geo() {
+		$code = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
+		$geos = json_decode(file_get_contents(__DIR__ . '/../../data/geos.json'), true);
+		return $geos[$code] + ['code' => $code];
+	}
+
+	/**
+	 * @route /account/tel
+	 */
+	public function telSendCode() {
+
+		$this->validate([
+			'tel' => ['required' => true]
+		]);
+
+		$this->params->tel = Tools::tel($this->params->tel);
+
+		$code = '1234';
+		//$code = Password::getPin();
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+		$ci->set('tel:' . $this->params->tel, $code, 3600);
+
+		// TODO: SMS with $code to $tel
+
+		return [
+			'sent' => true,
+			'tel' => $this->params->tel,
+			'code' => $code, // TODO: remove it
+		];
+	}
+
 
 }

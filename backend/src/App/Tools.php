@@ -176,10 +176,8 @@ class Tools {
 //		});
 //	}
 
-	public static function tel(?string $tel, int $code = 7): ?string {
+	public static function tel(?string $tel): ?string {
 		$tel = preg_replace('/[^0-9]/', '', $tel);
-		$tel = preg_replace('/^80/', $code, $tel);
-		$tel = preg_replace('/^8/', $code, $tel);
 		return $tel ?: null;
 	}
 
