@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {DatePickerAndroid, StyleSheet, Text, TouchableOpacity} from "react-native";
-import {View, Icon, ActionSheet} from 'native-base';
+import {View} from 'native-base';
 import {observer} from 'mobx-react';
 import moment from "moment";
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 12,
     paddingBottom: 12,
-    borderBottomWidth: .5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#d6d7da"
   }
 });

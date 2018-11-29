@@ -1,6 +1,6 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import {Container, Content, Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
+import {Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
 import User from "../store/User";
 import Cars from "../store/Cars";
 import {observer} from "mobx-react";
@@ -36,14 +36,29 @@ export default class Navigation extends Component {
     }
   ];
 
+  change = route => {
+    if(route.path === this.props.activeItemKey) {
+      this.props.navigation.closeDrawer();
+      return;
+    }
+
+    if(route.action) {
+      route.action();
+      this.props.navigation.closeDrawer();
+      return;
+    }
+
+    this.props.navigation.navigate(route.path);
+  };
+
   render () {
     const {user, refs} = User.profile;
     let cars = Cars.cars;
 
     return (
-      <View style={{justifyContent: "space-between", flex: 1}}>
+      <View style={componentStyle.wrapper}>
         <View>
-          <View style={styles.top}>
+          <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
                 {user.avatar
@@ -66,12 +81,12 @@ export default class Navigation extends Component {
           <List>
             {this.routes.map((route, key)=>{
               return (
-                <ListItem key={key} icon style={styles.listItem} onPress={() => {route.action ? route.action() : this.props.navigation.navigate(route.path)}}>
+                <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>
                     <Icon style={{color: "#f13f3f"}} name={route.icon}/>
                   </Left>
                   <Body>
-                  <Text style={styles.link}>{route.title}</Text>
+                    <Text style={componentStyle.link}>{route.title}</Text>
                   </Body>
                 </ListItem>
               )
@@ -79,9 +94,9 @@ export default class Navigation extends Component {
           </List>
         </View>
 
-        <View style={styles.callback}>
+        <View style={componentStyle.callback}>
           <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Support")}}>
-            <Text style={styles.callbackLink}>Обратная связь</Text>
+            <Text style={componentStyle.callbackLink}>Обратная связь</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -89,8 +104,12 @@ export default class Navigation extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  link : {
+const componentStyle = StyleSheet.create({
+  wrapper: {
+    justifyContent: "space-between",
+    flex: 1
+  },
+  link: {
     fontSize : 15
   },
   top: {

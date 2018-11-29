@@ -28,7 +28,7 @@ export default class Input extends Component {
       paddingLeft: 0,
       paddingRight: 12,
       paddingBottom: 7,
-      borderBottomWidth: .5,
+      borderBottomWidth: StyleSheet.hairlineWidth,
       borderBottomColor: "#d6d7da",
       color: this.props.light ? "#fff" : "#000"
     },

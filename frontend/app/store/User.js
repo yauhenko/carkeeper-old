@@ -121,6 +121,15 @@ class User {
   };
 
   /**
+   * Получить инфу по гео
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action getGeo = async (data = {}) => {
+    return await Api('account/geo', data);
+  };
+
+  /**
    * Пинг
    * @param silent
    * @returns {Promise<*>}

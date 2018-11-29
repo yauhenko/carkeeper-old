@@ -1,7 +1,24 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, RefreshControl, View, Alert} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail, Item, Label, Form} from 'native-base';
+import {
+  Container,
+  Button,
+  Content,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  List,
+  ListItem,
+  Thumbnail,
+  Item,
+  Label,
+  Form,
+  ActionSheet
+} from 'native-base';
 import styles from "../../styles"
 import User from "../../store/User";
 import Cropper from "../../modules/Cropper";
@@ -15,8 +32,6 @@ import Input from "../../components/Form/Input";
 
 @observer
 export default class Profile extends React.Component {
-  @observable avatarMenu = false;
-
   @observable profile = toJS(User.profile);
   @observable changed = false;
   @observable loading = false;
@@ -41,22 +56,6 @@ export default class Profile extends React.Component {
     this.loading = false;
   };
 
-  @action changeAvatar = async type => {
-    this.avatarMenu = false;
-    this.loading = true;
-
-    try {
-      const image = await Cropper[type]({cropperCircleOverlay: true});
-      this.profile.refs.avatar = image;
-      this.profile.user.avatar = image.id;
-      this.changed = true;
-    } catch (e) {
-      Notification(e)
-    }
-
-    this.loading = false;
-  };
-
   @action refresh = async () => {
     this.loading = true;
     User.profile = await User.info();
@@ -73,6 +72,36 @@ export default class Profile extends React.Component {
           {cancelable: false })
     });
   }
+
+  @action loadImage = async type => {
+    this.loading = true;
+
+    try {
+      const image = await Cropper[type]({cropperCircleOverlay: true});
+      this.profile.refs.avatar = image;
+      this.profile.user.avatar = image.id;
+      this.changed = true;
+    } catch (e) {}
+
+    this.loading = false;
+  };
+
+  @action action = () => {
+    ActionSheet.show(
+      {
+        options: [
+          { text: "Загрузить из галереи", icon: "images", iconColor: "#b9babd"},
+          { text: "Сделать снимок", icon: "camera", iconColor: "#b9babd"},
+          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+        ],
+        cancelButtonIndex: 2
+      },
+      index => {
+        if(index === 0) this.loadImage("gallery");
+        if(index === 1) this.loadImage("camera");
+      }
+    )
+  };
 
   render() {
     let {user, refs} = this.profile;
@@ -102,7 +131,7 @@ export default class Profile extends React.Component {
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
-              <TouchableOpacity onPressIn={() => {this.avatarMenu = true}}>
+              <TouchableOpacity onPress={() => {this.action()}}>
                 <Thumbnail style={customStyles.avatar} source={refs.avatar ? {uri: cdn + refs.avatar.path} : thumb} />
                 <Icon style={customStyles.camera} name="camera"/>
               </TouchableOpacity>
@@ -126,27 +155,6 @@ export default class Profile extends React.Component {
             <Input keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
           </Form>
         </Content>
-
-        {this.avatarMenu
-          ?
-            <ModalMenu onClose={()=>{this.avatarMenu = false}}>
-              <List>
-                <ListItem onPress={() => {this.changeAvatar("gallery")}}>
-                  <Text>Загрузить из галереи</Text>
-                </ListItem>
-
-                <ListItem onPress={() => {this.changeAvatar("camera")}}>
-                  <Text>Сделать снимок</Text>
-                </ListItem>
-
-                <ListItem onPress={() => {this.avatarMenu = false}}>
-                  <Text>Отмена</Text>
-                </ListItem>
-              </List>
-            </ModalMenu>
-          :
-            null
-        }
       </Container>
     );
   }
