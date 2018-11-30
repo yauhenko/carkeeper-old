@@ -70,7 +70,6 @@ export default class App extends React.Component {
 
   render() {
     return(User.ready ? (User.auth ? <Root><ConnectError/><Navigator/></Root>: <Auth/>) : null)
-
   }
 }
 

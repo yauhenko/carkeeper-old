@@ -186,15 +186,14 @@ export default class Login extends React.Component {
     });
   }
 
-
   render() {
     return (
       <Container>
-        <StatusBar backgroundColor="transparent" translucent={true} barStyle="light-content"/>
+        <StatusBar backgroundColor="#000" translucent={true} barStyle="light-content"/>
 
         <Content refreshControl={<RefreshControl enabled={false} refreshing={this.loading}/>} contentContainerStyle={componentStyle.container}>
-          <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
-            <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width}} source={background}/>
+          <View style={[StyleSheet.absoluteFill, {alignItems: "center", paddingTop: StatusBar.currentHeight}]}>
+            <Image style={{height: Dimensions.get("window").height - StatusBar.currentHeight, width: Dimensions.get("window").width}} source={background}/>
           </View>
 
           <View style={[StyleSheet.absoluteFill, {backgroundColor: "rgba(0,0,0,0.7)"}]}/>
@@ -249,14 +248,14 @@ export default class Login extends React.Component {
                     <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
                   </Button>
                   <Button onPress={()=>{this.sendSMS()}} style={componentStyle.link} transparent={true}>
-                    <Text style={componentStyle.linkText}>Мне не пришло СМС</Text>
+                    <Text style={componentStyle.linkText}>Отправить код повторно</Text>
                   </Button>
                 </Fragment>
               : null}
 
               {this.exists === "password" ?
                 <Fragment>
-                  <Text style={componentStyle.label}>Придумайте новый пароль</Text>
+                  <Text style={componentStyle.label}>Придумайте пароль</Text>
                   <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.register()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ЗАРЕГИСТРИРОВАТЬСЯ</Text>
@@ -272,12 +271,10 @@ export default class Login extends React.Component {
                     <Text style={componentStyle.buttonText}>ВОССТАНОВИТЬ ПАРОЛЬ</Text>
                   </Button>
                   <Button onPress={()=>{this.sendSMS()}} style={componentStyle.link} transparent={true}>
-                    <Text style={componentStyle.linkText}>Мне не пришло СМС</Text>
+                    <Text style={componentStyle.linkText}>Отправить код повторно</Text>
                   </Button>
                 </Fragment>
                 : null}
-
-
             </Animated.View>
             :
             null
@@ -343,6 +340,7 @@ const componentStyle = StyleSheet.create({
   slide: {
     left: -100
   },
+
   backContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#fff",
