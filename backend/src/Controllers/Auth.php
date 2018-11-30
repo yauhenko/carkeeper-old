@@ -13,6 +13,7 @@ use Framework\Security\Password;
 use Framework\Validation\Validator;
 use Tasks\Mail;
 use Tasks\Push;
+use Tasks\SMS;
 
 /**
  * Class Auth
@@ -368,35 +369,77 @@ class Auth extends ApiController {
 	 */
 	public function telSendCode() {
 
+		$this->filter(['tel' => [Tools::class, 'tel']], false);
+
 		$this->validate([
 			'tel' => ['required' => true]
 		]);
 
-		$this->params->tel = Tools::tel($this->params->tel);
-
-		$code = '1234';
-		//$code = Password::getPin();
+		$tel = & $this->params->tel;
 
 		/** @var CacheInterface $ci */
 		$ci = $this->di->get('cache:redis');
-		$ci->set('tel:' . $this->params->tel, $code, 3600);
 
-		// TODO: SMS with $code to $tel
+		$cnt = (int)$ci->get("tel:{$tel}:cnt");
+		$lock = (int)$ci->get("tel:{$tel}:lock");
+
+		if($lock) throw new \Exception('Запросить код еще раз можно через ' . ($lock - time()) . ' сек.', 40031);
+		if($cnt >= 3) throw new \Exception('Достигнут лимит SMS. Попробуйте позже', 40030);
+
+		$code = Password::getPin(6);
+
+		$ci->set("tel:{$tel}:code", $code, 3600);
+		$ci->set("tel:{$tel}:cnt", $cnt + 1, 3600);
+		$ci->set("tel:{$tel}:lock", time() + 120, 120);
+		$ci->set("tel:{$tel}:att", 0, 3600);
+
+		Task::create([SMS::class], [
+			'tel' => $this->params->tel,
+			'text' => "Код подтверждения CarKeeper: {$code}"
+		])->start();
 
 		return [
 			'sent' => true,
 			'tel' => $this->params->tel,
-			'code' => $code, // TODO: remove it
+		];
+
+	}
+
+	/**
+	 * @route /account/tel/verify
+	 */
+	public function telVerify() {
+
+		$this->filter(['tel' => [Tools::class, 'tel']], false);
+
+		$this->validate([
+			'tel' => ['required' => true],
+			'code' => ['required' => true],
+		]);
+
+		$this->verifyTel($this->params->tel, $this->params->code);
+
+		return [
+			'valid' => true,
 		];
 	}
 
 	public function verifyTel($tel, $code): void {
 		/** @var CacheInterface $ci */
 		$ci = $this->di->get('cache:redis');
-		if(!$codeSent = $ci->get('tel:' . $tel))
-			throw new \Exception('Срок действия кода истек. Запросите новый', 40010);
-		if($codeSent != $code)
-			throw new \Exception('Указан неверный код', 40011);
+
+		$att = (int)$ci->get("tel:{$tel}:att");
+		if($att >= 3)
+			throw new \Exception('Превышен лимит попыток. Запросите новый код', 40034);
+
+		if(!$codeSent = $ci->get("tel:{$tel}:code"))
+			throw new \Exception('Срок действия кода истек. Запросите новый', 40032);
+
+		if($codeSent != $code) {
+			$ci->set("tel:{$tel}:att", $att + 1, 3600);
+			throw new \Exception('Указан неверный код. Осталось попыток: ' . (2 - $att), 40033);
+		}
+
 	}
 
 }
