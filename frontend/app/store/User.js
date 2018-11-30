@@ -22,11 +22,11 @@ class User {
 
   /**
    * Регистрация пользователя
-   * @param user {object}
+   * @param data {object}
    * @returns {Promise<*>}
    */
-  @action register = async user => {
-    return await Api('account/register', {user: {...user, fcm: this.fcm}, ttl: 3600 * 24 * 7, noip: true});
+  @action register = async (data = {}) => {
+    return await Api('account/register', data);
   };
 
   /**
@@ -34,18 +34,8 @@ class User {
    * @param data {object}
    * @returns {Promise<void>}
    */
-  @action login = async (data) => {
-    try {
-      let response = await Api('account/login', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
-      this.token = response.token;
-      await AsyncStorage.setItem('token', response.token);
-      this.profile = await this.info();
-      this.auth = true;
-      Logger.debug("FCM", this.fcm);
-      return response;
-    } catch (e) {
-      throw e;
-    }
+  @action login = async (data = {}) => {
+    return await Api('account/login', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
   };
 
   /**
@@ -60,8 +50,21 @@ class User {
     this.token = null;
     this.auth = false;
     this.profile = {};
+
     AsyncStorage.removeItem('token');
+    AsyncStorage.removeItem('password');
   };
+
+
+  /**
+   * Отправить код верификации на телефон
+   * @param data {object}
+   * @returns {Promise<void>}
+   */
+  @action tel = async (data = {}) => {
+    return await Api('account/tel', data);
+  };
+
 
   /**
    * Профиль пользователя
@@ -110,6 +113,24 @@ class User {
     return await Api('account/recovery', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
   };
 
+  /**
+   * Восстановление доступа по SMS
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action recoverySMS = async (data = {}) => {
+    return await Api('account/recovery/tel', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
+  };
+
+
+  /**
+   * Проверка кода СМС
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action verify = async (data = {}) => {
+    return await Api('account/tel/verify', data);
+  };
 
   /**
    * Отправка сообщения в поддержку

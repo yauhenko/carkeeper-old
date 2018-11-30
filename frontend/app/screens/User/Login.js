@@ -1,61 +1,182 @@
-import React from 'react';
-import {AsyncStorage, StyleSheet, Text, StatusBar, RefreshControl, Image, View, Dimensions, TextInput} from 'react-native';
+import React, {Fragment} from 'react';
+import {
+  AsyncStorage,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Animated,
+  Image,
+  View,
+  Dimensions,
+  TextInput,
+  RefreshControl,
+  Vibration
+} from 'react-native';
 import {observer} from 'mobx-react';
-import { Container, Button, Content, Form, Item, Label } from 'native-base';
+import {Container, Button, Content} from 'native-base';
 import User from "../../store/User";
 import { observable, action} from 'mobx';
 import Logo from "../../assets/images/logo.png";
-import Logger from "../../modules/Logger";
 import Notification from "../../components/Notification";
 
 import background from "../../assets/images/login_background.jpg";
+import back from "../../assets/images/back.png";
+import TouchableItem from "react-navigation/src/views/TouchableItem";
 
 @observer
 export default class Login extends React.Component {
   @observable tel = "";
   @observable password = "";
+  @observable code = "";
   @observable geo = {};
+  @observable exists = null;
 
   @observable loading = false;
   @observable disabled = false;
 
-  @observable phoneChecked = false;
+  @observable left = new Animated.Value(0);
 
   @action change = (type, value) => {this[type] = value};
 
-  @action submitHandler = async () => {
+  @action login = async () => {
     this.loading = true;
+    this.disabled = true;
 
     try {
-      await User.login({tel: this.tel, password: this.password});
+      const response  = await User.login({tel: this.tel, password: this.password || " "});
+      User.token = response.token;
+      await AsyncStorage.setItem('token', response.token);
+      User.profile = await User.info();
+      User.auth = true;
       await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
-      Logger.info("Пользоваль авторизовался", String(this.tel));
     } catch (e) {
+      Vibration.vibrate(300);
       Notification(e);
     }
 
+    this.disabled = false;
     this.loading = false
   };
 
-  checkPhoneNumber = async () => {
+  @action register = async () => {
+    this.loading = true;
+    this.disabled = true;
+
+    try {
+      const response = await User.register({code: this.code, user: {tel: this.tel, password: this.password}, ttl: 3600 * 24 * 7, noip: true, fcm: User.fcm})
+      User.token = response.token;
+      await AsyncStorage.setItem('token', response.token);
+      User.profile = await User.info();
+      User.auth = true;
+      await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+    } catch (e) {
+      Notification(e)
+    }
+
+    this.disabled = false;
+    this.loading = false
+  };
+
+  @action checkPhoneNumber = async () => {
     this.disabled = true;
     this.loading = true;
 
+    try {
+      const response = await User.login({tel: this.tel});
+
+      this.slide();
+
+      setTimeout(() => {
+        this.exists = ("exists" in response) ? response.exists : null;
+        this.slide("0");
+      }, 600);
+
+      if (response.exists === false) {
+        await User.tel({tel: this.tel});
+      }
+    } catch (e) {
+      Notification(e)
+    }
 
     this.disabled = false;
     this.loading = false;
   };
 
-  fillPhoneCode = async () => {
+  @action fillPhoneCode = async () => {
     if(this.tel) return;
 
     try {
       this.geo = await User.getGeo();
-      this.tel = this.geo.tel;
+      this.tel = "+" + this.geo.tel;
     } catch (e) {
       Notification(e);
-      console.log(e)
     }
+  };
+
+  @action back = () => {
+    this.slide();
+    setTimeout(() => {
+      this.exists = null;
+      this.slide("0");
+    }, 600)
+  };
+
+  @action checkCode = async () => {
+    try {
+      await User.verify({tel: this.tel, code: this.code});
+      this.slide();
+      setTimeout(() => {this.exists = "password"; this.slide("0")}, 600)
+    } catch (e) {
+      Vibration.vibrate(300);
+      Notification(e)
+    }
+  };
+
+  @action sendSMS = async (silent = false) => {
+    this.disabled = true;
+
+    try {
+      await User.tel({tel: this.tel});
+      if(!silent) Notification("Вам отправлено СМС c кодом")
+    } catch (e) {
+      Notification(e)
+    }
+
+    this.disabled = false;
+  };
+
+  @action showRestore = () => {
+    this.sendSMS(true);
+    this.slide();
+
+    setTimeout(() => {
+      this.exists = "restore";
+      this.slide("0");
+    }, 600)
+  };
+
+  @action restore = async () => {
+    this.disabled = true;
+    this.loading = true;
+
+    try {
+      const response = await User.recoverySMS({tel: this.tel, code: this.code});
+      User.token = response.token;
+      await AsyncStorage.setItem('token', response.token);
+      User.profile = await User.info();
+      User.auth = true;
+      await AsyncStorage.multiSet([["tel", String(this.tel)]]);
+    } catch (e) {
+      Notification(e);
+      Vibration.vibrate(300);
+    }
+
+    this.disabled = false;
+    this.loading = false;
+  };
+
+  slide = (value) => {
+    Animated.spring(this.left, {toValue: value ? Number(value) : (Dimensions.get("window").width + 100)}, {}).start();
   };
 
   async componentDidMount() {
@@ -65,14 +186,13 @@ export default class Login extends React.Component {
     });
   }
 
+
   render() {
     return (
       <Container>
         <StatusBar backgroundColor="transparent" translucent={true} barStyle="light-content"/>
 
-
-
-        <Content contentContainerStyle={componentStyle.container}>
+        <Content refreshControl={<RefreshControl enabled={false} refreshing={this.loading}/>} contentContainerStyle={componentStyle.container}>
           <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
             <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width}} source={background}/>
           </View>
@@ -81,23 +201,88 @@ export default class Login extends React.Component {
 
           <View style={componentStyle.logoContainer}>
             <Image style={componentStyle.logo} source={Logo}/>
-            <Text style={componentStyle.slogan}>Авто. Гараж. Сервис. Помощь.</Text>
+            <Text style={componentStyle.slogan}>Мобильный органайзер водителя</Text>
           </View>
 
-          {/*<View style={{paddingRight: 17}}>*/}
-            {/*<Input keyboardType="numeric" onChange={text => {this.change('tel', text)}} value={this.tel} light={true} title="Телефон"/>*/}
-            {/*<Input onChange={text => {this.change('password', text)}} value={this.password} secureTextEntry light={true} title="Пароль"/>*/}
-          {/*</View>*/}
+          {
+            this.exists === null
+              ?
+              <Animated.View style={{left: this.left}}>
+                <Text style={componentStyle.label}>Введите Ваш номер телефона</Text>
+                <TextInput placeholder="Номер телефона" onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
+                <Button disabled={this.disabled} onPress={()=>{this.checkPhoneNumber()}} style={componentStyle.button} block>
+                  <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
+                </Button>
+              </Animated.View>
+              : null
+          }
 
-          <View>
-            <Text style={componentStyle.label}>Введите Ваш номер телефона:</Text>
+          {this.exists !== null ?
+            <Animated.View style={{left: this.left}}>
+              <View style={componentStyle.backContainer}>
+                <TouchableItem style={componentStyle.backTouchable} onPress={()=>{this.back()}}>
+                  <Fragment>
+                    <Image style={componentStyle.backIcon} source={back}/>
+                    <Text style={componentStyle.backText}>НАЗАД</Text>
+                  </Fragment>
+                </TouchableItem>
+              </View>
+              {this.exists === true ?
+                <Fragment>
+                  <Text style={componentStyle.label}>Введите Ваш пароль</Text>
+                  <TextInput placeholder="Пароль" secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <Button disabled={this.disabled} onPress={()=>{this.login()}} style={componentStyle.button} block>
+                    <Text style={componentStyle.buttonText}>ВОЙТИ</Text>
+                  </Button>
 
-            <TextInput onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
+                  <Button onPress={()=>{this.showRestore()}} style={componentStyle.link} transparent={true}>
+                    <Text style={componentStyle.linkText}>Забыли пароль?</Text>
+                  </Button>
+                </Fragment>
+              : null}
 
-            <Button disabled={this.disabled} onPress={()=>{this.checkPhoneNumber()}} style={componentStyle.button} block>
-              <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
-            </Button>
-          </View>
+              {this.exists === false ?
+                <Fragment>
+                  <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <Button disabled={this.disabled} onPress={()=>{this.checkCode()}} style={componentStyle.button} block>
+                    <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
+                  </Button>
+                  <Button onPress={()=>{this.sendSMS()}} style={componentStyle.link} transparent={true}>
+                    <Text style={componentStyle.linkText}>Мне не пришло СМС</Text>
+                  </Button>
+                </Fragment>
+              : null}
+
+              {this.exists === "password" ?
+                <Fragment>
+                  <Text style={componentStyle.label}>Придумайте новый пароль</Text>
+                  <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <Button disabled={this.disabled} onPress={()=>{this.register()}} style={componentStyle.button} block>
+                    <Text style={componentStyle.buttonText}>ЗАРЕГИСТРИРОВАТЬСЯ</Text>
+                  </Button>
+                </Fragment>
+              : null}
+
+              {this.exists === "restore" ?
+                <Fragment>
+                  <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <Button disabled={this.disabled} onPress={()=>{this.restore()}} style={componentStyle.button} block>
+                    <Text style={componentStyle.buttonText}>ВОССТАНОВИТЬ ПАРОЛЬ</Text>
+                  </Button>
+                  <Button onPress={()=>{this.sendSMS()}} style={componentStyle.link} transparent={true}>
+                    <Text style={componentStyle.linkText}>Мне не пришло СМС</Text>
+                  </Button>
+                </Fragment>
+                : null}
+
+
+            </Animated.View>
+            :
+            null
+          }
+
         </Content>
       </Container>
     );
@@ -108,7 +293,7 @@ const componentStyle = StyleSheet.create({
   container: {
     justifyContent: "space-between",
     flex: 1,
-    padding: 30,
+    padding: 30
   },
 
   logo: {
@@ -137,13 +322,14 @@ const componentStyle = StyleSheet.create({
     color: "#fff",
     fontSize: 14,
     marginBottom: 15,
-    marginLeft: 10
+    marginLeft: 10,
+    lineHeight: 22
   },
 
   input: {
     backgroundColor: "#fff",
     marginBottom: 15,
-    borderRadius: 3,
+    borderRadius: 2,
     paddingLeft: 10,
     paddingRight: 5,
     height: 50,
@@ -153,5 +339,41 @@ const componentStyle = StyleSheet.create({
     marginTop: 30,
     color: "#fff",
     fontSize: 16
+  },
+  slide: {
+    left: -100
+  },
+  backContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#fff",
+    marginBottom: 15,
+    alignItems: "flex-start"
+  },
+
+  backTouchable: {
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10
+  },
+
+  backText: {
+    fontWeight: "bold",
+    color: "#fff",
+    fontSize: 12
+  },
+
+  backIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10
+  },
+
+  link: {
+    marginTop: 15,
+    alignSelf: "center"
+  },
+
+  linkText: {
+    color: "#f13f3f",
   }
 });

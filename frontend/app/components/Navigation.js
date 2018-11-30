@@ -69,7 +69,7 @@ export default class Navigation extends Component {
             </View>
 
             <View>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name}`}</Text>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name || "Аноним"}`}</Text>
               {cars.cars.length ?
                 <Text style={{fontSize: 12, color: "#fff"}}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
                 :
