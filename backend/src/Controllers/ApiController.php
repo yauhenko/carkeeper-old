@@ -109,4 +109,8 @@ abstract class ApiController extends AbstractController {
 		Validator::validateData($this->params ?: [], $rules, false, $prefix);
 	}
 
+	protected function filter(array $filters, bool $strict = true): void {
+		$this->params = Validator::filterData((array)$this->params, $filters, $strict, true);
+	}
+
 }

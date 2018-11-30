@@ -267,4 +267,27 @@ class Validator {
 		$this->{"check{$filter}"}($value);
 	}
 
+	public static function filterData($data, array $filters, bool $strict = false, bool $object = false) {
+		$validator = new self;
+		return $validator->filter($data, $filters, $strict, $object);
+	}
+
+	public function filter($data, array $filters, bool $strict = false, bool $object = false) {
+		$data = json_decode(json_encode($data), true);
+		$result = $strict ? [] : $data;
+		foreach ($filters as $key => $filter) {
+			if(!key_exists($key, $data)) continue;
+			if(is_callable($filter)) $result[$key] = call_user_func($filter, $data[$key], $result);
+			elseif(method_exists($this, "filter{$filter}")) $result[$key] = call_user_func([$this, "filter{$filter}"], $data[$key], $result);
+			elseif(is_array($filter)) $result[$key] = $this->filter((array)$data[$key], $filter, $strict);
+			else throw new Error("Unknown filter: {$filter}");
+		}
+		if($object) return json_decode(json_encode($result));
+		return $result;
+	}
+
+	protected function filterBool($value): bool {
+		return in_array((string)$value, ['1', 'true', 'on', 'yes']);
+	}
+
 }

@@ -26,9 +26,9 @@ class Auth extends ApiController {
 	 */
 	public function login() {
 
-		$this->params->tel = Tools::tel($this->params->tel);
+		$this->filter(['tel' => [Tools::class, 'tel']], false);
 
-		Validator::validateData($this->params, [
+		$this->validate([
 			'tel' => ['required' => true, 'match' => '/^[0-9]{11,13}$/'],
 			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
@@ -84,7 +84,8 @@ class Auth extends ApiController {
 	 * @throws \Exception
 	 */
 	public function register() {
-		Validator::validateData($this->params, [
+
+		$this->validate([
 			'user' => [
 				'required' => true,
 				'sub' => [
@@ -115,13 +116,7 @@ class Auth extends ApiController {
 		elseif(preg_match('/^7/', $data['tel'])) $data['geo'] = 'RU';
 		elseif(preg_match('/^38/', $data['tel'])) $data['geo'] = 'UA';
 
-		/** @var CacheInterface $ci */
-		$ci = $this->di->get('cache:redis');
-		if(!$code = $ci->get('tel:' . $data['tel']))
-			throw new \Exception('Срок действия кода истек. Запросите новый', 40010);
-
-		if($code != $this->params->code)
-			throw new \Exception('Указан неверный код', 40011);
+		$this->verifyTel($data['tel'],  $this->params->code);
 
 		$user = new User;
 		$user->setData($data);
@@ -139,7 +134,6 @@ class Auth extends ApiController {
 
 	}
 
-
 	/**
 	 * Update profile
 	 *
@@ -155,7 +149,6 @@ class Auth extends ApiController {
 		$this->user->setData($update);
 		return $this->user->save();
 	}
-
 
 	/**
 	 * Get info
@@ -186,7 +179,7 @@ class Auth extends ApiController {
 	}
 
 	/**
-	 * @route /account/recovery
+	 * @route /account/recovery/email
 	 */
 	public function recovery() {
 
@@ -239,7 +232,7 @@ class Auth extends ApiController {
 	}
 
 	/**
-	 * @route /account/recovery/ticket
+	 * @route /account/recovery/email/ticket
 	 */
 	public function recoveryTicket() {
 
@@ -262,7 +255,7 @@ class Auth extends ApiController {
 	}
 
 	/**
-	 * @route /account/recovery/secret
+	 * @route /account/recovery/email/secret
 	 */
 	public function recoverySecret() {
 
@@ -303,6 +296,37 @@ class Auth extends ApiController {
 		];
 
 	}
+
+	/**
+	 * @route /account/recovery/tel
+	 */
+	public function recoveryTel() {
+
+		$this->filter(['tel' => [Tools::class, 'tel']], false);
+
+		$this->validate([
+			'tel' => ['required' => true],
+			'code' => ['required' => true],
+		]);
+
+		$this->verifyTel($this->params->tel, $this->params->code);
+
+		$ip = $this->params->noip ? null : $this->req->getClientIp();
+		$ttl = $this->params->ttl ?: 3600;
+
+		/** @var User $user */
+		$user = Users::factory()->findOneBy('tel', $this->params->tel);
+		$user->fcm = $this->params->fcm;
+		$user->update();
+
+		$token = Sessions::start($user, $ip, $ttl);
+
+		return [
+			'token' => $token
+		];
+
+	}
+
 
 	/**
 	 * @route /feedback
@@ -366,5 +390,13 @@ class Auth extends ApiController {
 		];
 	}
 
+	public function verifyTel($tel, $code): void {
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+		if(!$codeSent = $ci->get('tel:' . $tel))
+			throw new \Exception('Срок действия кода истек. Запросите новый', 40010);
+		if($codeSent != $code)
+			throw new \Exception('Указан неверный код', 40011);
+	}
 
 }
