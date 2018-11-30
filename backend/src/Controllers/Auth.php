@@ -26,14 +26,14 @@ class Auth extends ApiController {
 	 */
 	public function login() {
 
+		$this->params->tel = Tools::tel($this->params->tel);
+
 		Validator::validateData($this->params, [
-			'tel' => ['required' => true],
+			'tel' => ['required' => true, 'match' => '/^[0-9]{11,13}$/'],
 			'fcm' => ['type' => 'string', 'length' => [100, 255]],
 			'noip' => ['type' => 'bool'],
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
-
-		$this->params->tel = Tools::tel($this->params->tel);
 
 		$Users = new Users;
 

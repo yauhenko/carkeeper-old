@@ -18,7 +18,7 @@ class User extends Entity {
 	public $active = true;
 
 	/**
-	 * @validate required; match: /^[0-9]+$/
+	 * @validate required; match: /^[0-9]{11,13}$/
 	 * @var int
 	 */
 	public $tel;
