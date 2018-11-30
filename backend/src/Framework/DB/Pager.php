@@ -180,9 +180,11 @@ class Pager implements \Iterator {
 	 * Bind data to SQL
 	 *
 	 * @param array $data
+	 * @return Pager
 	 */
-	public function bind(array $data): void {
+	public function bind(array $data): self {
 		$this->sql = $this->db->prepare($this->sql, $data);
+		return $this;
 	}
 
 	/**

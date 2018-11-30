@@ -8,7 +8,7 @@ use Twilio\Rest\Client;
 
 class SMS extends Handler {
 
-	public function send(array $data) {
+	public function work(array $data) {
 		/** @var object $cfg */
 		$cfg = DI::getInstance()->config->twilio;
 		$tel = '+' . preg_replace('/[^0-9]/', null, $data['tel']);

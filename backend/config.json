@@ -36,7 +36,7 @@
 		"endpoint": "https://api.eu.mailgun.net"
 	},
 	"twilio": {
-		"sid": "ACc6127aae5bae3577d905ab9a02582ed6",
+		"sid": "MG5e64411f021dc0104a52537bb528c224",
 		"token": "97f09cc8897a93586f5a8bf26d239559",
 		"from": "+17014191559"
 	},
