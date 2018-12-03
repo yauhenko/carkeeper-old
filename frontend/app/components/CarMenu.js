@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import styles from "../styles";
 import {Button, Icon} from "native-base";
 import {action} from 'mobx';
+import Maintenance from "../screens/Garage/Maintenance";
 
 @observer
 export default class CarMenu extends React.Component {
@@ -25,9 +26,6 @@ export default class CarMenu extends React.Component {
           <Icon style={styles.footerBadge} name={"clipboard"} />
         </Button>
 
-        {/*<Button vertical style={this.activeStyle("Journal")} onPress={()=>this.props.navigation.navigate("Journal", {car: this.props.car})} active={this.activeButton("Journal")}>*/}
-          {/*<Icon style={styles.footerBadge} name={"build"} />*/}
-        {/*</Button>*/}
 
         <Button vertical style={this.activeStyle("Notes")} onPress={()=>this.props.navigation.navigate("Notes", {car: this.props.car})} active={this.activeButton("Notes")}>
           <Icon style={styles.footerBadge} name={"list-box"} />
@@ -35,6 +33,10 @@ export default class CarMenu extends React.Component {
 
         <Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders", {car: this.props.car})} active={this.activeButton("Reminders")}>
           <Icon style={styles.footerBadge} name={"notifications"} />
+        </Button>
+
+        <Button vertical style={this.activeStyle("Maintenance")} onPress={()=>this.props.navigation.navigate("Maintenance", {car: this.props.car})} active={this.activeButton("Maintenance")}>
+          <Icon style={styles.footerBadge} name={"build"} />
         </Button>
 
         <Button style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines", {car: this.props.car})} active={this.activeButton("Fines")}>

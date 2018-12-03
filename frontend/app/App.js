@@ -4,7 +4,6 @@ import {Root} from 'native-base';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
 import Login from "./screens/User/Login";
-import Registration from "./screens/User/Registration";
 import User from "./store/User";
 import Navigation from "./components/Navigation";
 import Garage from "./screens/Garage/Garage";
@@ -20,19 +19,20 @@ import Logger from "./modules/Logger";
 import Notifications from "./modules/Notifications";
 import Notes from "./screens/Garage/Notes";
 import List from "./screens/News/List";
-import Restore from "./screens/User/Restore";
 import Support from "./screens/User/Support";
+import Maintenance from "./screens/Garage/Maintenance";
 
 const Navigator = createDrawerNavigator({
-    Garage: {screen: Garage},
-    Car: {screen: Car},
-    Fines: {screen: Fines},
-    Journal: {screen: Journal},
-    Profile: {screen: Profile},
-    Reminders: {screen: Reminders},
-    Notes: {screen: Notes},
-    News: {screen: List},
-    Support: {screen: Support},
+  Garage: {screen: Garage},
+  Car: {screen: Car},
+  Fines: {screen: Fines},
+  Journal: {screen: Journal},
+  Reminders: {screen: Reminders},
+  Maintenance: {screen: Maintenance},
+  Profile: {screen: Profile},
+  Notes: {screen: Notes},
+  News: {screen: List},
+  Support: {screen: Support},
 }, {
   initialRouteName: 'Garage',
   headerMode: 'none',
@@ -40,9 +40,7 @@ const Navigator = createDrawerNavigator({
 });
 
 const Auth = createStackNavigator({
-    Login: {screen: Login, path: 'login'},
-    Registration: {screen: Registration, path: 'registration'},
-    Restore: {screen: Restore, path: 'restore'},
+    Login: {screen: Login, path: 'login'}
   }, {
     headerMode: "none"
   }
@@ -63,13 +61,13 @@ export default class App extends React.Component {
 
     Notifications.initial();
 
-    Logger.session(null, ()=>{
+    Logger.session(null, () => {
       Logger.info("Запуск приложения");
     });
   }
 
   render() {
-    return(User.ready ? (User.auth ? <Root><ConnectError/><Navigator/></Root>: <Auth/>) : null)
+    return(User.ready ? <Root><ConnectError/>{User.auth ? <Navigator/> : <Auth/>}</Root> : null)
   }
 }
 

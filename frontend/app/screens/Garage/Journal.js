@@ -22,7 +22,7 @@ import PhotoModal from "../../components/PhotoModal";
 export default class Journal extends React.Component {
   @observable car = this.props.navigation.state.params.car;
   @observable modal = false;
-  @observable types = [];
+  @observable maintenance = [];
   @observable loading = true;
   @observable update = false;
 
@@ -36,7 +36,7 @@ export default class Journal extends React.Component {
     record : {
       car: this.car.car.id,
       date: moment().format("YYYY-MM-DD"),
-      type: null,
+      maintenance: null,
       comment: null,
       image: null
     }
@@ -47,7 +47,7 @@ export default class Journal extends React.Component {
     record : {
       car: this.car.car.id,
       date: moment().format("YYYY-MM-DD"),
-      type: null,
+      maintenance: null,
       comment: null,
       image: null
     }
@@ -118,9 +118,10 @@ export default class Journal extends React.Component {
     this.record.record[key] = value;
   };
 
-  @action getTypes = async () => {
-    let tmp = await Cars.getJournalTypes();
-    this.types = tmp.types.map((item) => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
+  @action getMaintenance = async () => {
+    let tmp = await Cars.getMaintenance({car: this.car.car.id});
+    console.log(tmp);
+    this.maintenance = tmp.list.map((item) => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
   };
 
   action = record => {
@@ -192,7 +193,8 @@ export default class Journal extends React.Component {
                       <Body>
                         <View style={{paddingRight: 5, flexDirection: "row", alignItems: "center"}}>
                           <View style={{flex: 1}}>
-                            <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{(record.type === 1 && record.title) ? record.title : this.journal.refs.type[record.type].name}</Text>
+                            {/*<Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{(record.type === 1 && record.title) ? record.title : this.journal.refs.type[record.type].name}</Text>*/}
+                            <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{record.maintenance && this.journal.refs.maintenance[record.maintenance].name}</Text>
                             {record.comment ? <Text style={styles.textNote}>{record.comment}</Text> : null}
                           </View>
                           {record.image ? <TouchableOpacity onPress={()=>{this.photo = {modal: true, url: cdn + this.journal.refs.image[record.image].path}}} style={{width: 40, marginLeft: 10, marginRight: 5}}><Thumbnail square style={{width: 40, height: 40}} source={{uri: cdn + this.journal.refs.image[record.image].path}}/></TouchableOpacity>: null}
@@ -211,7 +213,7 @@ export default class Journal extends React.Component {
 
         <PhotoModal animationType="none" image={this.photo.url} onRequestClose={()=>{this.photo.modal = false}} visible={this.photo.modal}/>
 
-        <Modal onShow={()=>this.getTypes()} animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
+        <Modal onShow={()=>this.getMaintenance()} animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
               <Left>
@@ -231,11 +233,11 @@ export default class Journal extends React.Component {
 
             <Content refreshControl={<RefreshControl refreshing={this.loading} />}>
               <Form>
-                <Select value={record.type} onChange={(data)=>{this.changeRecord("type", data.id)}} buttons={this.types} title={"Тип записи"}/>
+                <Select value={record.maintenance} onChange={(data)=>{this.changeRecord("maintenance", data.id)}} buttons={this.maintenance} title={"Тип записи"}/>
 
-                {record.type === 1 ?
-                <Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>
-                : null}
+                {/*{record.type === 1 ?*/}
+                {/*<Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>*/}
+                {/*: null}*/}
 
                 <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title="Пробег"/>

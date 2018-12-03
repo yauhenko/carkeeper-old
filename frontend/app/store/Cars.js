@@ -254,6 +254,43 @@ class Cars {
   @action updateNote = async (data = {}) => {
     return await Api('garage/notes/update', data);
   };
+
+
+  /**
+   * Список обслуживания
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action getMaintenance = async (data = {}) => {
+    return await Api('garage/maintenance', data);
+  };
+
+  /**
+   * Добавление обслуживания
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action addMaintenance = async (data = {}) => {
+    return await Api('garage/maintenance/create', data);
+  };
+
+  /**
+   * Обновление обслуживания
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action updateMaintenance = async (data = {}) => {
+    return await Api('garage/maintenance/update', data);
+  };
+
+  /**
+   * Удаление обслуживания
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action deleteMaintenance = async (data = {}) => {
+    return await Api('garage/maintenance/delete', data);
+  };
 }
 
 export default new Cars();

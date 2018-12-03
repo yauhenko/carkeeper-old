@@ -23,3 +23,10 @@ export function number_format(number, decimals, dec_point, thousands_sep) {
   kd = (decimals ? dec_point + Math.abs(number - i).toFixed(decimals).replace(/-/, 0).slice(2) : "");
   return km + kw + kd;
 }
+
+export function plural(val, str) {
+  let  v = Math.abs(val) % 100, n = v % 10,
+    p = (!n || n >= 5 || (v >= 5 && v <= 20)) ? 3 : ((n > 1 && n < 5) ? 2 : 1),
+    s = str.split(',');
+  return s[0] + s[p];
+}
