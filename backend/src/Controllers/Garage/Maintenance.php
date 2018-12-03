@@ -41,7 +41,7 @@ class Maintenance extends ApiController {
 			'car' => $car->id
 		]);
 
-		if($list && !$skelled) {
+		if(!$list && !$skelled) {
 			$skels = $this->db->find('SELECT id, name, distance, period, period_type FROM maintenance_skel 
 				WHERE ((fuel IS NULL OR fuel = {$fuel}) OR {$fuel} IS NULL)
 				AND ((transmission IS NULL OR transmission = {$transmission}) OR {$transmission} IS NULL)
