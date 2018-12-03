@@ -38,7 +38,7 @@
 	"twilio": {
 		"sid": "ACc6127aae5bae3577d905ab9a02582ed6",
 		"token": "97f09cc8897a93586f5a8bf26d239559",
-		"from": "+48799448630"
+		"from": "+17014191559"
 	},
 	"static_regexp": "/\\.(html|jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
 	"cdn": "https://cdn.carkeeper.pro",
