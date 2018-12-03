@@ -5,6 +5,8 @@ namespace Controllers\Garage;
 use Entities\Car;
 use Collections\Cars as CarsCollection;
 use Controllers\ApiController;
+use Framework\DB\Client;
+use Framework\Utils\Time;
 
 class Cars extends ApiController {
 
@@ -99,6 +101,16 @@ class Cars extends ApiController {
 		$this->checkEntityAccess($car);
 
 		$car->setData((array)$this->params->car);
+
+		if($this->params->car->odo) {
+			/** @var Client $db */
+			$db = $this->di->db;
+			$db->save('odo_history', [
+				'car' => $car->id,
+				'date' => Time::date(),
+				'odo' => $car->odo,
+			]);
+		}
 
 		return [
 			'updated' => $car->update()
