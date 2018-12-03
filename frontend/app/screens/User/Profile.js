@@ -11,18 +11,13 @@ import {
   Right,
   Body,
   Title,
-  List,
-  ListItem,
   Thumbnail,
-  Item,
-  Label,
   Form,
   ActionSheet
 } from 'native-base';
 import styles from "../../styles"
 import User from "../../store/User";
 import Cropper from "../../modules/Cropper";
-import ModalMenu from "../../components/ModalMenu";
 import {observable, action, toJS} from 'mobx';
 import Cars from "../../store/Cars";
 import thumb from "../../assets/images/avatar_thumb.png";

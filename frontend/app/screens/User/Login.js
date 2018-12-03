@@ -1,24 +1,11 @@
 import React, {Fragment} from 'react';
-import {
-  AsyncStorage,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Animated,
-  Image,
-  View,
-  Dimensions,
-  TextInput,
-  RefreshControl,
-  Vibration
-} from 'react-native';
+import {AsyncStorage, StyleSheet, Text, StatusBar, Animated, Image, View, Dimensions, TextInput, RefreshControl, Vibration} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content} from 'native-base';
 import User from "../../store/User";
 import { observable, action} from 'mobx';
 import Logo from "../../assets/images/logo.png";
 import Notification from "../../components/Notification";
-
 import background from "../../assets/images/login_background.jpg";
 import back from "../../assets/images/back.png";
 import TouchableItem from "react-navigation/src/views/TouchableItem";
