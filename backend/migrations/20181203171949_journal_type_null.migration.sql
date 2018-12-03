@@ -1,0 +1,1 @@
+ALTER TABLE `journal` CHANGE `type` `type` INT(10) UNSIGNED NULL DEFAULT NULL;
