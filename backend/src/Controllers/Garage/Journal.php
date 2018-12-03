@@ -31,7 +31,10 @@ class Journal extends ApiController {
 
 		return [
 			'records' => $records,
-			'refs' => (object)$this->di->refs->get($records)
+			'refs' => (object)$this->di->refs->get($records, [
+				'image' => ['table' => 'uploads'],
+				'maintenance' => ['table' => 'maintenance'],
+			])
 		];
 
 	}
@@ -53,7 +56,10 @@ class Journal extends ApiController {
 
 		return [
 			'record' => $record,
-			'refs' => (object)$this->di->refs->single($record)
+			'refs' => (object)$this->di->refs->single($record, [
+				'image' => ['table' => 'uploads'],
+				'maintenance' => ['table' => 'maintenance'],
+			])
 		];
 
 	}
