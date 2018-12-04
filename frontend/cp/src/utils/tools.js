@@ -4,6 +4,13 @@ export function range(n) {
 	return arr;
 }
 
+export function plural(val, str) {
+	let  v = Math.abs(val) % 100, n = v % 10,
+		p = (!n || n >= 5 || (v >= 5 && v <= 20)) ? 3 : ((n > 1 && n < 5) ? 2 : 1),
+		s = str.split(',');
+	return s[0] + s[p];
+}
+
 export function formToObject() {
 	if (!(this instanceof formToObject)) {
 		let test = new formToObject();
@@ -20,7 +27,7 @@ export function formToObject() {
 		w3cSuccessfulControlsOnly: false,
 	};
 	// Currently matching only '[]'.
-	let keyRegex = /[^\[\]]+|\[\]/g;
+	let keyRegex = /[^[]]+|\[\]/g;
 	let $form = null;
 	let $formElements;
 	/**
@@ -164,6 +171,7 @@ export function formToObject() {
 					$form = formRef;
 				}
 				break;
+			default: break;
 		}
 		return $form;
 	}

@@ -18,7 +18,7 @@ class Crud extends ApiController {
 	}
 
 	/**
-	 * @route /admin/crud/{table}/list
+	 * @route /admin/crud/{table}
 	 */
 	public function index(): array {
 		$this->authAdmin();
@@ -44,7 +44,7 @@ class Crud extends ApiController {
 		$refs = $this->di->refs;
 		return [
 			'item' => $item,
-			'refs' => $refs->single((object)$item, (array)$this->params->rules ?: null)
+			'refs' => (object)$refs->single((object)$item, (array)$this->params->rules ?: null)
 		];
 	}
 

@@ -36,7 +36,7 @@ class AbstractStore {
 	};
 
 	@action createItem = async (data = {}) => {
-		this.item = {...this.item, ... data};
+		this.item = {...this.item, ...data};
 		try {
 			await api(this.endpoint + '/create', { item: this.item });
 			await this.fetchList();
@@ -48,7 +48,7 @@ class AbstractStore {
 	};
 
 	@action updateItem = async (data = {}) => {
-		this.item = {...this.item, ... data};
+		this.item = {...this.item, ...data};
 		try {
 			await api(this.endpoint + '/update', { id: this.item.id, item: this.item });
 			await this.fetchList();

@@ -14,7 +14,7 @@ class AbstractCrudStore {
 
 	@action fetchList = async () => {
 		try {
-			const res = await api('admin/crud/' + this.table, { page: this.page, limit: 5, rules: this.rules });
+			const res = await api('admin/crud/' + this.table, { page: this.page, limit: 10, rules: this.rules });
 			this.meta = res.meta;
 			this.data = res.data;
 			this.refs = res.refs;
@@ -37,7 +37,7 @@ class AbstractCrudStore {
 	};
 
 	@action createItem = async (data = {}) => {
-		this.item = {...this.item, ... data};
+		this.item = {...this.item, ...data};
 		try {
 			await api('admin/crud/' + this.table + '/create', { item: this.item });
 			await this.fetchList();
@@ -49,7 +49,7 @@ class AbstractCrudStore {
 	};
 
 	@action updateItem = async (data = {}) => {
-		this.item = {...this.item, ... data};
+		this.item = {...this.item, ...data};
 		try {
 			await api('admin/crud/' + this.table + '/update', { id: this.item.id, item: this.item });
 			await this.fetchList();

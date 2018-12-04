@@ -29,6 +29,12 @@ class Navbar extends Component {
 						</NavLink>
 					</li>
 					<li className="nav-item">
+						<NavLink to="/maintenance" className="nav-link">
+							<Icon icon="wrench"/>
+							Обслуживание
+						</NavLink>
+					</li>
+					<li className="nav-item">
 						<NavLink to="/users" className="nav-link">
 							<Icon icon="users"/>
 							Users

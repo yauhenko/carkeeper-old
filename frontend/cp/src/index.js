@@ -14,6 +14,7 @@ import Loader from './components/Loader';
 import Users from './pages/Users/Users';
 import News from './pages/News/News';
 import './styles.css';
+import Maintenance from "./pages/Maintenance/Maintenance";
 
 const stores = {
 	app: AppStore,
@@ -34,6 +35,7 @@ class App extends Component {
 								<Route render={(props) => <Private {...props}><Home {...props}/></Private>} exact path="/"/>
 								<Route render={(props) => <Private {...props}><Users {...props}/></Private>} exact path="/users"/>
 								<Route render={(props) => <Private {...props}><News {...props}/></Private>} exact path="/news"/>
+								<Route render={(props) => <Private {...props}><Maintenance {...props}/></Private>} exact path="/maintenance"/>
 								<Route component={NotFound}/>
 							</Switch>
 						</Router>
