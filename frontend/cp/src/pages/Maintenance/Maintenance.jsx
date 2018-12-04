@@ -150,7 +150,7 @@ class Maintenance extends Component {
 											<div className="form-group">
 												<label>Топливо</label>
 												<select name="fuel" defaultValue={store.item.fuel} className="form-control">
-													<option value="">Любоя</option>
+													<option value="">Любое</option>
 													<option value="gasoline">Бензин</option>
 													<option value="diesel">Дизель</option>
 												</select>
