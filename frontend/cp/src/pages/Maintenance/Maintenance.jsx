@@ -125,7 +125,7 @@ class Maintenance extends Component {
 											<div className="form-group">
 												<label>Пробег</label>
 												<div className="input-group">
-													<input type="number" min="0" step="1" name="distance" defaultValue={store.item.tel} className="form-control" />
+													<input type="number" min="0" step="1" name="distance" defaultValue={store.item.distance} className="form-control" />
 													<span className="input-group-append">
 														<span className="input-group-text">км.</span>
 													</span>
@@ -141,7 +141,6 @@ class Maintenance extends Component {
 													<option value="year">{plural(Number(store.item.period || 1), ',год,года,лет')}</option>
 												</select>
 											</div>
-
 										</div>
 									</div>
 
