@@ -25,6 +25,6 @@ const componentStyle = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(241, 63, 63, 0.8)",
+    backgroundColor: "rgba(0, 0, 0, 0.7)"
   }
 });

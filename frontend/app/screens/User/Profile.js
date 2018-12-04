@@ -164,7 +164,7 @@ const customStyles = StyleSheet.create({
     paddingRight: 15,
     paddingBottom: 25,
     paddingTop: 5,
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#555",
     marginBottom: 30
   },
 
@@ -178,11 +178,10 @@ const customStyles = StyleSheet.create({
     position: "absolute",
     right: -7,
     bottom: -7,
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#555",
     color:"#fff",
     padding: 10,
     fontSize: 20,
     borderRadius: 50,
   }
-
 });

@@ -85,7 +85,7 @@ export default class Reminders extends React.Component {
                 <Text>Напоминать о техосмотре</Text>
                 </Body>
                 <Right>
-                  <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.checkupHandler(value)}} value={this.checkup.notify} />
+                  <Switch onTintColor={"#f1838b"} thumbTintColor={this.checkup.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.checkupHandler(value)}} value={this.checkup.notify} />
                 </Right>
               </ListItem>
 
@@ -100,7 +100,7 @@ export default class Reminders extends React.Component {
                 <Text>Напоминать о страховке</Text>
                 </Body>
                 <Right>
-                  <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.insuranceHandler("regular", value)}} value={this.insurance.regular.notify} />
+                  <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.regular.notify ? "#a23737" : "#eee"}  onValueChange={(value)=>{this.insuranceHandler("regular", value)}} value={this.insurance.regular.notify} />
                 </Right>
               </ListItem>
 
@@ -116,7 +116,7 @@ export default class Reminders extends React.Component {
                 <Text>Напоминать о КАСКО</Text>
                 </Body>
                 <Right>
-                  <Switch onTintColor={"#f13f3f"} thumbTintColor={"#a23737"} onValueChange={(value)=>{this.insuranceHandler("casco", value)}} value={this.insurance.casco.notify} />
+                  <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.casco.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.insuranceHandler("casco", value)}} value={this.insurance.casco.notify} />
                 </Right>
               </ListItem>
 

@@ -1,11 +1,32 @@
 import React from 'react';
-import {View, Modal, StyleSheet, Text, Image} from 'react-native';
+import {Modal, StyleSheet, Text, Image, RefreshControl} from 'react-native';
 import {observer} from 'mobx-react';
-import {Body, Button, Container, Header, Icon, Left, Title} from "native-base";
+import {Body, Button, Container, Content, Header, Icon, Left, Right, Title} from "native-base";
 import styles from "../styles";
+import RNFS from 'react-native-fs';
+import Notification from "./Notification";
+import {observable, action} from "mobx";
+import PropTypes from 'prop-types';
 
 @observer
 export default class PhotoModal extends React.Component {
+  @observable loading = false;
+
+  @action download = url => {
+    this.loading = true;
+    const name = String(Math.random()).slice(2);
+
+    RNFS.downloadFile({
+      fromUrl: url,
+      toFile: RNFS.PicturesDirectoryPath + `/${name}.jpg`
+    }).promise.then(()=>{
+      Notification(`Изображение сохранено: ${name}.jpg`);
+      this.loading = false;
+    }).catch(() =>{
+      this.loading = false;
+    })
+  };
+
   render() {
     return (
       <Modal
@@ -23,16 +44,24 @@ export default class PhotoModal extends React.Component {
             <Body style={{flexGrow: 2}}>
               <Title><Text style={styles.headerTitle}>Изображение</Text></Title>
             </Body>
+            <Right>
+              <Button disabled={this.loading} transparent onPress={()=>{this.download(this.props.image)}}>
+                <Icon name="download"/>
+              </Button>
+            </Right>
           </Header>
-          <View style={componentStyle.container}>
-            <Image style={componentStyle.image} source={{uri: this.props.image}}/>
-          </View>
+          <Content refreshControl={<RefreshControl refreshing={this.loading} enabled={false} onRefresh={()=>{}}/>} contentContainerStyle={componentStyle.container}>
+              <Image style={componentStyle.image} source={{uri: this.props.image}}/>
+          </Content>
         </Container>
-
       </Modal>
     )
   }
 }
+
+PhotoModal.propTypes = {
+  image: PropTypes.string.isRequired
+};
 
 PhotoModal.defaultProps = {
   animationType: 'slide',
@@ -49,7 +78,6 @@ const componentStyle = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center"
   },
-
   image: {
     width: "100%",
     aspectRatio: 1

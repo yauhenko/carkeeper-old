@@ -169,7 +169,7 @@ export default class AddOrEditCar extends React.Component {
     return (
       <Modal animationType="slide" onShow={()=>{this.getMarks(); this.fill()}} transparent={false} visible={this.props.show} onRequestClose={()=>this.close()}>
         <Container>
-          <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+          <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
             <Left>
               <Button title={"Назад"} onPress={() => {this.close()}} transparent>
                 <Icon name='arrow-back'/>

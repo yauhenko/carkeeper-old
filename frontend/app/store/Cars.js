@@ -7,6 +7,12 @@ class Cars {
     refs: {}
   };
 
+  @observable currentCar = null;
+
+  @action setCurrentCar = (id = null) => {
+    this.currentCar = id;
+  };
+
   /**
    * Получение списка машин в гараже
    * @returns {Promise<*>}

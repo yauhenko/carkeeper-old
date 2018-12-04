@@ -176,7 +176,7 @@ export default class Maintenance extends React.Component {
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container>
-            <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+            <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
                   <Icon name='arrow-back'/>

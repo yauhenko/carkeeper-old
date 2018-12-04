@@ -1,5 +1,5 @@
 import React from 'react';
-import {NetInfo} from 'react-native';
+import {NetInfo, StatusBar} from 'react-native';
 import {Root} from 'native-base';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
@@ -21,6 +21,7 @@ import Notes from "./screens/Garage/Notes";
 import List from "./screens/News/List";
 import Support from "./screens/User/Support";
 import Maintenance from "./screens/Garage/Maintenance";
+import Card from "./screens/Card/Card";
 
 const Navigator = createDrawerNavigator({
   Garage: {screen: Garage},
@@ -33,9 +34,10 @@ const Navigator = createDrawerNavigator({
   Notes: {screen: Notes},
   News: {screen: List},
   Support: {screen: Support},
+  Card: {screen: Card}
 }, {
   initialRouteName: 'Garage',
-  headerMode: 'none',
+  headerMode: "none",
   contentComponent : Navigation
 });
 
@@ -50,13 +52,13 @@ const Auth = createStackNavigator({
 export default class App extends React.Component {
   async componentWillMount() {
     await User.checkAuth();
+    StatusBar.setTranslucent(true);
     SplashScreen.hide();
   }
 
   async componentDidMount() {
     NetInfo.isConnected.addEventListener('connectionChange', result => {
       AppStore.connect = result;
-      Logger.info(result ? "Подключение к интернету установлено" : "Нет подключения к интернету")
     });
 
     Notifications.initial();

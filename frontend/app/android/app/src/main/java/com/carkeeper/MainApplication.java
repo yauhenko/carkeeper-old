@@ -1,7 +1,6 @@
 package by.carkeeper;
-
 import android.app.Application;
-
+import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
@@ -32,7 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new SplashScreenReactPackage(),
             new PickerPackage(),
             new RNFirebaseMessagingPackage(),
-            new RNFirebaseNotificationsPackage()
+            new RNFirebaseNotificationsPackage(),
+            new RNFSPackage()
       );
     }
 

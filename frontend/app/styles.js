@@ -1,13 +1,23 @@
+import {StatusBar} from 'react-native';
+
+
 export default styles = {
-  statusBarColor: "#a23737",
+  statusBarColor: "rgba(0,0,0, 0.3)",
+
   selectionColor: "#a23737",
 
   header : {
-    backgroundColor: "#f13f3f"
+    backgroundColor: "#555",
+    paddingTop: StatusBar.currentHeight,
+    height: 80,
   },
 
   headerTitle: {
     fontSize: 16
+  },
+
+  modalHeader: {
+    backgroundColor: "#555"
   },
 
   container: {
@@ -33,13 +43,13 @@ export default styles = {
   },
 
   footerButton : {
-    backgroundColor: "#383a43",
+    backgroundColor: "#555",
     borderRadius: 0,
     height: 60
   },
 
   footerButtonActive : {
-    backgroundColor: "#21242b",
+    backgroundColor: "#333",
     borderRadius: 0,
     height: 60
   },

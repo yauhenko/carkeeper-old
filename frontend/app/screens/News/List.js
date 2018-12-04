@@ -80,7 +80,7 @@ export default class List extends React.Component {
 
         <Modal animationType="slide" onShow={()=>{}}  transparent={false} visible={this.modal} onRequestClose={() => {this.closeModal()}}>
           <Container>
-            <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+            <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.closeModal()}} transparent>
                   <Icon name='arrow-back'/>

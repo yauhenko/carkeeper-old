@@ -22,7 +22,7 @@ const style = {
     position: "absolute",
     right: 20,
     width: 170,
-    top: 20,
+    top: 40,
     zIndex: 20,
     backgroundColor: "#fff",
     borderRadius: 2,

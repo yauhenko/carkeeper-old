@@ -94,7 +94,7 @@ export default class Car extends React.Component {
       <Container>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
-            <Button title="Назад" onPress={() => {this.props.navigation.navigate('Garage')}} transparent>
+            <Button title="Назад" onPress={() => {Cars.setCurrentCar(null); this.props.navigation.navigate('Garage')}} transparent>
               <Icon name='arrow-back'/>
             </Button>
           </Left>
@@ -177,7 +177,7 @@ export default class Car extends React.Component {
         {this.odoModal &&
         <Modal onShow={()=>{}} animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.odoModal = false}}>
           <Container>
-            <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+            <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.odoModal = false}} transparent>
                   <Icon name='arrow-back'/>

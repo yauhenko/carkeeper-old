@@ -11,10 +11,6 @@ import AddOrEditCar from "./AddOrEditCar";
 
 @observer
 export default class Garage extends React.Component {
-  componentDidMount() {
-    this.cars();
-  }
-
   @observable loading = true;
 
   @observable modal = false;
@@ -30,6 +26,13 @@ export default class Garage extends React.Component {
     this.loading = false;
   };
 
+  componentWillMount() {
+    if(Cars.currentCar) {
+      this.props.navigation.navigate('Car', {id: Cars.currentCar});
+    } else {
+      this.cars();
+    }
+  }
 
   render() {
     const {cars, refs} = Cars.cars;
@@ -56,7 +59,7 @@ export default class Garage extends React.Component {
           <List>
             {cars && cars.map(car => {
               return(
-                <ListItem onPress={()=>this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name, })} thumbnail key={car.id}>
+                <ListItem onPress={()=>{Cars.setCurrentCar(car.id); this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name})}} thumbnail key={car.id}>
                   <Left>
                     {car.image ?
                       <Thumbnail source={{uri:  cdn + refs.image[car.image].path}}/>

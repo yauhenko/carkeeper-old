@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import {Text, List, ListItem, Left, Body, Thumbnail, Icon} from 'native-base';
+import {StyleSheet, View, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {Text, List, ListItem, Left, Body, Thumbnail, Icon, Button} from 'native-base';
 import User from "../store/User";
 import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
+import background from "../assets/images/login_background.jpg";
 
 @observer
 export default class Navigation extends Component {
@@ -23,16 +24,16 @@ export default class Navigation extends Component {
       action: null
     },
     {
-      title: "Профиль",
-      icon: "person",
-      path: "Profile",
+      title: "Автокарта",
+      icon: "card",
+      path: "Card",
       action: null
     },
     {
-      title: "Выход",
-      icon: "exit",
-      path: null,
-      action: User.logout
+      title: "Поддержка",
+      icon: "text",
+      path: "Support",
+      action: null
     }
   ];
 
@@ -57,17 +58,22 @@ export default class Navigation extends Component {
 
     return (
       <View style={componentStyle.wrapper}>
+        <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
+          <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width}} source={background}/>
+        </View>
+
+        <View style={[StyleSheet.absoluteFill, {backgroundColor: "rgba(0,0,0,0.7)"}]}/>
+
         <View>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
                 {user.avatar
-                  ? <Thumbnail large source={{uri: cdn + refs.avatar.path}}/>
+                  ? <Thumbnail style={{borderWidth: 3, borderColor: "#d6d7da"}} large source={{uri: cdn + refs.avatar.path}}/>
                   : <Thumbnail large source={thumb}/>
                 }
               </TouchableOpacity>
             </View>
-
             <View>
               <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 16, color: "#fff"}}>{`${user.name || "Аноним"}`}</Text>
               {cars.cars.length ?
@@ -83,7 +89,7 @@ export default class Navigation extends Component {
               return (
                 <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>
-                    <Icon style={{color: "#f13f3f"}} name={route.icon}/>
+                    <Icon style={{color: "#fff"}} name={route.icon}/>
                   </Left>
                   <Body>
                     <Text style={componentStyle.link}>{route.title}</Text>
@@ -94,10 +100,12 @@ export default class Navigation extends Component {
           </List>
         </View>
 
-        <View style={componentStyle.callback}>
-          <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Support")}}>
-            <Text style={componentStyle.callbackLink}>Обратная связь</Text>
-          </TouchableOpacity>
+        <View style={componentStyle.bottom}>
+          <View style={{flexDirection: "row"}}>
+            <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Profile")}} transparent><Icon style={[componentStyle.bottomIcon, {marginRight: 20}]} name={"settings"}/></Button>
+            <Button transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
+          </View>
+          <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={[componentStyle.bottomIcon, {color: "#f13f3f"}]} name={"power"}/></Button>
         </View>
       </View>
     )
@@ -110,32 +118,36 @@ const componentStyle = StyleSheet.create({
     flex: 1
   },
   link: {
-    fontSize : 15
+    fontSize : 14,
+    color: "#fff"
   },
   top: {
-    paddingTop: 53,
-    paddingBottom: 53,
+    paddingTop: 50,
+    paddingBottom: 30,
     paddingLeft: 15,
     borderBottomColor: "#d6d7da",
-    borderBottomWidth: 0.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     marginBottom: 20,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f13f3f",
     marginTop: 0
   },
+
   listItem : {
     height: 60,
     alignItems: "flex-end"
   },
-  callback: {
+  bottom: {
     flexDirection: "row",
-    justifyContent: "center",
-    paddingBottom: 15
+    justifyContent: "space-between",
+    paddingBottom: 5
   },
-  callbackLink: {
-    textDecorationLine: "underline",
-    color: "#f13f3f",
-    fontSize: 14
+
+
+  bottomIcon: {
+    color: "#fff",
+    fontSize: 26,
+    opacity: 0.5
+
   }
 });

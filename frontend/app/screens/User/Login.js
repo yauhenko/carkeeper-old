@@ -70,7 +70,6 @@ export default class Login extends React.Component {
 
     try {
       const response = await User.login({tel: this.tel});
-
       this.slide();
 
       setTimeout(() => {
