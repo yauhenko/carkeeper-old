@@ -1,4 +1,4 @@
-import {StatusBar} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 
 
 export default styles = {
@@ -34,7 +34,7 @@ export default styles = {
 
   pickerWrapper: {
     marginBottom: 5,
-    borderBottomWidth: 0.3,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#d6d7da"
   },
 
@@ -63,7 +63,7 @@ export default styles = {
     marginLeft: 0,
     marginBottom: 15,
     borderBottomColor: "#d6d7da",
-    borderBottomWidth: 0.5
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
 
   textNote: {

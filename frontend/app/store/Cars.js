@@ -7,6 +7,8 @@ class Cars {
     refs: {}
   };
 
+  @observable car = {};
+
   @observable currentCar = null;
 
   @action setCurrentCar = (id = null) => {

@@ -9,14 +9,24 @@ export default class Select extends Component {
   @action open = () => {
     if(this.props.disabled) return;
 
-    const options = this.props.buttons.map(item => {
+    let options = this.props.buttons.map(item => {
       item.icon = (this.props.value === item.id) ? "radio-button-on" : "radio-button-off";
       return item;
     });
 
+    options.push({ text: "Отмена", icon: "close", iconColor: "#b9babd"});
+
     ActionSheet.show (
-      {options: options, title: this.props.actionName},
+      {
+        options: options,
+        title: this.props.actionName,
+        cancelButtonIndex: options.length - 1
+      },
       selected => {
+        if(selected === options.length - 1) {
+          return;
+        }
+
         if(selected !== undefined) {
           this.selected = this.props.buttons[selected];
           if(this.props.onChange) this.props.onChange(this.selected)
@@ -26,7 +36,7 @@ export default class Select extends Component {
   };
 
   @action getName = id => {
-    const elem = this.props.buttons.find((elem)=>{return elem.id === id});
+    const elem = this.props.buttons.find(elem=>{return elem.id === id});
     return elem ? elem.text : "";
   };
 
@@ -37,7 +47,7 @@ export default class Select extends Component {
       <View style={styles.wrapper}>
         <View style={styles.title}><Text>{title}</Text></View>
         <TouchableOpacity style={styles.select} onPress={()=>{this.open()}}>
-          <Text style={this.props.disabled ? styles.disabled : {flex: 1}}>{this.props.value ? this.getName(this.props.value) : "Не выбрано"}</Text>
+          <Text style={this.props.disabled ? styles.disabled : {flex: 1}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
         </TouchableOpacity>
       </View>
