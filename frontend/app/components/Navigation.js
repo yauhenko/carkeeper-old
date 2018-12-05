@@ -6,7 +6,7 @@ import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
-import background from "../assets/images/login_background.jpg";
+import background from "../assets/images/navbar_bg.png";
 
 @observer
 export default class Navigation extends Component {
@@ -62,8 +62,6 @@ export default class Navigation extends Component {
           <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width}} source={background}/>
         </View>
 
-        <View style={[StyleSheet.absoluteFill, {backgroundColor: "rgba(0,0,0,0.7)"}]}/>
-
         <View>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
@@ -89,7 +87,7 @@ export default class Navigation extends Component {
               return (
                 <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>
-                    <Icon style={{color: "#fff"}} name={route.icon}/>
+                    <Icon style={{color: "#f13f3f"}} name={route.icon}/>
                   </Left>
                   <Body>
                     <Text style={componentStyle.link}>{route.title}</Text>
@@ -105,7 +103,7 @@ export default class Navigation extends Component {
             <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Profile")}} transparent><Icon style={[componentStyle.bottomIcon, {marginRight: 20}]} name={"settings"}/></Button>
             <Button transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
           </View>
-          <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={[componentStyle.bottomIcon, {color: "#f13f3f"}]} name={"power"}/></Button>
+          <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={componentStyle.bottomIcon} name={"power"}/></Button>
         </View>
       </View>
     )

@@ -59,9 +59,9 @@ export default class PhotoModal extends React.Component {
   }
 }
 
-PhotoModal.propTypes = {
-  image: PropTypes.string.isRequired
-};
+// PhotoModal.propTypes = {
+//   image: PropTypes.string.isRequired
+// };
 
 PhotoModal.defaultProps = {
   animationType: 'slide',
