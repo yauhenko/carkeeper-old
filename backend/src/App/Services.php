@@ -92,7 +92,8 @@ class Services {
 
         	return new Redis(
         		$di->config->cache->redis->host ?: 'locahost',
-		        $di->config->cache->redis->port ?: 6379
+		        $di->config->cache->redis->port ?: 6379,
+		        $di->config->cache->redis->prefix ?: null
 	        );
 
         })->set('cache:file', function (DI $di) {
