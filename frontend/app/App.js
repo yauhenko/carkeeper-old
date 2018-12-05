@@ -1,8 +1,8 @@
 import React from 'react';
-import {NetInfo, StatusBar} from 'react-native';
+import {NetInfo, StatusBar, Platform} from 'react-native';
 import {Root} from 'native-base';
-import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import {observer} from 'mobx-react';
+import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import Login from "./screens/User/Login";
 import User from "./store/User";
 import Navigation from "./components/Navigation";
@@ -52,8 +52,11 @@ const Auth = createStackNavigator({
 export default class App extends React.Component {
   async componentWillMount() {
     await User.checkAuth();
-    StatusBar.setTranslucent(true);
-    SplashScreen.hide();
+
+    if(Platform.OS === "android") {
+      StatusBar.setTranslucent(true);
+      SplashScreen.hide();
+    }
   }
 
   async componentDidMount() {

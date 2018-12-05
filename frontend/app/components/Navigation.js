@@ -58,7 +58,7 @@ export default class Navigation extends Component {
 
     return (
       <View style={componentStyle.wrapper}>
-        <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
+        <View style={{alignItems: "center", position: "absolute", left: 0, right: 0, top: 0, bottom: 0}}>
           <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width}} source={background}/>
         </View>
 
@@ -140,7 +140,6 @@ const componentStyle = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 5
   },
-
 
   bottomIcon: {
     color: "#fff",
