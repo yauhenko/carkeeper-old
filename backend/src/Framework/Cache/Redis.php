@@ -15,14 +15,21 @@ class Redis implements CacheInterface {
 	protected $redis;
 
 	/**
+	 * @var string|null
+	 */
+	protected $prefix = null;
+
+	/**
 	 * Redis Cache constructor
 	 *
 	 * @param string $host
 	 * @param int $port
+	 * @param string|null $prefix
 	 */
-	public function __construct(string $host = 'localhost', int $port = 6379) {
+	public function __construct(string $host = 'localhost', int $port = 6379, string $prefix = null) {
 		$this->redis = new \Redis;
 		$this->redis->connect($host, $port);
+		$this->prefix = $prefix;
 	}
 
 	/**
@@ -32,6 +39,7 @@ class Redis implements CacheInterface {
 	 * @return mixed
 	 */
 	public function get(string $key) {
+		$key = $this->prefix ? "{$this->prefix}:{$key}" : $key;
 		$res = $this->redis->get($key) ?: null;
 		return unserialize($res);
 	}
@@ -44,6 +52,7 @@ class Redis implements CacheInterface {
 	 * @param int $ttl
 	 */
 	public function set(string $key, $value, int $ttl = 0): void {
+		$key = $this->prefix ? "{$this->prefix}:{$key}" : $key;
 		$value = serialize($value);
 		$this->redis->set($key, $value, $ttl);
 	}
@@ -59,6 +68,7 @@ class Redis implements CacheInterface {
 				$this->delete($k);
 			return;
 		}
+		$key = $this->prefix ? "{$this->prefix}:{$key}" : $key;
 		$this->redis->delete($key);
 	}
 
@@ -69,6 +79,7 @@ class Redis implements CacheInterface {
 	 * @return array
 	 */
 	public function keys(string $mask = '*'): array {
+		$mask = $this->prefix ? "{$this->prefix}:{$mask}" : $mask;
 		return $this->redis->keys($mask);
 	}
 
