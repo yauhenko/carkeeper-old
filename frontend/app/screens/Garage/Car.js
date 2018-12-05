@@ -3,7 +3,7 @@ import {Text, View, RefreshControl, Alert, Dimensions, StyleSheet, Modal} from '
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Thumbnail, List, ListItem} from 'native-base';
 import styles from "../../styles"
-import {observable, action} from 'mobx';
+import {observable, action, toJS} from 'mobx';
 import Cars from "../../store/Cars";
 import Footer from "../../components/Footer";
 import HeaderMenu from "../../components/HeaderMenu";
@@ -11,8 +11,8 @@ import CarMenu from "../../components/CarMenu";
 import Notification from "../../components/Notification";
 import {cdn} from "../../modules/Url";
 import AddOrEditCar from "./AddOrEditCar";
-import Input from "../../components/Form/Input";
 import {number_format} from "../../modules/Utils";
+import Odo from "../../components/Odo";
 
 @observer
 export default class Car extends React.Component {
@@ -23,7 +23,7 @@ export default class Car extends React.Component {
   @observable loading = true;
 
   @observable odoModal = false;
-  @observable odoValue = false;
+  @observable odoValue = Number();
 
   @observable car = {};
 
@@ -55,6 +55,7 @@ export default class Car extends React.Component {
       });
       this.car.car.odo = this.odoValue;
       this.odoModal = false;
+      Notification("Показания обновлены");
     } catch (e) {
       Notification(e);
     }
@@ -81,6 +82,10 @@ export default class Car extends React.Component {
   @action toggleEditCarModal = (bool = true) => {
       this.menu = false;
       this.edit = bool;
+  };
+
+  @action resetOdo = () => {
+      this.odoValue = this.car.car.odo;
   };
 
   componentDidMount() {
@@ -173,9 +178,7 @@ export default class Car extends React.Component {
 
         {this.loading ? null : <AddOrEditCar cb={()=>{this.getCar()}} edit={true} onClose={()=>{this.toggleEditCarModal(false)}} car={this.car} show={this.edit}/>}
 
-
-        {this.odoModal &&
-        <Modal onShow={()=>{}} animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.odoModal = false}}>
+        <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
           <Container>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
@@ -192,13 +195,11 @@ export default class Car extends React.Component {
                 </Button>
               </Right>
             </Header>
-
             <Content>
-              <Input value={this.odoValue} onChange={value => {this.odoValue = value}} keyboardType={"numeric"} title={"Пробег"}/>
+              <Odo onChange={value => {this.odoValue = value}} value={this.odoValue}/>
             </Content>
           </Container>
-        </Modal>}
-
+        </Modal>
       </Container>
     );
   }

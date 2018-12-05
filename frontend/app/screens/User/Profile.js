@@ -107,7 +107,7 @@ export default class Profile extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
-              <Icon name='menu'/>
+              <Icon style={{color: "#fff"}} name='menu'/>
             </Button>
           </Left>
 
@@ -171,7 +171,7 @@ const customStyles = StyleSheet.create({
   avatar : {
     height: 100,
     width: 100,
-    borderRadius: 100
+    borderRadius: 100/2
   },
 
   camera : {

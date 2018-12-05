@@ -59,9 +59,7 @@ export default class Journal extends React.Component {
   };
 
   @action toggleModal = bool => {
-      if(!bool) {
-        this.update = false;
-      }
+      if(!bool) {this.update = false}
       this.modal = bool;
   };
 
@@ -120,7 +118,7 @@ export default class Journal extends React.Component {
 
   @action getMaintenance = async () => {
     let tmp = await Cars.getMaintenance({car: this.car.car.id});
-    console.log(tmp);
+    tmp.list.push({id: null, name: "Прочее"});
     this.maintenance = tmp.list.map((item) => {return {id: item.id, text: item.name, icon: "radio-button-off"}});
   };
 
@@ -153,7 +151,6 @@ export default class Journal extends React.Component {
   componentDidMount() {
      this.getJournal();
   }
-
 
   render() {
     const {refs : carRefs, car} = this.car;
@@ -193,9 +190,13 @@ export default class Journal extends React.Component {
                       <Body>
                         <View style={{paddingRight: 5, flexDirection: "row", alignItems: "center"}}>
                           <View style={{flex: 1}}>
-                            {/*<Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{(record.type === 1 && record.title) ? record.title : this.journal.refs.type[record.type].name}</Text>*/}
-                            <Text style={{marginBottom: (record.odo || record.comment) ? 5 : 0}}>{record.maintenance && this.journal.refs.maintenance[record.maintenance].name}</Text>
-                            {record.comment ? <Text style={styles.textNote}>{record.comment}</Text> : null}
+                            {record.title
+                              ?
+                              <Text>{record.title}</Text>
+                              :
+                              <Text>{record.maintenance && this.journal.refs.maintenance[record.maintenance].name}</Text>
+                            }
+                            {record.comment ? <Text style={[styles.textNote, {paddingTop: 5}]}>{record.comment}</Text> : null}
                           </View>
                           {record.image ? <TouchableOpacity onPress={()=>{this.photo = {modal: true, url: cdn + this.journal.refs.image[record.image].path}}} style={{width: 40, marginLeft: 10, marginRight: 5}}><Thumbnail square style={{width: 40, height: 40}} source={{uri: cdn + this.journal.refs.image[record.image].path}}/></TouchableOpacity>: null}
                         </View>
@@ -234,11 +235,9 @@ export default class Journal extends React.Component {
             <Content refreshControl={<RefreshControl refreshing={this.loading} />}>
               <Form>
                 <Select value={record.maintenance} onChange={(data)=>{this.changeRecord("maintenance", data.id)}} buttons={this.maintenance} title={"Тип записи"}/>
-
-                {/*{record.type === 1 ?*/}
-                {/*<Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>*/}
-                {/*: null}*/}
-
+                {!record.maintenance ?
+                  <Input value={record.title} onChange={value => this.changeRecord("title", value)} title={"Название"}/>
+                : null}
                 <InputDate onChange={(value)=>{this.changeRecord("date", moment(value).format("YYYY-MM-DD"))}} value={record.date} title={"Дата"}/>
                 <Input value={record.odo} onChange={(value)=>{this.changeRecord("odo", Number(value))}} keyboardType={"numeric"} title="Пробег"/>
                 <Input value={record.comment} onChange={(value)=>{this.changeRecord("comment", value)}} multiline={true} title={"Комментарий"}/>
