@@ -55,7 +55,7 @@ export default class Support extends React.Component {
           </Right>
         </Header>
 
-        <Content contentContainerStyle={styles.container}>
+        <Content contentContainerStyle={styles.content}>
             <View>
               <Select onChange={value => {this.subject = value.id}} value={this.subject} buttons={[
                 {id: "Ошибка в приложении", text: "Ошибка в приложении"},

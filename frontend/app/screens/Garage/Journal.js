@@ -176,7 +176,7 @@ export default class Journal extends React.Component {
             </Right>
           </Header>
 
-          <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.getJournal()}/>} contentContainerStyle={styles.container}>
+          <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.getJournal()}/>} contentContainerStyle={styles.content}>
             <List>
               {records && records.length
                 ?

@@ -112,7 +112,7 @@ export default class Notes extends React.Component {
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getNotes()}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getNotes()}}/>} contentContainerStyle={styles.content}>
           <List>
             {this.notes.length
               ?

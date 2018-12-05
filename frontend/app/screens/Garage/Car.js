@@ -113,7 +113,7 @@ export default class Car extends React.Component {
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getCar()}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getCar()}}/>} contentContainerStyle={styles.content}>
           {this.loading
             ?
             null
@@ -145,6 +145,8 @@ export default class Car extends React.Component {
                     case "checkup" : route = "Reminders";
                     break;
                     case "insurance" : route = "Reminders";
+                    break;
+                    case "maintenances" : route = "Maintenance";
                     break;
                   }
 

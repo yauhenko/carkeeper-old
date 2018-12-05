@@ -62,6 +62,7 @@ export default class Navigation extends Component {
           <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={background}/>
         </View>
 
+
         <View>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
@@ -81,6 +82,7 @@ export default class Navigation extends Component {
               }
             </View>
           </View>
+
 
           <List>
             {this.routes.map((route, key)=>{

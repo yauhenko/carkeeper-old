@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl} from 'react-native';
+import {Text, RefreshControl, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
 import styles from "../../styles"
@@ -38,11 +38,11 @@ export default class Garage extends React.Component {
     const {cars, refs} = Cars.cars;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-              <Icon name='menu'/>
+              <Icon style={styles.headerIcon} name='menu'/>
             </Button>
           </Left>
           <Body>
@@ -50,37 +50,28 @@ export default class Garage extends React.Component {
           </Body>
           <Right>
             <Button title={"Добавить"} onPress={()=>{this.toggleModal(true)}} transparent>
-              <Icon name='add' />
+              <Icon style={styles.headerIcon} name='add' />
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.container}>
-          <List>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.content}>
+          <View>
             {cars && cars.map(car => {
               return(
-                <ListItem onPress={()=>{Cars.setCurrentCar(car.id); this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name})}} thumbnail key={car.id}>
-                  <Left>
-                    {car.image ?
-                      <Thumbnail source={{uri:  cdn + refs.image[car.image].path}}/>
-                      :
-                      <Thumbnail source={require('../../assets/images/car_stub.png')}/>
-                    }
-                  </Left>
+                <TouchableOpacity onPress={()=>{Cars.setCurrentCar(car.id); this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name})}} key={car.id}>
+                  <View style={styles.block}>
+                    <Text style={componentStyle.header}>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
 
-                  <Body>
-                    <Text>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
+                    <Image style={componentStyle.image} source={car.image ? {uri:  cdn + refs.image[car.image].path} : require('../../assets/images/car_stub.png')}/>
+
                     <Text style={styles.textNote}>{Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name}</Text>
                     <Text style={styles.textNote}>{Boolean(car.modification) && refs.modification[car.modification].name}</Text>
-                  </Body>
-
-                  <Right style={{paddingLeft: 10}}>
-                    <Icon name="arrow-forward" />
-                  </Right>
-                </ListItem>
+                  </View>
+                </TouchableOpacity>
               )
             })}
-          </List>
+          </View>
 
           {!this.loading && !Cars.cars.cars.length && <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text>}
 
@@ -90,3 +81,16 @@ export default class Garage extends React.Component {
     );
   }
 }
+
+const componentStyle = StyleSheet.create({
+  header: {
+    fontWeight: "bold"
+  },
+  image: {
+    width: "100%",
+    height: 120,
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10
+  }
+});

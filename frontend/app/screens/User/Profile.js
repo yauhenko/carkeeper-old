@@ -110,11 +110,9 @@ export default class Profile extends React.Component {
               <Icon style={{color: "#fff"}} name='menu'/>
             </Button>
           </Left>
-
           <Body>
-          <Title><Text style={styles.headerTitle}>Профиль</Text></Title>
+            <Title><Text style={styles.headerTitle}>Профиль</Text></Title>
           </Body>
-
           <Right>
             {this.changed &&
             <Button onPress={this.update} title={"Сохранить"} transparent>
@@ -123,7 +121,7 @@ export default class Profile extends React.Component {
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>
           <View style={customStyles.top}>
             <View style={{paddingRight: 20}}>
               <TouchableOpacity onPress={() => {this.action()}}>

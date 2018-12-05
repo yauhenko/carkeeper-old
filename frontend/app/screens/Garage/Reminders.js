@@ -77,7 +77,7 @@ export default class Reminders extends React.Component {
           {/*</Right>*/}
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>
           {this.loading ? null :
             <Fragment>
               <ListItem style={componentStyle.header} itemDivider>

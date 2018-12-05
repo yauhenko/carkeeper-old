@@ -4,24 +4,40 @@ import {StatusBar, StyleSheet} from 'react-native';
 export default styles = {
   statusBarColor: "rgba(0,0,0, 0.3)",
 
+  container: {
+    backgroundColor: "#d5dae4"
+  },
+
   selectionColor: "#a23737",
 
   header : {
-    backgroundColor: "#555",
+    backgroundColor: "#eaeef7",
     paddingTop: StatusBar.currentHeight,
     height: 80,
   },
 
   headerTitle: {
-    fontSize: 16
+    fontSize: 16,
+    color: "#a9b3c7"
+  },
+
+  headerIcon: {
+    color: "#a9b3c7"
   },
 
   modalHeader: {
-    backgroundColor: "#555"
+    backgroundColor: "#eaeef7"
   },
 
-  container: {
-    backgroundColor: '#fff',
+  content: {
+    padding: 10
+  },
+
+  block: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10
   },
 
   primaryButton: {
