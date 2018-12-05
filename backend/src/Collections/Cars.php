@@ -106,18 +106,26 @@ class Cars extends Collection {
 
 		$ms = $db->find('SELECT * FROM maintenance WHERE car = {$car} AND
 			( 
-				(next_date IS NULL OR next_date <= NOW())
+				(NOW() >= next_date AND next_date IS NOT NULL)
 				OR
-				(next_odo IS NULL OR next_odo <= {$odo})
+				({$odo} >= next_odo AND next_odo IS NOT NULL)
 			)
-			ORDER BY (next_date OR next_odo) DESC, next_odo ASC, next_date ASC
 		', ['car' => $car->id, 'odo' => $car->odo]);
 		foreach ($ms as $m) {
 			$notifications[] = [
-				'level' => ($m['last_odo'] || $m['last_date']) ? 'warning' : 'info',
+				'level' => 'warning',
 				'type' => 'maintenance',
-				'text' => ($m['last_odo'] || $m['last_date']) ? 'Требуется ' . mb_convert_case($m['name'], MB_CASE_LOWER) : $m['name'],
+				'text' => 'Требуется ' . mb_convert_case($m['name'], MB_CASE_LOWER),
 				'maintenance' => $m['id']
+			];
+		}
+
+		if($cnt = $db->findOne('SELECT COUNT(*) AS cnt FROM maintenance WHERE car = {$car} AND (last_date IS NULL OR last_odo IS NULL)',
+			['car' => $car->id])['cnt']) {
+			$notifications[] = [
+				'level' => 'info',
+				'type' => 'maintenances',
+				'text' => 'Укажите когда проводилось обслуживание вашего автомобиля (' . $cnt . ' ' . Tools::plural($cnt, 'рабо,та,ты,т') . ')'
 			];
 		}
 
