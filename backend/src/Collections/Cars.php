@@ -127,6 +127,14 @@ class Cars extends Collection {
 				'type' => 'maintenances',
 				'text' => 'Укажите когда проводилось обслуживание вашего автомобиля (' . $cnt . ' ' . Tools::plural($cnt, 'рабо,та,ты,т') . ')'
 			];
+
+		} elseif(!$db->findOne('SELECT COUNT(*) AS cnt FROM maintenance WHERE car = {$car}',
+			['car' => $car->id])['cnt']) {
+			$notifications[] = [
+				'level' => 'info',
+				'type' => 'maintenances',
+				'text' => 'Настройте список работ по обслуживанию вашего автомобиля'
+			];
 		}
 
 		return $notifications;
