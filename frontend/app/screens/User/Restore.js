@@ -100,7 +100,7 @@ const customStyles = StyleSheet.create({
     ...styles.container,
     justifyContent: "center",
     flex: 1,
-    backgroundColor: "#f13f3f"
+    backgroundColor: "#a23737"
   },
 
   input: {

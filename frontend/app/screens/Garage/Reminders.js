@@ -12,7 +12,7 @@ import InputDate from "../../components/Form/InputDate";
 
 @observer
 export default class Reminders extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable insurance = {casco: {}, regular: {}};
   @observable checkup = {notify: false, edate: null};

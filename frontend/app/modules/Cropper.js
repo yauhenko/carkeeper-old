@@ -6,7 +6,7 @@ export default class Cropper {
     cropperToolbarTitle: "",
     width: 2000,
     height: 2000,
-    cropperToolbarColor: "#f13f3f",
+    cropperToolbarColor: "#a23737",
     includeBase64: true,
     mediaType: "photo",
     cropping: true

@@ -16,7 +16,7 @@ import moment from "moment";
 
 @observer
 export default class Maintenance extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable modal = false;
   @observable maintenance = [];

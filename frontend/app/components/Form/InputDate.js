@@ -33,11 +33,12 @@ const styles = StyleSheet.create({
   wrapper: {
     display: "flex",
     flexDirection: "row",
-    marginTop: 10
+    marginTop: 15,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#d5dae4"
   },
 
   title: {
-    paddingLeft: 17,
     marginRight: 20,
     width: 120,
   },
@@ -45,9 +46,6 @@ const styles = StyleSheet.create({
   date: {
     flex: 1,
     paddingLeft: 0,
-    paddingRight: 12,
-    paddingBottom: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#d6d7da"
+    paddingBottom: 15
   }
 });

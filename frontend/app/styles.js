@@ -25,6 +25,10 @@ export default styles = {
     color: "#a9b3c7"
   },
 
+  headerSaveIcon: {
+    color: "#a23737"
+  },
+
   modalHeader: {
     backgroundColor: "#eaeef7"
   },
@@ -40,8 +44,16 @@ export default styles = {
     marginBottom: 10
   },
 
+  blockHeading: {
+    fontWeight: "bold",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#d5dae4",
+    paddingTop: 5,
+    paddingBottom: 15
+  },
+
   primaryButton: {
-    backgroundColor: "#f13f3f"
+    backgroundColor: "#a23737"
   },
 
   primaryButtonText: {
@@ -59,13 +71,13 @@ export default styles = {
   },
 
   footerButton : {
-    backgroundColor: "#555",
+    backgroundColor: "#a23737",
     borderRadius: 0,
     height: 60
   },
 
   footerButtonActive : {
-    backgroundColor: "#333",
+    backgroundColor: "#903131",
     borderRadius: 0,
     height: 60
   },
@@ -84,6 +96,6 @@ export default styles = {
 
   textNote: {
     fontSize: 12,
-    color: "#b9babd"
+    color: "#9c9c9c"
   }
 }

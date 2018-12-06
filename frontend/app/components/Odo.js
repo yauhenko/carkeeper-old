@@ -62,7 +62,7 @@ export default Odo;
 const componentStyle = StyleSheet.create({
   button : {
     padding: 10,
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#a23737",
     width: "100%"
   },
   buttonText: {

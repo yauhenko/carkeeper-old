@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, Image, TouchableWithoutFeedback, Modal} from "react-native";
-import {List, ListItem, View, Container, Content} from 'native-base';
-import {observable, action, toJS} from "mobx";
+import {StyleSheet, Text, Image, TouchableWithoutFeedback} from "react-native";
+import {View, ActionSheet} from 'native-base';
+import {observable, action} from "mobx";
 import {observer} from 'mobx-react';
 import Cropper from "../../modules/Cropper";
 import {cdn} from "../../modules/Url";
 
 @observer
 export default class Photo extends Component {
-  @observable modal = false;
   @observable image = {
     path: this.props.path
   };
-
 
   @action changePhoto = async type => {
     this.modal = false;
@@ -26,41 +24,43 @@ export default class Photo extends Component {
     this.loading = false;
   };
 
+  @action action = () => {
+    ActionSheet.show(
+      {
+        options: [
+          { text: "Загрузить из галереи", icon: "images", iconColor: "#b9babd"},
+          { text: "Сделать снимок", icon: "camera", iconColor: "#b9babd"},
+          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+        ],
+        cancelButtonIndex: 2
+      },
+      index => {
+        if(index === 0) {
+          this.changePhoto("gallery")
+        }
+
+        if(index === 1) {
+          this.changePhoto("camera")
+        }
+      }
+    )
+  };
+
   render () {
     return (
       <View style={styles.wrapper}>
         <View style={styles.title}><Text>{this.props.title || ""}</Text></View>
-        <TouchableWithoutFeedback onPress={()=>{this.modal = true;}}>
+        <TouchableWithoutFeedback onPress={()=>{this.action()}}>
           <View style={styles.image}>
             {
               this.image.path
                 ?
-                <Image style={{width: "100%", aspectRatio: 1}} source={{uri: cdn + this.image.path}}/>
+                <Image style={{width: "100%", aspectRatio: 1, borderRadius: 5}} source={{uri: cdn + this.image.path}}/>
                 :
-                <Image style={{width: 100, height: 100, marginTop: 50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
+                <Image style={{width: 60, height: 60, marginTop: 50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
             }
           </View>
         </TouchableWithoutFeedback>
-
-        <Modal onShow={()=>{}} transparent={true} visible={this.modal} onRequestClose={() => {this.modal = false}}>
-          <View style={styles.container}>
-            <View style={styles.modal}>
-              <List>
-                <ListItem onPress={() => {this.changePhoto("gallery")}}>
-                  <Text>Загрузить из галереи</Text>
-                </ListItem>
-
-                <ListItem onPress={() => {this.changePhoto("camera")}}>
-                  <Text>Сделать снимок</Text>
-                </ListItem>
-
-                <ListItem onPress={() => {this.modal = false}}>
-                  <Text>Отмена</Text>
-                </ListItem>
-              </List>
-            </View>
-          </View>
-        </Modal>
       </View>
     )
   }
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
 
   title: {
     paddingTop: 15,
-    paddingLeft: 17,
     paddingBottom: 15,
     marginRight: 20,
     width: 120
@@ -86,26 +85,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f4f4f4",
     alignItems: "center",
-    justifyContent: "center"
-  },
-
-  container : {
-    display: "flex",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    alignItems: "center",
     justifyContent: "center",
-    flex: 1
+    borderRadius: 5
   },
-
-  modal: {
-    width: 250,
-    backgroundColor: "#fff",
-    borderRadius: 2,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    alignSelf: "center"
-  }
 });

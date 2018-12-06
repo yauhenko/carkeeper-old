@@ -89,7 +89,7 @@ export default class Navigation extends Component {
               return (
                 <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>
-                    <Icon style={{color: "#f13f3f"}} name={route.icon}/>
+                    <Icon style={{color: "#d5dae4"}} name={route.icon}/>
                   </Left>
                   <Body>
                     <Text style={componentStyle.link}>{route.title}</Text>
@@ -142,10 +142,8 @@ const componentStyle = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 5
   },
-
   bottomIcon: {
-    color: "#fff",
+    color: "#d5dae4",
     fontSize: 26,
-    opacity: 0.5
   }
 });

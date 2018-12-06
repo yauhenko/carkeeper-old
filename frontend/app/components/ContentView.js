@@ -37,7 +37,7 @@ const componentStyle = StyleSheet.create({
     paddingLeft: 17,
     paddingRight: 17,
     marginBottom: 15,
-    color: "#f13f3f",
+    color: "#a23737",
     textDecorationLine: "underline"
   },
 

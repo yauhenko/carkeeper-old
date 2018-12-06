@@ -11,8 +11,12 @@ class Cars {
 
   @observable currentCar = null;
 
-  @action setCurrentCar = (id = null) => {
-    this.currentCar = id;
+  @observable setCurrentCar = car => {
+    this.currentCar = car;
+  };
+
+  @observable resetCurrentCar = () => {
+      this.currentCar = null;
   };
 
   /**

@@ -62,7 +62,7 @@ const componentStyle = StyleSheet.create({
   },
   icon: {
     marginRight: 15,
-    color: "#f13f3f"
+    color: "#a23737"
   },
   image: {
     aspectRatio: 1,

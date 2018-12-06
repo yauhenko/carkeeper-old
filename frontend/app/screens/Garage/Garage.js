@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, RefreshControl, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles"
 import Cars from "../../store/Cars";
 import { observable, action} from 'mobx';
@@ -26,12 +26,21 @@ export default class Garage extends React.Component {
     this.loading = false;
   };
 
-  componentWillMount() {
-    if(Cars.currentCar) {
-      this.props.navigation.navigate('Car', {id: Cars.currentCar});
-    } else {
-      this.cars();
+  @action selectCar = async id => {
+    if(this.loading) return;
+    this.loading = true;
+    try {
+      const car = await Cars.getCar(id);
+      Cars.setCurrentCar(car);
+      this.props.navigation.navigate('Car')
+    } catch (e) {
+      Notification(e);
     }
+    this.loading = false;
+  };
+
+  componentWillMount() {
+    this.cars();
   }
 
   render() {
@@ -56,25 +65,42 @@ export default class Garage extends React.Component {
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.content}>
-          <View>
+          <View style={componentStyle.list}>
             {cars && cars.map(car => {
               return(
-                <TouchableOpacity onPress={()=>{Cars.setCurrentCar(car.id); this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name})}} key={car.id}>
-                  <View style={styles.block}>
-                    <Text style={componentStyle.header}>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
+                <View style={componentStyle.item} key={car.id}>
+                  <TouchableOpacity onPress={()=>{this.selectCar(car.id)}}>
+                    <View style={styles.block}>
+                      <Text style={componentStyle.header}>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
 
-                    <Image style={componentStyle.image} source={car.image ? {uri:  cdn + refs.image[car.image].path} : require('../../assets/images/car_stub.png')}/>
+                      {car.image
+                        ?
+                        <Image style={componentStyle.image} source={{uri:  cdn + refs.image[car.image].path}}/>
+                        :
+                        <View style={componentStyle.thumbWrapper}>
+                          <Image style={componentStyle.thumb} source={require('../../assets/images/car_stub.png')}/>
+                        </View>
+                      }
 
-                    <Text style={styles.textNote}>{Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name}</Text>
-                    <Text style={styles.textNote}>{Boolean(car.modification) && refs.modification[car.modification].name}</Text>
-                  </View>
-                </TouchableOpacity>
-              )
+                      {Boolean(car.serie) && <Text style={Boolean(car.serie) ? componentStyle.description : {}}>
+                        {Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name} {Boolean(car.modification) && refs.modification[car.modification].name}
+                      </Text>}
+
+                      <View style={componentStyle.notificationWrapper}>
+                        <View style={componentStyle.notificationValueWrapper}>
+                          <Text style={componentStyle.notificationValue}>1</Text>
+                        </View>
+                        <View style={componentStyle.triangle}/>
+
+                        <Icon style={componentStyle.notificationIcon} name="notifications"/>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>)
             })}
           </View>
 
-          {!this.loading && !Cars.cars.cars.length && <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text>}
-
+          {!this.loading && !Cars.cars.cars.length && <View style={styles.block}><Text style={{textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text></View>}
           <AddOrEditCar cb={this.cars} edit={false} onClose={()=>{this.toggleModal(false)}} show={this.modal}/>
         </Content>
       </Container>
@@ -83,6 +109,14 @@ export default class Garage extends React.Component {
 }
 
 const componentStyle = StyleSheet.create({
+  list: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    display: "flex",
+  },
+  item: {
+    width: "100%"
+  },
   header: {
     fontWeight: "bold"
   },
@@ -90,7 +124,65 @@ const componentStyle = StyleSheet.create({
     width: "100%",
     height: 120,
     borderRadius: 5,
+    marginTop: 10
+  },
+  thumbWrapper: {
+    backgroundColor: "#eaeef7",
+    height: 120,
+    borderRadius: 5,
     marginTop: 10,
-    marginBottom: 10
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  thumb: {
+    width: 74,
+    height: 34
+  },
+  description: {
+    color: "#7f8a9d",
+    fontSize: 14,
+    lineHeight: 22,
+    marginTop: 10
+  },
+  notificationWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 10
+  },
+  notificationValue: {
+    color: "#fff",
+    fontWeight: "bold"
+  },
+  notificationValueWrapper: {
+    backgroundColor: "#a23737",
+    paddingTop: 3,
+    paddingBottom: 3,
+    paddingLeft: 7,
+    paddingRight: 7,
+    borderRadius: 5,
+    overflow: "visible"
+  },
+  notificationIcon: {
+    color: "#7f8a9d",
+    fontSize: 20,
+    marginLeft: 5
+  },
+  triangle: {
+    left: -1,
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: 4,
+    borderBottomWidth: 6,
+    borderLeftWidth: 4,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#a23737',
+    borderLeftColor: 'transparent',
+    transform: [
+      {rotate: '90deg'}
+    ]
   }
 });

@@ -194,7 +194,7 @@ export default class Login extends React.Component {
               ?
               <Animated.View style={{left: this.left}}>
                 <Text style={componentStyle.label}>Введите Ваш номер телефона</Text>
-                <TextInput placeholder="Номер телефона" onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
+                <TextInput placeholder="Номер телефона" onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
                 <Button disabled={this.disabled} onPress={()=>{this.checkPhoneNumber()}} style={componentStyle.button} block>
                   <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
                 </Button>
@@ -215,7 +215,7 @@ export default class Login extends React.Component {
               {this.exists === true ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите Ваш пароль</Text>
-                  <TextInput placeholder="Пароль" secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <TextInput placeholder="Пароль" secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.password} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.login()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ВОЙТИ</Text>
                   </Button>
@@ -229,7 +229,7 @@ export default class Login extends React.Component {
               {this.exists === false ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
-                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.code} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.checkCode()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
                   </Button>
@@ -242,7 +242,7 @@ export default class Login extends React.Component {
               {this.exists === "password" ?
                 <Fragment>
                   <Text style={componentStyle.label}>Придумайте пароль</Text>
-                  <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.password} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.register()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ЗАРЕГИСТРИРОВАТЬСЯ</Text>
                   </Button>
@@ -252,7 +252,7 @@ export default class Login extends React.Component {
               {this.exists === "restore" ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
-                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.code} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.restore()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ВОССТАНОВИТЬ ПАРОЛЬ</Text>
                   </Button>
@@ -291,7 +291,7 @@ const componentStyle = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#a23737",
     height: 50
   },
 
@@ -358,6 +358,6 @@ const componentStyle = StyleSheet.create({
   },
 
   linkText: {
-    color: "#f13f3f",
+    color: "#a23737",
   }
 });

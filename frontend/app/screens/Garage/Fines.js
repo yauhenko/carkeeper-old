@@ -26,7 +26,7 @@ import moment from "moment";
 
 @observer
 export default class Fines extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable fines = [];
   @observable menu = false;
@@ -149,7 +149,7 @@ export default class Fines extends React.Component {
                 textAlign: "center",
                 marginTop: 10,
                 padding: 5,
-                color: "#f13f3f"}} onPress={()=>this.toggleModal(true)}>Заполнить</Text>
+                color: "#a23737"}} onPress={()=>this.toggleModal(true)}>Заполнить</Text>
             </View>
             :
             null
@@ -162,7 +162,7 @@ export default class Fines extends React.Component {
                   <ListItem onPress={()=>this.action(id, regid, status)} key={id}>
                     <View style={{flexDirection: "row", alignItems: "center"}}>
                       <View style={{width: 55, paddingLeft: 5}}>
-                        <Icon style={status === 0 ? {color: "#f13f3f"} : {color: "green"}} name={status === 0 ? "alert" : "checkmark-circle"}/>
+                        <Icon style={status === 0 ? {color: "#a23737"} : {color: "green"}} name={status === 0 ? "alert" : "checkmark-circle"}/>
                       </View>
                       <View style={{flex: 1}}>
                         <Text>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
