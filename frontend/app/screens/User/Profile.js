@@ -107,7 +107,7 @@ export default class Profile extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
-              <Icon style={styles.headerIcon} name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
           <Body>
@@ -116,7 +116,7 @@ export default class Profile extends React.Component {
           <Right>
             {this.changed &&
             <Button onPress={this.update} title={"Сохранить"} transparent>
-              <Icon style={styles.headerSaveIcon} name='checkmark'/>
+              <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
             </Button>}
           </Right>
         </Header>

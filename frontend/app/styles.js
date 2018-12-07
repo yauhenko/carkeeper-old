@@ -1,4 +1,4 @@
-import {StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet, Platform} from 'react-native';
 
 
 export default styles = {
@@ -13,7 +13,7 @@ export default styles = {
   header : {
     backgroundColor: "#eaeef7",
     paddingTop: StatusBar.currentHeight,
-    height: 80,
+    height: Platform.OS === "android" ? 80 : 60
   },
 
   headerTitle: {

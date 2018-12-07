@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl, View, TouchableOpacity, StyleSheet, Image} from 'react-native';
+import {Text, RefreshControl, View, TouchableWithoutFeedback, StyleSheet, Image} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles"
@@ -51,7 +51,7 @@ export default class Garage extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-              <Icon style={styles.headerIcon} name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
           <Body>
@@ -59,7 +59,7 @@ export default class Garage extends React.Component {
           </Body>
           <Right>
             <Button title={"Добавить"} onPress={()=>{this.toggleModal(true)}} transparent>
-              <Icon style={styles.headerIcon} name='add' />
+              <Icon style={styles.headerIcon} name='md-add'/>
             </Button>
           </Right>
         </Header>
@@ -69,7 +69,7 @@ export default class Garage extends React.Component {
             {cars && cars.map(car => {
               return(
                 <View style={componentStyle.item} key={car.id}>
-                  <TouchableOpacity onPress={()=>{this.selectCar(car.id)}}>
+                  <TouchableWithoutFeedback onPress={()=>{this.selectCar(car.id)}}>
                     <View style={styles.block}>
                       <Text style={componentStyle.header}>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
 
@@ -95,7 +95,7 @@ export default class Garage extends React.Component {
                         <Icon style={componentStyle.notificationIcon} name="notifications"/>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableWithoutFeedback>
                 </View>)
             })}
           </View>

@@ -99,7 +99,7 @@ export default class Notes extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon style={styles.headerIcon} name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
           <Body>
@@ -107,7 +107,7 @@ export default class Notes extends React.Component {
           </Body>
           <Right>
             <Button onPress={()=>{this.toggleModal(true); this.note = Object.assign({}, this.blank)}} transparent>
-              <Icon style={styles.headerIcon} name='add'/>
+              <Icon style={styles.headerIcon} name='md-add'/>
             </Button>
           </Right>
         </Header>
@@ -139,7 +139,7 @@ export default class Notes extends React.Component {
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
-                  <Icon style={styles.headerIcon} name='arrow-back'/>
+                  <Icon style={styles.headerIcon} name='md-arrow-back'/>
                 </Button>
               </Left>
               <Body>
@@ -147,7 +147,7 @@ export default class Notes extends React.Component {
               </Body>
               <Right>
                 <Button onPress={()=>{this.saveNote()}} title={"Сохранить"} transparent>
-                  <Icon style={styles.headerSaveIcon} name='checkmark'/>
+                  <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
                 </Button>
               </Right>
             </Header>

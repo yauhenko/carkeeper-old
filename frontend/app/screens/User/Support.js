@@ -40,7 +40,7 @@ export default class Support extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
-              <Icon style={styles.headerIcon} name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
 
@@ -50,7 +50,7 @@ export default class Support extends React.Component {
 
           <Right>
             <Button onPress={()=>{this.send()}} title={"Отправить"} transparent>
-              <Icon style={styles.headerSaveIcon} name='checkmark'/>
+              <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
             </Button>
           </Right>
         </Header>

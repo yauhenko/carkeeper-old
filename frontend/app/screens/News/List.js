@@ -43,7 +43,7 @@ export default class List extends React.Component {
           <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
             <Left>
               <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-                <Icon name='menu'/>
+                <Icon style={styles.headerIcon} name='md-menu'/>
               </Button>
             </Left>
             <Body>
@@ -83,7 +83,7 @@ export default class List extends React.Component {
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.closeModal()}} transparent>
-                  <Icon name='arrow-back'/>
+                  <Icon style={styles.headerIcon} name='md-arrow-back'/>
                 </Button>
               </Left>
               <Body>

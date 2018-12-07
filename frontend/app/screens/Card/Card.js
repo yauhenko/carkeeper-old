@@ -16,7 +16,7 @@ export default class Card extends React.Component {
         <Header hasTabs androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-              <Icon style={styles.headerIcon} name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
           <Body>

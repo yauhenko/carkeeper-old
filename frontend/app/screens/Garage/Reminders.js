@@ -64,7 +64,7 @@ export default class Reminders extends React.Component {
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon style={styles.headerIcon} name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
           <Body style={{flexGrow: 2}}>

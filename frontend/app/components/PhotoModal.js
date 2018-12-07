@@ -38,7 +38,7 @@ export default class PhotoModal extends React.Component {
           <Header androidStatusBarColor="#000" style={{backgroundColor: "#000"}}>
             <Left>
               <Button title={"Назад"} onPress={() => {this.props.onRequestClose()}} transparent>
-                <Icon name='arrow-back'/>
+                <Icon style={styles.headerIcon} name='md-arrow-back'/>
               </Button>
             </Left>
             <Body style={{flexGrow: 2}}>

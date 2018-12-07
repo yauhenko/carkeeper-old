@@ -93,7 +93,7 @@ export default class Car extends React.Component {
           <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
             <Left>
               <Button title="Назад" onPress={() => {Cars.resetCurrentCar(); this.props.navigation.navigate('Garage');}} transparent>
-                <Icon style={styles.headerIcon} name='arrow-back'/>
+                <Icon style={styles.headerIcon} name='md-arrow-back'/>
               </Button>
             </Left>
             <Body>
@@ -184,7 +184,7 @@ export default class Car extends React.Component {
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
                 <Left>
                   <Button title={"Назад"} onPress={() => {this.odoModal = false}} transparent>
-                    <Icon style={styles.headerIcon} name='arrow-back'/>
+                    <Icon style={styles.headerIcon} name='md-arrow-back'/>
                   </Button>
                 </Left>
                 <Body>
@@ -192,7 +192,7 @@ export default class Car extends React.Component {
                 </Body>
                 <Right>
                   <Button onPress={()=>{this.updateOdo()}} transparent>
-                    <Icon style={styles.headerIcon} name='checkmark'/>
+                    <Icon style={styles.headerIcon} name='md-checkmark'/>
                   </Button>
                 </Right>
               </Header>
