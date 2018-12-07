@@ -62,6 +62,17 @@ export default styles = {
     color: "#fff"
   },
 
+  grayButton: {
+    backgroundColor: "#eaeef7",
+    paddingLeft: 15,
+    paddingRight: 15
+  },
+  grayButtonText: {
+    fontWeight: "bold",
+    color: "#a9b3c7",
+    fontSize: 12
+  },
+
   pickerWrapper: {
     marginBottom: 5,
     borderBottomWidth: StyleSheet.hairlineWidth,

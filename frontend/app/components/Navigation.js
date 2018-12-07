@@ -6,7 +6,8 @@ import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
-import background from "../assets/images/navbar_bg.png";
+import background from "../assets/images/login_background.jpg";
+
 
 @observer
 export default class Navigation extends Component {
@@ -17,18 +18,19 @@ export default class Navigation extends Component {
       path: "Garage",
       action: null
     },
-    {
-      title: "Лента",
-      icon: "paper",
-      path: "News",
-      action: null
-    },
-    {
-      title: "Автокарта",
-      icon: "card",
-      path: "Card",
-      action: null
-    },
+    // {
+    //   title: "Лента",
+    //   icon: "paper",
+    //   path: "News",
+    //   action: null
+    // },
+    // {
+    //   title: "Автокарта",
+    //   icon: "card",
+    //   path: "Card",
+    //   action: null
+    // },
+
     {
       title: "Поддержка",
       icon: "text",

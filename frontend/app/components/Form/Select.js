@@ -45,7 +45,7 @@ export default class Select extends Component {
 
     return (
       <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
-        <View style={styles.title}><Text>{title}</Text></View>
+        <View style={styles.title}><Text style={styles.titleText}>{title}</Text></View>
         <TouchableOpacity style={styles.select} onPress={()=>{this.open()}}>
           <Text style={this.props.disabled ? styles.disabled : {flex: 1, color: "#a23737"}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
 
   disabled : {
     color: "#d6d7da"
+  },
+
+  titleText: {
+    color: "#7f8a9d"
   },
 
   icon: {

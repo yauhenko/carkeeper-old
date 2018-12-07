@@ -13,32 +13,46 @@ export default class Card extends React.Component {
   render() {
     return (
       <Container>
-        <Header  hasTabs androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+        <Header hasTabs androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-              <Icon name='menu'/>
+              <Icon style={styles.headerIcon} name='menu'/>
             </Button>
           </Left>
-          <Body style={{flexGrow: 2}}>
+          <Body>
             <Title><Text style={styles.headerTitle}>Автокарта</Text></Title>
           </Body>
+          <Right/>
         </Header>
-        <Tabs style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#fff"}} locked={true}>
-          <Tab heading={<TabHeading style={{backgroundColor: "#555"}}><Text style={componentStyle.tabText}>О карте</Text></TabHeading>}>
-            <ScrollView>
-              <View style={componentStyle.top}>
-                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
-                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
-                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
+        <Tabs style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#a9b3c7"}} locked={true}>
+
+          <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>О карте</Text></TabHeading>}>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
+                  <View style={componentStyle.top}>
+                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
+                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
+                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
+                  </View>
+                  <Image resizeMode={'contain'} style={componentStyle.image} source={avtokarta}/>
               </View>
-              <Image resizeMode={'contain'} style={componentStyle.image} source={avtokarta}/>
-            </ScrollView>
+            </Content>
           </Tab>
-          <Tab heading={<TabHeading style={{backgroundColor: "#555"}}><Text style={componentStyle.tabText}>Подробно</Text></TabHeading>}>
-            <Text>2</Text>
+
+          <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Подробно</Text></TabHeading>}>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
+                <Text>2</Text>
+              </View>
+            </Content>
           </Tab>
-          <Tab heading={<TabHeading style={{backgroundColor: "#555"}}><Text style={componentStyle.tabText}>Заказать</Text></TabHeading>}>
-            <Text>3</Text>
+
+          <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Заказать</Text></TabHeading>}>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
+                <Text>3</Text>
+              </View>
+            </Content>
           </Tab>
         </Tabs>
       </Container>
@@ -48,9 +62,10 @@ export default class Card extends React.Component {
 
 const componentStyle = StyleSheet.create({
   top: {
-    padding: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#d6d7da"
+    borderBottomColor: "#d5dae4"
   },
   topItem: {
     flexDirection: "row",
@@ -66,10 +81,13 @@ const componentStyle = StyleSheet.create({
   },
   image: {
     aspectRatio: 1,
-    width: Dimensions.get("window").width,
+    width: Dimensions.get("window").width - 30,
     height: null
   },
   tabText: {
-    color: "#fff"
+    color: "#a9b3c7"
+  },
+  tabHeading: {
+    backgroundColor: "#eaeef7"
   }
 });

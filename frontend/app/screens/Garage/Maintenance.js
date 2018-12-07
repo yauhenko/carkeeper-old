@@ -177,7 +177,7 @@ export default class Maintenance extends React.Component {
             }
         </Content>
 
-        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
+        <Footer><CarMenu navigation={this.props.navigation}/></Footer>
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container style={styles.container}>

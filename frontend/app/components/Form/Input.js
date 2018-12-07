@@ -21,21 +21,27 @@ export default class Input extends Component {
       width: 120
     },
 
+    titleText: {
+      color: "#7f8a9d"
+    },
+
     input: {
       display: "flex",
       flex: 1,
       alignItems: "center",
       paddingTop: 10,
       paddingRight: 12,
-      paddingBottom: 7
+      paddingBottom: 7,
+      paddingLeft: 0
     }
   });
 
   render () {
     return (
       <View style={this.styles.wrapper}>
-        <View style={this.styles.title}><Text>{this.props.title || ""}</Text></View>
+        <View style={this.styles.title}><Text style={this.styles.titleText}>{this.props.title || ""}</Text></View>
         <TextInput
+          placeholder={this.props.placeholder || ""}
           value={this.props.value ? String(this.props.value) : ""}
           onChangeText={this.props.onChange}
           selectionColor="#a23737"

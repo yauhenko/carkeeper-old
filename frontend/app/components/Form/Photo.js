@@ -49,7 +49,7 @@ export default class Photo extends Component {
   render () {
     return (
       <View style={styles.wrapper}>
-        <View style={styles.title}><Text>{this.props.title || ""}</Text></View>
+        <View style={styles.title}><Text style={styles.titleText}>{this.props.title || ""}</Text></View>
         <TouchableWithoutFeedback onPress={()=>{this.action()}}>
           <View style={styles.image}>
             {
@@ -79,6 +79,10 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     marginRight: 20,
     width: 120
+  },
+
+  titleText: {
+    color: "#7f8a9d"
   },
 
   image: {
