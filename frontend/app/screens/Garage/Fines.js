@@ -132,7 +132,7 @@ export default class Fines extends React.Component {
           </Body>
           <Right>
             <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
-              <Icon style={styles.headerIcon} name='more' />
+              <Icon style={styles.headerIcon} name='md-more' />
             </Button>
           </Right>
         </Header>

@@ -101,7 +101,7 @@ export default class Car extends React.Component {
             </Body>
             <Right>
               <Button onPress={() => {this.menu = true}} transparent>
-                <Icon style={styles.headerIcon} name='more'/>
+                <Icon style={styles.headerIcon} name='md-more'/>
               </Button>
             </Right>
           </Header>
