@@ -11,9 +11,7 @@ export default styles = {
   selectionColor: "#a23737",
 
   header : {
-    backgroundColor: "#eaeef7",
-    paddingTop: StatusBar.currentHeight,
-    height: Platform.OS === "android" ? 80 : 60
+    backgroundColor: "#eaeef7"
   },
 
   headerTitle: {
@@ -110,5 +108,13 @@ export default styles = {
   textNote: {
     fontSize: 12,
     color: "#9c9c9c"
+  }
+}
+
+if (Platform.OS === 'adnroid') {
+  styles.header = {
+      backgroundColor: "#eaeef7",
+      paddingTop:  StatusBar.currentHeight ,
+      height:  80
   }
 }
