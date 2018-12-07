@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
 import {View, Icon, ActionSheet} from 'native-base';
 import {observer} from 'mobx-react';
 import {action, observable} from 'mobx';
@@ -44,13 +44,15 @@ export default class Select extends Component {
     const {title} = this.props;
 
     return (
+      <TouchableWithoutFeedback onPress={()=>{this.open()}}>
       <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
         <View style={styles.title}><Text style={styles.titleText}>{title}</Text></View>
-        <TouchableOpacity style={styles.select} onPress={()=>{this.open()}}>
+        <View style={styles.select}>
           <Text style={this.props.disabled ? styles.disabled : {flex: 1, color: "#a23737"}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
-        </TouchableOpacity>
+        </View>
       </View>
+      </TouchableWithoutFeedback>
     )
   }
 }

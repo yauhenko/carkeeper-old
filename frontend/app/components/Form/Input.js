@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, TextInput} from "react-native";
-import {View, Icon, ActionSheet} from 'native-base';
+import {StyleSheet, Text, TextInput, TouchableWithoutFeedback} from "react-native";
+import {View} from 'native-base';
 import {observer} from 'mobx-react';
 
 @observer
 export default class Input extends Component {
+
   styles = StyleSheet.create({
     wrapper: {
       display: "flex",
@@ -38,19 +39,22 @@ export default class Input extends Component {
 
   render () {
     return (
-      <View style={this.styles.wrapper}>
-        <View style={this.styles.title}><Text style={this.styles.titleText}>{this.props.title || ""}</Text></View>
-        <TextInput
-          placeholder={this.props.placeholder || ""}
-          value={this.props.value ? String(this.props.value) : ""}
-          onChangeText={this.props.onChange}
-          selectionColor="#a23737"
-          secureTextEntry={"secureTextEntry" in this.props}
-          underlineColorAndroid="transparent"
-          multiline={this.props.multiline || false}
-          keyboardType={this.props.keyboardType || "default"}
-          style={this.styles.input}/>
-      </View>
+      <TouchableWithoutFeedback onPress={()=>{this.refs.input.focus()}}>
+        <View style={this.styles.wrapper}>
+          <View style={this.styles.title}><Text style={this.styles.titleText}>{this.props.title || ""}</Text></View>
+          <TextInput
+            ref="input"
+            placeholder={this.props.placeholder || ""}
+            value={this.props.value ? String(this.props.value) : ""}
+            onChangeText={this.props.onChange}
+            selectionColor="#a23737"
+            secureTextEntry={"secureTextEntry" in this.props}
+            underlineColorAndroid="transparent"
+            multiline={this.props.multiline || false}
+            keyboardType={this.props.keyboardType || "default"}
+            style={this.styles.input}/>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }

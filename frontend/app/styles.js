@@ -111,7 +111,7 @@ export default styles = {
   }
 }
 
-if (Platform.OS === 'adnroid') {
+if (Platform.OS === 'android') {
   styles.header = {
       backgroundColor: "#eaeef7",
       paddingTop:  StatusBar.currentHeight ,
