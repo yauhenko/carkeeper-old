@@ -22,11 +22,13 @@ export default styles = {
   },
 
   headerIcon: {
-    color: "#a9b3c7"
+    color: "#a9b3c7",
+    fontSize: 24
   },
 
   headerSaveIcon: {
-    color: "#a23737"
+    color: "#a23737",
+    fontSize: 24
   },
 
   modalHeader: {

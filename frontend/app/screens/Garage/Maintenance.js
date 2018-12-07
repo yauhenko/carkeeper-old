@@ -97,48 +97,50 @@ export default class Maintenance extends React.Component {
     }
   };
 
-
-
   action = item => {
     ActionSheet.show(
       {
         options: [
-          { text: "Редактировать", icon: "create", iconColor: "#b9babd"},
-          { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
-          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+          {text: "Редактировать", icon: "create", iconColor: "#b9babd"},
+          {text: "Удалить", icon: "trash", iconColor: "#b9babd"},
+          {text: "Отмена", icon: "close", iconColor: "#b9babd"}
         ],
         cancelButtonIndex: 2
       },
       index => {
 
-        if(index === 0) {
+        if (index === 0) {
           this.tmp = Object.assign({}, toJS(item));
           this.toggleModal(true);
         }
 
-        if(index === 1) {
+        if (index === 1) {
           Alert.alert(null, 'Подтвердите удаление', [
-              {text: 'Отмена', onPress: () => {}, style: 'cancel'},
-              {text: 'Удалить', onPress: async () => {
+              {
+                text: 'Отмена', onPress: () => {
+                }, style: 'cancel'
+              },
+              {
+                text: 'Удалить', onPress: async () => {
                   await this.deleteMaintenance(item.id);
                   await this.getMaintenance();
-                }}],
-            {cancelable: false })
+                }
+              }],
+            {cancelable: false})
         }
       }
-    )};
-
-
+    )
+  };
 
   render() {
     const {refs, car} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='arrow-back'/>
             </Button>
           </Left>
           <Body>
@@ -146,7 +148,7 @@ export default class Maintenance extends React.Component {
           </Body>
           <Right>
             <Button onPress={()=>{this.assign(this.item); this.toggleModal(true)}} transparent>
-              <Icon name='add'/>
+              <Icon style={styles.headerIcon} name='add'/>
             </Button>
           </Right>
         </Header>
@@ -165,14 +167,12 @@ export default class Maintenance extends React.Component {
                 </ListItem>
               ))
               :
-              this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли заметки</Text>
+              this.loading ? null : <View style={styles.block}><Text style={{padding: 20, textAlign: "center"}}>Нет записей обслуживания</Text></View>
             }
           </List>
-
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
-
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container>

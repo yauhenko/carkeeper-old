@@ -182,8 +182,6 @@ export default class Login extends React.Component {
             <Image style={{height: Dimensions.get("window").height - StatusBar.currentHeight, width: Dimensions.get("window").width}} source={background}/>
           </View>
 
-          <View style={[StyleSheet.absoluteFill, {backgroundColor: "rgba(0,0,0,0.7)"}]}/>
-
           <View style={componentStyle.logoContainer}>
             <Image style={componentStyle.logo} source={Logo}/>
             <Text style={componentStyle.slogan}>Мобильный органайзер водителя</Text>
