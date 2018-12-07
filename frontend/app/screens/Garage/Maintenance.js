@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl, Alert, Modal} from 'react-native';
+import {Text, RefreshControl, Alert, Modal, TouchableOpacity, StyleSheet} from 'react-native';
 import {action, observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem,  List, ActionSheet} from 'native-base';
@@ -154,32 +154,37 @@ export default class Maintenance extends React.Component {
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getMaintenance()}}/>} contentContainerStyle={styles.content}>
-          <List>
+
             {this.maintenance.length
               ?
-              this.maintenance.map(item => (
-                <ListItem onPress={() => {this.action(item)}} style={{flexDirection: "column", alignItems: "flex-start"}} key={item.id}>
-                  <Text style={{marginBottom: 5}}>{item.name}</Text>
-                  <Text style={styles.textNote}>
-                    {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
-                    {item.distance && item.period ? ` / ` : null}
-                    {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
-                </ListItem>
-              ))
+              <View style={styles.block}>
+                {
+                  this.maintenance.map((item, key) => (
+                    <TouchableOpacity onPress={()=>{this.action(item)}}  key={item.id}>
+                      <View style={[componentStyle.item, this.maintenance.length === key+1 ? {borderBottomWidth: 0} : {}]}>
+                        <Text style={componentStyle.name}>{item.name}</Text>
+                        <Text style={styles.textNote}>
+                          {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                          {item.distance && item.period ? ` / ` : null}
+                          {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))
+                }
+              </View>
               :
-              this.loading ? null : <View style={styles.block}><Text style={{padding: 20, textAlign: "center"}}>Нет записей обслуживания</Text></View>
+              this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Нет записей обслуживания</Text></View>
             }
-          </List>
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
-          <Container>
+          <Container style={styles.container}>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
-                  <Icon name='arrow-back'/>
+                  <Icon style={styles.headerIcon} name='arrow-back'/>
                 </Button>
               </Left>
               <Body>
@@ -187,26 +192,27 @@ export default class Maintenance extends React.Component {
               </Body>
               <Right>
                 <Button onPress={()=>{this.save()}} title={"Сохранить"} transparent>
-                  <Icon name='checkmark'/>
+                  <Icon style={styles.headerSaveIcon} name='checkmark'/>
                 </Button>
               </Right>
             </Header>
 
-            <Content>
-              <View style={{paddingTop: 10}}>
-                  <Input multiline={true} onChange={(value)=>{this.tmp.name = value}} value={this.tmp.name} title="Название"/>
-                  <Input onChange={(value)=>{this.tmp.distance = Number(value)}} value={this.tmp.distance} keyboardType="numeric" title="Пробег"/>
-                  <Input onChange={(value)=>{this.tmp.period = Number(value)}} value={this.tmp.period} keyboardType="numeric" title="Период"/>
-                  <Select onChange={value => {this.tmp.period_type = value.id}} value={this.tmp.period_type} buttons={[
-                    {id: "year", text: "Год"},
-                    {id: "month", text: "Месяц"}
-                  ]} title={"Год/Месяц"}/>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
+                <Text style={styles.blockHeading}>Основные параметры</Text>
+                <Input multiline={true} onChange={(value)=>{this.tmp.name = value}} value={this.tmp.name} title="Название"/>
+                <Input onChange={(value)=>{this.tmp.distance = Number(value)}} value={this.tmp.distance} keyboardType="numeric" title="Пробег"/>
+                <Input onChange={(value)=>{this.tmp.period = Number(value)}} value={this.tmp.period} keyboardType="numeric" title="Период"/>
+                <Select last={true} onChange={value => {this.tmp.period_type = value.id}} value={this.tmp.period_type} buttons={[
+                  {id: "year", text: "Год"},
+                  {id: "month", text: "Месяц"}
+                ]} title={"Год/Месяц"}/>
+              </View>
 
-                <ListItem style={{marginTop: 25}} itemDivider>
-                  <Text>Последнее проведение работы</Text>
-                </ListItem>
+              <View style={styles.block}>
+                <Text style={styles.blockHeading}>Последнее проведение работы</Text>
                 <Input keyboardType="numeric" onChange={value => {this.tmp.last_odo = value}} value={this.tmp.last_odo} title="Пробег"/>
-                <InputDate onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>
+                <InputDate last={true} onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>
               </View>
             </Content>
           </Container>
@@ -215,3 +221,20 @@ export default class Maintenance extends React.Component {
     );
   }
 }
+
+const componentStyle = StyleSheet.create({
+  item: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4"
+  },
+  empty: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+  name: {
+    marginBottom: 5
+  }
+});

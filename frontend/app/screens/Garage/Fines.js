@@ -120,21 +120,19 @@ export default class Fines extends React.Component {
     const {refs} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='arrow-back'/>
             </Button>
           </Left>
-
           <Body>
             <Title><Text style={styles.headerTitle}>Штрафы: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
-
           <Right>
             <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
-              <Icon name='more' />
+              <Icon style={styles.headerIcon} name='more' />
             </Button>
           </Right>
         </Header>
@@ -182,7 +180,7 @@ export default class Fines extends React.Component {
           }
 
           <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
-            <Container>
+            <Container style={styles.container}>
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
                 <Left>
                   <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
@@ -199,7 +197,7 @@ export default class Fines extends React.Component {
                 </Right>
               </Header>
 
-              <Content>
+              <Content contentContainerStyle={styles.content}>
                 <View style={{paddingTop: 10}}>
                   <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Фамилия"/>
                   <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Имя"/>

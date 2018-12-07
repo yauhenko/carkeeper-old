@@ -178,7 +178,7 @@ export default class Login extends React.Component {
         <StatusBar backgroundColor="#000" translucent={true} barStyle="light-content"/>
 
         <Content refreshControl={<RefreshControl enabled={false} refreshing={this.loading}/>} contentContainerStyle={componentStyle.container} style={{  backgroundColor: 'rgba(255,255,255,0.4)'}}>
-          <View style={ {alignItems: "center", paddingTop: StatusBar.currentHeight, position: 'absolute', width: Dimensions.get("window").width, top: 0, left: 0, right: 0, bottom: 0 } }>
+          <View style={componentStyle.background}>
             <Image style={{height: '100%', width: '100%'}} source={background}/>
           </View>
 
@@ -277,6 +277,17 @@ const componentStyle = StyleSheet.create({
     padding: 30
   },
 
+  background: {
+    alignItems: "center",
+    paddingTop: StatusBar.currentHeight,
+    position: 'absolute',
+    width: Dimensions.get("window").width,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+
   logo: {
     width: 167.5,
     height: 88
@@ -321,6 +332,7 @@ const componentStyle = StyleSheet.create({
     color: "#fff",
     fontSize: 16
   },
+
   slide: {
     left: -100
   },
