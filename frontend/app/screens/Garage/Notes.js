@@ -127,14 +127,12 @@ export default class Notes extends React.Component {
                   ))
                 }
               </View>
-
               :
               this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Вы еще не добавляли заметки</Text></View>
             }
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
-
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
           <Container style={styles.container}>

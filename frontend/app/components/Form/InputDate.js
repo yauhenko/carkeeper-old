@@ -19,7 +19,7 @@ export default class InputDate extends Component {
 
   render() {
     return (
-      <View style={styles.wrapper}>
+      <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
         <View style={styles.title}><Text>{this.props.title || ""}</Text></View>
         <TouchableOpacity style={styles.date} onPress={() => {this.open(this.props.value)}}>
           <Text>{this.props.value ? moment(this.props.value).format("DD.MM.YYYY") : "Выберите дату"}</Text>

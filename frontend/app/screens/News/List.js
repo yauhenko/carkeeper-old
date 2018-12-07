@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Text, View, RefreshControl, StyleSheet, TouchableNativeFeedback, Modal} from 'react-native';
+import {Text, View, RefreshControl, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, ListItem} from 'native-base';
 import styles from "../../styles"
@@ -67,9 +67,9 @@ export default class List extends React.Component {
                       <View style={{flexDirection: "row", alignItems: "center"}}>
                         <Text style={{color: "#d6d7da"}}>{moment(item.date_begin).format("DD.MM.YYYY")}</Text>
                       </View>
-                      <TouchableNativeFeedback onPress={()=>this.openModal(item)}>
+                      <TouchableOpacity onPress={()=>this.openModal(item)}>
                         <Text style={{color: "#d6d7da"}}>Читать дальше</Text>
-                      </TouchableNativeFeedback>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 </View>
