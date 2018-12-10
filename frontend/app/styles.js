@@ -112,6 +112,11 @@ export default styles = {
   textNote: {
     fontSize: 12,
     color: "#9c9c9c"
+  },
+
+  p: {
+    lineHeight: 21,
+    marginBottom: 10
   }
 }
 

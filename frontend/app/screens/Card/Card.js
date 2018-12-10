@@ -18,11 +18,11 @@ export default class Card extends React.Component {
     phone: User.profile.user.tel || ""
   };
 
-  @observable dataChange = (key, value) => {
+  @action dataChange = (key, value) => {
     this.data[key] = value;
   };
   
-  @observable submitHandler = () => {
+  @action submitHandler = () => {
     
   };
 
@@ -40,17 +40,21 @@ export default class Card extends React.Component {
           </Body>
           <Right/>
         </Header>
-        <Tabs style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#a9b3c7"}} locked={true}>
-
+        <Tabs ref="tabs" style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#a9b3c7"}} locked={true}>
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>О карте</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
-                  <View style={componentStyle.top}>
-                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
-                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
-                    <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
-                  </View>
+                <Text style={styles.blockHeading}>Автокарта от МТБанка</Text>
+                <View style={componentStyle.top}>
+                  <Text style={styles.p}>Уникальный банковский продукт, не имеющий аналогов в Беларуси. Она создана специально для автовладельцев и членов их семей. Теперь любая поездка, будь то дальнее путешествие или дорога на работу, станет приятнее, ведь с каждой обязательной траты (топливо, запчасти, замена шин, автомойка и др.) при помощи Автокарты от МТБанка вам будет возвращаться кэшбэк (возврат деньгами) до 10%. Также владельцы Автокарты получат 1% или 0,5% кэшбэк за любые покупки как в РБ, так и за границей.</Text>
+                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
+                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
+                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
                   <Image resizeMode={'contain'} style={componentStyle.image} source={autoCard}/>
+                </View>
+                <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
+                  <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
+                </Button>
               </View>
             </Content>
           </Tab>
@@ -58,7 +62,57 @@ export default class Card extends React.Component {
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Подробно</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
-                <Text>Текст</Text>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>АЗС</Text>
+                <Text>от 3 до 4,5%</Text>
+                <Text style={styles.textNote}>А-100 и другие заправки</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Автомойки</Text>
+                <Text>от 3 до 10%</Text>
+                <Text style={styles.textNote}>Эспрессо и другие партнеры</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Автозапчасти</Text>
+                <Text>от 2 до 8,5%</Text>
+                <Text style={styles.textNote}>Шате-М, ARMTEK и другие партнеры</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Автошкола</Text>
+                <Text>2%</Text>
+                <Text style={styles.textNote}>Автошкола Минской РОС ДОСААФ</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>СТО</Text>
+                <Text>от 2,5 до 10%</Text>
+                <Text style={styles.textNote}>Шате-М и другие партнеры</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Такси</Text>
+                <Text>от 2 до 3%</Text>
+                <Text style={styles.textNote}>Iqtaxi, Шатле, Новое такси</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Страхование</Text>
+                <Text>от 4 до 10%</Text>
+                <Text style={styles.textNote}>Таск, Купала</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Супермаркет</Text>
+                <Text>0,5%</Text>
+                <Text style={styles.textNote}>Крупные сетевые магазины</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
+                  <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
+                </Button>
               </View>
             </Content>
           </Tab>
@@ -70,7 +124,7 @@ export default class Card extends React.Component {
                 <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
                 <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
                 <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
-                <Button onPress={this.submitHandler} style={[styles.primaryButton, {alignSelf: "center", marginTop: 15}]}>
+                <Button onPress={this.submitHandler} full style={[styles.primaryButton, {marginTop: 15}]}>
                   <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
                 </Button>
               </View>
@@ -85,7 +139,6 @@ export default class Card extends React.Component {
 const componentStyle = StyleSheet.create({
   top: {
     paddingTop: 10,
-    paddingBottom: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "#d5dae4"
   },
@@ -102,14 +155,18 @@ const componentStyle = StyleSheet.create({
     color: "#a23737"
   },
   image: {
-    aspectRatio: 1,
-    width: Dimensions.get("window").width - 30,
-    height: null
+    width: "100%",
+    height: 200,
+    marginTop: 25,
+    marginBottom: 10
   },
   tabText: {
     color: "#000"
   },
   tabHeading: {
     backgroundColor: "#eaeef7"
+  },
+  blockHeading: {
+    marginBottom: 10
   }
 });

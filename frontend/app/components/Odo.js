@@ -60,15 +60,15 @@ const componentStyle = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
     padding: 20,
-    justifyContent: "space-between"
   },
   number: {
     textAlign: "center",
-    fontSize: 30
+    fontSize: 26
   },
   numberWrapper: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#d6d7da"
+    borderColor: "#d6d7da",
+    flex: 1
   },
   icon: {
     color: "#a23737",
