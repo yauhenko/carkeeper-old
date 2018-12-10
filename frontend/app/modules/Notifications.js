@@ -10,7 +10,10 @@ class Notifications {
     const channel = new firebase.notifications.Android.Channel('test-channel', 'CarKeeper Channel', firebase.notifications.Android.Importance.Max).setDescription('My apps test channel');
     firebase.notifications().android.createChannel(channel);
     firebase.messaging().getToken().then(fcm => {AsyncStorage.setItem('fcm', fcm); this.fcm = fcm; User.fcm = fcm;});
-    firebase.messaging().hasPermission().then(bool => {this.permission = bool});
+    firebase.messaging().hasPermission().then(bool => {
+        firebase.messaging().requestPermission()
+        this.permission = bool
+    });
 
     firebase.messaging().onMessage(message => {
       const notification = new firebase.notifications.Notification()
