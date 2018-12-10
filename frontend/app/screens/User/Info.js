@@ -2,14 +2,12 @@ import React from 'react';
 import {StyleSheet, Text} from 'react-native';
 import {observable, action} from 'mobx';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles";
 import Accordion from "../../components/Accordion";
 
 @observer
 export default class Info extends React.Component {
-  @observable loading = false;
-
   render() {
     return (
       <Container style={styles.container}>

@@ -1,16 +1,18 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, Dimensions, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, Image, Vibration} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, ListItem, Tab, Tabs, TabHeading,} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, CheckBox, Tab, Tabs, TabHeading} from 'native-base';
 import styles from "../../styles"
 import {observable, action} from 'mobx';
 import autoCard from "../../assets/images/autoCard.jpg";
 import Input from "../../components/Form/Input";
 import User from "../../store/User";
+import Notification from "../../components/Notification"
 
 @observer
 export default class Card extends React.Component {
   @observable loading = false;
+  @observable checked = false;
 
   @observable data = {
     firstname: User.profile.user.name || "",
@@ -23,7 +25,11 @@ export default class Card extends React.Component {
   };
   
   @action submitHandler = () => {
-    
+    if(!this.checked) {
+      Notification(`Согласитесь с правилами обработки персональных данных`);
+      Vibration.vibrate(300);
+      return false;
+    }
   };
 
   render() {
@@ -124,6 +130,10 @@ export default class Card extends React.Component {
                 <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
                 <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
                 <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
+                <View style={componentStyle.checkboxWrapper}>
+                  <CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>
+                  <Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>
+                </View>
                 <Button onPress={this.submitHandler} full style={[styles.primaryButton, {marginTop: 15}]}>
                   <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
                 </Button>
@@ -168,5 +178,14 @@ const componentStyle = StyleSheet.create({
   },
   blockHeading: {
     marginBottom: 10
+  },
+  checkbox: {
+    left: 0,
+    marginRight: 15
+  },
+  checkboxWrapper: {
+    flexDirection: "row",
+    paddingTop: 15,
+    alignItems: "center"
   }
 });
