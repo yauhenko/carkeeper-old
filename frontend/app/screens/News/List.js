@@ -51,7 +51,7 @@ export default class List extends React.Component {
             </Body>
             <Right>
               {/*<Button onPress={() => {}} transparent>*/}
-              {/*<Icon name='more'/>*/}
+              {/*<Icon name='md-more'/>*/}
               {/*</Button>*/}
             </Right>
           </Header>
