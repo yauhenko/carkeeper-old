@@ -161,7 +161,7 @@ export default class Fines extends React.Component {
 
                       <View style={{flex: 1}}>
                         <Text style={{marginBottom: 5}}>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
-                        <Text style={styles.textNote}>Номер: {regid}</Text>
+                        <Text style={styles.textNote}>Постановление: {regid}</Text>
                       </View>
                       {Boolean(amount) && <Text>{amount.toFixed(2)} руб.</Text>}
                     </View>

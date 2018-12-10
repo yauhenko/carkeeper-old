@@ -82,7 +82,7 @@ export default class Reminders extends React.Component {
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.checkup.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.checkupHandler(value)}} value={this.checkup.notify} />
                 </View>
                 <View style={componentStyle.content}>
-                  <InputDate last={true} onChange={(value)=>{this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
+                  <InputDate  last={true} onChange={value => {this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
                 </View>
               </View>
 
@@ -92,10 +92,9 @@ export default class Reminders extends React.Component {
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.regular.notify ? "#a23737" : "#eee"}  onValueChange={(value)=>{this.insuranceHandler("regular", value)}} value={this.insurance.regular.notify} />
                 </View>
                 <View style={componentStyle.content}>
-                  <InputDate onChange={(value)=>{this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
+                  <InputDate last={true} onChange={value => {this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
                 </View>
               </View>
-
 
               <View style={[styles.block, componentStyle.paddingReset]}>
                 <View style={componentStyle.header}>
@@ -103,7 +102,7 @@ export default class Reminders extends React.Component {
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.casco.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.insuranceHandler("casco", value)}} value={this.insurance.casco.notify} />
                 </View>
                 <View style={componentStyle.content}>
-                  <InputDate onChange={(value)=>{this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
+                  <InputDate last={true} onChange={value => {this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
                 </View>
               </View>
             </Fragment>

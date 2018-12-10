@@ -4,11 +4,27 @@ import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, ListItem, Tab, Tabs, TabHeading,} from 'native-base';
 import styles from "../../styles"
 import {observable, action} from 'mobx';
-import avtokarta from "../../assets/images/avtokarta.jpg";
+import autoCard from "../../assets/images/autoCard.jpg";
+import Input from "../../components/Form/Input";
+import User from "../../store/User";
 
 @observer
 export default class Card extends React.Component {
   @observable loading = false;
+
+  @observable data = {
+    firstname: User.profile.user.name || "",
+    lastname: "",
+    phone: User.profile.user.tel || ""
+  };
+
+  @observable dataChange = (key, value) => {
+    this.data[key] = value;
+  };
+  
+  @observable submitHandler = () => {
+    
+  };
 
   render() {
     return (
@@ -34,7 +50,7 @@ export default class Card extends React.Component {
                     <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
                     <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
                   </View>
-                  <Image resizeMode={'contain'} style={componentStyle.image} source={avtokarta}/>
+                  <Image resizeMode={'contain'} style={componentStyle.image} source={autoCard}/>
               </View>
             </Content>
           </Tab>
@@ -42,7 +58,7 @@ export default class Card extends React.Component {
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Подробно</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
-                <Text>2</Text>
+                <Text>Текст</Text>
               </View>
             </Content>
           </Tab>
@@ -50,7 +66,13 @@ export default class Card extends React.Component {
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Заказать</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
-                <Text>3</Text>
+                <Text style={styles.blockHeading}>Заявка на автокарту</Text>
+                <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
+                <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
+                <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
+                <Button onPress={this.submitHandler} style={[styles.primaryButton, {alignSelf: "center", marginTop: 15}]}>
+                  <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
+                </Button>
               </View>
             </Content>
           </Tab>
@@ -85,7 +107,7 @@ const componentStyle = StyleSheet.create({
     height: null
   },
   tabText: {
-    color: "#a9b3c7"
+    color: "#000"
   },
   tabHeading: {
     backgroundColor: "#eaeef7"

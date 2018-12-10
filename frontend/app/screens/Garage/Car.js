@@ -59,14 +59,14 @@ export default class Car extends React.Component {
   @action deleteCar = async () => {
     this.menu = false;
 
-    Alert.alert('Удалить автомобиль', `${this.mark} ${this.model}`, [
+    Alert.alert('Удалить автомобиль', `${this.car.refs.mark.name} ${this.car.refs.model.name}`, [
       {text: 'Отмена', style: 'cancel'},
       {text: 'Удалить', onPress: async () => {
           this.loading = true;
           try {
-            this.car = await Cars.deleteCar(this.car.car.id);
-            Cars.resetCurrentCar();
+            await Cars.deleteCar(this.car.car.id);
             this.props.navigation.navigate('Garage');
+            Cars.resetCurrentCar();
           } catch (e) {
             Notification(e);
           }
@@ -192,7 +192,7 @@ export default class Car extends React.Component {
                 </Body>
                 <Right>
                   <Button onPress={()=>{this.updateOdo()}} transparent>
-                    <Icon style={styles.headerIcon} name='md-checkmark'/>
+                    <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
                   </Button>
                 </Right>
               </Header>

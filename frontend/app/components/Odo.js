@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Text, View} from 'react-native';
-import {Button} from 'native-base';
+import {Button, Icon} from 'native-base';
 import {observer} from "mobx-react";
 
 
 @observer
-class Odo extends Component {
+export default class Odo extends Component {
   digits = 7;
 
   static propTypes = {
@@ -42,13 +42,13 @@ class Odo extends Component {
 
   render() {
     return (
-      <View style={{flexDirection: "row", padding: 20, justifyContent: "space-between"}}>
+      <View style={componentStyle.wrapper}>
         {this.state.digits.map((n, idx) => {
           return(
             <View key={idx}>
-              <Button style={componentStyle.button} onPress={()=>this.change(idx, +1)}><Text style={componentStyle.buttonText}>+</Text></Button>
+              <Button transparent onPress={()=>this.change(idx, +1)}><Icon style={componentStyle.icon} name='arrow-dropup'/></Button>
               <View style={componentStyle.numberWrapper}><Text style={componentStyle.number}>{n}</Text></View>
-              <Button style={componentStyle.button} onPress={()=>this.change(idx, -1)}><Text style={componentStyle.buttonText}>-</Text></Button>
+              <Button transparent onPress={()=>this.change(idx, -1)}><Icon style={componentStyle.icon} name='arrow-dropdown'/></Button>
             </View>)
         })}
       </View>
@@ -56,25 +56,22 @@ class Odo extends Component {
   }
 }
 
-export default Odo;
-
-
 const componentStyle = StyleSheet.create({
-  button : {
-    padding: 10,
-    backgroundColor: "#a23737",
-    width: "100%"
-  },
-  buttonText: {
-    color: "#fff"
+  wrapper: {
+    flexDirection: "row",
+    padding: 20,
+    justifyContent: "space-between"
   },
   number: {
     textAlign: "center",
     fontSize: 30
   },
   numberWrapper: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    marginTop: 10,
-    marginBottom: 20
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d6d7da"
+  },
+  icon: {
+    color: "#a23737",
+    fontSize: 28
   }
 });

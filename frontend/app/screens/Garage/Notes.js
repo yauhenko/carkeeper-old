@@ -89,8 +89,6 @@ export default class Notes extends React.Component {
       }
   )};
 
-
-
   render() {
     const {refs} = this.car;
 

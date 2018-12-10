@@ -24,13 +24,12 @@ export default class Navigation extends Component {
     //   path: "News",
     //   action: null
     // },
-    // {
-    //   title: "Автокарта",
-    //   icon: "card",
-    //   path: "Card",
-    //   action: null
-    // },
-
+    {
+      title: "Автокарта",
+      icon: "card",
+      path: "Card",
+      action: null
+    },
     {
       title: "Поддержка",
       icon: "text",
@@ -51,6 +50,12 @@ export default class Navigation extends Component {
       return;
     }
 
+    if(route.path === "Garage" && Cars.currentCar) {
+      this.props.navigation.navigate("Car");
+      this.props.navigation.closeDrawer();
+      return;
+    }
+
     this.props.navigation.navigate(route.path);
   };
 
@@ -63,8 +68,6 @@ export default class Navigation extends Component {
         <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
           <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={background}/>
         </View>
-
-
         <View>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
@@ -105,7 +108,7 @@ export default class Navigation extends Component {
         <View style={componentStyle.bottom}>
           <View style={{flexDirection: "row"}}>
             <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Profile")}} transparent><Icon style={[componentStyle.bottomIcon, {marginRight: 20}]} name={"settings"}/></Button>
-            <Button transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
+            <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Info")}} transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
           </View>
           <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={componentStyle.bottomIcon} name={"power"}/></Button>
         </View>

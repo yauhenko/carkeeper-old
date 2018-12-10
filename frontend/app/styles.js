@@ -53,11 +53,15 @@ export default styles = {
   },
 
   primaryButton: {
-    backgroundColor: "#a23737"
+    backgroundColor: "#a23737",
+    paddingLeft: 10,
+    paddingRight: 10
   },
 
   primaryButtonText: {
-    color: "#fff"
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 12
   },
 
   grayButton: {

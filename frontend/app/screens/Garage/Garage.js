@@ -40,7 +40,7 @@ export default class Garage extends React.Component {
   };
 
   componentWillMount() {
-    this.cars();
+      this.cars();
   }
 
   render() {
