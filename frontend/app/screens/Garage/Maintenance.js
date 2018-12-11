@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, RefreshControl, Alert, Modal, TouchableOpacity, StyleSheet} from 'react-native';
 import {action, observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem,  List, ActionSheet} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ActionSheet} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -42,7 +42,6 @@ export default class Maintenance extends React.Component {
   @action getMaintenance = async () => {
     this.loading = true;
     this.maintenance = (await Cars.getMaintenance({car: this.car.car.id})).list;
-    console.log(toJS(this.maintenance));
     this.loading = false;
   };
 

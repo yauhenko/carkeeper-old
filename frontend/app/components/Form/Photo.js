@@ -1,46 +1,47 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, Image, TouchableWithoutFeedback} from "react-native";
+import {StyleSheet, Text, Image, TouchableWithoutFeedback, Alert} from "react-native";
 import {View, ActionSheet} from 'native-base';
-import {observable, action} from "mobx";
+import {action} from "mobx";
 import {observer} from 'mobx-react';
 import Cropper from "../../modules/Cropper";
 import {cdn} from "../../modules/Url";
 
 @observer
 export default class Photo extends Component {
-  @observable image = {
-    path: this.props.path
-  };
-
   @action changePhoto = async type => {
-    this.modal = false;
-    this.loading = true;
-
     try {
       this.image = await Cropper[type]({cropperCircleOverlay: false});
       this.props.onChange(this.image);
     } catch (e) {}
-
-    this.loading = false;
   };
 
   @action action = () => {
+    let options = [
+      { text: "Загрузить из галереи", icon: "images", iconColor: "#9c9c9c", id: "gallery"},
+      { text: "Сделать снимок", icon: "camera", iconColor: "#9c9c9c", id: "camera"},
+      { text: "Отмена", icon: "close", iconColor: "#9c9c9c"}
+    ];
+
+    if(typeof this.props.onDelete === "function" && this.props.path) {
+      options.splice(options.length - 1, 0, { text: "Удалить", icon: "trash", iconColor: "#9c9c9c", id: "delete"} );
+    }
+
     ActionSheet.show(
       {
-        options: [
-          { text: "Загрузить из галереи", icon: "images", iconColor: "#b9babd"},
-          { text: "Сделать снимок", icon: "camera", iconColor: "#b9babd"},
-          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
-        ],
-        cancelButtonIndex: 2
+        options: options,
+        cancelButtonIndex: options.length - 1
       },
       index => {
-        if(index === 0) {
-          this.changePhoto("gallery")
+        if(options[index].id === "gallery" || options[index].id === "camera") {
+          this.changePhoto(options[index].id)
         }
 
-        if(index === 1) {
-          this.changePhoto("camera")
+        if(options[index].id === "delete" && typeof this.props.onDelete === "function") {
+          Alert.alert(null, 'Подтвердите удаление', [
+              {text: 'Отмена', onPress: () => {}, style: 'cancel'},
+              {text: 'Удалить', onPress: () => {this.props.onDelete()}}
+              ],
+              {cancelable: false });
         }
       }
     )
@@ -53,9 +54,9 @@ export default class Photo extends Component {
         <TouchableWithoutFeedback onPress={()=>{this.action()}}>
           <View style={styles.image}>
             {
-              this.image.path
+              this.props.path
                 ?
-                <Image style={{width: "100%", aspectRatio: 1, borderRadius: 5}} source={{uri: cdn + this.image.path}}/>
+                <Image style={{width: "100%", aspectRatio: 1, borderRadius: 5}} source={{uri: cdn + this.props.path}}/>
                 :
                 <Image style={{width: 60, height: 60, marginTop: 50, marginBottom: 50}} source={require("../../assets/images/photo_thumb.png")}/>
             }

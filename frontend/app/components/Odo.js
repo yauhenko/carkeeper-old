@@ -72,6 +72,6 @@ const componentStyle = StyleSheet.create({
   },
   icon: {
     color: "#a23737",
-    fontSize: 28
+    fontSize: 30
   }
 });

@@ -3,7 +3,6 @@ import Api from '../modules/Api';
 import Notification from "../components/Notification";
 import { AsyncStorage } from "react-native";
 import App from "../store/App";
-import Logger from "../modules/Logger";
 
 class User {
   constructor () {

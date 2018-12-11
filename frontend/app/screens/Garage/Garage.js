@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, RefreshControl, View, TouchableWithoutFeedback, StyleSheet, Image} from 'react-native';
+import {Text, RefreshControl, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles"
@@ -91,7 +91,6 @@ export default class Garage extends React.Component {
                           <Text style={componentStyle.notificationValue}>1</Text>
                         </View>
                         <View style={componentStyle.triangle}/>
-
                         <Icon style={componentStyle.notificationIcon} name="notifications"/>
                       </View>
                     </View>

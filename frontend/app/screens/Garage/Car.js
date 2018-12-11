@@ -134,6 +134,8 @@ export default class Car extends React.Component {
 
             <View style={styles.block}>
               {notifications.map((item, key) => {
+                console.log(item)
+
                 let route = null;
 
                 switch (item.type) {
@@ -144,6 +146,8 @@ export default class Car extends React.Component {
                   case "insurance" : route = "Reminders";
                     break;
                   case "maintenances" : route = "Maintenance";
+                    break;
+                  case "maintenance" : route = "Maintenance";
                     break;
                 }
 
@@ -188,7 +192,7 @@ export default class Car extends React.Component {
                   </Button>
                 </Left>
                 <Body>
-                <Title><Text style={styles.headerTitle}>Обновить показания одометра</Text></Title>
+                <Title><Text style={styles.headerTitle}>Текущий пробег</Text></Title>
                 </Body>
                 <Right>
                   <Button onPress={()=>{this.updateOdo()}} transparent>

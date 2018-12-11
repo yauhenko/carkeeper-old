@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, Text} from 'react-native';
-import {observable, action} from 'mobx';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles";
@@ -17,11 +16,9 @@ export default class Info extends React.Component {
               <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
-
           <Body>
-          <Title><Text style={styles.headerTitle}>Информация</Text></Title>
+            <Title><Text style={styles.headerTitle}>Информация</Text></Title>
           </Body>
-
           <Right/>
         </Header>
 
