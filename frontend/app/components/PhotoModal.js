@@ -16,7 +16,7 @@ export default class PhotoModal extends React.Component {
 
   @action download = url => {
     this.loading = true;
-    const name = `CarKeeper_${moment().format("DD_MM_YYYY-HH_mm_ss")}`;
+    const name = `CarKeeper_${moment().format("DD-MM-YYYY_HH-mm-ss")}`;
 
     RNFS.downloadFile({
       fromUrl: url,

@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-native start",
-    "android": "react-native run-android && react-devtools",
+    "android": "react-native run-android",
     "release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "test": "jest"
@@ -19,7 +19,6 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "@babel/plugin-proposal-decorators": "^7.2.0",
     "create-react-class": "^15.6.3",
     "es6-symbol": "^3.1.1",
     "jsc-android": "224109.x.x",

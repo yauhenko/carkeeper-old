@@ -34,17 +34,19 @@ class User {
    * @returns {Promise<void>}
    */
   @action login = async (data = {}) => {
-    return await Api('account/login', {...data, ttl: 3600 * 24 * 7, noip: true, fcm: this.fcm});
+    return await Api('account/login', {...data, ttl: 3600 * 24 * 30, noip: true, fcm: this.fcm});
   };
 
   /**
    * Выход пользователя
    * @returns {Promise<void>}
    */
-  @action logout = async () => {
-    try {
-      await Api('account/logout');
-    } catch (e) {/* Скромно молчим */}
+  @action logout = async (ignore = false) => {
+    if(!ignore) {
+      try {
+        await Api('account/logout');
+      } catch (e) {/* Скромно молчим */}
+    }
 
     this.token = null;
     this.auth = false;

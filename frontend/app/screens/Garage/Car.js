@@ -118,13 +118,14 @@ export default class Car extends React.Component {
                 </View>
               }
 
+
               <View style={componentStyle.odo}>
                 <View style={componentStyle.odoValue}>
                   {car.odo
                     ?
-                    <Text style={componentStyle.odoValueText}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                    <Text  onPress={()=>this.odoModal = true}style={componentStyle.odoValueText}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
                     :
-                    <Text style={componentStyle.odoValueText}>Пробег не указан</Text>
+                    <Text onPress={()=>this.odoModal = true} style={componentStyle.odoValueText}>Пробег не указан</Text>
                   }
                   <Button style={componentStyle.odoButton} transparent small onPress={()=>this.odoModal = true}><Icon style={{color: "#7f8a9d"}} name="create"/></Button>
                 </View>
@@ -134,10 +135,7 @@ export default class Car extends React.Component {
 
             <View style={styles.block}>
               {notifications.map((item, key) => {
-                console.log(item)
-
                 let route = null;
-
                 switch (item.type) {
                   case "fines" : route = "Fines";
                     break;

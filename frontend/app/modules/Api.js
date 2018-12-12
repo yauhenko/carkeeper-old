@@ -20,7 +20,7 @@ export default async (path, params = {}) => {
 
 
   if (data.error) {
-    // if(data.error.code === 403) {User.logout()}
+    if(data.error.code === 51) {User.logout(true)}
     throw data.error.message || data.error.sql || "Внутренняя ошибка";
   }
 
