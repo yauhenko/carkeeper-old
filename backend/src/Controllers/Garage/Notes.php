@@ -74,6 +74,7 @@ class Notes extends ApiController {
 					'car' => ['required' => true, 'type' => 'int'],
 					'name' => ['required' => true, 'type' => 'string', 'length' => [1, 100]],
 					'content' => ['required' => true, 'type' => 'string', 'length' => [1, 20000]],
+					'image' => ['type' => 'string', 'uuid' => true],
 				]
 			]
 		]);
