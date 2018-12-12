@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Collections\Notes;
 use Entities\Car;
 use Entities\Journal\Record;
 use Entities\User;
@@ -31,6 +32,10 @@ class References {
 		$this->rules[User::class] = [
 			'avatar' => ['table' => 'uploads'],
 			'city' => ['table' => 'geo_cities', 'fields' => ['id', 'name', 'type']],
+		];
+
+		$this->rules[Notes::class] = [
+			'image' => ['table' => 'uploads']
 		];
 
 	}

@@ -34,6 +34,13 @@ class Note extends Entity {
 	 */
 	public $content = null;
 
+	/**
+	 * @validate uuid
+	 * @rel Entities\Upload
+	 * @var string|null
+	 */
+	public $image = null;
+
 	/** @var string */
 	protected $_collection = Notes::class;
 

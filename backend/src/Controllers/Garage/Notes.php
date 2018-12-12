@@ -28,9 +28,11 @@ class Notes extends ApiController {
 
 		$notes = new NotesCollection;
 		$list = $notes->getList($car);
+		$refs = (object)$this->di->refs->get($list, ['image' => ['table' => 'uploads']]);
 
 		return [
 			'notes' => $list,
+			'refs' => $refs
 		];
 
 	}

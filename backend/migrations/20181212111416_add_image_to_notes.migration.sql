@@ -1,0 +1,2 @@
+ALTER TABLE `cars_notes` ADD `image` CHAR(36) NULL DEFAULT NULL AFTER `content`;
+ALTER TABLE `cars_notes` ADD FOREIGN KEY (`image`) REFERENCES `uploads`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
