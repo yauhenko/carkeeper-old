@@ -116,6 +116,8 @@ class Services {
 		    'user.name' => 'Имя',
 		    'city' => 'Город',
 		    'fcm' => 'FCM',
+		    'firstname' => 'Имя',
+		    'lastname' => 'Фамилия',
 
 		    'journal.car' => 'Идентификатор автомобиля',
 		    'journal.date' => 'Дата события',
