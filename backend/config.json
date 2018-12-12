@@ -41,6 +41,12 @@
 		"token": "97f09cc8897a93586f5a8bf26d239559",
 		"from": "+17014191559"
 	},
+	"sms_assistent": {
+		"user": "RedStrim",
+		"password": "8BG8f4ip",
+		"sender": "Proverka",
+		"validity_period": 1
+	},
 	"static_regexp": "/\\.(html|jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
 	"cdn": "https://cdn.carkeeper.pro",
 	"fcm": {
