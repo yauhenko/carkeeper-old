@@ -34,7 +34,7 @@ class Autocard extends ApiController {
 			'form' => [
 				'tel' => [Tools::class, 'tel']
 			]
-		]);
+		], false);
 
 		$this->validate([
 			'form' => [
