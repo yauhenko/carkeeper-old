@@ -4,8 +4,8 @@ import Modal from 'react-responsive-modal';
 import Loader from '../../components/Loader';
 import Icon from '../../components/Icon';
 import Pager from '../../components/Pager';
-import {formToObject} from '../../utils/tools';
 import api from '../../utils/api';
+import serialize from 'form-serialize';
 
 import './Users.css';
 
@@ -49,7 +49,7 @@ class Users extends Component {
 		e.preventDefault();
 		try {
 			const form = e.target;
-			const res = await api('admin/users/push', { fcm: this.state.fcm, ...formToObject(form), extra: JSON.parse(form.extra.value) });
+			const res = await api('admin/users/push', { fcm: this.state.fcm, ...serialize(form, true), extra: JSON.parse(form.extra.value) });
 			console.log(res);
 			form.reset();
 			this.closePushModal();
@@ -61,7 +61,7 @@ class Users extends Component {
 
 	update = async (e) => {
 		e.preventDefault();
-		if(await this.props.users.updateItem(formToObject(e.target))) this.closeEditModal();
+		if(await this.props.users.updateItem(serialize(e.target, true))) this.closeEditModal();
 	};
 
 	delete = async (id) => {
