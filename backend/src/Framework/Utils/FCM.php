@@ -6,22 +6,22 @@ use Framework\Patterns\DI;
 
 class FCM {
 
-	public static function send($to, string $platform, string $title, string $message, array $extra = [], bool $vibrate = true, bool $sound = true) {
+	public static function send($to, string $title, string $message, array $extra = [], bool $vibrate = true, bool $sound = true) {
 
 		if(!is_array($to)) $to = [$to];
-
-		if($platform === 'android') {
-			$fields = [
-				'registration_ids' => $to,
-				'data' => [
-					'title' => $title,
-					'body' => $message,
-					'sound' => $sound ? 'default' : null,
-					'vibrate' => (int)$vibrate,
-				],
-			];
-			$fields['data'] += $extra;
-		} else {
+//
+//		if($platform === 'android') {
+//			$fields = [
+//				'registration_ids' => $to,
+//				'data' => [
+//					'title' => $title,
+//					'body' => $message,
+//					'sound' => $sound ? 'default' : null,
+//					'vibrate' => (int)$vibrate,
+//				],
+//			];
+//			$fields['data'] += $extra;
+//		} else {
 			$fields = [
 				'registration_ids' => $to,
 				'notification' => [
@@ -32,7 +32,7 @@ class FCM {
 				],
 				'data' => $extra
 			];
-		}
+		//}
 
 		$key = DI::getInstance()->config->fcm->key;
 

@@ -28,7 +28,7 @@ class Push extends Handler {
 			return 'No FCM';
 		}
 
-		$res = FCM::send($data['fcm'], 'android', $data['title'], $data['body'], (array)$data['extra'] ?: []);
+		$res = FCM::send($data['fcm'], $data['title'], $data['body'], (array)$data['extra'] ?: []);
 
 		if($res['failure']) {
 
