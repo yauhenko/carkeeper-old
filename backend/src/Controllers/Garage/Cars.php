@@ -18,10 +18,24 @@ class Cars extends ApiController {
 		$this->auth();
 
 		$list = CarsCollection::factory()->find('user = {$user} ORDER BY id', ['user' => $this->user->id]);
+		$refs = (object)$this->di->refs->get($list);
+
+		/** @var Car $car */
+		foreach ($list as &$car) {
+			$cnt = 0;
+			/** @var CarsCollection $cars */
+			$cars = CarsCollection::factory();
+			$ns = $cars->getNotifications($car);
+			foreach($ns as $n) {
+				if($n['level'] === 'warning' || $n['level'] === 'danger') $cnt++;
+			}
+			$car = $car->getData();
+			$car['notifications'] = $cnt;
+		}
 
 		return [
 			'cars' => $list,
-			'refs' => (object)$this->di->refs->get($list)
+			'refs' => $refs
 		];
 
 	}
