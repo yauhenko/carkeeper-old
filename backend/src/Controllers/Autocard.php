@@ -12,6 +12,8 @@ class Autocard extends ApiController {
 	 */
 	public function check() {
 
+		$this->auth();
+
 		/** @var Client $db */
 		$db = $this->di->db;
 
