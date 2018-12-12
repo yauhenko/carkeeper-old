@@ -1,6 +1,6 @@
 import React from 'react';
 import {NetInfo, StatusBar, Platform} from 'react-native';
-import {Root} from 'native-base';
+import {Root, ListItem} from 'native-base';
 import {observer} from 'mobx-react';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import Login from "./screens/User/Login";

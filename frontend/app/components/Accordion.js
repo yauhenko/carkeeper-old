@@ -28,6 +28,7 @@ export default class Accordion extends React.Component {
             <Icon style={componentStyle.headerIcon} name={this.open ? "arrow-dropup" : "arrow-dropdown"}/>
           </View>
         </TouchableWithoutFeedback>
+
         {this.open
           ?
           <View style={componentStyle.content}>

@@ -147,7 +147,7 @@ export default class Car extends React.Component {
                     break;
                   case "maintenances" : route = "Maintenance";
                     break;
-                  case "maintenance" : route = "Maintenance";
+                  case "maintenance" : route = "Journal";
                     break;
                 }
 
@@ -184,7 +184,7 @@ export default class Car extends React.Component {
           </HeaderMenu>
 
           <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
-            <Container>
+            <Container style={styles.container}>
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
                 <Left>
                   <Button title={"Назад"} onPress={() => {this.odoModal = false}} transparent>
@@ -200,8 +200,11 @@ export default class Car extends React.Component {
                   </Button>
                 </Right>
               </Header>
-              <Content>
-                <Odo onChange={value => {this.odoValue = value}} value={this.odoValue || 0}/>
+
+              <Content contentContainerStyle={styles.content}>
+                <View style={styles.block}>
+                  <Odo onChange={value => {this.odoValue = value}} value={this.odoValue || 0}/>
+                </View>
               </Content>
             </Container>
           </Modal>

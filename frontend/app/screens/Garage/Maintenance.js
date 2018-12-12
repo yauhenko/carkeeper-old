@@ -208,11 +208,11 @@ export default class Maintenance extends React.Component {
                 ]} title={"Год/Месяц"}/>
               </View>
 
-              <View style={styles.block}>
-                <Text style={styles.blockHeading}>Последнее проведение работы</Text>
-                <Input keyboardType="numeric" onChange={value => {this.tmp.last_odo = value}} value={this.tmp.last_odo} title="Пробег"/>
-                <InputDate last={true} onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>
-              </View>
+              {/*<View style={styles.block}>*/}
+                {/*<Text style={styles.blockHeading}>Последнее проведение работы</Text>*/}
+                {/*<Input keyboardType="numeric" onChange={value => {this.tmp.last_odo = value}} value={this.tmp.last_odo} title="Пробег"/>*/}
+                {/*<InputDate last={true} onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>*/}
+              {/*</View>*/}
             </Content>
           </Container>
         </Modal>

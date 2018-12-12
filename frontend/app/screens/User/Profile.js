@@ -130,7 +130,7 @@ export default class Profile extends React.Component {
                   <Icon style={componentStyle.cameraIcon} name="camera"/>
                 </View>
               </TouchableOpacity>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={componentStyle.name}>{`${User.profile.user.name}`}</Text>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={componentStyle.name}>{`${User.profile.user.name || "Аноним"}`}</Text>
               {cars.cars.length
                 ?
                 <Text style={styles.textNote}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
