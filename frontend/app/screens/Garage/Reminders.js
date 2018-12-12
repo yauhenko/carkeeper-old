@@ -12,7 +12,7 @@ import InputDate from "../../components/Form/InputDate";
 
 @observer
 export default class Reminders extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable insurance = {casco: {}, regular: {}};
   @observable checkup = {notify: false, edate: null};
@@ -60,72 +60,51 @@ export default class Reminders extends React.Component {
     const {refs} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
           <Body style={{flexGrow: 2}}>
             <Title><Text style={styles.headerTitle}>Напоминания: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
-          {/*<Right>*/}
-            {/*<Button onPress={()=>{}} transparent>*/}
-              {/*<Icon name='add'/>*/}
-            {/*</Button>*/}
-          {/*</Right>*/}
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>
+
           {this.loading ? null :
             <Fragment>
-              <ListItem style={componentStyle.header} itemDivider>
-                <Body>
-                <Text>Напоминать о техосмотре</Text>
-                </Body>
-                <Right>
+              <View style={[styles.block, componentStyle.paddingReset]}>
+                <View style={componentStyle.header}>
+                  <Text style={componentStyle.headerText}>Напоминать о техосмотре</Text>
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.checkup.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.checkupHandler(value)}} value={this.checkup.notify} />
-                </Right>
-              </ListItem>
-
-              {this.checkup.notify ?
-                <View style={componentStyle.content}>
-                  <InputDate onChange={(value)=>{this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
                 </View>
-              : null}
+                <View style={componentStyle.content}>
+                  <InputDate  last={true} onChange={value => {this.checkupDate(value)}} value={this.checkup.edate} title={"Окончание"}/>
+                </View>
+              </View>
 
-              <ListItem style={componentStyle.header} itemDivider>
-                <Body>
-                <Text>Напоминать о страховке</Text>
-                </Body>
-                <Right>
+              <View style={[styles.block, componentStyle.paddingReset]}>
+                <View style={componentStyle.header}>
+                  <Text style={componentStyle.headerText}>Напоминать о страховке</Text>
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.regular.notify ? "#a23737" : "#eee"}  onValueChange={(value)=>{this.insuranceHandler("regular", value)}} value={this.insurance.regular.notify} />
-                </Right>
-              </ListItem>
-
-              {this.insurance.regular.notify ?
-                <View style={componentStyle.content}>
-                  <InputDate onChange={(value)=>{this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
                 </View>
-                :
-                null}
+                <View style={componentStyle.content}>
+                  <InputDate last={true} onChange={value => {this.insuranceDate("regular", value)}} value={this.insurance.regular.edate} title={"Окончание"}/>
+                </View>
+              </View>
 
-              <ListItem style={componentStyle.header} itemDivider>
-                <Body>
-                <Text>Напоминать о КАСКО</Text>
-                </Body>
-                <Right>
+              <View style={[styles.block, componentStyle.paddingReset]}>
+                <View style={componentStyle.header}>
+                  <Text style={componentStyle.headerText}>Напоминать о КАСКО</Text>
                   <Switch onTintColor={"#f1838b"} thumbTintColor={this.insurance.casco.notify ? "#a23737" : "#eee"} onValueChange={(value)=>{this.insuranceHandler("casco", value)}} value={this.insurance.casco.notify} />
-                </Right>
-              </ListItem>
-
-              {this.insurance.casco.notify ?
-                <View style={componentStyle.content}>
-                  <InputDate onChange={(value)=>{this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
                 </View>
-                :
-                null}
+                <View style={componentStyle.content}>
+                  <InputDate last={true} onChange={value => {this.insuranceDate("casco", value)}} value={this.insurance.casco.edate} title={"Окончание"}/>
+                </View>
+              </View>
             </Fragment>
           }
         </Content>
@@ -138,11 +117,19 @@ export default class Reminders extends React.Component {
 
 const componentStyle = StyleSheet.create({
   header: {
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#d6d7da"
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingBottom: 10,
+    alignItems: "center"
+  },
+  headerText: {
+    fontWeight: "bold"
   },
   content: {
-    paddingBottom: 20,
-    paddingTop: 10
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4"
+  },
+  paddingReset: {
+    paddingBottom: 0
   }
 });

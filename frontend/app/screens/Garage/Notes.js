@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, RefreshControl, Clipboard, Alert, Modal} from 'react-native';
-import {action, observable, toJS} from "mobx";
+import {Text, RefreshControl, Clipboard, Alert, Modal, TouchableOpacity, StyleSheet} from 'react-native';
+import {action, observable} from "mobx";
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem,  List, ActionSheet} from 'native-base';
 import styles from "../../styles"
@@ -11,7 +11,7 @@ import Input from "../../components/Form/Input";
 
 @observer
 export default class Notes extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable modal = false;
   @observable notes = [];
@@ -89,17 +89,15 @@ export default class Notes extends React.Component {
       }
   )};
 
-
-
   render() {
     const {refs} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
           <Body>
@@ -107,37 +105,39 @@ export default class Notes extends React.Component {
           </Body>
           <Right>
             <Button onPress={()=>{this.toggleModal(true); this.note = Object.assign({}, this.blank)}} transparent>
-              <Icon name='add'/>
+              <Icon style={styles.headerIcon} name='md-add'/>
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getNotes()}}/>} contentContainerStyle={styles.container}>
-          <List>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getNotes()}}/>} contentContainerStyle={styles.content}>
             {this.notes.length
               ?
-              this.notes.map((note) => (
-                <ListItem onPress={() => {this.action(note)}} style={{flexDirection: "column", alignItems: "flex-start"}} key={note.id}>
-                  <Text style={{marginBottom: 5}}>{note.name}</Text>
-                  <Text style={styles.textNote}>{note.content}</Text>
-                </ListItem>
-              ))
+              <View style={styles.block}>
+                {
+                  this.notes.map((note, key) => (
+                    <TouchableOpacity onPress={() => {this.action(note)}} key={note.id}>
+                      <View style={[componentStyle.item, this.notes.length === key+1 ? {borderBottomWidth: 0} : {}]}>
+                        <Text>{note.name}</Text>
+                        {Boolean(note.content) && <Text style={[styles.textNote,{marginTop: 5}]}>{note.content}</Text>}
+                      </View>
+                    </TouchableOpacity>
+                  ))
+                }
+              </View>
               :
-              this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли заметки</Text>
+              this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Вы еще не добавляли заметки</Text></View>
             }
-          </List>
-
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
 
-
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
-          <Container>
+          <Container style={styles.container}>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
-                  <Icon name='arrow-back'/>
+                  <Icon style={styles.headerIcon} name='md-arrow-back'/>
                 </Button>
               </Left>
               <Body>
@@ -145,21 +145,35 @@ export default class Notes extends React.Component {
               </Body>
               <Right>
                 <Button onPress={()=>{this.saveNote()}} title={"Сохранить"} transparent>
-                  <Icon name='checkmark'/>
+                  <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
                 </Button>
               </Right>
             </Header>
 
-            <Content>
-              <View style={{paddingTop: 10}}>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
                 <Input value={this.note.name} onChange={(value)=>{this.fillNote("name", value)}} title="Заголовок"/>
-                <Input value={this.note.content} onChange={(value)=>{this.fillNote("content", value)}} multiline={true} title="Текст заметки"/>
+                <Input last={true} value={this.note.content} onChange={(value)=>{this.fillNote("content", value)}} multiline={true} title="Текст заметки"/>
               </View>
             </Content>
           </Container>
         </Modal>
-
       </Container>
     );
   }
 }
+
+
+const componentStyle = StyleSheet.create({
+  item: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4",
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  empty: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  }
+});

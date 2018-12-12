@@ -36,11 +36,11 @@ export default class Support extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
-              <Icon name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
 
@@ -50,20 +50,20 @@ export default class Support extends React.Component {
 
           <Right>
             <Button onPress={()=>{this.send()}} title={"Отправить"} transparent>
-              <Icon name='checkmark'/>
+              <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
             </Button>
           </Right>
         </Header>
 
-        <Content contentContainerStyle={styles.container}>
-            <View>
+        <Content contentContainerStyle={styles.content}>
+            <View style={styles.block}>
               <Select onChange={value => {this.subject = value.id}} value={this.subject} buttons={[
                 {id: "Ошибка в приложении", text: "Ошибка в приложении"},
                 {id: "Предложить улучшение", text: "Предложить улучшение"},
                 {id: "Сотрудничество", text: "Сотрудничество"},
                 {id: "Прочее", text: "Прочее"}
               ]} title={"Тема"}/>
-              <Input onChange={value => {this.message = value}} value={this.message} multiline={true} title={"Сообщение"}/>
+              <Input placeholder="Введите сообщение" last={true} onChange={value => {this.message = value}} value={this.message} multiline={true} title={"Сообщение"}/>
             </View>
         </Content>
       </Container>

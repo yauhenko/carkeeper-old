@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
 import {View, Icon, ActionSheet} from 'native-base';
 import {observer} from 'mobx-react';
 import {action, observable} from 'mobx';
@@ -44,13 +44,15 @@ export default class Select extends Component {
     const {title} = this.props;
 
     return (
-      <View style={styles.wrapper}>
-        <View style={styles.title}><Text>{title}</Text></View>
-        <TouchableOpacity style={styles.select} onPress={()=>{this.open()}}>
-          <Text style={this.props.disabled ? styles.disabled : {flex: 1}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
+      <TouchableWithoutFeedback onPress={()=>{this.open()}}>
+      <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
+        <View style={styles.title}><Text style={styles.titleText}>{title}</Text></View>
+        <View style={styles.select}>
+          <Text style={this.props.disabled ? styles.disabled : {flex: 1, color: "#a23737"}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
-        </TouchableOpacity>
+        </View>
       </View>
+      </TouchableWithoutFeedback>
     )
   }
 }
@@ -58,7 +60,6 @@ export default class Select extends Component {
 const styles = StyleSheet.create({
   title: {
     paddingTop: 15,
-    paddingLeft: 17,
     paddingBottom: 15,
     marginRight: 20,
     width: 120
@@ -66,7 +67,9 @@ const styles = StyleSheet.create({
 
   wrapper: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#d5dae4"
   },
 
   select: {
@@ -77,18 +80,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 15,
     paddingLeft: 0,
-    paddingBottom: 15,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#d6d7da"
+    paddingBottom: 15
   },
 
   disabled : {
     color: "#d6d7da"
   },
 
+  titleText: {
+    color: "#7f8a9d"
+  },
+
   icon: {
-    color: "#ccc",
-    marginRight: 12,
+    color: "#a23737",
     marginLeft: 15,
     fontSize: 16,
     width: 15

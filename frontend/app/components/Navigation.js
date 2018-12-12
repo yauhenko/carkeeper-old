@@ -6,7 +6,8 @@ import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
-import background from "../assets/images/navbar_bg.png";
+import background from "../assets/images/login_background.jpg";
+
 
 @observer
 export default class Navigation extends Component {
@@ -17,12 +18,12 @@ export default class Navigation extends Component {
       path: "Garage",
       action: null
     },
-    {
-      title: "Лента",
-      icon: "paper",
-      path: "News",
-      action: null
-    },
+    // {
+    //   title: "Лента",
+    //   icon: "paper",
+    //   path: "News",
+    //   action: null
+    // },
     {
       title: "Автокарта",
       icon: "card",
@@ -49,6 +50,12 @@ export default class Navigation extends Component {
       return;
     }
 
+    if(route.path === "Garage" && Cars.currentCar) {
+      this.props.navigation.navigate("Car");
+      this.props.navigation.closeDrawer();
+      return;
+    }
+
     this.props.navigation.navigate(route.path);
   };
 
@@ -61,7 +68,6 @@ export default class Navigation extends Component {
         <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
           <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={background}/>
         </View>
-
         <View>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
@@ -82,12 +88,13 @@ export default class Navigation extends Component {
             </View>
           </View>
 
+
           <List>
             {this.routes.map((route, key)=>{
               return (
                 <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>
-                    <Icon style={{color: "#f13f3f"}} name={route.icon}/>
+                    <Icon style={{color: "#d5dae4"}} name={route.icon}/>
                   </Left>
                   <Body>
                     <Text style={componentStyle.link}>{route.title}</Text>
@@ -101,7 +108,7 @@ export default class Navigation extends Component {
         <View style={componentStyle.bottom}>
           <View style={{flexDirection: "row"}}>
             <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Profile")}} transparent><Icon style={[componentStyle.bottomIcon, {marginRight: 20}]} name={"settings"}/></Button>
-            <Button transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
+            <Button onPress={()=>{this.props.navigation.closeDrawer(); this.props.navigation.navigate("Info")}} transparent><Icon style={componentStyle.bottomIcon} name={"information-circle"}/></Button>
           </View>
           <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={componentStyle.bottomIcon} name={"power"}/></Button>
         </View>
@@ -140,10 +147,8 @@ const componentStyle = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 5
   },
-
   bottomIcon: {
-    color: "#fff",
+    color: "#d5dae4",
     fontSize: 26,
-    opacity: 0.5
   }
 });

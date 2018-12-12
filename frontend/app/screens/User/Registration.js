@@ -72,7 +72,7 @@ export default class Registration extends React.Component {
 const customStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#a23737",
     justifyContent: 'center'
   },
 

@@ -1,6 +1,6 @@
-import React, {Fragment} from 'react';
-import {Text, RefreshControl, View, Modal, Clipboard, Alert} from 'react-native';
-import {observable, action, toJS} from "mobx";
+import React from 'react';
+import {Text, RefreshControl, View, Modal, Clipboard, Alert, StyleSheet, TouchableOpacity} from 'react-native';
+import {observable, action} from "mobx";
 import {observer} from 'mobx-react';
 import {
   Container,
@@ -26,7 +26,7 @@ import moment from "moment";
 
 @observer
 export default class Fines extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable fines = [];
   @observable menu = false;
@@ -120,36 +120,30 @@ export default class Fines extends React.Component {
     const {refs} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
-
           <Body>
             <Title><Text style={styles.headerTitle}>Штрафы: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
-
           <Right>
             <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
-              <Icon name='more' />
+              <Icon style={styles.headerIcon} name='md-more' />
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getFines()}}/>} contentContainerStyle={styles.container}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getFines()}}/>} contentContainerStyle={styles.content}>
 
           {this.passportLoaded && !this.passport.serie
             ?
-            <View style={{padding: 20, borderBottomColor: "#b9babd", borderBottomWidth: 0.5}}>
-              <Text style={{textAlign: "center"}}>Для получения уведомлений о штрафах необходимо ввести данные техпаспорта</Text>
-              <Text style={{textDecorationLine: "underline",
-                textAlign: "center",
-                marginTop: 10,
-                padding: 5,
-                color: "#f13f3f"}} onPress={()=>this.toggleModal(true)}>Заполнить</Text>
+            <View style={[styles.block]}>
+              <Text style={componentStyle.empty}>Для получения уведомлений о штрафах необходимо заполнить данные техпаспорта</Text>
+              <Button style={[styles.grayButton, {alignSelf: "center", marginTop: 10, marginBottom: 10}]} onPress={()=>this.toggleModal(true)}><Text style={styles.grayButtonText}>ЗАПОЛНИТЬ</Text></Button>
             </View>
             :
             null
@@ -157,36 +151,33 @@ export default class Fines extends React.Component {
 
           {this.fines.length
             ?
-            <List>
-              {this.fines.map(({id, cdate, regid, amount, status}) => (
-                  <ListItem onPress={()=>this.action(id, regid, status)} key={id}>
-                    <View style={{flexDirection: "row", alignItems: "center"}}>
-                      <View style={{width: 55, paddingLeft: 5}}>
-                        <Icon style={status === 0 ? {color: "#f13f3f"} : {color: "green"}} name={status === 0 ? "alert" : "checkmark-circle"}/>
+            <View style={styles.block}>
+              {this.fines.map(({id, cdate, regid, amount, status}, key) => (
+                  <TouchableOpacity onPress={()=>this.action(id, regid, status)} key={id}>
+                    <View style={[componentStyle.item, this.fines.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                      <View style={{width: 50, paddingLeft: 10}}>
+                        <Icon style={[status === 0 ? {color: "#a23737"} : {color: "green"}, {fontSize: 22}]} name={status === 0 ? "alert" : "checkmark-circle"}/>
                       </View>
+
                       <View style={{flex: 1}}>
-                        <Text>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
-                        <Text>Номер: {regid}</Text>
+                        <Text style={{marginBottom: 5}}>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
+                        <Text style={styles.textNote}>Постановление: {regid}</Text>
                       </View>
-                      {amount ?
-                        <View style={{alignItems: "center"}}>
-                          <Text>Сумма</Text>
-                          <Text style={{fontWeight: "bold"}}>{amount.toFixed(2)} руб.</Text>
-                        </View> : null}
+                      {Boolean(amount) && <Text>{amount.toFixed(2)} руб.</Text>}
                     </View>
-                  </ListItem>
+                  </TouchableOpacity>
               ))}
-            </List>
+            </View>
             :
-            this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Штрафы не найдены</Text>
+            this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Штрафы не найдены</Text></View>
           }
 
           <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
-            <Container>
+            <Container style={styles.container}>
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
                 <Left>
                   <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
-                    <Icon name='arrow-back'/>
+                    <Icon style={styles.headerIcon} name='md-arrow-back'/>
                   </Button>
                 </Left>
                 <Body>
@@ -194,25 +185,26 @@ export default class Fines extends React.Component {
                 </Body>
                 <Right>
                   <Button onPress={()=>{this.updatePass()}} title={"Сохранить"} transparent>
-                    <Icon name='checkmark'/>
+                    <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
                   </Button>
                 </Right>
               </Header>
 
-              <Content>
-                <View style={{paddingTop: 10}}>
+              <Content contentContainerStyle={styles.content}>
+                <View style={styles.block}>
+                  <Text style={styles.blockHeading}>Данные техпаспорта</Text>
                   <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Фамилия"/>
                   <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Имя"/>
                   <Input value={this.passport.lastname} onChange={value => {this.fillPass("lastname", value)}} title="Отчество"/>
                   <Input value={this.passport.serie} onChange={value => {this.fillPass("serie", value)}} title="Серия"/>
-                  <Input value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
+                  <Input last={true} value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
                 </View>
               </Content>
             </Container>
           </Modal>
         </Content>
 
-        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
+        <Footer><CarMenu navigation={this.props.navigation}/></Footer>
 
         <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
           <List>
@@ -225,3 +217,24 @@ export default class Fines extends React.Component {
     );
   }
 }
+
+
+const componentStyle = StyleSheet.create({
+  item: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4",
+    flexDirection: "row",
+    alignItems: "center"
+  },
+  empty: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    lineHeight: 21
+  },
+  name: {
+    marginBottom: 5
+  }
+});

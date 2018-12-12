@@ -177,12 +177,10 @@ export default class Login extends React.Component {
       <Container>
         <StatusBar backgroundColor="#000" translucent={true} barStyle="light-content"/>
 
-        <Content refreshControl={<RefreshControl enabled={false} refreshing={this.loading}/>} contentContainerStyle={componentStyle.container}>
-          <View style={[StyleSheet.absoluteFill, {alignItems: "center", paddingTop: StatusBar.currentHeight}]}>
-            <Image style={{height: Dimensions.get("window").height - StatusBar.currentHeight, width: Dimensions.get("window").width}} source={background}/>
+        <Content refreshControl={<RefreshControl enabled={false} refreshing={this.loading}/>} contentContainerStyle={componentStyle.container} style={{  backgroundColor: 'rgba(255,255,255,0.4)'}}>
+          <View style={componentStyle.background}>
+            <Image style={{height: '100%', width: '100%'}} source={background}/>
           </View>
-
-          <View style={[StyleSheet.absoluteFill, {backgroundColor: "rgba(0,0,0,0.7)"}]}/>
 
           <View style={componentStyle.logoContainer}>
             <Image style={componentStyle.logo} source={Logo}/>
@@ -194,7 +192,7 @@ export default class Login extends React.Component {
               ?
               <Animated.View style={{left: this.left}}>
                 <Text style={componentStyle.label}>Введите Ваш номер телефона</Text>
-                <TextInput placeholder="Номер телефона" onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
+                <TextInput placeholder="Номер телефона" onChangeText={text => {this.change('tel', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" keyboardType="phone-pad" value={this.tel} style={componentStyle.input}/>
                 <Button disabled={this.disabled} onPress={()=>{this.checkPhoneNumber()}} style={componentStyle.button} block>
                   <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
                 </Button>
@@ -215,7 +213,7 @@ export default class Login extends React.Component {
               {this.exists === true ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите Ваш пароль</Text>
-                  <TextInput placeholder="Пароль" secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <TextInput placeholder="Пароль" secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.password} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.login()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ВОЙТИ</Text>
                   </Button>
@@ -229,7 +227,7 @@ export default class Login extends React.Component {
               {this.exists === false ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
-                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.code} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.checkCode()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ДАЛЕЕ</Text>
                   </Button>
@@ -242,7 +240,7 @@ export default class Login extends React.Component {
               {this.exists === "password" ?
                 <Fragment>
                   <Text style={componentStyle.label}>Придумайте пароль</Text>
-                  <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.password} style={componentStyle.input}/>
+                  <TextInput secureTextEntry onChangeText={text => {this.change('password', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.password} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.register()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ЗАРЕГИСТРИРОВАТЬСЯ</Text>
                   </Button>
@@ -252,7 +250,7 @@ export default class Login extends React.Component {
               {this.exists === "restore" ?
                 <Fragment>
                   <Text style={componentStyle.label}>Введите код, который мы отправили на Ваш телефон {this.tel}</Text>
-                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#f13f3f" value={this.code} style={componentStyle.input}/>
+                  <TextInput keyboardType="numeric" onChangeText={text => {this.change('code', text)}} underlineColorAndroid="transparent" autoCorrect={false} selectionColor="#a23737" value={this.code} style={componentStyle.input}/>
                   <Button disabled={this.disabled} onPress={()=>{this.restore()}} style={componentStyle.button} block>
                     <Text style={componentStyle.buttonText}>ВОССТАНОВИТЬ ПАРОЛЬ</Text>
                   </Button>
@@ -279,6 +277,17 @@ const componentStyle = StyleSheet.create({
     padding: 30
   },
 
+  background: {
+    alignItems: "center",
+    paddingTop: StatusBar.currentHeight,
+    position: 'absolute',
+    width: Dimensions.get("window").width,
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+
   logo: {
     width: 167.5,
     height: 88
@@ -291,7 +300,7 @@ const componentStyle = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#f13f3f",
+    backgroundColor: "#a23737",
     height: 50
   },
 
@@ -323,6 +332,7 @@ const componentStyle = StyleSheet.create({
     color: "#fff",
     fontSize: 16
   },
+
   slide: {
     left: -100
   },
@@ -358,6 +368,6 @@ const componentStyle = StyleSheet.create({
   },
 
   linkText: {
-    color: "#f13f3f",
+    color: "#a23737",
   }
 });

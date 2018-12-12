@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, RefreshControl} from 'react-native';
+import {Text, RefreshControl, View, TouchableWithoutFeedback, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem, Thumbnail} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title} from 'native-base';
 import styles from "../../styles"
 import Cars from "../../store/Cars";
 import { observable, action} from 'mobx';
@@ -26,23 +26,32 @@ export default class Garage extends React.Component {
     this.loading = false;
   };
 
-  componentWillMount() {
-    if(Cars.currentCar) {
-      this.props.navigation.navigate('Car', {id: Cars.currentCar});
-    } else {
-      this.cars();
+  @action selectCar = async id => {
+    if(this.loading) return;
+    this.loading = true;
+    try {
+      const car = await Cars.getCar(id);
+      Cars.setCurrentCar(car);
+      this.props.navigation.navigate('Car')
+    } catch (e) {
+      Notification(e);
     }
+    this.loading = false;
+  };
+
+  componentWillMount() {
+      this.cars();
   }
 
   render() {
     const {cars, refs} = Cars.cars;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Меню"} onPress={this.props.navigation.openDrawer} transparent>
-              <Icon name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
           <Body>
@@ -50,43 +59,129 @@ export default class Garage extends React.Component {
           </Body>
           <Right>
             <Button title={"Добавить"} onPress={()=>{this.toggleModal(true)}} transparent>
-              <Icon name='add' />
+              <Icon style={styles.headerIcon} name='md-add'/>
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.container}>
-          <List>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>this.cars()}/>} contentContainerStyle={styles.content}>
+          <View style={componentStyle.list}>
             {cars && cars.map(car => {
               return(
-                <ListItem onPress={()=>{Cars.setCurrentCar(car.id); this.props.navigation.navigate('Car', {id: car.id, mark: refs.mark[car.mark].name, model: refs.model[car.model].name})}} thumbnail key={car.id}>
-                  <Left>
-                    {car.image ?
-                      <Thumbnail source={{uri:  cdn + refs.image[car.image].path}}/>
-                      :
-                      <Thumbnail source={require('../../assets/images/car_stub.png')}/>
-                    }
-                  </Left>
+                <View style={componentStyle.item} key={car.id}>
+                  <TouchableWithoutFeedback onPress={()=>{this.selectCar(car.id)}}>
+                    <View style={styles.block}>
+                      <Text style={componentStyle.header}>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
 
-                  <Body>
-                    <Text>{refs.mark[car.mark].name} {refs.model[car.model].name}, {String(car.year)}г.</Text>
-                    <Text style={styles.textNote}>{Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name}</Text>
-                    <Text style={styles.textNote}>{Boolean(car.modification) && refs.modification[car.modification].name}</Text>
-                  </Body>
+                      {car.image
+                        ?
+                        <Image style={componentStyle.image} source={{uri:  cdn + refs.image[car.image].path}}/>
+                        :
+                        <View style={componentStyle.thumbWrapper}>
+                          <Image style={componentStyle.thumb} source={require('../../assets/images/car_stub.png')}/>
+                        </View>
+                      }
 
-                  <Right style={{paddingLeft: 10}}>
-                    <Icon name="arrow-forward" />
-                  </Right>
-                </ListItem>
-              )
+                      {Boolean(car.serie) && <Text style={Boolean(car.serie) ? componentStyle.description : {}}>
+                        {Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name} {Boolean(car.modification) && refs.modification[car.modification].name}
+                      </Text>}
+
+                      <View style={componentStyle.notificationWrapper}>
+                        <View style={componentStyle.notificationValueWrapper}>
+                          <Text style={componentStyle.notificationValue}>1</Text>
+                        </View>
+                        <View style={componentStyle.triangle}/>
+                        <Icon style={componentStyle.notificationIcon} name="notifications"/>
+                      </View>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>)
             })}
-          </List>
+          </View>
 
-          {!this.loading && !Cars.cars.cars.length && <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text>}
-
+          {!this.loading && !Cars.cars.cars.length && <View style={styles.block}><Text style={{textAlign: "center"}}>Вы еще не добавляли автомобили в гараж.</Text></View>}
           <AddOrEditCar cb={this.cars} edit={false} onClose={()=>{this.toggleModal(false)}} show={this.modal}/>
         </Content>
       </Container>
     );
   }
 }
+
+const componentStyle = StyleSheet.create({
+  list: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    display: "flex",
+  },
+  item: {
+    width: "100%"
+  },
+  header: {
+    fontWeight: "bold"
+  },
+  image: {
+    width: "100%",
+    height: 120,
+    borderRadius: 5,
+    marginTop: 10
+  },
+  thumbWrapper: {
+    backgroundColor: "#eaeef7",
+    height: 120,
+    borderRadius: 5,
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  thumb: {
+    width: 74,
+    height: 34
+  },
+  description: {
+    color: "#7f8a9d",
+    fontSize: 14,
+    lineHeight: 22,
+    marginTop: 10
+  },
+  notificationWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 10
+  },
+  notificationValue: {
+    color: "#fff",
+    fontWeight: "bold"
+  },
+  notificationValueWrapper: {
+    backgroundColor: "#a23737",
+    paddingTop: 3,
+    paddingBottom: 3,
+    paddingLeft: 7,
+    paddingRight: 7,
+    borderRadius: 5,
+    overflow: "visible"
+  },
+  notificationIcon: {
+    color: "#7f8a9d",
+    fontSize: 20,
+    marginLeft: 5
+  },
+  triangle: {
+    left: -1,
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderTopWidth: 0,
+    borderRightWidth: 4,
+    borderBottomWidth: 6,
+    borderLeftWidth: 4,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderBottomColor: '#a23737',
+    borderLeftColor: 'transparent',
+    transform: [
+      {rotate: '90deg'}
+    ]
+  }
+});

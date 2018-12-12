@@ -1,9 +1,9 @@
 import React, {Fragment} from 'react';
-import {Text, View, RefreshControl, Alert, Dimensions, StyleSheet, Modal} from 'react-native';
+import {Text, View, RefreshControl, Alert, Image, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, Thumbnail, List, ListItem} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem} from 'native-base';
 import styles from "../../styles"
-import {observable, action, toJS} from 'mobx';
+import {observable, action} from 'mobx';
 import Cars from "../../store/Cars";
 import Footer from "../../components/Footer";
 import HeaderMenu from "../../components/HeaderMenu";
@@ -16,16 +16,12 @@ import Odo from "../../components/Odo";
 
 @observer
 export default class Car extends React.Component {
-  @observable id = this.props.navigation.state.params.id;
-  @observable mark = this.props.navigation.state.params.mark;
-  @observable model = this.props.navigation.state.params.model;
+  @observable car = Cars.currentCar;
 
-  @observable loading = true;
+  @observable loading = false;
 
   @observable odoModal = false;
-  @observable odoValue = Number();
-
-  @observable car = {};
+  @observable odoValue = this.car.car.odo;
 
   @observable menu = false;
 
@@ -34,10 +30,9 @@ export default class Car extends React.Component {
   @action getCar = async () => {
     this.loading = true;
     try {
-      this.car = await Cars.getCar(this.id);
+      this.car = await Cars.getCar(this.car.car.id);
+      Cars.setCurrentCar(this.car);
       this.odoValue = this.car.car.odo;
-      this.mark = this.car.refs.mark.name;
-      this.model = this.car.refs.model.name;
     } catch (e) {
       Notification(e);
       this.props.navigation.navigate('Garage');
@@ -48,7 +43,7 @@ export default class Car extends React.Component {
   @action updateOdo = async () => {
     try {
       await Cars.updateCar({
-        id: this.id,
+        id: this.car.car.id,
         car: {
           odo: Number(this.odoValue)
         }
@@ -64,13 +59,14 @@ export default class Car extends React.Component {
   @action deleteCar = async () => {
     this.menu = false;
 
-    Alert.alert('Удалить автомобиль', `${this.mark} ${this.model}`, [
+    Alert.alert('Удалить автомобиль', `${this.car.refs.mark.name} ${this.car.refs.model.name}`, [
       {text: 'Отмена', style: 'cancel'},
       {text: 'Удалить', onPress: async () => {
           this.loading = true;
           try {
-            this.car = await Cars.deleteCar(this.id);
+            await Cars.deleteCar(this.car.car.id);
             this.props.navigation.navigate('Garage');
+            Cars.resetCurrentCar();
           } catch (e) {
             Notification(e);
           }
@@ -88,137 +84,197 @@ export default class Car extends React.Component {
       this.odoValue = this.car.car.odo;
   };
 
-  componentDidMount() {
-    this.getCar();
-  };
-
   render() {
     const {car, refs, notifications} = this.car;
 
     return (
-      <Container>
-        <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
-          <Left>
-            <Button title="Назад" onPress={() => {Cars.setCurrentCar(null); this.props.navigation.navigate('Garage')}} transparent>
-              <Icon name='arrow-back'/>
-            </Button>
-          </Left>
-          <Body>
-            <Title><Text style={styles.headerTitle}>Обзор: {this.mark} {this.model}</Text></Title>
-          </Body>
-          <Right>
-            <Button onPress={() => {this.menu = true}} transparent>
-              <Icon name='more'/>
-            </Button>
-          </Right>
-        </Header>
+      <Fragment>
+        <Container style={styles.container}>
+          <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
+            <Left>
+              <Button title="Назад" onPress={() => {Cars.resetCurrentCar(); this.props.navigation.navigate('Garage');}} transparent>
+                <Icon style={styles.headerIcon} name='md-arrow-back'/>
+              </Button>
+            </Left>
+            <Body>
+            <Title><Text style={styles.headerTitle}>Обзор: {refs.mark.name} {refs.model.name}</Text></Title>
+            </Body>
+            <Right>
+              <Button onPress={() => {this.menu = true}} transparent>
+                <Icon style={styles.headerIcon} name='md-more'/>
+              </Button>
+            </Right>
+          </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getCar()}}/>} contentContainerStyle={styles.container}>
-          {this.loading
-            ?
-            null
-            :
-            <Fragment>
-              <View style={{alignItems: "center", borderBottomWidth: 0.5, borderBottomColor: "#d6d7da"}}>
-                <Thumbnail square style={{width: Dimensions.get('window').width, height: 200}} large source={car.image ? {uri: cdn + refs.image.path} : require('../../assets/images/car_stub_square.png')} />
-              </View>
+          <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={() => {this.getCar()}}/>} contentContainerStyle={styles.content}>
+            <View style={styles.block}>
+              <Text style={componentStyle.header}>{refs.mark.name} {refs.model.name}, {this.car.car.year}г.</Text>
+              {car.image
+                ?
+                <Image style={componentStyle.image} source={{uri: cdn + refs.image.path}} />
+                :
+                <View style={componentStyle.stubWrapper}>
+                  <Image style={componentStyle.stub} source={car.image ? {uri: cdn + refs.image.path} : require('../../assets/images/car_stub.png')} />
+                </View>
+              }
+
               <View style={componentStyle.odo}>
-                <View style={{flex: 1}}>
+                <View style={componentStyle.odoValue}>
                   {car.odo
                     ?
-                    <Text style={componentStyle.odo_value}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                    <Text style={componentStyle.odoValueText}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
                     :
-                    <Text style={componentStyle.odo_value}>Пробег не указан</Text>
+                    <Text style={componentStyle.odoValueText}>Пробег не указан</Text>
                   }
-                  <Text style={styles.textNote}>Регулярно обновляйте показания одометра, чтобы получать рекомендации по обслуживанию автомобиля</Text>
+                  <Button style={componentStyle.odoButton} transparent small onPress={()=>this.odoModal = true}><Icon style={{color: "#7f8a9d"}} name="create"/></Button>
                 </View>
-                <Button style={componentStyle.odo_button} small onPress={()=>this.odoModal = true}><Icon name="create"/></Button>
+                <Text style={componentStyle.odo_text}>Регулярно обновляйте показания одометра, чтобы получать рекомендации по обслуживанию автомобиля</Text>
               </View>
+            </View>
 
+            <View style={styles.block}>
+              {notifications.map((item, key) => {
+                console.log(item)
 
-                {notifications.map((item, key) => {
-                  let route = null;
+                let route = null;
 
-                  switch (item.type) {
-                    case "fines" : route = "Fines";
+                switch (item.type) {
+                  case "fines" : route = "Fines";
                     break;
-                    case "checkup" : route = "Reminders";
+                  case "checkup" : route = "Reminders";
                     break;
-                    case "insurance" : route = "Reminders";
+                  case "insurance" : route = "Reminders";
                     break;
-                  }
+                  case "maintenances" : route = "Maintenance";
+                    break;
+                  case "maintenance" : route = "Maintenance";
+                    break;
+                }
 
-                  return <ListItem style={{height: null}} onPress={()=>{Boolean(route) && this.props.navigation.navigate(route, {car: this.car})}} last={key === (notifications.length - 1)} key={key} icon>
-                    <Left>
-                      {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
-                      {item.level === "danger" && <Icon style={{color: "#f13f3f"}} name="alert" />}
-                      {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
-                    </Left>
-                    <Body style={{height: null, paddingBottom: 15, paddingTop: 15}}>
-                      <Text>{item.text}</Text>
-                    </Body>
-                  </ListItem>
-                })}
-            </Fragment>
-          }
-        </Content>
+                return(
+                  <TouchableOpacity key={key} onPress={()=>{Boolean(route) && this.props.navigation.navigate(route)}}>
+                    <View style={[componentStyle.listItem, notifications.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                      <View style={componentStyle.listIcon}>
+                        {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
+                        {item.level === "danger" && <Icon style={{color: "#a23737"}} name="alert" />}
+                        {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
+                      </View>
+                      <Text style={componentStyle.listText}>{item.text}</Text>
+                      <View>
+                        <Icon style={componentStyle.listArrow} name='arrow-forward'/>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )
+              })}
+            </View>
+          </Content>
 
-        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
+          <Footer><CarMenu navigation={this.props.navigation}/></Footer>
 
-        <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
-          <List>
-            <ListItem onPress={()=>{this.toggleEditCarModal(true)}}>
-              <Text>Редактировать</Text>
-            </ListItem>
-            <ListItem onPress={() => {this.deleteCar()}} last={true}>
-              <Text>Удалить</Text>
-            </ListItem>
-          </List>
-        </HeaderMenu>
+          <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
+            <List>
+              <ListItem onPress={()=>{this.toggleEditCarModal(true)}}>
+                <Text>Редактировать</Text>
+              </ListItem>
+              <ListItem onPress={() => {this.deleteCar()}} last={true}>
+                <Text>Удалить</Text>
+              </ListItem>
+            </List>
+          </HeaderMenu>
 
-        {this.loading ? null : <AddOrEditCar cb={()=>{this.getCar()}} edit={true} onClose={()=>{this.toggleEditCarModal(false)}} car={this.car} show={this.edit}/>}
+          <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
+            <Container>
+              <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
+                <Left>
+                  <Button title={"Назад"} onPress={() => {this.odoModal = false}} transparent>
+                    <Icon style={styles.headerIcon} name='md-arrow-back'/>
+                  </Button>
+                </Left>
+                <Body>
+                <Title><Text style={styles.headerTitle}>Текущий пробег</Text></Title>
+                </Body>
+                <Right>
+                  <Button onPress={()=>{this.updateOdo()}} transparent>
+                    <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
+                  </Button>
+                </Right>
+              </Header>
+              <Content>
+                <Odo onChange={value => {this.odoValue = value}} value={this.odoValue || 0}/>
+              </Content>
+            </Container>
+          </Modal>
+        </Container>
 
-        <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
-          <Container>
-            <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
-              <Left>
-                <Button title={"Назад"} onPress={() => {this.odoModal = false}} transparent>
-                  <Icon name='arrow-back'/>
-                </Button>
-              </Left>
-              <Body>
-                <Title><Text style={styles.headerTitle}>Обновить показания одометра</Text></Title>
-              </Body>
-              <Right>
-                <Button onPress={()=>{this.updateOdo()}} transparent>
-                  <Icon name='checkmark'/>
-                </Button>
-              </Right>
-            </Header>
-            <Content>
-              <Odo onChange={value => {this.odoValue = value}} value={this.odoValue}/>
-            </Content>
-          </Container>
-        </Modal>
-      </Container>
+        <AddOrEditCar cb={()=>{this.getCar()}} edit={true} onClose={()=>{this.toggleEditCarModal(false)}} car={this.car} show={this.edit}/>
+      </Fragment>
     );
   }
 }
 
 const componentStyle = StyleSheet.create({
   odo: {
-    padding: 15,
+    marginTop: 10
+  },
+  odoValue: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4",
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     flexDirection: "row",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#d6d7da",
+    alignItems: "center",
+  },
+  odoButton : {
+    top: 2
+  },
+  odoValueText: {
+    color: "#7f8a9d"
+  },
+  image: {
+    width: "100%",
+    height: 120,
+    borderRadius: 5,
+    marginTop: 10
+  },
+  stubWrapper: {
+    backgroundColor: "#eaeef7",
+    height: 120,
+    borderRadius: 5,
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  stub: {
+    width: 74,
+    height: 34
+  },
+  header: {
+    fontWeight: "bold"
+  },
+  odo_text: {
+    lineHeight: 21
+  },
+  listItem: {
+    flexDirection: "row",
+    paddingTop: 10,
+    paddingBottom: 10,
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4"
   },
-  odo_value: {
-    marginBottom: 10
+  listIcon: {
+    width: 35
   },
-  odo_button : {
-    backgroundColor: "#f13f3f"
+  listText: {
+    lineHeight: 21,
+    flex: 1,
+    paddingRight: 10
+  },
+  listArrow: {
+    color: "#d5dae4"
   }
 });

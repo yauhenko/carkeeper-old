@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "react-native start",
-    "android": "react-native run-android",
+    "android": "react-native run-android && react-devtools",
     "release": "react-native run-android --variant=release",
     "ios": "react-native run-ios",
     "test": "jest"

@@ -103,52 +103,49 @@ export default class Profile extends React.Component {
     let cars = Cars.cars;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button onPress={this.props.navigation.openDrawer} transparent>
-              <Icon style={{color: "#fff"}} name='menu'/>
+              <Icon style={styles.headerIcon} name='md-menu'/>
             </Button>
           </Left>
-
           <Body>
-          <Title><Text style={styles.headerTitle}>Профиль</Text></Title>
+            <Title><Text style={styles.headerTitle}>Профиль</Text></Title>
           </Body>
-
           <Right>
             {this.changed &&
             <Button onPress={this.update} title={"Сохранить"} transparent>
-              <Icon name='checkmark'/>
+              <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
             </Button>}
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.container}>
-          <View style={customStyles.top}>
-            <View style={{paddingRight: 20}}>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>
+          <View style={styles.block}>
+            <View style={componentStyle.top}>
               <TouchableOpacity onPress={() => {this.action()}}>
-                <Thumbnail style={customStyles.avatar} source={refs.avatar ? {uri: cdn + refs.avatar.path} : thumb} />
-                <Icon style={customStyles.camera} name="camera"/>
+                <Thumbnail style={componentStyle.avatar} source={refs.avatar ? {uri: cdn + refs.avatar.path} : thumb} />
+                <View style={componentStyle.camera}>
+                  <Icon style={componentStyle.cameraIcon} name="camera"/>
+                </View>
               </TouchableOpacity>
-            </View>
-
-            <View>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={{fontSize: 20, color: "#fff"}}>{`${User.profile.user.name}`}</Text>
+              <Text ellipsizeMode='tail' numberOfLines={1} style={componentStyle.name}>{`${User.profile.user.name}`}</Text>
               {cars.cars.length
                 ?
-                <Text style={{color: "#fff", marginTop: 5}}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
+                <Text style={styles.textNote}>Езжу на {cars.refs.mark[cars.cars[0].mark].name} {cars.refs.model[cars.cars[0].model].name}</Text>
                 :
-                <Text style={{color: "#fff", marginTop: 5, width: 180}}>Пешеход. Автомобиль не добавлен в гараж.</Text>
+                <Text style={styles.textNote}>Пешеход. Автомобиль не добавлен в гараж.</Text>
               }
             </View>
-          </View>
 
-          <Form>
-            <Input onChange={value => {this.change("name", value)}} value={user.name || ""}  title="Имя"/>
-            <Input keyboardType="numeric" onChange={value => {this.change("tel", value)}} value={String(user.tel || "")}  title="Телефон"/>
-            <Input secureTextEntry style={customStyles.input} onChange={value => {this.change("password", value)}} value={String(user.password || "")} title="Новый пароль"/>
-            <Input keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
-          </Form>
+            <Form>
+              <Input onChange={value => {this.change("name", value)}} value={user.name || ""}  title="Имя"/>
+              <Input keyboardType="numeric" onChange={value => {this.change("tel", value)}} value={String(user.tel || "")}  title="Телефон"/>
+              <Input secureTextEntry style={componentStyle.input} onChange={value => {this.change("password", value)}} value={String(user.password || "")} title="Новый пароль"/>
+              <Input last={true} keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
+            </Form>
+          </View>
         </Content>
       </Container>
     );
@@ -156,16 +153,15 @@ export default class Profile extends React.Component {
 }
 
 
-const customStyles = StyleSheet.create({
+const componentStyle = StyleSheet.create({
   top: {
-    flexDirection: "row",
     alignItems: "center",
     paddingLeft: 15,
     paddingRight: 15,
     paddingBottom: 25,
     paddingTop: 5,
-    backgroundColor: "#555",
-    marginBottom: 30
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "#d5dae4",
   },
 
   avatar : {
@@ -176,12 +172,24 @@ const customStyles = StyleSheet.create({
 
   camera : {
     position: "absolute",
-    right: -7,
-    bottom: -7,
-    backgroundColor: "#555",
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#a23737",
+    borderRadius: 30/2,
+    width: 30,
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  cameraIcon: {
+    fontSize: 15,
     color:"#fff",
-    padding: 10,
-    fontSize: 20,
-    borderRadius: 50,
+  },
+
+  name: {
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 5
   }
 });

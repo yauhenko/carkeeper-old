@@ -1,8 +1,8 @@
 import React from 'react';
-import {Text, RefreshControl, Alert, Modal} from 'react-native';
+import {Text, RefreshControl, Alert, Modal, TouchableOpacity, StyleSheet} from 'react-native';
 import {action, observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem,  List, ActionSheet} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ActionSheet} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -16,7 +16,7 @@ import moment from "moment";
 
 @observer
 export default class Maintenance extends React.Component {
-  @observable car = this.props.navigation.state.params.car;
+  @observable car = Cars.currentCar;
   @observable loading = true;
   @observable modal = false;
   @observable maintenance = [];
@@ -42,7 +42,6 @@ export default class Maintenance extends React.Component {
   @action getMaintenance = async () => {
     this.loading = true;
     this.maintenance = (await Cars.getMaintenance({car: this.car.car.id})).list;
-    console.log(toJS(this.maintenance));
     this.loading = false;
   };
 
@@ -97,48 +96,50 @@ export default class Maintenance extends React.Component {
     }
   };
 
-
-
   action = item => {
     ActionSheet.show(
       {
         options: [
-          { text: "Редактировать", icon: "create", iconColor: "#b9babd"},
-          { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
-          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+          {text: "Редактировать", icon: "create", iconColor: "#b9babd"},
+          {text: "Удалить", icon: "trash", iconColor: "#b9babd"},
+          {text: "Отмена", icon: "close", iconColor: "#b9babd"}
         ],
         cancelButtonIndex: 2
       },
       index => {
 
-        if(index === 0) {
+        if (index === 0) {
           this.tmp = Object.assign({}, toJS(item));
           this.toggleModal(true);
         }
 
-        if(index === 1) {
+        if (index === 1) {
           Alert.alert(null, 'Подтвердите удаление', [
-              {text: 'Отмена', onPress: () => {}, style: 'cancel'},
-              {text: 'Удалить', onPress: async () => {
+              {
+                text: 'Отмена', onPress: () => {
+                }, style: 'cancel'
+              },
+              {
+                text: 'Удалить', onPress: async () => {
                   await this.deleteMaintenance(item.id);
                   await this.getMaintenance();
-                }}],
-            {cancelable: false })
+                }
+              }],
+            {cancelable: false})
         }
       }
-    )};
-
-
+    )
+  };
 
   render() {
     const {refs, car} = this.car;
 
     return (
-      <Container>
+      <Container style={styles.container}>
         <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
           <Left>
             <Button title={"Назад"} onPress={() => {this.props.navigation.goBack()}} transparent>
-              <Icon name='arrow-back'/>
+              <Icon style={styles.headerIcon} name='md-arrow-back'/>
             </Button>
           </Left>
           <Body>
@@ -146,40 +147,43 @@ export default class Maintenance extends React.Component {
           </Body>
           <Right>
             <Button onPress={()=>{this.assign(this.item); this.toggleModal(true)}} transparent>
-              <Icon name='add'/>
+              <Icon style={styles.headerIcon} name='md-add'/>
             </Button>
           </Right>
         </Header>
 
-        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getMaintenance()}}/>} contentContainerStyle={styles.container}>
-          <List>
+        <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getMaintenance()}}/>} contentContainerStyle={styles.content}>
+
             {this.maintenance.length
               ?
-              this.maintenance.map(item => (
-                <ListItem onPress={() => {this.action(item)}} style={{flexDirection: "column", alignItems: "flex-start"}} key={item.id}>
-                  <Text style={{marginBottom: 5}}>{item.name}</Text>
-                  <Text style={styles.textNote}>
-                    {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
-                    {item.distance && item.period ? ` / ` : null}
-                    {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
-                </ListItem>
-              ))
+              <View style={styles.block}>
+                {
+                  this.maintenance.map((item, key) => (
+                    <TouchableOpacity onPress={()=>{this.action(item)}}  key={item.id}>
+                      <View style={[componentStyle.item, this.maintenance.length === key+1 ? {borderBottomWidth: 0} : {}]}>
+                        <Text style={componentStyle.name}>{item.name}</Text>
+                        <Text style={styles.textNote}>
+                          {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                          {item.distance && item.period ? ` / ` : null}
+                          {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))
+                }
+              </View>
               :
-              this.loading ? null : <Text style={{padding: 20, textAlign: "center"}}>Вы еще не добавляли заметки</Text>
+              this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Нет записей обслуживания</Text></View>
             }
-          </List>
-
         </Content>
 
-        <Footer><CarMenu navigation={this.props.navigation} car={this.car}/></Footer>
-
+        <Footer><CarMenu navigation={this.props.navigation}/></Footer>
 
         <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>
-          <Container>
+          <Container style={styles.container}>
             <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
               <Left>
                 <Button title={"Назад"} onPress={() => {this.toggleModal(false)}} transparent>
-                  <Icon name='arrow-back'/>
+                  <Icon style={styles.headerIcon} name='md-arrow-back'/>
                 </Button>
               </Left>
               <Body>
@@ -187,26 +191,27 @@ export default class Maintenance extends React.Component {
               </Body>
               <Right>
                 <Button onPress={()=>{this.save()}} title={"Сохранить"} transparent>
-                  <Icon name='checkmark'/>
+                  <Icon style={styles.headerSaveIcon} name='md-checkmark'/>
                 </Button>
               </Right>
             </Header>
 
-            <Content>
-              <View style={{paddingTop: 10}}>
-                  <Input multiline={true} onChange={(value)=>{this.tmp.name = value}} value={this.tmp.name} title="Название"/>
-                  <Input onChange={(value)=>{this.tmp.distance = Number(value)}} value={this.tmp.distance} keyboardType="numeric" title="Пробег"/>
-                  <Input onChange={(value)=>{this.tmp.period = Number(value)}} value={this.tmp.period} keyboardType="numeric" title="Период"/>
-                  <Select onChange={value => {this.tmp.period_type = value.id}} value={this.tmp.period_type} buttons={[
-                    {id: "year", text: "Год"},
-                    {id: "month", text: "Месяц"}
-                  ]} title={"Год/Месяц"}/>
+            <Content contentContainerStyle={styles.content}>
+              <View style={styles.block}>
+                <Text style={styles.blockHeading}>Основные параметры</Text>
+                <Input multiline={true} onChange={(value)=>{this.tmp.name = value}} value={this.tmp.name} title="Название"/>
+                <Input onChange={(value)=>{this.tmp.distance = Number(value)}} value={this.tmp.distance} keyboardType="numeric" title="Пробег"/>
+                <Input onChange={(value)=>{this.tmp.period = Number(value)}} value={this.tmp.period} keyboardType="numeric" title="Период"/>
+                <Select last={true} onChange={value => {this.tmp.period_type = value.id}} value={this.tmp.period_type} buttons={[
+                  {id: "year", text: "Год"},
+                  {id: "month", text: "Месяц"}
+                ]} title={"Год/Месяц"}/>
+              </View>
 
-                <ListItem style={{marginTop: 25}} itemDivider>
-                  <Text>Последнее проведение работы</Text>
-                </ListItem>
+              <View style={styles.block}>
+                <Text style={styles.blockHeading}>Последнее проведение работы</Text>
                 <Input keyboardType="numeric" onChange={value => {this.tmp.last_odo = value}} value={this.tmp.last_odo} title="Пробег"/>
-                <InputDate onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>
+                <InputDate last={true} onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>
               </View>
             </Content>
           </Container>
@@ -215,3 +220,20 @@ export default class Maintenance extends React.Component {
     );
   }
 }
+
+const componentStyle = StyleSheet.create({
+  item: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#d5dae4"
+  },
+  empty: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
+  },
+  name: {
+    marginBottom: 5
+  }
+});

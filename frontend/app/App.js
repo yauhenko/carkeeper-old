@@ -22,6 +22,7 @@ import List from "./screens/News/List";
 import Support from "./screens/User/Support";
 import Maintenance from "./screens/Garage/Maintenance";
 import Card from "./screens/Card/Card";
+import Info from "./screens/User/Info";
 
 const Navigator = createDrawerNavigator({
   Garage: {screen: Garage},
@@ -34,7 +35,8 @@ const Navigator = createDrawerNavigator({
   Notes: {screen: Notes},
   News: {screen: List},
   Support: {screen: Support},
-  Card: {screen: Card}
+  Card: {screen: Card},
+  Info: {screen: Info}
 }, {
   initialRouteName: 'Garage',
   headerMode: "none",
