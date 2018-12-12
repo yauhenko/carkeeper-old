@@ -19,6 +19,7 @@
     "preset": "react-native"
   },
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.2.0",
     "create-react-class": "^15.6.3",
     "es6-symbol": "^3.1.1",
     "jsc-android": "224109.x.x",
@@ -31,8 +32,9 @@
     "react-native": "^0.55.4",
     "react-native-firebase": "^5.0.0",
     "react-native-fs": "^2.12.1",
-    "react-native-image-crop-picker": "^0.20.3",
+    "react-native-image-crop-picker": "^0.21.3",
     "react-native-motion": "^0.2.0",
+    "react-native-simple-toast": "0.0.8",
     "react-native-splash-screen": "^3.1.1",
     "react-navigation": "^2.9.3"
   }
