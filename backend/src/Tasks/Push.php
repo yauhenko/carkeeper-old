@@ -28,9 +28,9 @@ class Push extends Handler {
 			return 'No FCM';
 		}
 
-		$res = FCM::send($data['fcm'], $data['title'], $data['body'], (array)$data['extra'] ?: []);
+		$res = FCM::send($data['fcm'], $data['title'], $data['body'], (array)$data['extra'] ?: null);
 
-		if($res['failure']) {
+		if($res && $res['failure']) {
 
 			if(!$user) $user = Users::factory()->findOneBy('fcm', $data['fcm']);
 			$user->fcm = null;
