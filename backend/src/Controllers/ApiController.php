@@ -52,9 +52,9 @@ abstract class ApiController extends AbstractController {
 		if(!$this->params = json_decode($data))
 			throw new \Exception('Invalid JSON-data', 400);
 
-		$token = $this->req->headers->get('Token') ?: $this->params->token;
-
-		if($token) $this->auth();
+//		$token = $this->req->headers->get('Token') ?: $this->params->token;
+//
+//		if($token) $this->auth();
 
 	}
 
