@@ -7,6 +7,8 @@ import RNFS from 'react-native-fs';
 import Notification from "./Notification";
 import {observable, action} from "mobx";
 import PropTypes from 'prop-types';
+import moment from "moment";
+
 
 @observer
 export default class PhotoModal extends React.Component {
@@ -14,13 +16,13 @@ export default class PhotoModal extends React.Component {
 
   @action download = url => {
     this.loading = true;
-    const name = String(Math.random()).slice(2);
+    const name = `CarKeeper_${moment().format("DD_MM_YYYY-HH_mm_ss")}`;
 
     RNFS.downloadFile({
       fromUrl: url,
       toFile: RNFS.PicturesDirectoryPath + `/${name}.jpg`
     }).promise.then(()=>{
-      Notification(`Изображение сохранено: ${name}.jpg`);
+      Notification(`Изображение сохранено: ${name}.jpg в ${RNFS.PicturesDirectoryPath}`);
       this.loading = false;
     }).catch(() =>{
       this.loading = false;
@@ -59,9 +61,9 @@ export default class PhotoModal extends React.Component {
   }
 }
 
-// PhotoModal.propTypes = {
-//   image: PropTypes.string.isRequired
-// };
+PhotoModal.propTypes = {
+  image: PropTypes.string
+};
 
 PhotoModal.defaultProps = {
   animationType: 'slide',

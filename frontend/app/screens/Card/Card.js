@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, Vibration} from 'react-native';
+import {Text, View, StyleSheet, Image, Vibration, RefreshControl} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, CheckBox, Tab, Tabs, TabHeading} from 'native-base';
 import styles from "../../styles"
@@ -8,11 +8,13 @@ import autoCard from "../../assets/images/autoCard.jpg";
 import Input from "../../components/Form/Input";
 import User from "../../store/User";
 import Notification from "../../components/Notification"
+import Api from "../../modules/Api";
 
 @observer
 export default class Card extends React.Component {
   @observable loading = false;
   @observable checked = false;
+  @observable submitted = false;
 
   @observable data = {
     firstname: User.profile.user.name || "",
@@ -23,14 +25,38 @@ export default class Card extends React.Component {
   @action dataChange = (key, value) => {
     this.data[key] = value;
   };
-  
-  @action submitHandler = () => {
+
+  @action check = async () => {
+      const response = await Api("autocard/check", {});
+      this.submitted = Boolean(response.application);
+  };
+
+  @action submitHandler = async () => {
     if(!this.checked) {
       Notification(`Согласитесь с правилами обработки персональных данных`);
       Vibration.vibrate(300);
       return false;
     }
+
+    this.loading = true;
+
+    try {
+      await Api("autocard/submit", {form: {
+          firstname: this.data.firstname,
+          lastname: this.data.lastname,
+          tel: this.data.phone
+      }});
+      Notification("Заявка успешно отправлена");
+    } catch (e) {
+      Notification(e)
+    }
+
+    this.loading = false;
   };
+
+  componentDidMount() {
+    this.check()
+  }
 
   render() {
     return (
@@ -124,20 +150,27 @@ export default class Card extends React.Component {
           </Tab>
 
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>Заказать</Text></TabHeading>}>
-            <Content contentContainerStyle={styles.content}>
-              <View style={styles.block}>
-                <Text style={styles.blockHeading}>Заявка на автокарту</Text>
-                <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
-                <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
-                <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
-                <View style={componentStyle.checkboxWrapper}>
-                  <CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>
-                  <Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>
+            <Content refreshControl={<RefreshControl refreshing={this.loading} enabled={false} />} contentContainerStyle={styles.content}>
+              {this.submitted
+                ?
+                <View style={styles.block}>
+                  <Text style={componentStyle.empty}>Вы уже отправили заявку на карту</Text>
                 </View>
-                <Button onPress={this.submitHandler} full style={[styles.primaryButton, {marginTop: 15}]}>
-                  <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
-                </Button>
-              </View>
+                :
+                <View style={styles.block}>
+                  <Text style={styles.blockHeading}>Заявка на автокарту</Text>
+                  <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
+                  <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
+                  <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
+                  <View style={componentStyle.checkboxWrapper}>
+                    <CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>
+                    <Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>
+                  </View>
+                  <Button onPress={this.submitHandler} full style={[styles.primaryButton, {marginTop: 15}]}>
+                    <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
+                  </Button>
+                </View>
+              }
             </Content>
           </Tab>
         </Tabs>
@@ -187,5 +220,10 @@ const componentStyle = StyleSheet.create({
     flexDirection: "row",
     paddingTop: 15,
     alignItems: "center"
+  },
+  empty: {
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center"
   }
 });

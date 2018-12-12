@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {Button, Icon} from 'native-base';
 import {observer} from "mobx-react";
 
@@ -45,10 +45,10 @@ export default class Odo extends Component {
       <View style={componentStyle.wrapper}>
         {this.state.digits.map((n, idx) => {
           return(
-            <View key={idx}>
-              <Button transparent onPress={()=>this.change(idx, +1)}><Icon style={componentStyle.icon} name='arrow-dropup'/></Button>
+            <View style={{flex: 1}} key={idx}>
+              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, +1)}><Icon style={componentStyle.icon} name='arrow-dropup'/></TouchableOpacity>
               <View style={componentStyle.numberWrapper}><Text style={componentStyle.number}>{n}</Text></View>
-              <Button transparent onPress={()=>this.change(idx, -1)}><Icon style={componentStyle.icon} name='arrow-dropdown'/></Button>
+              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, -1)}><Icon style={componentStyle.icon} name='arrow-dropdown'/></TouchableOpacity>
             </View>)
         })}
       </View>
@@ -58,8 +58,7 @@ export default class Odo extends Component {
 
 const componentStyle = StyleSheet.create({
   wrapper: {
-    flexDirection: "row",
-    padding: 20,
+    flexDirection: "row"
   },
   number: {
     textAlign: "center",
@@ -67,11 +66,14 @@ const componentStyle = StyleSheet.create({
   },
   numberWrapper: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#d6d7da",
-    flex: 1
+    borderColor: "#d6d7da"
   },
   icon: {
     color: "#a23737",
-    fontSize: 30
+    fontSize: 40
+  },
+  iconButton: {
+    flex: 1,
+    alignItems: "center"
   }
 });

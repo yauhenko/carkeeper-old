@@ -86,13 +86,17 @@ export default class Garage extends React.Component {
                         {Boolean(car.serie) && refs.serie[car.serie].name} {Boolean(car.generation) && refs.generation[car.generation].name} {Boolean(car.modification) && refs.modification[car.modification].name}
                       </Text>}
 
-                      <View style={componentStyle.notificationWrapper}>
-                        <View style={componentStyle.notificationValueWrapper}>
-                          <Text style={componentStyle.notificationValue}>1</Text>
+                      {car.notifications
+                        ?
+                        <View style={componentStyle.notificationWrapper}>
+                          <View style={componentStyle.notificationValueWrapper}>
+                            <Text style={componentStyle.notificationValue}>{car.notifications}</Text>
+                          </View>
+                          <View style={componentStyle.triangle}/>
+                          <Icon style={componentStyle.notificationIcon} name="notifications"/>
                         </View>
-                        <View style={componentStyle.triangle}/>
-                        <Icon style={componentStyle.notificationIcon} name="notifications"/>
-                      </View>
+                        :
+                        null}
                     </View>
                   </TouchableWithoutFeedback>
                 </View>)
