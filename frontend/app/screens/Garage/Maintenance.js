@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, RefreshControl, Alert, Modal, TouchableOpacity, StyleSheet} from 'react-native';
 import {action, observable, toJS} from "mobx";
 import {observer} from 'mobx-react';
@@ -11,8 +11,6 @@ import Input from "../../components/Form/Input";
 import {number_format, plural} from "../../modules/Utils";
 import Notification from "../../components/Notification";
 import Select from "../../components/Form/Select";
-import InputDate from "../../components/Form/InputDate";
-import moment from "moment";
 
 @observer
 export default class Maintenance extends React.Component {
@@ -151,23 +149,28 @@ export default class Maintenance extends React.Component {
             </Button>
           </Right>
         </Header>
-
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getMaintenance()}}/>} contentContainerStyle={styles.content}>
-
             {this.maintenance.length
               ?
               <View style={styles.block}>
                 {
                   this.maintenance.map((item, key) => (
-                    <TouchableOpacity onPress={()=>{this.action(item)}}  key={item.id}>
-                      <View style={[componentStyle.item, this.maintenance.length === key+1 ? {borderBottomWidth: 0} : {}]}>
-                        <Text style={componentStyle.name}>{item.name}</Text>
-                        <Text style={styles.textNote}>
-                          {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
-                          {item.distance && item.period ? ` / ` : null}
-                          {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
+                      <View key={item.id} style={[componentStyle.item, this.maintenance.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                        <TouchableOpacity style={componentStyle.itemText} onPress={()=>{this.action(item)}}>
+                          <Fragment>
+                            <Text style={componentStyle.name}>{item.name}</Text>
+                            <Text style={styles.textNote}>
+                              {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                              {item.distance && item.period ? ` / ` : null}
+                              {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
+                          </Fragment>
+                        </TouchableOpacity>
+                        <View style={{flexDirection: "row"}}>
+                          <Button onPress={()=>{this.props.navigation.navigate("Journal", {maintenance: item.id})}} transparent>
+                            <Icon style={{color: "#a9b3c7"}} name="md-checkmark"/>
+                          </Button>
+                        </View>
                       </View>
-                    </TouchableOpacity>
                   ))
                 }
               </View>
@@ -226,7 +229,13 @@ const componentStyle = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#d5dae4"
+    borderColor: "#d5dae4",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  itemText: {
+    flex: 1,
+    paddingRight: 5
   },
   empty: {
     marginTop: 10,

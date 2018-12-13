@@ -1,6 +1,6 @@
 import React from 'react';
 import {NetInfo, StatusBar, Platform} from 'react-native';
-import {Root, ListItem} from 'native-base';
+import {Root} from 'native-base';
 import {observer} from 'mobx-react';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import Login from "./screens/User/Login";
@@ -15,7 +15,6 @@ import AppStore from "./store/App";
 import ConnectError from "./components/ConnectError";
 import Fines from "./screens/Garage/Fines";
 import Journal from "./screens/Garage/Journal";
-import Logger from "./modules/Logger";
 import Notifications from "./modules/Notifications";
 import Notes from "./screens/Garage/Notes";
 import List from "./screens/News/List";
@@ -54,7 +53,6 @@ const Auth = createStackNavigator({
 export default class App extends React.Component {
   async componentWillMount() {
     await User.checkAuth();
-
     if(Platform.OS === "android") {
       StatusBar.setTranslucent(true);
       SplashScreen.hide();
@@ -65,12 +63,7 @@ export default class App extends React.Component {
     NetInfo.isConnected.addEventListener('connectionChange', result => {
       AppStore.connect = result;
     });
-
     Notifications.initial();
-
-    Logger.session(null, () => {
-      Logger.info("Запуск приложения");
-    });
   }
 
   render() {

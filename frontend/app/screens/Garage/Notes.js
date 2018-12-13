@@ -145,7 +145,6 @@ export default class Notes extends React.Component {
                           </TouchableOpacity>
                           :
                           null}
-
                       </View>
                     </TouchableOpacity>
                   ))
@@ -185,7 +184,6 @@ export default class Notes extends React.Component {
             </Content>
           </Container>
         </Modal>
-
         <PhotoModal animationType="none" image={this.imageModal.path} onRequestClose={()=>{this.imageModal.open = false}} visible={this.imageModal.open}/>
       </Fragment>
     );

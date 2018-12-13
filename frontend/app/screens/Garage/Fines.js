@@ -23,6 +23,7 @@ import Cars from "../../store/Cars";
 import Input from "../../components/Form/Input";
 import HeaderMenu from "../../components/HeaderMenu";
 import moment from "moment";
+import Notification from "../../components/Notification";
 
 @observer
 export default class Fines extends React.Component {
@@ -60,12 +61,12 @@ export default class Fines extends React.Component {
   };
 
   @action updatePass = async () => {
-    await Cars.updatePass({
-      car: this.car.car.id,
-      pass: this.passport
-    });
-
-    this.toggleModal(false)
+    try {
+      await Cars.updatePass({car: this.car.car.id, pass: this.passport});
+      this.toggleModal(false)
+    } catch (e) {
+      Notification(e)
+    }
   };
 
   @action fillPass = (key, value) => {

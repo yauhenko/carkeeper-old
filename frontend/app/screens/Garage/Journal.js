@@ -26,6 +26,8 @@ export default class Journal extends React.Component {
   @observable loading = true;
   @observable update = false;
 
+  @observable maintenanceId = this.props.navigation.state.params && this.props.navigation.state.params.maintenance  ? this.props.navigation.state.params.maintenance : null;
+
   @observable photo = {
     modal: false,
     url: null
@@ -148,8 +150,17 @@ export default class Journal extends React.Component {
       }
   )};
 
+  @action openCurrentMaintenance = id => {
+    this.record = Object.assign({}, this.initialRecord);
+    this.record.record.maintenance = id;
+    this.record.record.odo = this.car.car.odo;
+    this.modal = true;
+    this.props.navigation.state.params.maintenance = null;
+  };
+
   componentDidMount() {
      this.getJournal();
+     if(this.maintenanceId) {this.openCurrentMaintenance(this.maintenanceId)}
   }
 
   render() {
@@ -228,7 +239,7 @@ export default class Journal extends React.Component {
                 </Button>
               </Left>
               <Body>
-                <Title><Text style={styles.headerTitle}>{this.update ? "Редактирование записи" : "Добавление записи"}</Text></Title>
+                <Title><Text style={styles.headerTitle}>{this.update ? "Редактирование записи" : "Журнал: Добавление записи"}</Text></Title>
               </Body>
               <Right>
                 <Button onPress={()=>{this.update ? this.updateRecord() : this.addRecord(this.record)}} transparent>
@@ -236,7 +247,6 @@ export default class Journal extends React.Component {
                 </Button>
               </Right>
             </Header>
-
             <Content contentContainerStyle={styles.content} refreshControl={<RefreshControl refreshing={this.loading} />}>
               <View style={styles.block}>
                 <Select value={record.maintenance} onChange={(data)=>{this.changeRecord("maintenance", data.id)}} buttons={this.maintenance} title={"Тип записи"}/>
