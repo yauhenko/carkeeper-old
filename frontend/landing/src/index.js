@@ -1,15 +1,23 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../src/assets/css/template.css";
-import logo from "../src/assets/images/logo.png";
 import Modal from 'react-responsive-modal';
+import bg1 from './assets/images/bg.jpg'
+import Slider from "react-slick";
+import 'font-awesome/css/font-awesome.css'
+
+const BGLIST = [bg1]
+
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-        modal: Boolean(window.location.pathname.match(/privacy/))
+      modal: Boolean(window.location.pathname.match(/privacy/))
     };
   }
 
@@ -28,46 +36,94 @@ class App extends Component {
   }
 
   recovery = () => {
-      const secret = this.getParameterByName("secret");
-      if(!secret) return;
+    const secret = this.getParameterByName("secret");
+    if (!secret) return;
 
-      fetch('https://api.carkeeper.pro/account/recovery/secret', {
-        method: 'POST',
-        body: JSON.stringify({secret: secret})
-      }).then((data)=>{
-        return data.json();
-      })
+    fetch('https://api.carkeeper.pro/account/recovery/secret', {
+      method: 'POST',
+      body: JSON.stringify({secret: secret})
+    }).then((data) => {
+      return data.json();
+    })
       .then((data) => {
-          if(data.error) {
-            alert(data.error.message)
-          } else {
-            alert("Ok")
-          }
+        if (data.error) {
+          alert(data.error.message)
+        } else {
+          alert("Ok")
+        }
       })
-      .catch((e)=>{
+      .catch((e) => {
         alert(e)
       })
   };
 
   render() {
+    let bg = BGLIST[Math.floor(Math.random() * (BGLIST.length))]
+    var settings = {
+      afterChange: current => console.log(current),
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      nextArrow: <div><i className='fa fa-angle-right' /></div>,
+      prevArrow: <div><i className='fa fa-angle-left' /></div>
+    };
     return (
-      <div className="app">
-        <div className="logo">
-          <img width={250} src={logo} alt=""/>
+      <div className="app" style={{background: `url(${bg}) no-repeat 0 center / cover`}}>
+        <div className="content">
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <div>lorem2000</div>
+                <div className="links">
+                  <i className='fa fa-home' />
+                  <ul>
+                    <li>CarKeeper &copy; 2018</li>
+                    <li className="link" onClick={() => {
+                      this.setState({modal: true})
+                    }}>Privacy Policy
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <div className="slider">
+                  <Slider {...settings}>
+                    <div>
+                      <h3>1</h3>
+                    </div>
+                    <div>
+                      <h3>2</h3>
+                    </div>
+                    <div>
+                      <h3>3</h3>
+                    </div>
+                    <div>
+                      <h3>4</h3>
+                    </div>
+                    <div>
+                      <h3>5</h3>
+                    </div>
+                    <div>
+                      <h3>6</h3>
+                    </div>
+                  </Slider>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="links">
-          <ul>
-            <li>CarKeeper &copy; 2018</li>
-            <li className="link" onClick={()=>{this.setState({modal: true})}}>Privacy Policy</li>
-          </ul>
-        </div>
-
-        <Modal classNames={{overlay: "modal"}} closeIconSize={20} open={this.state.modal} onClose={()=>{this.setState({modal: false})}} center>
+        <Modal classNames={{overlay: "react-modal"}} closeIconSize={20} open={this.state.modal} onClose={() => {
+          this.setState({modal: false})
+        }} center>
           <h2>Privacy Policy</h2>
 
           <p>Last Updated: 8/8/2018</p>
-          <p>Owner of CarKeeper (“CarKeeper”, “we,” and “us”) respects the privacy of its users (“you”) and has developed
+          <p>Owner of CarKeeper (“CarKeeper”, “we,” and “us”) respects the privacy of its users (“you”) and has
+            developed
             this Privacy Policy to demonstrate its commitment to protecting your privacy. This Privacy Policy
             describes the information we collect, how that information may be used, with whom it may be shared, and
             your choices about such uses and disclosures. We encourage you to read this Privacy Policy carefully when
@@ -128,4 +184,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App/>, document.getElementById('root'));

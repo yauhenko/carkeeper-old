@@ -4,7 +4,6 @@ import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, CheckBox, Tab, Tabs, TabHeading} from 'native-base';
 import styles from "../../styles"
 import {observable, action} from 'mobx';
-import autoCard from "../../assets/images/autoCard.jpg";
 import Input from "../../components/Form/Input";
 import User from "../../store/User";
 import Notification from "../../components/Notification"
@@ -46,6 +45,7 @@ export default class Card extends React.Component {
           lastname: this.data.lastname,
           tel: this.data.phone
       }});
+      this.submitted = true;
       Notification("Заявка успешно отправлена");
     } catch (e) {
       Notification(e)
@@ -82,7 +82,7 @@ export default class Card extends React.Component {
                   <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
                   <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
                   <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
-                  <Image resizeMode={'contain'} style={componentStyle.image} source={autoCard}/>
+                  <Image resizeMode={'contain'} style={componentStyle.image} source={require("../../assets/images/autoCard.jpg")}/>
                 </View>
                 <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
                   <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
@@ -154,7 +154,10 @@ export default class Card extends React.Component {
               {this.submitted
                 ?
                 <View style={styles.block}>
-                  <Text style={componentStyle.empty}>Вы уже отправили заявку на карту</Text>
+                  <Text style={componentStyle.empty}>Вы уже отправили заявку на автокарту</Text>
+                  <Button onPress={()=>{this.submitted = false}} style={[styles.primaryButton, {marginTop: 15, alignSelf: "center"}]}>
+                    <Text style={styles.primaryButtonText}>ОТПРАВИТЬ НОВУЮ ЗАЯВКУ</Text>
+                  </Button>
                 </View>
                 :
                 <View style={styles.block}>

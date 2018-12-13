@@ -26,16 +26,16 @@ export default class CarMenu extends React.Component {
           <Icon style={styles.footerBadge} name={"clipboard"} />
         </Button>
 
+        <Button vertical style={this.activeStyle("Maintenance")} onPress={()=>this.props.navigation.navigate("Maintenance")} active={this.activeButton("Maintenance")}>
+          <Icon style={styles.footerBadge} name={"build"} />
+        </Button>
+
         <Button vertical style={this.activeStyle("Notes")} onPress={()=>this.props.navigation.navigate("Notes")} active={this.activeButton("Notes")}>
           <Icon style={styles.footerBadge} name={"list-box"} />
         </Button>
 
         <Button vertical style={this.activeStyle("Reminders")} onPress={()=>this.props.navigation.navigate("Reminders")} active={this.activeButton("Reminders")}>
           <Icon style={styles.footerBadge} name={"notifications"} />
-        </Button>
-
-        <Button vertical style={this.activeStyle("Maintenance")} onPress={()=>this.props.navigation.navigate("Maintenance")} active={this.activeButton("Maintenance")}>
-          <Icon style={styles.footerBadge} name={"build"} />
         </Button>
 
         <Button style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines")} active={this.activeButton("Fines")}>

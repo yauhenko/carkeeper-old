@@ -143,7 +143,7 @@ export default class Fines extends React.Component {
             ?
             <View style={[styles.block]}>
               <Text style={componentStyle.empty}>Для получения уведомлений о штрафах необходимо заполнить данные техпаспорта</Text>
-              <Button style={[styles.grayButton, {alignSelf: "center", marginTop: 10, marginBottom: 10}]} onPress={()=>this.toggleModal(true)}><Text style={styles.grayButtonText}>ЗАПОЛНИТЬ</Text></Button>
+              <Button style={[styles.primaryButton, {alignSelf: "center", marginTop: 10, marginBottom: 10}]} onPress={()=>this.toggleModal(true)}><Text style={styles.primaryButtonText}>ЗАПОЛНИТЬ</Text></Button>
             </View>
             :
             null
