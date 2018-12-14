@@ -1,12 +1,22 @@
 import React, {Fragment} from 'react';
 import {Text, View, RefreshControl, Alert, Image, StyleSheet, Modal, TouchableOpacity} from 'react-native';
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, List, ListItem} from 'native-base';
+import {
+  Container,
+  Button,
+  Content,
+  Icon,
+  Header,
+  Left,
+  Right,
+  Body,
+  Title,
+  ActionSheet
+} from 'native-base';
 import styles from "../../styles"
 import {observable, action} from 'mobx';
 import Cars from "../../store/Cars";
 import Footer from "../../components/Footer";
-import HeaderMenu from "../../components/HeaderMenu";
 import CarMenu from "../../components/CarMenu";
 import Notification from "../../components/Notification";
 import {cdn} from "../../modules/Url";
@@ -23,7 +33,6 @@ export default class Car extends React.Component {
   @observable odoModal = false;
   @observable odoValue = this.car.car.odo;
 
-  @observable menu = false;
 
   @observable edit = false;
 
@@ -57,8 +66,6 @@ export default class Car extends React.Component {
   };
 
   @action deleteCar = async () => {
-    this.menu = false;
-
     Alert.alert('Удалить автомобиль', `${this.car.refs.mark.name} ${this.car.refs.model.name}`, [
       {text: 'Отмена', style: 'cancel'},
       {text: 'Удалить', onPress: async () => {
@@ -76,12 +83,29 @@ export default class Car extends React.Component {
   };
 
   @action toggleEditCarModal = (bool = true) => {
-      this.menu = false;
       this.edit = bool;
   };
 
   @action resetOdo = () => {
       this.odoValue = this.car.car.odo;
+  };
+
+  action = () => {
+    ActionSheet.show(
+      {
+        options: [
+          { text: "Редактировать", icon: "create", iconColor: "#b9babd" },
+          { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
+          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+        ],
+        cancelButtonIndex: 2,
+        title: `${this.car.refs.mark.name} ${this.car.refs.model.name}`
+      },
+      index => {
+        if(index === 0) {this.toggleEditCarModal(true)}
+        if(index === 1) {this.deleteCar()}
+      }
+    )
   };
 
   render() {
@@ -100,7 +124,7 @@ export default class Car extends React.Component {
             <Title><Text style={styles.headerTitle}>Обзор: {refs.mark.name} {refs.model.name}</Text></Title>
             </Body>
             <Right>
-              <Button onPress={() => {this.menu = true}} transparent>
+              <Button onPress={() => {this.action()}} transparent>
                 <Icon style={styles.headerIcon} name='md-more'/>
               </Button>
             </Right>
@@ -169,17 +193,6 @@ export default class Car extends React.Component {
           </Content>
 
           <Footer><CarMenu navigation={this.props.navigation}/></Footer>
-
-          <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
-            <List>
-              <ListItem onPress={()=>{this.toggleEditCarModal(true)}}>
-                <Text>Редактировать</Text>
-              </ListItem>
-              <ListItem onPress={() => {this.deleteCar()}} last={true}>
-                <Text>Удалить</Text>
-              </ListItem>
-            </List>
-          </HeaderMenu>
 
           <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
             <Container style={styles.container}>

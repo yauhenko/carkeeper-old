@@ -141,7 +141,7 @@ export default class Maintenance extends React.Component {
             </Button>
           </Left>
           <Body>
-          <Title><Text style={styles.headerTitle}>Обслуживание: {refs.mark.name} {refs.model.name}</Text></Title>
+            <Title><Text style={styles.headerTitle}>Обслуживание: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
           <Right>
             <Button onPress={()=>{this.assign(this.item); this.toggleModal(true)}} transparent>
@@ -165,6 +165,7 @@ export default class Maintenance extends React.Component {
                               {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
                           </Fragment>
                         </TouchableOpacity>
+
                         <View style={{flexDirection: "row"}}>
                           <Button onPress={()=>{this.props.navigation.navigate("Journal", {maintenance: item.id})}} transparent>
                             <Icon style={{color: "#a9b3c7"}} name="md-checkmark"/>
