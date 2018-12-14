@@ -154,11 +154,11 @@ configurations.all {
 }
 
 dependencies {
-    compile project(':react-native-fs')
+    compile project(':react-native-image-crop-picker')
     compile project(':react-native-firebase')
+    compile project(':react-native-fs')
     implementation project(':react-native-firebase')
     compile project(':react-native-splash-screen')
-    compile project(':react-native-image-crop-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation "com.facebook.react:react-native:+"

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Text, RefreshControl, StyleSheet} from 'react-native';
+import {Text, RefreshControl, StyleSheet,} from 'react-native';
 import {observable} from "mobx";
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch} from 'native-base';
@@ -70,6 +70,7 @@ export default class Reminders extends React.Component {
           <Body style={{flexGrow: 2}}>
             <Title><Text style={styles.headerTitle}>Напоминания: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
+          <Right/>
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>
