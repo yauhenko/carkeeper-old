@@ -48,7 +48,7 @@ export default class Select extends Component {
       <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
         <View style={styles.title}><Text style={styles.titleText}>{title}</Text></View>
         <View style={styles.select}>
-          <Text style={this.props.disabled ? styles.disabled : {flex: 1, color: "#a23737"}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
+          <Text numberOfLines={1} ellipsizeMode="tail" style={this.props.disabled ? styles.disabled : {flex: 1, color: "#a23737"}}>{this.getName(this.props.value) || "Не выбрано"}</Text>
           <Icon style={styles.icon} name="arrow-dropdown"/>
         </View>
       </View>
