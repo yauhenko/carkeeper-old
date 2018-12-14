@@ -1,0 +1,509 @@
+
+.header-left, .header-right {
+  user-select: none;
+  padding: 30px 0;
+  border-bottom: 1px solid #888987;
+}
+
+.header-left_logo {
+  display: flex;
+  align-items: flex-end;
+}
+
+.header-left_logo img {
+  width: 100px;
+  height: auto;
+}
+
+.header-left_defis {
+  position: relative;
+  top: -10px;
+  margin: 0 15px;
+  width: 35px;
+  height: 1px;
+  background-color: #fff;
+  display: inline-block;
+}
+
+.header-right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+}
+
+.header_sighIn {
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.header_sighIn:hover {
+  color: #9c1000;
+}
+
+.main_path {
+  padding-top: 50px;
+}
+
+.main_path_slogan {
+  text-align: center;
+  color: #ffffff;
+  line-height: 35px;
+  margin-bottom: 10px;
+  font-size: 36px;
+}
+
+.main_path_slogan_2 {
+  text-align: center;
+  line-height: 22px;
+  font-size: 16px;
+  color: #ffffff;
+  max-width: 650px;
+  margin: 0 auto 50px auto;
+}
+
+.main_path_form-text {
+  margin-bottom: 25px;
+}
+
+.main_path_phone-wrap {
+  float: right;
+}
+
+.main_path_phone-input {
+  margin-top: 10px;
+  max-width: 100%;
+  width: 300px;
+  border-radius: 5px;
+  border: none;
+  color: #000000;
+  padding: 10px;
+}
+
+.main_path_phone-button {
+  max-width: 100%;
+  width: 300px;
+}
+
+.main_path_policy {
+  margin: 0 auto;
+  margin-top: 25px;
+  display: flex;
+  max-width: 720px;
+}
+
+.main_path_policy-text {
+  margin-left: 10px;
+}
+
+.main_path_agrement-link, .main_path_policy-link {
+  text-decoration: underline;
+  transition: all .5s ease;
+  cursor: pointer;
+}
+
+.main_path_agrement-link:hover, .main_path_policy-link:hover {
+  color: #9c1000;
+}
+
+.main_path_shops img {
+  width: 130px;
+  height: auto;
+}
+
+.mb_download {
+  margin: 30px 0;
+}
+
+.main_path_shops-ios {
+  text-align: right;
+}
+
+.main_path_shops a {
+  transition: all .5s ease;
+  display: inline-block;
+}
+
+.main_path_shops a:hover {
+  opacity: 0.8;
+}
+
+.main_path_shops-android {
+  text-align: left;
+}
+
+.sec_tasks {
+  margin-top: 80px;
+}
+
+.sec_tasks_item {
+  opacity: 0.6;
+}
+
+.sec_tasks_item > div {
+  cursor: pointer;
+}
+
+.sec_tasks_item-active {
+  opacity: 1;
+}
+
+.sec_tasks-title {
+  font-size: 36px;
+  margin-bottom: 60px;
+  text-align: center;
+  line-height: 45px;
+}
+
+.sec_tasks_item_text {
+  margin-top: 5px;
+}
+
+.slider {
+  margin-top: 50px;
+}
+
+.slider_item-text {
+  max-width: 750px;
+  color: #d1d1d1;
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.slider_item-text span {
+  color: #fff;
+}
+
+.slider_item_images {
+  display: none;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.slider_item_images-iphone {
+  position: absolute;
+  z-index: 3;
+  width: 20%;
+  left: calc(10% + 40px);
+  bottom: 0;
+}
+
+.slider_item_images-mac {
+  position: relative;
+  left: 0;
+  top: 0;
+  text-align: center;
+  width: 80%;
+  z-index: 2;
+  margin: 0 auto;
+  padding-bottom: 70px;
+  z-index: 2;
+}
+
+.slider_item_images-mac-shadow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  border-radius: 50%;
+  width: 85%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.slider_item_images-mac img {
+  width: 100%;
+  height: auto;
+}
+
+.slider-arrows {
+  position: absolute;
+  font-size: 60px;
+  top: 0;
+  cursor: pointer;
+  transition: all .5s ease;
+  z-index: 4;
+}
+
+.slider-arrows img {
+  width: 35px;
+  height: auto;
+}
+
+.slider-arrows:hover {
+  opacity: 0.7;
+}
+
+.slider-arrows-next {
+  right: -37px;
+}
+
+.slider-arrows-prev {
+  left: -37px;
+}
+
+.footer {
+  font-size: 14px;
+  text-align: center;
+  padding: 30px;
+}
+
+.footer span {
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0 15px;
+  transition: all .5s ease
+}
+
+.footer span:hover {
+  color: #9c1000;
+}
+
+.react-modal-sogl h2 {
+  color: #9c1000;
+}
+
+.react-modal-sogl .list_0f_terms {
+  margin-left: 15px;
+}
+
+.react-modal-sogl h4 {
+  font-family: 'Roboto-Bold';
+  font-size: 20px;
+}
+
+.react-modal-sogl {
+  color: #000000;
+}
+
+.react-modal-signIn .styles_modal__gNwvD {
+  background-color: transparent;
+  padding: 0;
+  box-shadow: 0px 0px 213px -8px rgba(255, 255, 255, 0.6);
+}
+
+.react-modal-signIn .styles_closeIcon__1QwbI:hover {
+  opacity: 0.7;
+}
+
+.signInForm {
+  width: 100%;
+  background-color: #090808;
+  padding: 40px 40px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+
+.signInForm-title {
+  text-align: center;
+}
+
+.signInForm-wrap {
+  display: flex;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.signInForm-wrap > div {
+  padding: 0 10px;
+  flex: 0 33%;
+}
+
+.signInForm-wrap input {
+  margin-top: 10px;
+
+}
+
+.signInForm-wrap input, .signInForm-wrap label, .signInForm-wrap button {
+  max-width: 600px;
+  width: 100%;
+}
+
+.react-modal-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.slider_item_images-small {
+  position: relative;
+  max-width: 295px;
+  margin: 0 auto;
+  width: 100%;
+}
+.slider_item_images-small img {
+  width: 100%;
+  position: relative;
+  z-index: 3;
+  height: auto;
+}
+
+/*==========  Desktop First Method  ==========*/
+/* Largest Devices, Wide Screens */
+@media only screen and (min-width: 1201px) {
+  /**/
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width: 1200px) {
+  /**/
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 992px) {
+  .signInForm-wrap > div {
+    flex: 0 100%;
+    margin-bottom: 15px;
+  }
+
+  .slider_item_images-iphone {
+    bottom: 40px;
+    left: calc(10% + 15px);
+  }
+
+  .signInForm-wrap > div {
+    text-align: center;
+  }
+
+  .signInForm-wrap button {
+    margin-top: 20px;
+  }
+
+  /**/
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width: 768px) {
+  .main_path_phone_form {
+    text-align: center;
+  }
+
+  .main_path_phone-wrap {
+    float: none;
+    margin-bottom: 15px;
+  }
+
+  .sec_tasks_item_text {
+    font-size: 14px;
+  }
+
+  .sec_tasks_item {
+    padding: 0 10px;
+  }
+
+  .footer {
+    padding-top: 15px;
+  }
+
+  .footer span {
+    margin-top: 10px;
+    display: block;
+  }
+
+  /**/
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width: 576px) {
+  .header {
+    padding: 0 15px;
+  }
+
+  .main_path_slogan_2 {
+    margin-bottom: 30px;
+  }
+
+  .header-left_defis {
+    margin: 0 10px;
+    width: 20px;
+    top: -8px;
+  }
+
+  .header-left_logo {
+    font-size: 14px;
+  }
+
+  .header-left_logo img {
+    width: 80px;
+  }
+
+  .main_path_form-text {
+    margin-bottom: 20px;
+  }
+
+  .header-left, .header-right {
+    padding: 20px 0;
+    font-size: 14px;
+  }
+
+  .main_path {
+    padding-top: 30px;
+  }
+
+  .main_path_slogan {
+    font-size: 30px;
+  }
+
+  .sec_tasks {
+    margin-top: 45px;
+  }
+
+  .sec_tasks-title {
+    font-size: 30px;
+    line-height: 40px;
+    margin-bottom: 35px;
+  }
+
+  .sec_tasks_item {
+    margin-bottom: 40px;
+  }
+
+  .slider {
+    margin-top: 0;
+  }
+
+  .slider_item_images-mac {
+    padding-bottom: 20px;
+  }
+
+  .slider_item_images-iphone {
+    bottom: 0px;
+    left: calc(10% + 15px);
+  }
+
+  .signInForm {
+    padding: 20px 15px;
+  }
+
+  .react-modal-sogl h2 {
+    font-size: 20px;
+    padding-right: 25px;
+  }
+
+  .react-modal-sogl h4 {
+    font-size: 16px;
+  }
+
+  .react-modal-sogl p {
+    font-size: 14px;
+  }
+  .react-modal-sogl .styles_modal__gNwvD {
+    padding: 15px;
+  }
+
+  /**/
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width: 320px) {
+  /**/
+}
+
