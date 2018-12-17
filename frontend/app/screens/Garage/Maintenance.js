@@ -11,6 +11,7 @@ import Input from "../../components/Form/Input";
 import {number_format, plural} from "../../modules/Utils";
 import Notification from "../../components/Notification";
 import Select from "../../components/Form/Select";
+import moment from "moment";
 
 @observer
 export default class Maintenance extends React.Component {
@@ -156,20 +157,37 @@ export default class Maintenance extends React.Component {
                 {
                   this.maintenance.map((item, key) => (
                       <View key={item.id} style={[componentStyle.item, this.maintenance.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                        <View style={componentStyle.leftIcon}>
+                          {item.type === "danger" ? <Icon style={{color: "#a23737"}} name="md-alert"/> : null}
+                          {item.type === "info" ? <Icon style={{color: "#76b6ff"}} name="md-information-circle"/> : null}
+                          {item.type === "none" ? <Icon style={{color: "#59d25a"}} name="md-thumbs-up"/> : null}
+                        </View>
+
                         <TouchableOpacity style={componentStyle.itemText} onPress={()=>{this.action(item)}}>
                           <Fragment>
                             <Text style={componentStyle.name}>{item.name}</Text>
+
                             <Text style={styles.textNote}>
-                              {item.distance ? `${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
-                              {item.distance && item.period ? ` / ` : null}
-                              {item.period ? `${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}</Text>
+                              {item.distance ? `Каждые ${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                              {item.distance && item.period ? ` или ` : null}
+                              {item.period ? `раз в ${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}
+                            </Text>
+
+                            {(Boolean(item.next_odo) || Boolean(item.next_date)) && <Text style={styles.textNote}>
+                              {item.next_odo ? `В следующий раз: ${number_format(item.next_odo, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                              {item.next_odo && item.next_date ? ` или ` : null}
+                              {item.next_date ? moment(item.next_date).format("DD.MM.YYYY") : null}
+                            </Text>}
+
+
+
                           </Fragment>
                         </TouchableOpacity>
 
-                        <View style={{flexDirection: "row"}}>
-                          <Button onPress={()=>{this.props.navigation.navigate("Journal", {maintenance: item.id})}} transparent>
-                            <Icon style={{color: "#a9b3c7"}} name="md-checkmark"/>
-                          </Button>
+                        <View>
+                          <TouchableOpacity style={componentStyle.addButton} onPress={()=>{this.props.navigation.navigate("Journal", {maintenance: item.id})}} transparent>
+                            <Icon style={{color: "#a9b3c7"}} name="md-add-circle"/>
+                          </TouchableOpacity>
                         </View>
                       </View>
                   ))
@@ -245,5 +263,13 @@ const componentStyle = StyleSheet.create({
   },
   name: {
     marginBottom: 5
+  },
+  leftIcon: {
+    paddingRight: 10,
+    paddingTop: 5
+  },
+  addButton: {
+    paddingTop: 5,
+    marginLeft: 10
   }
 });

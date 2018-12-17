@@ -28,7 +28,8 @@ export default class Navigation extends Component {
       title: "Автокарта",
       icon: "card",
       path: "Card",
-      action: null
+      action: null,
+      hidden: User.profile.user.geo !== "BY"
     },
     {
       title: "Поддержка",
@@ -88,9 +89,9 @@ export default class Navigation extends Component {
             </View>
           </View>
 
-
           <List>
             {this.routes.map((route, key)=>{
+              if(route.hidden) return null;
               return (
                 <ListItem key={key} icon style={componentStyle.listItem} onPress={() => {this.change(route)}}>
                   <Left style={{alignItems: "flex-end"}}>

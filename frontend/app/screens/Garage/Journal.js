@@ -16,6 +16,7 @@ import Photo from "../../components/Form/Photo";
 import {cdn} from "../../modules/Url";
 import {number_format} from "../../modules/Utils";
 import PhotoModal from "../../components/PhotoModal";
+import Logger from "../../modules/Logger";
 
 
 @observer
@@ -79,6 +80,7 @@ export default class Journal extends React.Component {
     this.loading = true;
     try {
       await Cars.journalAdd(obj);
+      Logger.info("Добавлена запись в журнал", {record: obj});
       this.journal = await Cars.getJournal(this.car.car.id);
       this.toggleModal(false);
       this.record = Object.assign({}, this.initialRecord);
@@ -91,6 +93,7 @@ export default class Journal extends React.Component {
   @action deleteRecord = async (id) => {
     this.loading = true;
     await Cars.journalDelete({id: id});
+    Logger.info("Удалена запись в журнале", {record: id});
     await this.getJournal();
     this.loading = false;
   };
@@ -103,6 +106,9 @@ export default class Journal extends React.Component {
         id: this.record.record.id,
         record: this.record.record
       });
+
+      Logger.info("Обновлена запись в журнале", {record: this.record.record.id});
+
       this.modal = false;
       this.update = false;
 
@@ -110,8 +116,10 @@ export default class Journal extends React.Component {
 
       this.loading = false;
     } catch (e) {
-      this.loading = false;
+      Notification(e);
     }
+
+    this.loading = false;
   };
 
   @action changeRecord = (key, value) => {
