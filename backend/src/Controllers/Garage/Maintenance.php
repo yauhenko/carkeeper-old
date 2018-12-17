@@ -41,8 +41,8 @@ class Maintenance extends ApiController {
 			ORDER BY 
 				type = "danger" DESC,
 				type = "none" DESC,
-				next_odo ASC,
-				next_date ASC
+				IFNULL(next_odo, 99999999) ASC,
+				IFNULL(next_date, "2099-01-01") ASC
 			', [
 			'user' => $this->user->id,
 			'car' => $car->id,
