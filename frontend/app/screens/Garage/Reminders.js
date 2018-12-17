@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {Text, RefreshControl, StyleSheet} from 'react-native';
 import {observable} from "mobx";
 import {observer} from 'mobx-react';
-import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, View, ListItem, Switch} from 'native-base';
+import {Container, Button, Content, Icon, Header, Left, Body, Title, View, Switch} from 'native-base';
 import styles from "../../styles"
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -42,7 +42,6 @@ export default class Reminders extends React.Component {
   };
 
   insuranceHandler = (type, bool) => {
-    console.log(type, bool)
     this.insurance[type].notify = bool;
     this.updateInsurance(type);
   };

@@ -10,6 +10,7 @@ import Select from "../../components/Form/Select";
 import Input from "../../components/Form/Input";
 import Cropper from "../../modules/Cropper";
 import {cdn} from "../../modules/Url";
+import Logger from "../../modules/Logger";
 
 
 @observer
@@ -106,6 +107,7 @@ export default class AddOrEditCar extends React.Component {
   @action addCar = async () => {
     try {
       await Cars.addCar(this.car);
+      Logger.info("Пользователь добавил автомобиль", {car: this.car});
       this.close();
       this.props.cb && this.props.cb();
     } catch (e) {
@@ -118,7 +120,8 @@ export default class AddOrEditCar extends React.Component {
         await Cars.updateCar({id: this.car.id, car: this.car});
         this.close();
         this.props.cb && this.props.cb();
-        Notification("Изменения сохранены")
+        Notification("Изменения сохранены");
+        Logger.info("Пользователь отредактировал автомобиль", {car: this.car});
       } catch (e) {
         Notification(e)
       }

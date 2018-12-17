@@ -24,6 +24,7 @@ import thumb from "../../assets/images/avatar_thumb.png";
 import {cdn} from "../../modules/Url";
 import Notification from "../../components/Notification";
 import Input from "../../components/Form/Input";
+import Logger from "../../modules/Logger";
 
 @observer
 export default class Profile extends React.Component {
@@ -43,6 +44,7 @@ export default class Profile extends React.Component {
       await User.update(this.profile);
       User.profile = await User.info();
       Notification("Профиль обновлен");
+      Logger.info("Пользователь обновил профиль", {profile: this.profile});
       this.changed = false;
     } catch (e) {
       Notification(e);

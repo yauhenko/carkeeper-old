@@ -5,6 +5,7 @@ class App {
   @observable auth = false;
   @observable connect = false;
   @observable platform = Platform.OS;
+  @observable ready = false;
 }
 
 export default new App();
