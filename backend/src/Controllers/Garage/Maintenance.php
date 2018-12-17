@@ -4,7 +4,6 @@ namespace Controllers\Garage;
 
 use Entities\Car;
 use Controllers\ApiController;
-use Entities\Journal\Record;
 use Framework\DB\Client;
 
 class Maintenance extends ApiController {
@@ -35,10 +34,19 @@ class Maintenance extends ApiController {
 		$skelled = false;
 
 		fetch:
-		$list = $this->db->find('SELECT id, name, distance, period, period_type, last_odo, next_odo, last_date, next_date 
-			FROM maintenance WHERE user = {$user} AND car = {$car}', [
+		$list = $this->db->find('SELECT id, name, distance, period, period_type, last_odo, next_odo, last_date, next_date,
+			IF(((next_odo IS NOT NULL AND next_odo <= {$odo}) OR (next_date IS NOT NULL AND next_date <= DATE_FORMAT(NOW(), "%Y-%m-%d"))), "danger", 
+				IF(last_odo IS NULL AND last_date IS NULL, "info", "none")) type
+			FROM maintenance WHERE user = {$user} AND car = {$car}
+			ORDER BY 
+				type = "danger" DESC,
+				type = "none" DESC,
+				next_odo ASC,
+				next_date ASC
+			', [
 			'user' => $this->user->id,
-			'car' => $car->id
+			'car' => $car->id,
+			'odo' => $car->odo
 		]);
 
 		if(!$list && !$skelled) {
@@ -78,6 +86,17 @@ class Maintenance extends ApiController {
 	public function create() {
 
 		$this->auth();
+
+		$this->filter([
+			'id' => 'int',
+			'maintenance' => [
+				'car' => 'int',
+				'name' => 'string',
+				'distance' => 'int',
+				'period' => 'int',
+				'period_type' => 'string'
+			]
+		]);
 
 		$this->validate([
 			'maintenance' => [
@@ -133,6 +152,16 @@ class Maintenance extends ApiController {
 
 		$this->auth();
 
+		$this->filter([
+			'id' => 'int',
+			'maintenance' => [
+				'name' => 'string',
+				'distance' => 'int',
+				'period' => 'int',
+				'period_type' => 'string'
+			]
+		]);
+
 		$this->validate([
 			'id' => ['required' => true, 'type' => 'int'],
 			'maintenance' => [
@@ -154,80 +183,13 @@ class Maintenance extends ApiController {
 
 		$item = array_merge($item, (array)$this->params->maintenance);
 
-		if($item['last_odo'] && $item['distance']) {
-			$item['next_odo'] = $item['last_odo'] + $item['distance'];
-		} else {
-			$item['next_odo'] = null;
-		}
-
-		if($item['last_date'] && $item['period']) {
-			$d = new \DateTime($item['last_date']);
-			$d->modify('+' . $item['period'] . ' ' . $item['period_type']);
-			$item['next_date'] = $d->format('Y-m-d');
-		} else {
-			$item['next_date'] = null;
-		}
+		$item = self::calcNext($item);
 
 		$res = $this->db->update('maintenance', $item, 'id', $this->params->id);
 
 		return [
 			'updated' => $res,
 			'item' => $item
-		];
-
-	}
-
-	/**
-	 * @route /garage/maintenance/journal
-	 */
-	public function journal() {
-
-		$this->auth();
-
-		$this->validate([
-			'id' => ['required' => true, 'type' => 'int'],
-			'odo' => ['required' => true, 'type' => 'int'],
-			'date' => ['required' => true, 'date' => 'true'],
-		]);
-
-		if(!$item = $this->db->findOneBy('maintenance', 'id', $this->params->id))
-			throw new \Exception('Запись не существует', 404);
-
-		$this->checkDataAccess($item);
-
-		$item['last_odo'] = $this->params->odo;
-		$item['last_date'] = $this->params->date;
-
-		if($item['last_odo'] && $item['distance']) {
-			$item['next_odo'] = $item['last_odo'] + $item['distance'];
-		} else {
-			$item['next_odo'] = null;
-		}
-
-		if($item['last_date'] && $item['period']) {
-			$d = new \DateTime($item['last_date']);
-			$d->modify('+' . $item['period'] . ' ' . $item['period_type']);
-			$item['next_date'] = $d->format('Y-m-d');
-		} else {
-			$item['next_date'] = null;
-		}
-
-		$j = new Record;
-		$j->car = $item['car'];
-		$j->type = 1; // TODO Remove it
-		$j->user = $item['user'];
-		$j->date = $this->params->date;
-		$j->odo = $this->params->odo;
-		$j->maintenance = $this->params->id;
-		$j->title = $item['name'];
-		$j->insert();
-
-		$res = $this->db->update('maintenance', $item, 'id', $this->params->id);
-
-		return [
-			'journaled' => $res,
-			'item' => $item,
-			'record' => $j->id
 		];
 
 	}
@@ -248,11 +210,32 @@ class Maintenance extends ApiController {
 
 		$this->checkDataAccess($item);
 
+		$this->db->update('journal', ['title' => $item['name']], 'maintenance', $item['id']);
 		$res = $this->db->delete('maintenance', 'id', $this->params->id);
 
 		return [
 			'deleted' => $res
 		];
+
+	}
+
+	public static function calcNext(array $item): array {
+
+		if($item['last_odo'] && $item['distance']) {
+			$item['next_odo'] = $item['last_odo'] + $item['distance'];
+		} else {
+			$item['next_odo'] = null;
+		}
+
+		if($item['last_date'] && $item['period']) {
+			$d = new \DateTime($item['last_date']);
+			$d->modify('+' . $item['period'] . ' ' . $item['period_type']);
+			$item['next_date'] = $d->format('Y-m-d');
+		} else {
+			$item['next_date'] = null;
+		}
+
+		return $item;
 
 	}
 

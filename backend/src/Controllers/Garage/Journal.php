@@ -2,13 +2,10 @@
 
 namespace Controllers\Garage;
 
-use Entities\Car;
 use Entities\Journal\Record;
 use Controllers\ApiController;
-use Collections\Cars as CarsCollection;
 use Collections\Journal\Journal as JournalCollection;
 use Framework\DB\Client;
-use Framework\Utils\Time;
 
 class Journal extends ApiController {
 
@@ -94,13 +91,19 @@ class Journal extends ApiController {
 		$data['user'] = $this->user->id;
 		$record = Record::createFromData($data);
 
-		if($record->odo) {
-			/** @var Car $car */
-			$car = CarsCollection::factory()->get($this->params->record->car);
-			if($record->odo > $car->odo) {
-				$car->odo = $record->odo;
-				$car->odo_mdate = Time::date();
-				$car->save();
+		if($record->maintenance) {
+			/** @var Client $db */
+			$db = $this->di->db;
+			$last = $db->findOne('SELECT id, odo, date FROM journal WHERE maintenance = {$maintenance} 
+				ORDER BY odo DESC, date DESC LIMIT 1', [
+				'maintenance' => $record->maintenance,
+			]);
+			if($last) {
+				$item = $db->findOneBy('maintenance', 'id', $record->maintenance);
+				$item['last_odo'] = $last['odo'];
+				$item['last_date'] = $last['date'];
+				$item = Maintenance::calcNext($item);
+				$db->update('maintenance', $item, 'id', $record->maintenance);
 			}
 		}
 
@@ -129,9 +132,26 @@ class Journal extends ApiController {
 		$this->checkEntityAccess($record);
 
 		$record->setData((array)$this->params->record);
+		$res = $record->update();
+
+		if($record->maintenance) {
+			/** @var Client $db */
+			$db = $this->di->db;
+			$last = $db->findOne('SELECT id, odo, date FROM journal WHERE maintenance = {$maintenance} 
+				ORDER BY odo DESC, date DESC LIMIT 1', [
+				'maintenance' => $record->maintenance,
+			]);
+			if($last) {
+				$item = $db->findOneBy('maintenance', 'id', $record->maintenance);
+				$item['last_odo'] = $last['odo'];
+				$item['last_date'] = $last['date'];
+				$item = Maintenance::calcNext($item);
+				$db->update('maintenance', $item, 'id', $record->maintenance);
+			}
+		}
 
 		return [
-			'updated' => $record->update()
+			'updated' => $res
 		];
 
 	}
@@ -152,8 +172,36 @@ class Journal extends ApiController {
 
 		$this->checkEntityAccess($record);
 
+		$res = $record->delete();
+
+		if($record->maintenance) {
+			/** @var Client $db */
+			$db = $this->di->db;
+
+			$last = $db->findOne('SELECT id, odo, date FROM journal WHERE maintenance = {$maintenance} 
+				ORDER BY odo DESC, date DESC LIMIT 1', [
+				'maintenance' => $record->maintenance,
+			]);
+
+			if($last) {
+				$item = $db->findOneBy('maintenance', 'id', $record->maintenance);
+				$item['last_odo'] = $last['odo'];
+				$item['last_date'] = $last['date'];
+				$item = Maintenance::calcNext($item);
+				$db->update('maintenance', $item, 'id', $record->maintenance);
+			} else {
+				$db->update('maintenance', [
+					'last_odo' => null,
+					'last_date' => null,
+					'next_odo' => null,
+					'next_date' => null,
+				], 'id', $record->maintenance);
+			}
+
+		}
+
 		return [
-			'deleted' => $record->delete()
+			'deleted' => $res
 		];
 
 	}
