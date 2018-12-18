@@ -11,7 +11,6 @@ export default class Input extends Component {
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
-      borderBottomWidth: this.props.last ? 0 : StyleSheet.hairlineWidth,
       borderBottomColor: "#d5dae4"
     },
 
@@ -37,15 +36,20 @@ export default class Input extends Component {
     }
   });
 
+  checkValue = value => {
+      if(value === undefined || value === null) return "";
+      return String(value);
+  };
+
   render () {
     return (
       <TouchableWithoutFeedback onPress={()=>{this.refs.input.focus()}}>
-        <View style={this.styles.wrapper}>
+        <View style={[this.styles.wrapper, {borderBottomWidth: this.props.last ? 0 : StyleSheet.hairlineWidth}]}>
           <View style={this.styles.title}><Text style={this.styles.titleText}>{this.props.title || ""}</Text></View>
           <TextInput
             ref="input"
             placeholder={this.props.placeholder || ""}
-            value={this.props.value ? String(this.props.value) : ""}
+            value={this.checkValue(this.props.value)}
             onChangeText={this.props.onChange}
             selectionColor="#a23737"
             secureTextEntry={"secureTextEntry" in this.props}

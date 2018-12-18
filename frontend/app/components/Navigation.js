@@ -6,8 +6,6 @@ import Cars from "../store/Cars";
 import {observer} from "mobx-react";
 import thumb from "../assets/images/avatar_thumb.png";
 import {cdn} from "../modules/Url";
-import background from "../assets/images/login_background.jpg";
-
 
 @observer
 export default class Navigation extends Component {
@@ -67,7 +65,7 @@ export default class Navigation extends Component {
     return (
       <View style={componentStyle.wrapper}>
         <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
-          <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={background}/>
+          <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={require("../assets/images/login_background.jpg")}/>
         </View>
         <View>
           <View style={componentStyle.top}>
