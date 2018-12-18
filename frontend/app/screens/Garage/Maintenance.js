@@ -23,9 +23,9 @@ export default class Maintenance extends React.Component {
   @observable item = {
     car: this.car.car.id,
     name: String(),
-    distance: Number(),
-    period: Number(),
-    period_type: null
+    distance: null,
+    period: null,
+    period_type: "year"
   };
 
   @observable tmp = {};
@@ -166,24 +166,19 @@ export default class Maintenance extends React.Component {
                         <TouchableOpacity style={componentStyle.itemText} onPress={()=>{this.action(item)}}>
                           <Fragment>
                             <Text style={componentStyle.name}>{item.name}</Text>
-
                             <Text style={styles.textNote}>
                               {item.distance ? `Каждые ${number_format(item.distance, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
                               {item.distance && item.period ? ` или ` : null}
-                              {item.period ? `раз в ${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}
+                              {item.period ? `${item.distance ? "р" : "Р"}аз в ${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}
                             </Text>
-
                             {(Boolean(item.next_odo) || Boolean(item.next_date)) && <Text style={styles.textNote}>
-                              {item.next_odo ? `В следующий раз: ${number_format(item.next_odo, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
+                              {item.next_odo || item.next_date ? `В следующий раз: ` : ``}
+                              {item.next_odo ? `${number_format(item.next_odo, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
                               {item.next_odo && item.next_date ? ` или ` : null}
                               {item.next_date ? moment(item.next_date).format("DD.MM.YYYY") : null}
                             </Text>}
-
-
-
                           </Fragment>
                         </TouchableOpacity>
-
                         <View>
                           <TouchableOpacity style={componentStyle.addButton} onPress={()=>{this.props.navigation.navigate("Journal", {maintenance: item.id})}} transparent>
                             <Icon style={{color: "#a9b3c7"}} name="md-add-circle"/>
@@ -222,19 +217,14 @@ export default class Maintenance extends React.Component {
               <View style={styles.block}>
                 <Text style={styles.blockHeading}>Основные параметры</Text>
                 <Input multiline={true} onChange={(value)=>{this.tmp.name = value}} value={this.tmp.name} title="Название"/>
-                <Input onChange={(value)=>{this.tmp.distance = Number(value)}} value={this.tmp.distance} keyboardType="numeric" title="Пробег"/>
-                <Input onChange={(value)=>{this.tmp.period = Number(value)}} value={this.tmp.period} keyboardType="numeric" title="Период"/>
+                <Input onChange={(value)=>{this.tmp.distance = value}} value={this.tmp.distance} keyboardType="numeric" title="Каждые" placeholder={`5000 ${car.odo_unit === "m" ? "миль" : "км"}`}/>
+                <Input last={this.tmp.period === null} onChange={(value)=>{this.tmp.period = value}} value={this.tmp.period} keyboardType="numeric" title="Или раз в" placeholder="3 года"/>
+                {this.tmp.period !== null &&
                 <Select last={true} onChange={value => {this.tmp.period_type = value.id}} value={this.tmp.period_type} buttons={[
                   {id: "year", text: "Год"},
                   {id: "month", text: "Месяц"}
-                ]} title={"Год/Месяц"}/>
+                ]} title={"Период"}/>}
               </View>
-
-              {/*<View style={styles.block}>*/}
-                {/*<Text style={styles.blockHeading}>Последнее проведение работы</Text>*/}
-                {/*<Input keyboardType="numeric" onChange={value => {this.tmp.last_odo = value}} value={this.tmp.last_odo} title="Пробег"/>*/}
-                {/*<InputDate last={true} onChange={(date)=>{this.tmp.last_date = moment(date).format("YYYY-MM-DD")}} value={this.tmp.last_date} title="Дата"/>*/}
-              {/*</View>*/}
             </Content>
           </Container>
         </Modal>

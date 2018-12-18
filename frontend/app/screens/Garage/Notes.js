@@ -88,7 +88,8 @@ export default class Notes extends React.Component {
           { text: "Удалить", icon: "trash", iconColor: "#b9babd" },
           { text: "Отмена", icon: "close", iconColor: "#b9babd" }
         ],
-        cancelButtonIndex: 3
+        cancelButtonIndex: 3,
+        title: note.name
       },
       index => {
 
