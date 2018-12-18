@@ -290,4 +290,12 @@ class Validator {
 		return in_array((string)$value, ['1', 'true', 'on', 'yes']);
 	}
 
+	protected function filterInt($value): int {
+		return (int)$value;
+	}
+
+	protected function filterString($value): string {
+		return (string)$value;
+	}
+
 }

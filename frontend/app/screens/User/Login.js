@@ -9,6 +9,7 @@ import Notification from "../../components/Notification";
 import background from "../../assets/images/login_background.jpg";
 import back from "../../assets/images/back.png";
 import TouchableItem from "react-navigation/src/views/TouchableItem";
+import Logger from "../../modules/Logger";
 
 @observer
 export default class Login extends React.Component {
@@ -36,6 +37,7 @@ export default class Login extends React.Component {
       User.profile = await User.info();
       User.auth = true;
       await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+      Logger.info("Пользователь авторизовался", {phone: String(this.tel)})
     } catch (e) {
       Vibration.vibrate(300);
       Notification(e);
@@ -56,6 +58,7 @@ export default class Login extends React.Component {
       User.profile = await User.info();
       User.auth = true;
       await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
+      Logger.info("Пользователь зарегистрировался", {phone: String(this.tel)})
     } catch (e) {
       Notification(e)
     }
@@ -121,9 +124,11 @@ export default class Login extends React.Component {
   @action sendSMS = async (silent = false) => {
     this.disabled = true;
 
+    Logger.info("Пользователю отправлено СМС с кодом");
+
     try {
       await User.tel({tel: this.tel});
-      if(!silent) Notification("Вам отправлено СМС c кодом")
+      if(!silent) Notification("Вам отправлено СМС c кодом");
     } catch (e) {
       Notification(e)
     }

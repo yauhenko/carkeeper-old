@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Text, RefreshControl, View, Modal, Clipboard, Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import {observable, action} from "mobx";
 import {observer} from 'mobx-react';
@@ -24,6 +24,7 @@ import Input from "../../components/Form/Input";
 import HeaderMenu from "../../components/HeaderMenu";
 import moment from "moment";
 import Notification from "../../components/Notification";
+import User from "../../store/User";
 
 @observer
 export default class Fines extends React.Component {
@@ -44,8 +45,12 @@ export default class Fines extends React.Component {
   @observable modal = false;
 
   componentDidMount = async () => {
-    this.getFines();
-    this.getPass();
+    if(User.profile.user.geo === "BY") {
+      this.getFines();
+      this.getPass();
+    } else {
+      this.loading = false;
+    }
   };
 
   @action getFines = async () => {
@@ -132,45 +137,60 @@ export default class Fines extends React.Component {
             <Title><Text style={styles.headerTitle}>Штрафы: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
           <Right>
-            <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
-              <Icon style={styles.headerIcon} name='md-more' />
-            </Button>
+            {User.profile.user.geo === "BY"
+              ?
+              <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
+                <Icon style={styles.headerIcon} name='md-more' />
+              </Button>
+              :
+              null
+            }
           </Right>
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getFines()}}/>} contentContainerStyle={styles.content}>
 
-          {this.passportLoaded && !this.passport.serie
-            ?
-            <View style={[styles.block]}>
-              <Text style={componentStyle.empty}>Для получения уведомлений о штрафах необходимо заполнить данные техпаспорта</Text>
-              <Button style={[styles.primaryButton, {alignSelf: "center", marginTop: 10, marginBottom: 10}]} onPress={()=>this.toggleModal(true)}><Text style={styles.primaryButtonText}>ЗАПОЛНИТЬ</Text></Button>
-            </View>
-            :
-            null
-          }
 
-          {this.fines.length
-            ?
+          {User.profile.user.geo === "BY" ?
+            <Fragment>
+              {this.passportLoaded && !this.passport.serie
+                ?
+                <View style={[styles.block]}>
+                  <Text style={componentStyle.empty}>Для получения уведомлений о штрафах необходимо заполнить данные техпаспорта</Text>
+                  <Button style={[styles.primaryButton, {alignSelf: "center", marginTop: 10, marginBottom: 10}]} onPress={()=>this.toggleModal(true)}><Text style={styles.primaryButtonText}>ЗАПОЛНИТЬ</Text></Button>
+                </View>
+                :
+                null
+              }
+
+              {this.fines.length
+                ?
+                <View style={styles.block}>
+                  {this.fines.map(({id, cdate, regid, amount, status}, key) => (
+                    <TouchableOpacity onPress={()=>this.action(id, regid, status)} key={id}>
+                      <View style={[componentStyle.item, this.fines.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                        <View style={{width: 50, paddingLeft: 10}}>
+                          <Icon style={[status === 0 ? {color: "#a23737"} : {color: "green"}, {fontSize: 22}]} name={status === 0 ? "alert" : "checkmark-circle"}/>
+                        </View>
+
+                        <View style={{flex: 1}}>
+                          <Text style={{marginBottom: 5}}>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
+                          <Text style={styles.textNote}>Постановление: {regid}</Text>
+                        </View>
+                        {Boolean(amount) && <Text>{amount.toFixed(2)} руб.</Text>}
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+                :
+                this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Штрафы не найдены</Text></View>
+              }
+            </Fragment>
+            :
             <View style={styles.block}>
-              {this.fines.map(({id, cdate, regid, amount, status}, key) => (
-                  <TouchableOpacity onPress={()=>this.action(id, regid, status)} key={id}>
-                    <View style={[componentStyle.item, this.fines.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
-                      <View style={{width: 50, paddingLeft: 10}}>
-                        <Icon style={[status === 0 ? {color: "#a23737"} : {color: "green"}, {fontSize: 22}]} name={status === 0 ? "alert" : "checkmark-circle"}/>
-                      </View>
-
-                      <View style={{flex: 1}}>
-                        <Text style={{marginBottom: 5}}>Дата: {moment(cdate).format("DD.MM.YYYY")}</Text>
-                        <Text style={styles.textNote}>Постановление: {regid}</Text>
-                      </View>
-                      {Boolean(amount) && <Text>{amount.toFixed(2)} руб.</Text>}
-                    </View>
-                  </TouchableOpacity>
-              ))}
+              <Text style={componentStyle.empty}>К сожалению у нас пока еще нет информации о штрафах из Вашего региона</Text>
+              <Text style={componentStyle.empty}>Но мы работаем над этим!</Text>
             </View>
-            :
-            this.loading ? null : <View style={styles.block}><Text style={componentStyle.empty}>Штрафы не найдены</Text></View>
           }
 
           <Modal animationType="slide" transparent={false} visible={this.modal} onRequestClose={() => {this.toggleModal(false)}}>

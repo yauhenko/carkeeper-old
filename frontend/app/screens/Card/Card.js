@@ -8,6 +8,7 @@ import Input from "../../components/Form/Input";
 import User from "../../store/User";
 import Notification from "../../components/Notification"
 import Api from "../../modules/Api";
+import Logger from "../../modules/Logger";
 
 @observer
 export default class Card extends React.Component {
@@ -45,6 +46,8 @@ export default class Card extends React.Component {
           lastname: this.data.lastname,
           tel: this.data.phone
       }});
+
+      Logger.info("Оформлена заявка на автокарту", {form: this.data});
       this.submitted = true;
       Notification("Заявка успешно отправлена");
     } catch (e) {

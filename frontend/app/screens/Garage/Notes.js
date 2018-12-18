@@ -11,6 +11,8 @@ import Input from "../../components/Form/Input";
 import Photo from "../../components/Form/Photo";
 import {cdn} from "../../modules/Url";
 import PhotoModal from "../../components/PhotoModal";
+import Logger from "../../modules/Logger";
+import Notification from "../../components/Notification";
 
 @observer
 export default class Notes extends React.Component {
@@ -51,18 +53,24 @@ export default class Notes extends React.Component {
   };
 
   @action saveNote = async () => {
-    if(this.note.id) {
-      await Cars.updateNote({id: this.note.id, note: this.note});
-    } else {
-      await Cars.addNote({note: this.note});
+    try {
+      if(this.note.id) {
+        await Cars.updateNote({id: this.note.id, note: this.note});
+        Logger.info("Обновлена заметка", {note: this.note});
+      } else {
+        await Cars.addNote({note: this.note});
+        Logger.info("Добавлена заметка", {note: this.note});
+      }
+      this.getNotes();
+      this.toggleModal(false);
+    } catch (e) {
+      Notification(e);
     }
-
-    this.getNotes();
-    this.toggleModal(false);
   };
   
   @action deleteNote = async (id) => {
     await Cars.deleteNotes({id});
+    Logger.info("Удалена заметка", {id});
     await this.getNotes();
   };
 

@@ -36,6 +36,7 @@ export default class Garage extends React.Component {
     } catch (e) {
       Notification(e);
     }
+
     this.loading = false;
   };
 
