@@ -2,6 +2,7 @@
 
 namespace Controllers\Garage;
 
+use Entities\Car;
 use Entities\Journal\Record;
 use Controllers\ApiController;
 use Collections\Journal\Journal as JournalCollection;
@@ -172,6 +173,9 @@ class Journal extends ApiController {
 
 		$this->checkEntityAccess($record);
 
+		/** @var Car $car */
+		$car = \Collections\Cars::factory()->get($record->car);
+
 		$res = $record->delete();
 
 		if($record->maintenance) {
@@ -190,12 +194,12 @@ class Journal extends ApiController {
 				$item = Maintenance::calcNext($item);
 				$db->update('maintenance', $item, 'id', $record->maintenance);
 			} else {
-				$db->update('maintenance', [
-					'last_odo' => null,
-					'last_date' => null,
-					'next_odo' => null,
-					'next_date' => null,
-				], 'id', $record->maintenance);
+				$item = [
+					'last_odo' => 0,
+					'last_date' => $car->year . '-01-01',
+				];
+				$item = Maintenance::calcNext($item);
+				$db->update('maintenance', $item, 'id', $record->maintenance);
 			}
 
 		}

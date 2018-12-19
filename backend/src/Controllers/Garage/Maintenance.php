@@ -59,7 +59,7 @@ class Maintenance extends ApiController {
 			]);
 			$this->db->begin();
 			foreach ($skels as $skel) {
-				$this->db->insert('maintenance', [
+				$item =  [
 					'car' => $car->id,
 					'user' => $car->user,
 					'skel' => $skel['id'],
@@ -67,7 +67,11 @@ class Maintenance extends ApiController {
 					'distance' => $car->odo_unit === 'km' ? $skel['distance'] : $skel['distance'] / 1.6,
 					'period' => $skel['period'],
 					'period_type' => $skel['period_type'],
-				], true);
+					'last_odo' => 0,
+					'last_date' => $car->year . '-01-01'
+				];
+				$item = self::calcNext($item);
+				$this->db->insert('maintenance', $item, true);
 			}
 			$this->db->commit();
 			$skelled = true;
@@ -112,9 +116,17 @@ class Maintenance extends ApiController {
 			]
 		]);
 
-		$this->params->maintenance->user = $this->user->id;
+		$item = (array)$this->params->maintenance;
 
-		$id = $this->db->insert('maintenance', (array)$this->params->maintenance);
+		/** @var Car $car */
+		$car = \Collections\Cars::factory()->get($item['car']);
+
+		$item['user'] = $this->user->id;
+		$item['last_odo'] = 0;
+		$item['last_date'] = $car->year . '-01-01';
+		$item = self::calcNext($item);
+
+		$id = $this->db->insert('maintenance', $item);
 
 		return [
 			'created' => true,
@@ -221,13 +233,13 @@ class Maintenance extends ApiController {
 
 	public static function calcNext(array $item): array {
 
-		if($item['last_odo'] && $item['distance']) {
+		if($item['last_odo'] !== null && $item['distance']) {
 			$item['next_odo'] = $item['last_odo'] + $item['distance'];
 		} else {
 			$item['next_odo'] = null;
 		}
 
-		if($item['last_date'] && $item['period']) {
+		if($item['last_date'] !== null && $item['period']) {
 			$d = new \DateTime($item['last_date']);
 			$d->modify('+' . $item['period'] . ' ' . $item['period_type']);
 			$item['next_date'] = $d->format('Y-m-d');
