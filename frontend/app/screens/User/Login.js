@@ -189,7 +189,6 @@ export default class Login extends React.Component {
 
   render() {
     return (
-
       <Fragment>
         <Container>
           <StatusBar backgroundColor="#000" translucent={true} barStyle="light-content"/>
