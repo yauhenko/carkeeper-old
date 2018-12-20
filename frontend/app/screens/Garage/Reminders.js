@@ -69,7 +69,6 @@ export default class Reminders extends React.Component {
           <Body style={{flexGrow: 2}}>
             <Title><Text style={styles.headerTitle}>Напоминания: {refs.mark.name} {refs.model.name}</Text></Title>
           </Body>
-          <Right/>
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{}}/>} contentContainerStyle={styles.content}>

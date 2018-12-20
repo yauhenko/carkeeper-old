@@ -56,8 +56,8 @@ export default class App extends React.Component {
     await User.checkAuth();
     if(Platform.OS === "android") {
       StatusBar.setTranslucent(true);
-      SplashScreen.hide();
     }
+      SplashScreen.hide();
   }
 
   async componentDidMount() {
