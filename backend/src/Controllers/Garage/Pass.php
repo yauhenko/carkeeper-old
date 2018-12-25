@@ -58,7 +58,7 @@ class Pass extends ApiController {
 					'middlename' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'lastname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'serie' => ['required' => true, 'length' => 3],
-					'number' => ['required' => true, 'length' => 6],
+					'number' => ['required' => true, 'length' => [6, 7]],
 				]
 			]
 		]);
