@@ -18,8 +18,10 @@ export default class Card extends React.Component {
 
   @observable data = {
     firstname: User.profile.user.name || "",
+    middlename: "",
     lastname: "",
-    phone: User.profile.user.tel || ""
+    phone: User.profile.user.tel || "",
+    email: User.profile.user.email || ""
   };
 
   @action dataChange = (key, value) => {
@@ -32,11 +34,11 @@ export default class Card extends React.Component {
   };
 
   @action submitHandler = async () => {
-    if(!this.checked) {
-      Notification(`Согласитесь с правилами обработки персональных данных`);
-      Vibration.vibrate(300);
-      return false;
-    }
+    // if(!this.checked) {
+    //   Notification(`Согласитесь с правилами обработки персональных данных`);
+    //   Vibration.vibrate(300);
+    //   return false;
+    // }
 
     this.loading = true;
 
@@ -44,6 +46,8 @@ export default class Card extends React.Component {
       await Api("autocard/submit", {form: {
           firstname: this.data.firstname,
           lastname: this.data.lastname,
+          middlename: this.data.middlename,
+          email: this.data.email,
           tel: this.data.phone
       }});
 
@@ -166,12 +170,16 @@ export default class Card extends React.Component {
                 <View style={styles.block}>
                   <Text style={styles.blockHeading}>Заявка на автокарту</Text>
                   <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
-                  <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
+                  <Input onChange={value=>this.dataChange("middlename", value)} value={this.data.email} title="E-mail"/>
+
                   <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
-                  <View style={componentStyle.checkboxWrapper}>
-                    <CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>
-                    <Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>
-                  </View>
+                  <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
+                  <Input keyboardType="email-address" onChange={value=>this.dataChange("middlename", value)} value={this.data.middlename} title="Отчество"/>
+
+                  {/*<View style={componentStyle.checkboxWrapper}>*/}
+                    {/*<CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>*/}
+                    {/*<Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>*/}
+                  {/*</View>*/}
                   <Button onPress={this.submitHandler} full style={[styles.primaryButton, {marginTop: 15}]}>
                     <Text style={styles.primaryButtonText}>ОТПРАВИТЬ ЗАЯВКУ</Text>
                   </Button>
