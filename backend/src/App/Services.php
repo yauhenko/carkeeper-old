@@ -117,6 +117,7 @@ class Services {
 		    'city' => 'Город',
 		    'fcm' => 'FCM',
 		    'firstname' => 'Имя',
+		    'middlename' => 'Отчество',
 		    'lastname' => 'Фамилия',
 
 		    'journal.car' => 'Идентификатор автомобиля',
