@@ -36,6 +36,7 @@ class Fines extends Command {
 		$srv->check((int)$input->getOption('limit'),
 			function() use($mutex) {
 				$mutex->update();
+				return true;
 			}
 		);
 

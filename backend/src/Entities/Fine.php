@@ -47,7 +47,7 @@ class Fine extends Entity {
 	public $status = 0;
 
 	/**
-	 * @validate required; type: float
+	 * @validate type: float
 	 * @var float|null
 	 */
 	public $amount = null;
