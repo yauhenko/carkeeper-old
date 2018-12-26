@@ -58,7 +58,8 @@ class Autocard extends ApiController {
 		$form = (array)$this->params->form;
 		$form['user'] = $this->user->id;
 
-		$id = $db->insert('autocard', $form);
+		$id = $db->insert('autocard', $form, true);
+		if(!$id) throw new \Exception("Заявка с указанным номером телефона уже отправлена");
 
 		return [
 			'submitted' => true,
