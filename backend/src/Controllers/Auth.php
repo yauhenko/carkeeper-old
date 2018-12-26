@@ -190,6 +190,12 @@ class Auth extends ApiController {
 	 */
 	public function ping() {
 		$this->auth();
+		if($fcm = $this->params->fcm) {
+			if($fcm !== $this->user->fcm) {
+				$this->user->fcm = $fcm;
+				$this->user->save();
+			}
+		}
 		return 'pong';
 	}
 
