@@ -119,7 +119,7 @@ class Maintenance extends ApiController {
 		$item = (array)$this->params->maintenance;
 
 		if(!$item['period'] && !$item['distance'])
-			throw new \Exception('Укажите пробег или периодичность облуживания');
+			throw new \Exception('Укажите пробег или периодичность обcлуживания');
 
 
 		/** @var Car $car */
@@ -200,7 +200,7 @@ class Maintenance extends ApiController {
 		$item = array_merge($item, (array)$this->params->maintenance);
 
 		if(!$item['period'] && !$item['distance'])
-			throw new \Exception('Укажите пробег или периодичность облуживания');
+			throw new \Exception('Укажите пробег или периодичность обcлуживания');
 
 		$item = self::calcNext($item);
 
