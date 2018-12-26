@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use App\Sessions;
+use App\Tools;
 use Entities\User;
 use Framework\DB\Client;
 use Framework\DB\Entity;
@@ -43,18 +44,17 @@ abstract class ApiController extends AbstractController {
 		/** @var Request req */
 		$this->req = $this->di->request;
 
-		if($this->req->getMethod() !== 'POST')
-			throw new \Exception('Only POST method accepted', 405);
-
-		if(!$data = $this->req->getContent())
-			throw new \Exception('Empty request', 400);
-
-		if(!$this->params = json_decode($data))
-			throw new \Exception('Invalid JSON-data', 400);
-
-//		$token = $this->req->headers->get('Token') ?: $this->params->token;
-//
-//		if($token) $this->auth();
+		if($this->req->getMethod() === 'POST') {
+			if($data = $this->req->getContent()) {
+				if(!$this->params = json_decode($data)) {
+					$this->params = Tools::toObject($this->req->request->all());
+				}
+			}
+		} elseif($this->req->getMethod() === 'GET') {
+			$this->params = Tools::toObject($this->req->query->all());
+		} else {
+			$this->params = Tools::toObject($_REQUEST);
+		}
 
 	}
 

@@ -79,6 +79,10 @@ class FinesService {
 					$fine->cdate = Time::dateTime();
 					$fine->rdate = $d->format('Y-m-d H:i:s');
 					$fine->insert();
+
+					$user = Users::factory()->get($car->user);
+					\App\Stats::roll((array)$user, ['fines' => 1]);
+
 				}
 				$det = $this->getFineDetails($fine);
 				if($det['amount']) $sum += $det['amount'];

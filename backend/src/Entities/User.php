@@ -74,6 +74,10 @@ class User extends Entity {
 
 	public $fcm_auth = 1;
 
+	public $date;
+
+	public $source;
+
 	/** @var string */
 	protected $_collection = Users::class;
 

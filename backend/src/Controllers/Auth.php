@@ -10,6 +10,7 @@ use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
 use Framework\MQ\Task;
 use Framework\Security\Password;
+use Framework\Utils\Time;
 use Framework\Validation\Validator;
 use Tasks\Mail;
 use Tasks\Push;
@@ -101,10 +102,22 @@ class Auth extends ApiController {
 			'ttl' => ['type' => 'int', 'min' => 60, 'max' => 3600 * 24 * 365]
 		]);
 
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+		$ip = $this->req->getClientIp();
+
+		if(!$pixel = (array)json_decode(base64_decode($this->params->pixel)))
+			$pixel = $ci->get("pixel:{$ip}") ?: [
+				'date' => Time::date(),
+				'source' => 'organic'
+			];
+
 		$data = (array)$this->params->user;
 		$data['tel'] = Tools::tel($data['tel']);
 		$data['fcm'] = $this->params->fcm ?: null;
 		$data['fcm_auth'] = 1;
+		$data['date'] = $pixel['date'];
+		$data['source'] = $pixel['source'];
 		$data['password'] = Password::getHash((string)$data['password']);
 
 		$users = new Users;

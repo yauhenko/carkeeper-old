@@ -90,6 +90,8 @@ class Cars extends ApiController {
 		/** @var Car $car */
 		$car = Car::createFromData($data);
 
+		\App\Stats::roll((array)$this->user, ['cars' => 1]);
+
 		return [
 			'created' => true,
 			'id' => $car->id

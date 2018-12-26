@@ -191,4 +191,12 @@ class Tools {
 		return implode(' ', $result);
 	}
 
+	public static function toObject($data): ?object {
+		return (object)json_decode(json_encode($data)) ?: null;
+	}
+
+	public static function toArray($data): ?array {
+		return (array)json_decode(json_encode($data), true) ?: null;
+	}
+
 }
