@@ -52,6 +52,7 @@ class Auth extends ApiController {
 
 		if($this->params->fcm) {
 			$user->fcm = $this->params->fcm;
+			$user->fcm_auth = 1;
 			$user->save();
 		}
 
@@ -71,7 +72,7 @@ class Auth extends ApiController {
 	 */
 	public function logout() {
 		$this->auth();
-		$this->user->fcm = null;
+		$this->user->fcm_auth = 0;
 		$this->user->save();
 		/** @var Client $db */
 		$db = $this->di->db;
@@ -103,6 +104,7 @@ class Auth extends ApiController {
 		$data = (array)$this->params->user;
 		$data['tel'] = Tools::tel($data['tel']);
 		$data['fcm'] = $this->params->fcm ?: null;
+		$data['fcm_auth'] = 1;
 		$data['password'] = Password::getHash((string)$data['password']);
 
 		$users = new Users;
@@ -277,6 +279,7 @@ class Auth extends ApiController {
 		/** @var User $user */
 		$user = Users::factory()->get($recovery['user']);
 		$user->fcm = $recovery['fcm'];
+		$user->fcm_auth = 1;
 		$user->update();
 
 		$token = Sessions::start($user, $ip, $ttl);
@@ -319,6 +322,7 @@ class Auth extends ApiController {
 		/** @var User $user */
 		$user = Users::factory()->findOneBy('tel', $this->params->tel);
 		$user->fcm = $this->params->fcm;
+		$user->fcm_auth = 1;
 		$user->update();
 
 		$token = Sessions::start($user, $ip, $ttl);

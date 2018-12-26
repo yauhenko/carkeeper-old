@@ -12,20 +12,27 @@ class Push extends Handler {
 	public function work(array $data) {
 
 		$user = null;
+		$auth = true;
 
 		if(is_object($data['user'])) {
 			/** @var User $user */
 			$user = $data['user'];
 			$data['fcm'] = $user->fcm;
+			$auth = (bool)$user->fcm_auth;
 
 		} elseif (is_numeric($data['user'])) {
 			/** @var User $user */
 			$user = Users::factory()->get($data['user']);
 			$data['fcm'] = $user->fcm;
+			$auth = (bool)$user->fcm_auth;
 		}
 
 		if(!$data['fcm']) {
 			return 'No FCM';
+		}
+
+		if(!$auth && !$data['force']) {
+			return 'No Auth';
 		}
 
 		$res = FCM::send($data['fcm'], $data['title'], $data['body'], (array)$data['extra'] ?: null);
