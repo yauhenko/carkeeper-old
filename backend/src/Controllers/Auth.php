@@ -102,6 +102,7 @@ class Auth extends ApiController {
 
 		$data = (array)$this->params->user;
 		$data['tel'] = Tools::tel($data['tel']);
+		$data['fcm'] = $this->params->fcm ?: null;
 		$data['password'] = Password::getHash((string)$data['password']);
 
 		$users = new Users;
