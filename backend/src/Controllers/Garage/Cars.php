@@ -156,4 +156,32 @@ class Cars extends ApiController {
 
 	}
 
+
+	/**
+	 * @route /garage/cars/odo
+	 */
+	public function odoHistory() {
+
+		$this->auth();
+
+		$this->validate([
+			'id' => ['required' => true, 'type' => 'int']
+		]);
+
+		/** @var Car $car */
+		$car = CarsCollection::factory()->get($this->params->id);
+
+		$this->checkEntityAccess($car);
+
+		/** @var Client $db */
+		$db = $this->di->db;
+
+		return [
+			'history' => $db->query('SELECT date, odo FROM odo_history WHERE car = {$car} ORDER BY date DESC', [
+				'car' => $car->id
+			]),
+		];
+
+	}
+
 }
