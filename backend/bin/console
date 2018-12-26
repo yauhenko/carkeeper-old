@@ -20,5 +20,6 @@ $app->add(new \App\Console\Fines);
 $app->add(new \App\Console\Cleanup);
 $app->add(new \App\Console\NotifyInsurance);
 $app->add(new \App\Console\NotifyCheckup);
+$app->add(new \App\Console\Autocard);
 
 $app->run();
