@@ -12,7 +12,7 @@ class Pass extends ApiController {
 	 */
 	public function get() {
 
-		throw new \Exception('Ведутся технические работы. Зайдите попозже');
+		//throw new \Exception('Ведутся технические работы. Зайдите попозже');
 
 		$this->auth();
 
@@ -48,7 +48,7 @@ class Pass extends ApiController {
 	 */
 	public function update() {
 
-		throw new \Exception('Ведутся технические работы. Зайдите попозже');
+		//throw new \Exception('Ведутся технические работы. Зайдите попозже');
 
 		$this->auth();
 
