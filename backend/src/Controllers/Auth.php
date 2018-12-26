@@ -150,8 +150,19 @@ class Auth extends ApiController {
 		]);
 		$update = (array)$this->params->user;
 		if($update['password']) $update['password'] = Password::getHash($update['password']);
+
+		if($this->user->tel) unset($update['tel']);
+		if($this->user->email) unset($update['email']);
+
 		$this->user->setData($update);
-		return $this->user->save();
+
+		try {
+			$res = $this->user->save();
+		} catch (\Exception $e) {
+			throw new \Exception('E-mail уже используется другим пользователем');
+		}
+
+		return $res;
 	}
 
 	/**

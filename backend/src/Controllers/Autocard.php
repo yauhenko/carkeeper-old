@@ -43,9 +43,9 @@ class Autocard extends ApiController {
 				'required' => true,
 				'type' => 'struct',
 				'sub' => [
+					'lastname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'firstname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'middlename' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
-					'lastname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'tel' => ['required' => true, 'match' => '/^375(25|29|33|44)[0-9]{7}$/'],
 					'email' => ['type' => 'string', 'length' => [2, 50], 'email' => true],
 				]

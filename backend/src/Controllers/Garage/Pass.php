@@ -54,11 +54,11 @@ class Pass extends ApiController {
 				'required' => true,
 				'type' => 'struct',
 				'sub' => [
+					'lastname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'firstname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'middlename' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
-					'lastname' => ['required' => true, 'type' => 'string', 'length' => [2, 50]],
 					'serie' => ['required' => true, 'length' => 3],
-					'number' => ['required' => true, 'length' => [6, 7]],
+					'number' => ['required' => true, 'match' => '/^[0-9]{6,7}$/', 'length' => [6, 7]],
 				]
 			]
 		]);

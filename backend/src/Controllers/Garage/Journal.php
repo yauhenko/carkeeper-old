@@ -90,6 +90,10 @@ class Journal extends ApiController {
 
 		$data = (array)$this->params->record;
 		$data['user'] = $this->user->id;
+
+		if(!$data['maintenance'] && !$data['title'])
+			throw new \Exception('Укажите название или тип записи');
+
 		$record = Record::createFromData($data);
 
 		if($record->maintenance) {
@@ -133,6 +137,10 @@ class Journal extends ApiController {
 		$this->checkEntityAccess($record);
 
 		$record->setData((array)$this->params->record);
+
+		if(!$record->maintenance && !$record->title)
+			throw new \Exception('Укажите название или тип записи');
+
 		$res = $record->update();
 
 		if($record->maintenance) {

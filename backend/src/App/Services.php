@@ -121,20 +121,34 @@ class Services {
 		    'lastname' => 'Фамилия',
 
 		    'journal.car' => 'Идентификатор автомобиля',
-		    'journal.date' => 'Дата события',
-		    'journal.odo' => 'Показания одометра',
+		    'journal.date' => 'Дата записи',
+		    'journal.odo' => 'Пробег',
 		    'journal.type' => 'Тип записи',
 		    'journal.comment' => 'Комментарий',
 
 		    'mark' => 'Марка',
 		    'model' => 'Модель',
-		    'year' => 'Год',
+		    'year' => 'Год выпруска',
 		    'generation' => 'Поколение',
 		    'serie' => 'Серия',
 		    'modification' => 'Модификация',
 
 		    'image' => 'Изображение',
-		    'avatar' => 'Аватар'
+		    'avatar' => 'Аватар',
+
+		    'message' => 'Сообщение',
+
+		    'pass.serie' => 'Серия',
+		    'pass.number' => 'Номер',
+
+		    'note.name' => 'Заголовок',
+		    'note.content' => 'Текст заметки',
+		    'note.image' => 'Изображение',
+
+		    'maintenance.name' => 'Название',
+		    'maintenance.distance' => 'Пробег',
+		    'maintenance.period' => 'Периодичность'
+
 	    ];
     }
 

@@ -108,7 +108,7 @@ class Maintenance extends ApiController {
 				'type' => 'struct',
 				'sub' => [
 					'car' => ['required' => true, 'type' => 'int'],
-					'name' => ['type' => 'string', 'length' => [1, 100]],
+					'name' => ['required' => true, 'type' => 'string', 'length' => [1, 100]],
 					'distance' => ['type' => 'int'],
 					'period' => ['type' => 'int'],
 					'period_type' => ['required' => true, 'type' => 'string', 'in' => ['month', 'year']],
@@ -117,6 +117,10 @@ class Maintenance extends ApiController {
 		]);
 
 		$item = (array)$this->params->maintenance;
+
+		if(!$item['period'] && !$item['distance'])
+			throw new \Exception('Укажите пробег или периодичность облуживания');
+
 
 		/** @var Car $car */
 		$car = \Collections\Cars::factory()->get($item['car']);
@@ -180,7 +184,7 @@ class Maintenance extends ApiController {
 				'required' => true,
 				'type' => 'struct',
 				'sub' => [
-					'name' => ['type' => 'string', 'length' => [1, 100]],
+					'name' => ['required' => true, 'type' => 'string', 'length' => [1, 100]],
 					'distance' => ['type' => 'int'],
 					'period' => ['type' => 'int'],
 					'period_type' => ['type' => 'string', 'in' => ['month', 'year']],
@@ -194,6 +198,9 @@ class Maintenance extends ApiController {
 		$this->checkDataAccess($item);
 
 		$item = array_merge($item, (array)$this->params->maintenance);
+
+		if(!$item['period'] && !$item['distance'])
+			throw new \Exception('Укажите пробег или периодичность облуживания');
 
 		$item = self::calcNext($item);
 
