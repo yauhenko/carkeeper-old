@@ -160,7 +160,7 @@ class User {
     if(!App.connect) return false;
     if(!this.token) return false;
     try {
-      return await Api('account/ping');
+      return await Api('account/ping', {fcm: this.fcm});
     } catch (e) {
       if(silent) return false;
       Notification(e);

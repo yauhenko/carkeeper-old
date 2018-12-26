@@ -55,6 +55,7 @@ export default class Card extends React.Component {
       this.submitted = true;
       Notification("Заявка успешно отправлена");
     } catch (e) {
+      Vibration.vibrate(300);
       Notification(e)
     }
 
@@ -79,18 +80,25 @@ export default class Card extends React.Component {
           </Body>
           <Right/>
         </Header>
-        <Tabs ref="tabs" style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#a9b3c7"}} locked={true}>
+        <Tabs ref="tabs" style={{borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: "#d5dae4"}} locked={true}>
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>О карте</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
+                <Image resizeMode={'contain'} style={componentStyle.image} source={require("../../assets/images/autoCard.jpg")}/>
+              </View>
+
+              <View style={styles.block}>
                 <Text style={styles.blockHeading}>Автокарта от МТБанка</Text>
-                <View style={componentStyle.top}>
-                  <Text style={styles.p}>Уникальный банковский продукт, не имеющий аналогов в Беларуси. Она создана специально для автовладельцев и членов их семей. Теперь любая поездка, будь то дальнее путешествие или дорога на работу, станет приятнее, ведь с каждой обязательной траты (топливо, запчасти, замена шин, автомойка и др.) при помощи Автокарты от МТБанка вам будет возвращаться кэшбэк (возврат деньгами) до 10%. Также владельцы Автокарты получат 1% или 0,5% кэшбэк за любые покупки как в РБ, так и за границей.</Text>
-                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк 3% на АЗС по всему миру</Text></View>
-                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
-                  <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="star"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
-                  <Image resizeMode={'contain'} style={componentStyle.image} source={require("../../assets/images/autoCard.jpg")}/>
-                </View>
+                <Text style={[styles.p, {marginTop: 15}]}>Уникальный банковский продукт, не имеющий аналогов в Беларуси. Она создана специально для автовладельцев и членов их семей. Теперь любая поездка, будь то дальнее путешествие или дорога на работу, станет приятнее, ведь с каждой обязательной траты (топливо, запчасти, замена шин, автомойка и др.) при помощи Автокарты от МТБанка вам будет возвращаться кэшбэк (возврат деньгами) до 10%. Также владельцы Автокарты получат 1% или 0,5% кэшбэк за любые покупки как в РБ, так и за границей.</Text>
+              </View>
+
+              <View style={styles.block}>
+                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк от 3 до 4,5% на АЗС по всему миру</Text></View>
+                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
+                <View style={[componentStyle.topItem, {marginBottom: 5}]}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
+              </View>
+
+              <View style={styles.block}>
                 <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
                   <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
                 </Button>
@@ -149,6 +157,17 @@ export default class Card extends React.Component {
               </View>
 
               <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Доставка</Text>
+                <Text>Бесплатная доставка</Text>
+              </View>
+
+              <View style={styles.block}>
+                <Text style={[styles.blockHeading, componentStyle.blockHeading]}>Обслуживание карты</Text>
+                <Text>19,9 руб. в год</Text>
+                <Text style={styles.textNote}>Срок карты 3 года</Text>
+              </View>
+
+              <View style={styles.block}>
                 <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
                   <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
                 </Button>
@@ -161,7 +180,7 @@ export default class Card extends React.Component {
               {this.submitted
                 ?
                 <View style={styles.block}>
-                  <Text style={componentStyle.empty}>Вы уже отправили заявку на автокарту</Text>
+                  <Text style={componentStyle.empty}>Спасибо, Ваша заявка принята!</Text>
                   <Button onPress={()=>{this.submitted = false}} style={[styles.primaryButton, {marginTop: 15, alignSelf: "center"}]}>
                     <Text style={styles.primaryButtonText}>ОТПРАВИТЬ НОВУЮ ЗАЯВКУ</Text>
                   </Button>
@@ -169,13 +188,11 @@ export default class Card extends React.Component {
                 :
                 <View style={styles.block}>
                   <Text style={styles.blockHeading}>Заявка на автокарту</Text>
-                  <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон"/>
-                  <Input onChange={value=>this.dataChange("middlename", value)} value={this.data.email} title="E-mail"/>
-
-                  <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия"/>
-                  <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя"/>
-                  <Input keyboardType="email-address" onChange={value=>this.dataChange("middlename", value)} value={this.data.middlename} title="Отчество"/>
-
+                  <Input onChange={value=>this.dataChange("lastname", value)} value={this.data.lastname}  title="Фамилия *"/>
+                  <Input onChange={value=>this.dataChange("firstname", value)} value={this.data.firstname} title="Имя *"/>
+                  <Input onChange={value=>this.dataChange("middlename", value)} value={this.data.middlename} title="Отчество *"/>
+                  <Input onChange={value=>this.dataChange("phone", value)} value={this.data.phone} title="Телефон *"/>
+                  <Input keyboardType="email-address" onChange={value=>this.dataChange("email", value)} value={this.data.email} title="E-mail"/>
                   {/*<View style={componentStyle.checkboxWrapper}>*/}
                     {/*<CheckBox onPress={()=>{this.checked = !this.checked}} checked={this.checked} color={"#a23737"} style={componentStyle.checkbox}/>*/}
                     {/*<Text onPress={()=>{this.checked = !this.checked}} style={{flex: 1}}>Согласен с правилами обработки персональных данных</Text>*/}
@@ -194,22 +211,18 @@ export default class Card extends React.Component {
 }
 
 const componentStyle = StyleSheet.create({
-  top: {
-    paddingTop: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#d5dae4"
-  },
   topItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 5
+    marginBottom: 10
   },
   topText: {
     fontWeight: "bold",
   },
   icon: {
-    marginRight: 15,
-    color: "#a23737"
+    marginRight: 10,
+    color: "#a23737",
+    fontSize: 16
   },
   image: {
     width: "100%",
@@ -218,7 +231,7 @@ const componentStyle = StyleSheet.create({
     marginBottom: 10
   },
   tabText: {
-    color: "#000"
+    color: "#a9b3c7"
   },
   tabHeading: {
     backgroundColor: "#eaeef7"

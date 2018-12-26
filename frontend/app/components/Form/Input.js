@@ -47,6 +47,7 @@ export default class Input extends Component {
         <View style={[this.styles.wrapper, {borderBottomWidth: this.props.last ? 0 : StyleSheet.hairlineWidth}]}>
           <View style={this.styles.title}><Text style={this.styles.titleText}>{this.props.title || ""}</Text></View>
           <TextInput
+            editable={"editable" in this.props ? this.props.editable : true}
             ref="input"
             placeholder={this.props.placeholder || ""}
             value={this.checkValue(this.props.value)}

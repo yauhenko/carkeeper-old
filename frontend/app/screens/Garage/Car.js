@@ -14,7 +14,7 @@ import {
   ActionSheet
 } from 'native-base';
 import styles from "../../styles"
-import {observable, action} from 'mobx';
+import {observable, action, toJS} from 'mobx';
 import Cars from "../../store/Cars";
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
@@ -24,6 +24,7 @@ import AddOrEditCar from "./AddOrEditCar";
 import {number_format} from "../../modules/Utils";
 import Odo from "../../components/Odo";
 import Logger from "../../modules/Logger";
+import moment from "moment";
 
 @observer
 export default class Car extends React.Component {
@@ -34,6 +35,7 @@ export default class Car extends React.Component {
   @observable odoModal = false;
   @observable odoValue = this.car.car.odo;
 
+  @observable history = [];
 
   @observable edit = false;
 
@@ -61,7 +63,7 @@ export default class Car extends React.Component {
       this.car.car.odo = this.odoValue;
       this.odoModal = false;
       Logger.info("Пользователь обновил одометр", {odo: this.odoValue});
-      Notification("Показания обновлены");
+      Notification("Пробег сохранён");
     } catch (e) {
       Notification(e);
     }
@@ -93,6 +95,11 @@ export default class Car extends React.Component {
       this.odoValue = this.car.car.odo;
   };
 
+  @action getOdoHistory = async () => {
+    this.history = (await Cars.getOdoHistory({id: this.car.car.id})).history;
+    console.log(toJS(this.history))
+  };
+
   action = () => {
     ActionSheet.show(
       {
@@ -119,7 +126,7 @@ export default class Car extends React.Component {
         <Container style={styles.container}>
           <Header androidStatusBarColor={styles.statusBarColor} style={styles.header}>
             <Left>
-              <Button title="Назад" onPress={() => {Cars.resetCurrentCar(); this.props.navigation.navigate('Garage');}} transparent>
+              <Button title="Назад" onPress={() => {Cars.resetCurrentCar(); this.props.navigation.navigate('Garage')}} transparent>
                 <Icon style={styles.headerIcon} name='md-arrow-back'/>
               </Button>
             </Left>
@@ -145,18 +152,17 @@ export default class Car extends React.Component {
                 </View>
               }
 
-
               <View style={componentStyle.odo}>
                 <View style={componentStyle.odoValue}>
                   {car.odo
                     ?
-                    <Text  onPress={()=>this.odoModal = true}style={componentStyle.odoValueText}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                    <Text  onPress={()=>this.odoModal = true} style={componentStyle.odoValueText}>Пробег: <Text style={{fontSize: 18}}>{number_format(car.odo, 0, "", " ")}</Text> {car.odo_unit === "m" ? "миль" : "км"}</Text>
                     :
                     <Text onPress={()=>this.odoModal = true} style={componentStyle.odoValueText}>Пробег не указан</Text>
                   }
                   <Button style={componentStyle.odoButton} transparent small onPress={()=>this.odoModal = true}><Icon style={{color: "#7f8a9d"}} name="create"/></Button>
                 </View>
-                <Text style={componentStyle.odo_text}>Регулярно обновляйте показания одометра, чтобы получать рекомендации по обслуживанию автомобиля</Text>
+                <Text style={componentStyle.odo_text}>Регулярно обновляйте значение пробега, чтобы своевременно получать рекомендации по обслуживанию автомобиля</Text>
               </View>
             </View>
 
@@ -197,7 +203,7 @@ export default class Car extends React.Component {
 
           <Footer><CarMenu navigation={this.props.navigation}/></Footer>
 
-          <Modal animationType="slide" transparent={false} visible={this.odoModal} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
+          <Modal animationType="slide" transparent={false} visible={this.odoModal} onShow={()=>{this.getOdoHistory()}} onRequestClose={() => {this.resetOdo(); this.odoModal = false;}}>
             <Container style={styles.container}>
               <Header androidStatusBarColor={styles.statusBarColor} style={styles.modalHeader}>
                 <Left>
@@ -219,6 +225,23 @@ export default class Car extends React.Component {
                 <View style={styles.block}>
                   <Odo onChange={value => {this.odoValue = value}} value={this.odoValue || 0}/>
                 </View>
+                {
+                  this.history.length
+                  ?
+                  <View style={styles.block}>
+                    <Text style={styles.blockHeading}>История обновлений одометра</Text>
+                    {this.history.map((item, key) => (
+                      <View key={key} style={[componentStyle.listItem, this.history.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                        <View style={{width: 120}}>
+                          <Text>{moment(item.date).format("DD.MM.YYYY")}</Text>
+                        </View>
+                        <Text style={componentStyle.listText}>{number_format(item.odo, 0, "", " ")} {car.odo_unit === "m" ? "миль" : "км"}</Text>
+                      </View>
+                    ))}
+                  </View>
+                  :
+                  null
+                }
               </Content>
             </Container>
           </Modal>

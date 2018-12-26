@@ -54,9 +54,7 @@ const Auth = createStackNavigator({
 export default class App extends React.Component {
   async componentWillMount() {
     await User.checkAuth();
-    if(Platform.OS === "android") {
-      StatusBar.setTranslucent(true);
-    }
+    if(Platform.OS === "android") {StatusBar.setTranslucent(true)}
     SplashScreen.hide();
   }
 
@@ -64,6 +62,7 @@ export default class App extends React.Component {
     NetInfo.isConnected.addEventListener('connectionChange', result => {
       AppStore.connect = result;
     });
+
     Notifications.initial();
     Logger.info("Запуск приложения");
   }

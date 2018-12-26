@@ -30,7 +30,7 @@ export default class Navigation extends Component {
       hidden: User.profile.user.geo !== "BY"
     },
     {
-      title: "Поддержка",
+      title: "Обратная связь",
       icon: "text",
       path: "Support",
       action: null
@@ -136,7 +136,6 @@ const componentStyle = StyleSheet.create({
     alignItems: "center",
     marginTop: 0
   },
-
   listItem : {
     height: 60,
     alignItems: "flex-end"

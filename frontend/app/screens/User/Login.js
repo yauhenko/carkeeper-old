@@ -9,6 +9,7 @@ import TouchableItem from "react-navigation/src/views/TouchableItem";
 import Logger from "../../modules/Logger";
 import Swiper from 'react-native-swiper';
 import styles from "../../styles";
+import Pixel from "../../modules/Pixel";
 
 @observer
 export default class Login extends React.Component {
@@ -53,7 +54,14 @@ export default class Login extends React.Component {
     this.disabled = true;
 
     try {
-      const response = await User.register({code: this.code, user: {tel: this.tel, password: this.password}, ttl: 3600 * 24 * 7, noip: true, fcm: User.fcm});
+      const response = await User.register({
+        code: this.code,
+        user: {tel: this.tel, password: this.password},
+        ttl: 3600 * 24 * 7,
+        noip: true,
+        fcm: User.fcm,
+        pixel: Pixel.pixel
+      });
       User.token = response.token;
       await AsyncStorage.setItem('token', response.token);
       User.profile = await User.info();
