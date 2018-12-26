@@ -137,7 +137,15 @@ class Cars extends Collection {
 			];
 		}
 
-		return $notifications;
+		$sorted = [];
+
+		foreach (['danger', 'warning', 'info'] as $level) {
+			foreach ($notifications as $n) {
+				if($n['level'] === $level) $sorted[] = $n;
+			}
+		}
+
+		return $sorted;
 
 	}
 
