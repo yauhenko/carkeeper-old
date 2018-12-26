@@ -12,6 +12,8 @@ class Pass extends ApiController {
 	 */
 	public function get() {
 
+		throw new \Exception('Ведутся технические работы. Зайдите попозже');
+
 		$this->auth();
 
 		$this->validate([
@@ -26,9 +28,9 @@ class Pass extends ApiController {
 		$item = $db->findOneBy('cars_pass', 'car', $this->params->car);
 		if(!$item) {
 			$item = [
+				'lastname' => null,
 				'firstname' => null,
 				'middlename' => null,
-				'lastname' => null,
 				'serie' => null,
 				'number' => null,
 			];
@@ -45,6 +47,8 @@ class Pass extends ApiController {
 	 * @route /garage/pass/update
 	 */
 	public function update() {
+
+		throw new \Exception('Ведутся технические работы. Зайдите попозже');
 
 		$this->auth();
 
