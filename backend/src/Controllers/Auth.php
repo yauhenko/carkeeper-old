@@ -158,7 +158,7 @@ class Auth extends ApiController {
 
 		try {
 			$res = $this->user->save();
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			throw new \Exception('E-mail уже используется другим пользователем');
 		}
 
