@@ -46,9 +46,9 @@ export default class Odo extends Component {
         {this.state.digits.map((n, idx) => {
           return(
             <View style={{flex: 1}} key={idx}>
-              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, +1)}><Icon style={componentStyle.icon} name='arrow-dropup'/></TouchableOpacity>
+              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, +1)}><Icon style={componentStyle.icon} name='arrow-dropup-circle'/></TouchableOpacity>
               <View style={componentStyle.numberWrapper}><Text style={componentStyle.number}>{n}</Text></View>
-              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, -1)}><Icon style={componentStyle.icon} name='arrow-dropdown'/></TouchableOpacity>
+              <TouchableOpacity style={componentStyle.iconButton} onPress={()=>this.change(idx, -1)}><Icon style={componentStyle.icon} name='arrow-dropdown-circle'/></TouchableOpacity>
             </View>)
         })}
       </View>
@@ -66,11 +66,15 @@ const componentStyle = StyleSheet.create({
   },
   numberWrapper: {
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#d6d7da"
+    borderColor: "#d6d7da",
+    paddingTop: 5,
+    paddingBottom: 5
   },
   icon: {
-    color: "#a23737",
-    fontSize: 40
+    color: "#d5dae4",
+    fontSize: 40,
+    marginTop: 10,
+    marginBottom: 10
   },
   iconButton: {
     flex: 1,

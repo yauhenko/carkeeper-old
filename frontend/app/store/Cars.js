@@ -303,6 +303,17 @@ class Cars {
   @action deleteMaintenance = async (data = {}) => {
     return await Api('garage/maintenance/delete', data);
   };
+
+
+
+  /**
+   * Получение истории зменений одометра
+   * @param data {object}
+   * @returns {Promise<*>}
+   */
+  @action getOdoHistory = async (data = {}) => {
+    return await Api('garage/cars/odo', data);
+  };
 }
 
 export default new Cars();

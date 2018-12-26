@@ -61,8 +61,12 @@ export default class Fines extends React.Component {
   };
 
   @action getPass = async () => {
-    this.passport = (await Cars.getPass({car: this.car.car.id})).pass;
-    this.passportLoaded = true;
+    try {
+      this.passport = (await Cars.getPass({car: this.car.car.id})).pass;
+      this.passportLoaded = true;
+    } catch (e) {
+      Notification(e);
+    }
   };
 
   @action updatePass = async () => {
@@ -214,11 +218,11 @@ export default class Fines extends React.Component {
               <Content contentContainerStyle={styles.content}>
                 <View style={styles.block}>
                   <Text style={styles.blockHeading}>Данные техпаспорта</Text>
-                  <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Фамилия"/>
-                  <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Имя"/>
-                  <Input value={this.passport.lastname} onChange={value => {this.fillPass("lastname", value)}} title="Отчество"/>
+                  <Input value={this.passport.lastname} onChange={value => {this.fillPass("lastname", value)}} title="Фамилия"/>
+                  <Input value={this.passport.firstname} onChange={value => {this.fillPass("firstname", value)}} title="Имя"/>
+                  <Input value={this.passport.middlename} onChange={value => {this.fillPass("middlename", value)}} title="Отчество"/>
                   <Input value={this.passport.serie} onChange={value => {this.fillPass("serie", value)}} title="Серия"/>
-                  <Input last={true} value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
+                  <Input keyboardType="numeric" last={true} value={this.passport.number} onChange={value => {this.fillPass("number", value)}} title="Номер"/>
                 </View>
               </Content>
             </Container>

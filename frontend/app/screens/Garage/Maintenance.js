@@ -172,7 +172,7 @@ export default class Maintenance extends React.Component {
                               {item.period ? `${item.distance ? "р" : "Р"}аз в ${item.period} ${item.period_type === "year" ? plural(item.period, ",год,года,лет") : plural(item.period, "месяц,,а,ев")}` : null}
                             </Text>
                             {(Boolean(item.next_odo) || Boolean(item.next_date)) && <Text style={styles.textNote}>
-                              {item.next_odo || item.next_date ? `В следующий раз: ` : ``}
+                              {item.next_odo || item.next_date ? `${item.type === "danger" ? "Требовалось:" : "В следующий раз:"} ` : ``}
                               {item.next_odo ? `${number_format(item.next_odo, "", "", " ")} ${car.odo_unit === "m" ? "миль" : "км"}` : null}
                               {item.next_odo && item.next_date ? ` или ` : null}
                               {item.next_date ? moment(item.next_date).format("DD.MM.YYYY") : null}

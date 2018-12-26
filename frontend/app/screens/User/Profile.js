@@ -140,12 +140,11 @@ export default class Profile extends React.Component {
                 <Text style={styles.textNote}>Пешеход. Автомобиль не добавлен в гараж.</Text>
               }
             </View>
-
             <Form>
               <Input onChange={value => {this.change("name", value)}} value={user.name || ""}  title="Имя"/>
-              <Input keyboardType="numeric" onChange={value => {this.change("tel", value)}} value={String(user.tel || "")}  title="Телефон"/>
-              <Input secureTextEntry style={componentStyle.input} onChange={value => {this.change("password", value)}} value={String(user.password || "")} title="Новый пароль"/>
-              <Input last={true} keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
+              <Input editable={!Boolean(User.profile.user.email)} keyboardType="email-address" onChange={value => {this.change("email", value)}} value={user.email || ""}  title="E-mail"/>
+              <Input editable={false} keyboardType="numeric" onChange={value => {this.change("tel", value)}} value={String(user.tel || "")}  title="Телефон"/>
+              <Input last={true} secureTextEntry style={componentStyle.input} onChange={value => {this.change("password", value)}} value={String(user.password || "")} title="Новый пароль"/>
             </Form>
           </View>
         </Content>
@@ -153,7 +152,6 @@ export default class Profile extends React.Component {
     );
   }
 }
-
 
 const componentStyle = StyleSheet.create({
   top: {
