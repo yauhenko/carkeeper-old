@@ -18,7 +18,6 @@ export default class GarageAutoCard extends React.Component {
 
   componentDidMount() {
     this.check();
-    AsyncStorage.removeItem("hideGarageAutoCard")
   }
 
   @action hide = () => {
