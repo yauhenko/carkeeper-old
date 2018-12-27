@@ -2,29 +2,15 @@ import React, {Fragment} from 'react';
 import {Text, RefreshControl, View, Modal, Clipboard, Alert, StyleSheet, TouchableOpacity} from 'react-native';
 import {observable, action} from "mobx";
 import {observer} from 'mobx-react';
-import {
-  Container,
-  Button,
-  Content,
-  Icon,
-  Header,
-  Left,
-  Right,
-  Body,
-  Title,
-  List,
-  ListItem,
-  ActionSheet
-} from 'native-base';
-import styles from "../../styles"
+import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, ActionSheet} from 'native-base';
 import Footer from "../../components/Footer";
 import CarMenu from "../../components/CarMenu";
 import Cars from "../../store/Cars";
 import Input from "../../components/Form/Input";
-import HeaderMenu from "../../components/HeaderMenu";
 import moment from "moment";
 import Notification from "../../components/Notification";
 import User from "../../store/User";
+import styles from "../../styles"
 
 @observer
 export default class Fines extends React.Component {
@@ -102,7 +88,7 @@ export default class Fines extends React.Component {
     ActionSheet.show(
       {
         options: options,
-        cancelButtonIndex: 3
+        cancelButtonIndex: 2
       },
       index => {
         if(status === 1) {
@@ -119,12 +105,26 @@ export default class Fines extends React.Component {
 
         if(index === 2) {
           Alert.alert(null, 'Подтвердите удаление', [
-              {text: 'Отмена', onPress: () => {}, style: 'cancel'},
-              {text: 'Удалить', onPress: () => {Cars.deleteFines({id: id}).then(this.getFines)}}],
+            {text: 'Отмена', onPress: () => {}, style: 'cancel'},
+            {text: 'Удалить', onPress: () => {Cars.deleteFines({id: id}).then(this.getFines)}}],
             {cancelable: false })
         }
       }
-    )};
+  )};
+
+  finesActionSheet = () => {
+    ActionSheet.show(
+      {
+        options: [
+          { text: "Редактировать техпаспорт", icon: "create", iconColor: "#b9babd"},
+          { text: "Отмена", icon: "close", iconColor: "#b9babd" }
+        ],
+        cancelButtonIndex: 1
+      },
+      index => {
+        if(index === 0) {this.toggleModal(true)}
+      }
+  )};
 
   render() {
     const {refs} = this.car;
@@ -143,7 +143,7 @@ export default class Fines extends React.Component {
           <Right>
             {User.profile.user.geo === "BY"
               ?
-              <Button title={"Опции"} onPress={()=>{this.menu = true}} transparent>
+              <Button title={"Опции"} onPress={()=>{this.finesActionSheet()}} transparent>
                 <Icon style={styles.headerIcon} name='md-more' />
               </Button>
               :
@@ -153,8 +153,6 @@ export default class Fines extends React.Component {
         </Header>
 
         <Content refreshControl={<RefreshControl refreshing={this.loading} onRefresh={()=>{this.getFines()}}/>} contentContainerStyle={styles.content}>
-
-
           {User.profile.user.geo === "BY" ?
             <Fragment>
               {this.passportLoaded && !this.passport.serie
@@ -214,7 +212,6 @@ export default class Fines extends React.Component {
                   </Button>
                 </Right>
               </Header>
-
               <Content contentContainerStyle={styles.content}>
                 <View style={styles.block}>
                   <Text style={styles.blockHeading}>Данные техпаспорта</Text>
@@ -230,19 +227,10 @@ export default class Fines extends React.Component {
         </Content>
 
         <Footer><CarMenu navigation={this.props.navigation}/></Footer>
-
-        <HeaderMenu show={this.menu} onClose={() => this.menu = false}>
-          <List>
-            <ListItem onPress={() => {this.menu = false; this.toggleModal(true)}}>
-              <Text>Редактировать паспорт</Text>
-            </ListItem>
-          </List>
-        </HeaderMenu>
       </Container>
     );
   }
 }
-
 
 const componentStyle = StyleSheet.create({
   item: {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {DatePickerAndroid, StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
+import {DatePickerAndroid, DatePickerIOS, StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
 import {View} from 'native-base';
 import {observer} from 'mobx-react';
 import moment from "moment";
@@ -22,7 +22,7 @@ export default class InputDate extends Component {
       <TouchableWithoutFeedback onPress={() => {this.open(this.props.value)}}>
         <View style={[styles.wrapper, this.props.last ? {borderBottomWidth: 0} : {}]}>
           <View style={styles.title}><Text style={styles.titleText}>{this.props.title || ""}</Text></View>
-          <View style={styles.date} >
+          <View style={styles.date}>
             <Text>{this.props.value ? moment(this.props.value).format("DD.MM.YYYY") : "Выберите дату"}</Text>
           </View>
         </View>

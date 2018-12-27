@@ -21,7 +21,7 @@ class Pixel {
 
       if(response) {
         this.pixel = response.pixel;
-        await AsyncStorage.setItem("pixel", this.pixel);
+        await AsyncStorage.setItem("pixel", response.pixel);
       }
     } catch (e) {
       Logger.error("Ошибка в Pixel / request ", e)

@@ -3,7 +3,7 @@ import {View, TouchableWithoutFeedback} from 'react-native';
 import {observer} from 'mobx-react';
 
 @observer
-export default class HeaderMenu extends React.Component {
+export default class RM_HeaderMenu extends React.Component {
   render() {
     return this.props.show ? (
       <TouchableWithoutFeedback onPress={this.props.onClose}>
