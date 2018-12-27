@@ -89,9 +89,9 @@ class Stats extends ApiController {
 			SUM(cards) cards
 			FROM stats
 			WHERE TRUE
-			' . ($this->params->source ? ' AND source = {$source})' : '') . '
-			' . ($this->params->date_from ? ' AND date >= {$date_from})' : '') . '
-			' . ($this->params->date_till ? ' AND date <= {$date_till})' : '') . '
+			' . ($this->params->source ? ' AND source = {$source}' : '') . '
+			' . ($this->params->date_from ? ' AND date >= {$date_from}' : '') . '
+			' . ($this->params->date_till ? ' AND date <= {$date_till}' : '') . '
 			GROUP BY {&group}
 			ORDER BY {&sort} ' . ($this->params->sort ? 'ASC' : 'DESC') . '
 		', [

@@ -1,12 +1,12 @@
 import React, {Component, Fragment} from 'react';
-import {observer, inject} from 'mobx-react';
-import {observable, action, toJS} from 'mobx';
+import {observer} from 'mobx-react';
+import {observable, action} from 'mobx';
 import Loader from '../../components/Loader';
-import Pager from '../../components/Pager';
 import api from '../../utils/api';
 
 @observer
 class Stats extends Component {
+
   @observable loading = false;
 
   @observable group = "date";
@@ -42,7 +42,6 @@ class Stats extends Component {
   };
 
   render() {
-    if(this.loading) return <div className="text-center p-5"><Loader/></div>;
 
     return (
       <Fragment>
@@ -60,46 +59,52 @@ class Stats extends Component {
           </div>
         </div>
 
-        <div className="table-responsive">
-          <table className="table table-striped">
-            <thead>
-            <tr>
-              <th className="pl-0">
-                <select className="form-control" onChange={(e) => {this.group = e.target.value; this.fetch()}} value={this.group}>
-                  <option value="date">Дата</option>
-                  <option value="source">Источник</option>
-                </select>
-              </th>
-              <th className="text-right">Клики</th>
-              <th className="text-right">Уники</th>
-              <th className="text-right">Инсталлы</th>
-              <th className="text-right">Запуски</th>
-              <th className="text-right">Машины</th>
-              <th className="text-right">Штрафы</th>
-              <th className="text-right">АвтоКарты</th>
-            </tr>
-            </thead>
-            <tbody>
-            {this.stats.length ? this.stats.map((item, key)=>(
-                <tr key={key}>
-                  <td>{item.title}</td>
-                  <td className="text-right">{item.clicks}</td>
-                  <td className="text-right">{item.uniqs}</td>
-                  <td className="text-right">{item.installs}</td>
-                  <td className="text-right">{item.launches}</td>
-                  <td className="text-right">{item.cars}</td>
-                  <td className="text-right">{item.fines}</td>
-                  <td className="text-right">{item.cards}</td>
+        {this.loading ? <Loader/> :
+
+            <div className="table-responsive">
+              <table className="table table-striped">
+                <thead>
+                <tr>
+                  <th className="pl-0">
+                    <select className="form-control" onChange={(e) => {
+                      this.group = e.target.value;
+                      this.fetch()
+                    }} value={this.group}>
+                      <option value="date">Дата</option>
+                      <option value="source">Источник</option>
+                    </select>
+                  </th>
+                  <th className="text-right">Клики</th>
+                  <th className="text-right">Уники</th>
+                  <th className="text-right">Инсталлы</th>
+                  <th className="text-right">Запуски</th>
+                  <th className="text-right">Машины</th>
+                  <th className="text-right">Штрафы</th>
+                  <th className="text-right">АвтоКарты</th>
                 </tr>
-              ))
-              :
-              <tr>
-                <td colSpan={10}><p>Лавэ нанэ, сиси кар, саси палэ.</p></td>
-              </tr>
-            }
-            </tbody>
-          </table>
-        </div>
+                </thead>
+                <tbody>
+                {this.stats.length ? this.stats.map((item, key) => (
+                        <tr key={key}>
+                          <td>{item.title}</td>
+                          <td className="text-right">{item.clicks}</td>
+                          <td className="text-right">{item.uniqs}</td>
+                          <td className="text-right">{item.installs}</td>
+                          <td className="text-right">{item.launches}</td>
+                          <td className="text-right">{item.cars}</td>
+                          <td className="text-right">{item.fines}</td>
+                          <td className="text-right">{item.cards}</td>
+                        </tr>
+                    ))
+                    :
+                    <tr>
+                      <td colSpan={10}><p>Лавэ нанэ, сиси кар, саси палэ.</p></td>
+                    </tr>
+                }
+                </tbody>
+              </table>
+            </div>
+        }
       </Fragment>
     );
   }
