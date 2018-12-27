@@ -129,7 +129,7 @@ class Validator {
 	 * @throws Error
 	 */
 	protected function checkMin($value, $min) {
-		if($value < $min) throw new Error('Значение должно быть больше ' . $min);
+		if($value < $min) throw new Error('Значение не должно быть меньше ' . $min);
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Validator {
 	 * @throws Error
 	 */
 	protected function checkMax($value, $max) {
-		if($value > $max) throw new Error('Значение должно быть меньше ' . $max);
+		if($value > $max) throw new Error('Значение не должно быть больше ' . $max);
 	}
 
 	/**

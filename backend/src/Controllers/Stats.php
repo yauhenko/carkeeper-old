@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Framework\Cache\CacheInterface;
+use Framework\DB\Client;
 use Framework\Types\UUID;
 use Framework\Utils\Time;
 
@@ -66,6 +67,43 @@ class Stats extends ApiController {
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * @route /stats
+	 */
+	public function stats() {
+		$this->authAdmin();
+
+		/** @var Client $db */
+		$db = $this->di->db;
+
+		$stats = $db->query('SELECT
+			{&group} title,
+			SUM(clicks) clicks,
+			SUM(uniqs) uniqs,
+			SUM(installs) installs,
+			SUM(launches) launches,
+			SUM(cars) cars,
+			SUM(fines) fines,
+			SUM(cards) cards
+			FROM stats
+			WHERE TRUE
+			' . ($this->params->source ? ' AND source = {$source})' : '') . '
+			' . ($this->params->date_from ? ' AND date >= {$date_from})' : '') . '
+			' . ($this->params->date_till ? ' AND date <= {$date_till})' : '') . '
+			GROUP BY {&group}
+			ORDER BY {&sort} ' . ($this->params->sort ? 'ASC' : 'DESC') . '
+		', [
+			'group' => $this->params->group ?: 'date',
+			'sort' => $this->params->sort ?: true,
+			'source' => $this->params->source ?: '',
+			'date_from' => $this->params->date_from ?: '',
+			'date_till' => $this->params->date_till ?: '',
+		]);
+
+		return $stats;
+
 	}
 
 }

@@ -128,7 +128,7 @@ class Services {
 
 		    'mark' => 'Марка',
 		    'model' => 'Модель',
-		    'year' => 'Год выпруска',
+		    'year' => 'Год выпуска',
 		    'generation' => 'Поколение',
 		    'serie' => 'Серия',
 		    'modification' => 'Модификация',
@@ -144,6 +144,9 @@ class Services {
 		    'note.name' => 'Заголовок',
 		    'note.content' => 'Текст заметки',
 		    'note.image' => 'Изображение',
+
+		    'pass.vu' => 'Водительское удостоверение',
+		    'pass.sts' => 'Свидетельство о регистрации ТС',
 
 		    'maintenance.name' => 'Название',
 		    'maintenance.distance' => 'Пробег',

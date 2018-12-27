@@ -42,6 +42,7 @@ class Client {
 		}
         $this->driver->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
         $this->query('SET names utf8');
+        $this->query('SET sql_mode=""');
 	}
 
     /**
