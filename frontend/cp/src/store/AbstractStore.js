@@ -13,7 +13,7 @@ class AbstractStore {
 
 	@action fetchList = async () => {
 		try {
-			const res = await api(this.endpoint, { page: this.page, limit: 5 });
+			const res = await api(this.endpoint, { page: this.page, limit: 50 });
 			this.meta = res.meta;
 			this.data = res.data;
 			this.refs = res.refs;

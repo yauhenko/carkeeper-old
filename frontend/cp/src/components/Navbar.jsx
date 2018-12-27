@@ -19,13 +19,19 @@ class Navbar extends Component {
 					<li className="nav-item">
 						<NavLink to="/" className="nav-link" exact={true}>
 							<Icon icon="home"/>
-							Home
+							Дом
+						</NavLink>
+					</li>
+					<li className="nav-item">
+						<NavLink to="/stats" className="nav-link" exact={true}>
+							<Icon icon="bar-chart"/>
+							Статистика
 						</NavLink>
 					</li>
 					<li className="nav-item">
 						<NavLink to="/news" className="nav-link">
 							<Icon icon="list"/>
-							News
+							Новости
 						</NavLink>
 					</li>
 					<li className="nav-item">
@@ -37,7 +43,7 @@ class Navbar extends Component {
 					<li className="nav-item">
 						<NavLink to="/users" className="nav-link">
 							<Icon icon="users"/>
-							Users
+							Пользователи
 						</NavLink>
 					</li>
 					<li className="nav-item">

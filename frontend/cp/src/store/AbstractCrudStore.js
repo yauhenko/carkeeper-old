@@ -14,7 +14,7 @@ class AbstractCrudStore {
 
 	@action fetchList = async () => {
 		try {
-			const res = await api('admin/crud/' + this.table, { page: this.page, limit: 10, rules: this.rules });
+			const res = await api('admin/crud/' + this.table, { page: this.page, limit: 50, rules: this.rules });
 			this.meta = res.meta;
 			this.data = res.data;
 			this.refs = res.refs;

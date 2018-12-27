@@ -15,6 +15,7 @@ import Users from './pages/Users/Users';
 import News from './pages/News/News';
 import './styles.css';
 import Maintenance from "./pages/Maintenance/Maintenance";
+import Stats from "./pages/Stats/Stats";
 
 const stores = {
 	app: AppStore,
@@ -33,6 +34,7 @@ class App extends Component {
 							<Switch>
 								<Route exact path="/login" component={Login}/>
 								<Route render={(props) => <Private {...props}><Home {...props}/></Private>} exact path="/"/>
+								<Route render={(props) => <Private {...props}><Stats {...props}/></Private>} exact path="/stats"/>
 								<Route render={(props) => <Private {...props}><Users {...props}/></Private>} exact path="/users"/>
 								<Route render={(props) => <Private {...props}><News {...props}/></Private>} exact path="/news"/>
 								<Route render={(props) => <Private {...props}><Maintenance {...props}/></Private>} exact path="/maintenance"/>
