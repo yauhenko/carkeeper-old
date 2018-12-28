@@ -1,0 +1,30 @@
+.sidebar {
+    height: 100vh;
+    background: url("../images/sidebar_bg.jpg") no-repeat center;
+    background-size: cover;
+    margin-top: -54px;
+    box-shadow: 0 0 10px #5f636b;
+}
+
+.sidebar__logo {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.sidebar__menu {
+    list-style-type: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.sidebar__menu_li a {
+    color: #fff;
+    display: block;
+    padding-bottom: 10px;
+}
+
+.sidebar__menu_li {
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    margin-bottom: 10px;
+    margin-right: -20px;
+}

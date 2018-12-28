@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, Vibration, RefreshControl} from 'react-native';
+import {Text, View, StyleSheet, Image, Vibration, RefreshControl, Dimensions} from 'react-native';
 import {observer} from 'mobx-react';
 import {Container, Button, Content, Icon, Header, Left, Right, Body, Title, CheckBox, Tab, Tabs, TabHeading} from 'native-base';
 import styles from "../../styles"
@@ -84,24 +84,20 @@ export default class Card extends React.Component {
           <Tab style={{backgroundColor: "#d5dae4"}} heading={<TabHeading style={componentStyle.tabHeading}><Text style={componentStyle.tabText}>О карте</Text></TabHeading>}>
             <Content contentContainerStyle={styles.content}>
               <View style={styles.block}>
-                <Image resizeMode={'contain'} style={componentStyle.image} source={require("../../assets/images/autoCard.jpg")}/>
-              </View>
-
-              <View style={styles.block}>
-                <Text style={styles.blockHeading}>Автокарта от МТБанка</Text>
-                <Text style={[styles.p, {marginTop: 15}]}>Уникальный банковский продукт, не имеющий аналогов в Беларуси. Она создана специально для автовладельцев и членов их семей. Теперь любая поездка, будь то дальнее путешествие или дорога на работу, станет приятнее, ведь с каждой обязательной траты (топливо, запчасти, замена шин, автомойка и др.) при помощи Автокарты от МТБанка вам будет возвращаться кэшбэк (возврат деньгами) до 10%. Также владельцы Автокарты получат 1% или 0,5% кэшбэк за любые покупки как в РБ, так и за границей.</Text>
-              </View>
-
-              <View style={styles.block}>
+                <Text style={styles.blockHeading}>АвтоКарта</Text>
                 <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк от 3 до 4,5% на АЗС по всему миру</Text></View>
                 <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк до 10% в сети автопартнеров</Text></View>
-                <View style={[componentStyle.topItem, {marginBottom: 5}]}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
+                <View style={componentStyle.topItem}><Icon style={componentStyle.icon} name="radio-button-on"/><Text style={componentStyle.topText}>Кэшбэк до 1% за любые покупки</Text></View>
               </View>
 
               <View style={styles.block}>
                 <Button onPress={()=>{this.refs.tabs.goToPage(2)}} full style={styles.primaryButton}>
                   <Text style={styles.primaryButtonText}>ОФОРМИТЬ ЗАЯВКУ</Text>
                 </Button>
+              </View>
+
+              <View style={styles.block}>
+                <Image resizeMode='contain' style={componentStyle.image} source={require("../../assets/images/autocard_new.png")}/>
               </View>
             </Content>
           </Tab>
@@ -214,7 +210,8 @@ const componentStyle = StyleSheet.create({
   topItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 10
+    marginBottom: 10,
+    marginTop: 10
   },
   topText: {
     fontWeight: "bold",
@@ -225,10 +222,10 @@ const componentStyle = StyleSheet.create({
     fontSize: 16
   },
   image: {
-    width: "100%",
-    height: 200,
-    marginTop: 25,
-    marginBottom: 10
+    width: Dimensions.get("window").width - 40,
+    flexShrink: 1,
+    borderRadius: 5,
+    height: (Dimensions.get("window").width - 40) / 1.5
   },
   tabText: {
     color: "#a9b3c7"

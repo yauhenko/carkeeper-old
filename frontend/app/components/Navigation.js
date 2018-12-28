@@ -22,8 +22,9 @@ export default class Navigation extends Component {
     //   path: "News",
     //   action: null
     // },
+
     {
-      title: "Автокарта",
+      title: "АвтоКарта",
       icon: "card",
       path: "Card",
       action: null,
