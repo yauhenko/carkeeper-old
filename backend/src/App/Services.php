@@ -150,7 +150,9 @@ class Services {
 
 		    'maintenance.name' => 'Название',
 		    'maintenance.distance' => 'Пробег',
-		    'maintenance.period' => 'Периодичность'
+		    'maintenance.period' => 'Периодичность',
+
+		    'code' => 'Код'
 
 	    ];
     }
