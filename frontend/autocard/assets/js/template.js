@@ -25,12 +25,12 @@ var formData = {},
         email: e.target.email.value || "",
       };
 
-      form.style.display = "none";
-      formCode.style.display = "block";
-
-      sendCode(formData.tel).then((data)=>{
-        console.log(data);
-      }).catch(alert);
+      sendCode(formData.tel).then(()=>{
+        form.style.display = "none";
+        formCode.style.display = "block";
+      }).catch(function (err) {
+        alert(err.message)
+      });
     };
   }
 
@@ -41,11 +41,14 @@ var formData = {},
       submitForm(formData).then(function () {
         localStorage.setItem("success", "1");
         window.location.href = "app.html"
-      }).catch(alert)
+      }).catch((e)=>{
+        console.log(e.message);
+        alert(e.message);
+      })
     }
   }
 
-  if (more) {
+  if(more) {
     more.onclick = function () {
       detail.style.display = "block";
       more.style.display = "none";
