@@ -13,12 +13,18 @@ class User extends Entity {
 	public $id;
 
 	/**
+	 * @validate uuid
+	 * @var string|null
+	 */
+	public $uuid;
+
+	/**
 	 * @var bool
 	 */
 	public $active = true;
 
 	/**
-	 * @validate required; match: /^[0-9]{11,13}$/
+	 * @validate match: /^[0-9]{11,13}$/
 	 * @var int
 	 */
 	public $tel;
@@ -35,7 +41,6 @@ class User extends Entity {
 	public $username = null;
 
 	/**
-	 * @validate required
 	 * @var string
 	 */
 	public $password;

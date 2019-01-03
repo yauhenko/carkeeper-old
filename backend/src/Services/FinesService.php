@@ -44,14 +44,14 @@ class FinesService {
 			]);
 
 			$data = (string)$res->getBody();
-			print $res->getStatusCode();
-			print $data;
+			//print $res->getStatusCode();
+			//print $data;
 			//$data = '"\u003ctable class=\"ii\" cellspacing=\"0\" cellpadding=\"2\" border=\"1\"\u003e\r\n  \u003ctr style=\"background-color: silver\"\u003e\r\n    \u003ctd\u003eФамилия, Имя, Отчество\u003c/td\u003e\r\n    \u003ctd\u003eСерия\u003c/td\u003e\r\n    \u003ctd\u003eСвид. о регистрации\u003c/td\u003e\r\n    \u003ctd\u003eДата и время правонарушения\u003c/td\u003e\r\n    \u003ctd\u003eРег. № правонарушения\u003c/td\u003e\r\n  \u003c/tr\u003e\r\n  \u003ctr\u003e\r\n    \u003ctd\u003eМОНИЧ АЛЕКСАНДР ИГОРЕВИЧ\u003c/td\u003e\r\n    \u003ctd\u003eOBA\u003c/td\u003e\r\n    \u003ctd\u003e177094\u003c/td\u003e\r\n    \u003ctd\u003e30.09.2018 8:51:00\u003c/td\u003e\r\n    \u003ctd\u003e18145999022\u003c/td\u003e\r\n  \u003c/tr\u003e\r\n  \u003ctr\u003e\r\n    \u003ctd\u003eМОНИЧ АЛЕКСАНДР ИГОРЕВИЧ\u003c/td\u003e\r\n    \u003ctd\u003eOBA\u003c/td\u003e\r\n    \u003ctd\u003e177094\u003c/td\u003e\r\n    \u003ctd\u003e23.09.2018 13:21:00\u003c/td\u003e\r\n    \u003ctd\u003e18146906169\u003c/td\u003e\r\n  \u003c/tr\u003e\r\n\u003c/table\u003e\r\n\u003cdiv\u003e\u003cb\u003eДата и время последнего обновления данных 29.10.2018 10:01:43.\u003c/b\u003e\u003c/div\u003e\r\n\u003cp\u003eШтраф за \r\nправонарушение можно оплатить в любом банке, подключенном к системе \"Расчет\" (ЕРИП). \r\nОплату можно совершить в платежно-справочном терминале, интернет-банкинге, \r\nбанкомате, кассе банка и других пунктах банковского обслуживания. Более подробная информация о перечне пунктов \r\nбанковского обслуживания, задействованных в системе \"Расчет\" (ЕРИП), размещена \r\nна сайте\r\n\u003ca target=\"_blank\" style=\"color: blue\" href=\"http://raschet.by/\"\u003e\r\nwww.raschet.by\u003c/a\u003e в разделе \"Плательщик\". В случае возникновения вопросов по \r\nсовершению оплаты обращайтесь к сотрудникам банка.\u003c/p\u003e\r\n\u003cp\u003eДля оплаты правонарушения Вам, либо сотруднику банка необходимо:\u003c/p\u003e\r\n\u003col\u003e\r\n  \u003cli\u003eВ системе \"Расчет\" (ЕРИП) последовательно перейти в разделы \"МВД\" - \"ГАИ - \r\nфотофиксация\", после чего выбрать услугу \"Скоростной режим\" (номер услуги 381141);\u003c/li\u003e\r\n  \u003cli\u003eВвести регистрационный номер правонарушения;\u003c/li\u003e\r\n  \u003cli\u003eСверить данные о правонарушении (фамилию, имя, отчество владельца транспортного средства \r\nи сумму штрафа);\u003c/li\u003e\r\n  \u003cli\u003eСовершить оплату.\u003c/li\u003e\r\n\u003c/ol\u003e"';
 
 			$data = json_decode($data);
 
 			if(!$data) {
-				echo 'Error!';
+				//echo 'Error!';
 				return;
 			}
 
@@ -68,7 +68,7 @@ class FinesService {
 			$new = 0;
 			$sum = 0;
 			foreach ($ms as $m) {
-				print_r($m);
+				//print_r($m);
 				$fines = new Fines;
 				if(!$fine = $fines->findOneBy('regid', $m[5], true)) {
 					$d = new \DateTime($m[4]);
@@ -110,7 +110,7 @@ class FinesService {
 				Task::create(Push::class, [
 					'user' => $car->user,
 					'title' => $new ? 'Новый штраф!' : 'Любите быструю езду?',
-					'message' => 'Извольте оплатить ' . $cnt . ' ' . Tools::plural($cnt, 'штраф,,а,ов') . ($sum ? ' на ' . $sum . ' руб' : ''),
+					'body' => 'Извольте оплатить ' . $cnt . ' ' . Tools::plural($cnt, 'штраф,,а,ов') . ($sum ? ' на ' . $sum . ' руб' : ''),
 				])->start();
 
 			}

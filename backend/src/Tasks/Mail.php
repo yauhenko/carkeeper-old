@@ -18,6 +18,7 @@ class Mail extends Handler {
 	}
 
 	public function send(array $data) {
+		if(!$data['to']) return 'No E-mail';
 		$di = DI::getInstance();
 		/** @var object $cfg */
 		$cfg = $di->config;

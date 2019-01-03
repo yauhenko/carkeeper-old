@@ -4,7 +4,6 @@ namespace Controllers;
 
 use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
-use Framework\Types\UUID;
 use Framework\Utils\Time;
 
 /**

@@ -44,8 +44,8 @@
 	"sms_assistent": {
 		"user": "RedStrim",
 		"password": "8BG8f4ip",
-		"sender": "Proverka",
-		"validity_period": 1
+		"sender": "RedStream",
+		"validity_period": 2
 	},
 	"static_regexp": "/\\.(html|jpe?g|png|ico|js|css|ttf|woff2?)(\\?.+)?$/i",
 	"cdn": "https://cdn.carkeeper.pro",

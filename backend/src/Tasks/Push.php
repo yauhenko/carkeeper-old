@@ -35,7 +35,7 @@ class Push extends Handler {
 			return 'No Auth';
 		}
 
-		$res = FCM::send($data['fcm'], $data['title'], $data['body'], (array)$data['extra'] ?: null);
+		$res = FCM::send($data['fcm'], $data['title'], $data['body'] ?: $data['message'], (array)$data['extra'] ?: null);
 
 		if($res && $res['failure']) {
 
