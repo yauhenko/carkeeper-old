@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>АвтоКарта / Проверка штрафов</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./assets/css/template.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,700&amp;subset=cyrillic" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <header class="header">
+                    <img width="125" src="./assets/images/logo.png" alt="Лого">
+                    <span class="logo_description">Органайзер водителя</span>
+                </header>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div style="display: none" id="card_success" class="row">
+                <div class="col">
+                    <div class="card_success">
+                        <p>Ваша заявка на АвтоКарту получена. Ожидайте звонок оператора.</p>
+                        <p>Также рекомендуем проверить наличие штрафов с камер фотофиксации Беларуси и их сумму. Пароль отправлен Вам в SMS.</p>
+                        <p>Помните, что неоплаченный штраф может стать помехой даже при выезде за границу, поэтому своевременно оплачивайте штрафы!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="block with_tabs">
+                        <div class="block_tabs">
+                            <div class="block_tab">АвтоКарта</div>
+                            <a href="./app.html" class="block_tab block_tab-right">
+                                <span>Проверка штрафов (РБ)</span>
+                            </a>
+                        </div>
+                        <div class="block_ text">
+                            <div class="row">
+                                <div class="col-12 col-md-5 mb-4 mb-md-0">
+                                    <h2 class="card_h2">АвтоКарта для водителя</h2>
+                                    <ul class="card_list">
+                                        <li>Экономия от 3 до 4.5% на АЗС по всему миру <span>А-100 и другие заправки</span></li>
+                                        <li>Экономия от 2 до 8,5% на автозапчасти <span>Шате-М, ARMTEK и другие партнеры</span></li>
+                                        <li>Экономия от 3 до 10% на автомойки <span>Эспрессо и другие партнеры</span></li>
+                                    </ul>
+                                    <ul style="display: none" id="card_list-detail" class="card_list card_list-detail">
+                                        <li>Кэшбэк от 2,5 до 10% на СТО <span>Шате-М и другие партнеры</span></li>
+                                        <li>Кэшбэк от 4 до 10% на страхование <span>Таск, Купала</span></li>
+                                        <li>Кэшбэк 2% на автошколу <span>Автошкола Минской РОС ДОСААФ</span></li>
+                                        <li>Кэшбэк от 2 до 3% на такси <span>Iqtaxi, Шатле, Новое такси</span></li>
+                                        <li>Кэшбэк 0,5% на супермаркеты <span>Крупные сетевые магазины</span></li>
+                                        <li>Кэшбэк 1% на любые товары и услуги</li>
+                                        <li>Лимит суммы 200 руб. <span>за 1 мес.</span></li>
+                                        <li>Обслуживание карты 19,9 руб. в год<span>Срок карты 3 года</span></li>
+                                    </ul>
+                                    <br>
+                                    <span id="list_more_btn" class="list_more">Подробнее</span>
+                                    <!--<p>* Кэшбэк - это возврат денежных средств на карту.</p>-->
+
+                                    <img id="card_image" class="card_image" src="./assets/images/autocard.png" alt="">
+                                </div>
+                                <div class="col-1 d-md-block d-none"></div>
+                                <div class="col">
+                                    <h2 class="card_h2">Заказать АвтоКарту</h2>
+                                    <form id="form">
+                                        <div class="form-group">
+                                            <label>Фамилия <span class="required">*</span></label>
+                                            <input required name="lastname" placeholder="Иванов" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Имя <span class="required">*</span></label>
+                                            <input required name="firstname" placeholder="Иван" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Отчество <span class="required">*</span></label>
+                                            <input required name="middlename" placeholder="Иванович" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Телефон <span class="required">*</span></label>
+                                            <input required name="tel" placeholder="375 29 0000000" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>E-mail</label>
+                                            <input name="email" placeholder="ivan1990@gmail.com" type="email" class="form-control">
+                                        </div>
+                                        <div class="form-check">
+                                            <input checked required type="checkbox" class="form-check-input" id="check">
+                                            <label class="form-check-label" for="check">
+                                                <span class="label_text">Принимаю условия <a target="_blank" href="https://carkeeper.pro/terms">Пользовательского соглашения</a> и даю свое согласие на обработку персональной информации на условиях, определенных <a href="https://carkeeper.pro/privacy" target="_blank">Политикой конфиденциальности</a></span>
+                                            </label>
+                                        </div>
+                                        <div class="form-group text-center pt-4">
+                                            <button class="btn btn-success card_button" type="submit">Отправить заявку</button>
+                                        </div>
+                                    </form>
+
+                                    <form style="display: none" id="form_code">
+                                        <div class="form-group">
+                                            <p class="text-success">Мы отправили SMS с кодом подтверждения на Ваш телефон, введите его в поле ниже и нажмите кнопку &laquo;Завершить&raquo;</p>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label>Код из SMS <span class="required">*</span></label>
+                                                <input required name="code" placeholder="000000" type="number" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group text-center pt-4">
+                                            <button class="btn btn-success card_button" type="submit">Завершить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="container">
+        <footer class="footer">
+            <div class="row">
+                <div class="col">
+                    <span>&copy; 2019 - ООО &laquo;РэдСтрим&raquo;. Все права защищены.</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./assets/js/template.js"></script>
+
+    <script src="https://cdn.carkeeper.pro/js/sdk.js"></script>
+    <script>carkeeper.init({ source: 'land_card2' })</script>
+</body>
+</html>
