@@ -154,7 +154,7 @@ class Autocard extends ApiController {
 
 		Task::create(SMS::class, [
 			'tel' => $user->tel,
-			'text' => "Проверка штрафов: https://d.carkeeper.pro\nВаш пароль: {$password}"
+			'text' => "Проверка штрафов:\nhttps://d.carkeeper.pro\nВаш пароль: {$password}"
 		])->start();
 
 		return [
