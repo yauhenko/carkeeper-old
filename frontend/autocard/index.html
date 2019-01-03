@@ -36,13 +36,13 @@
 
             <div class="row">
                 <div class="col">
+                    <div style="display: none;" id="block_tabs" class="block_tabs">
+                        <div class="block_tab">АвтоКарта</div>
+                        <a href="./app.html" class="block_tab block_tab-right">
+                            <span>Проверка штрафов (РБ)</span>
+                        </a>
+                    </div>
                     <div class="block with_tabs">
-                        <div class="block_tabs">
-                            <div class="block_tab">АвтоКарта</div>
-                            <a href="./app.html" class="block_tab block_tab-right">
-                                <span>Проверка штрафов (РБ)</span>
-                            </a>
-                        </div>
                         <div class="block_ text">
                             <div class="row">
                                 <div class="col-12 col-md-5 mb-4 mb-md-0">
@@ -59,7 +59,6 @@
                                         <li>Кэшбэк от 2 до 3% на такси <span>Iqtaxi, Шатле, Новое такси</span></li>
                                         <li>Кэшбэк 0,5% на супермаркеты <span>Крупные сетевые магазины</span></li>
                                         <li>Кэшбэк 1% на любые товары и услуги</li>
-                                        <li>Лимит суммы 200 руб. <span>за 1 мес.</span></li>
                                         <li>Обслуживание карты 19,9 руб. в год<span>Срок карты 3 года</span></li>
                                     </ul>
                                     <br>
@@ -136,9 +135,8 @@
         </footer>
     </div>
 
-    <script src="./assets/js/template.js"></script>
 
-    <script src="https://cdn.carkeeper.pro/js/sdk.js"></script>
-    <script>carkeeper.init({ source: 'land_card2' })</script>
+    <script defer src="https://cdn.carkeeper.pro/js/sdk.js"></script>
+    <script defer src="./assets/js/template.js"></script>
 </body>
 </html>

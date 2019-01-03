@@ -1,3 +1,4 @@
+
 var formData = {},
   form = document.getElementById("form"),
   formCode = document.getElementById("form_code"),
@@ -9,8 +10,15 @@ var formData = {},
 
 
 (function () {
+  carkeeper.init({ source: 'land_card2' });
+
+  if(!carkeeper.param("card")) {
+    var a = document.getElementById("block_tabs");
+    if(a) a.style.removeProperty("display")
+  }
+
   if(localStorage.success) {
-    message.style.display = "block"
+    message.style.display = "block";
   }
 
   if(form) {
@@ -42,7 +50,6 @@ var formData = {},
         localStorage.setItem("success", "1");
         window.location.href = "app.html"
       }).catch((e)=>{
-        console.log(e.message);
         alert(e.message);
       })
     }
