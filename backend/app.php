@@ -3,7 +3,7 @@
 use App\Services;
 use Framework\MVC\ApiApplication;
 
-date_default_timezone_set('Europe/Minsk');
+//date_default_timezone_set('Europe/Minsk');
 
 error_reporting(E_ALL ^ E_NOTICE);
 

@@ -59,7 +59,7 @@ class Services {
 
             $cfg = $di->config->db;
             $db = new Client($cfg->host, $cfg->user, $cfg->pass, $cfg->name);
-            $db->query('SET time_zone="+03:00"');
+            //$db->query('SET time_zone="+03:00"');
             return $db;
 
         })->set('twig', function (DI $di) {
