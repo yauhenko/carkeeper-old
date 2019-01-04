@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import {observable, action} from 'mobx';
 import Loader from '../../components/Loader';
 import api from '../../utils/api';
+import Icon from "../../components/Icon";
 
 @observer
 class Stats extends Component {
@@ -17,6 +18,7 @@ class Stats extends Component {
   @observable order = true;
 
   @observable stats = [];
+  @observable sources = [];
 
   componentDidMount() {
     this.fetch();
@@ -25,7 +27,20 @@ class Stats extends Component {
   @action fetch = async () => {
     this.loading = true;
 
+    // this.sort = this.group;
+    // this.order = this.sort !== "date";
+
+    this.order = false;
+
+    if(this.group === "date") {
+      this.sort = "date";
+    } else {
+      this.sort = "clicks";
+    }
+
     try {
+      this.sources = await api("stats/sources", {});
+
       this.stats = await api("stats", {
         group: this.group,
         source: this.source,
@@ -35,26 +50,35 @@ class Stats extends Component {
         order: this.order
       });
     } catch (e) {
-      console.error(e);
+      alert(`Ошибка: ${e.message}`)
     }
 
     this.loading = false;
   };
 
   render() {
-
     return (
       <Fragment>
         <div className="pt-3 pb-3">
           <div className="row">
             <div className="col-2">
-              <input onChange={(e) => {this.date_from = e.target.value; this.fetch()}} value={this.date_from} className="form-control" type="date"/>
+              <input onChange={(e) => {this.date_from = e.target.value; this.fetch()}} value={this.date_from || ""} className="form-control" type="date"/>
             </div>
             <div className="col-2">
-              <input onChange={(e) => {this.date_till = e.target.value; this.fetch()}} value={this.date_till} className="form-control" type="date"/>
+              <input onChange={(e) => {this.date_till = e.target.value; this.fetch()}} value={this.date_till || ""} className="form-control" type="date"/>
             </div>
             <div className="col-2">
-              <input onChange={(e) => {this.source = e.target.value; this.fetch()}} value={this.source} className="form-control" type="text"/>
+              <select onChange={(e) => {this.source = e.target.value; this.fetch()}} className="form-control">
+                <option value="">Источник</option>
+                {this.sources.map((item)=>(
+                  <option key={item} value={item}>{item}</option>
+                ))}
+              </select>
+            </div>
+            <div className="col-6 text-right">
+              <button className="btn" onClick={this.fetch}>
+                <Icon icon="refresh"/>
+              </button>
             </div>
           </div>
         </div>
@@ -98,7 +122,7 @@ class Stats extends Component {
                     ))
                     :
                     <tr>
-                      <td colSpan={10}><p>Лавэ нанэ, сиси кар, саси палэ.</p></td>
+                      <td colSpan={10}><p>Лавэ нанэ, саси кар, саси палэ.</p></td>
                     </tr>
                 }
                 </tbody>
