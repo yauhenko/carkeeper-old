@@ -30,6 +30,7 @@ class Stats extends ApiController {
 			$ci->set("ip:{$ip}", time(), Time::DAY);
 		}
 
+		$this->params->source = $this->params->source ?: 'organic';
 		$this->params->date = Time::date();
 
 		$ci->set("pixel:{$ip}", (array)$this->params, Time::DAY);
@@ -54,7 +55,10 @@ class Stats extends ApiController {
 		$ip = $this->req->getClientIp();
 
 		if(!$pixel = (array)json_decode(base64_decode($this->params->pixel)))
-			$pixel = $ci->get("pixel:{$ip}");
+			$pixel = $ci->get("pixel:{$ip}") ?: [
+				'date' => Time::date(),
+				'source' => 'organic'
+			];
 
 		if($pixel) {
 			\App\Stats::roll((array)$pixel, [
