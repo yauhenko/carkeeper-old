@@ -199,11 +199,11 @@ export default class Journal extends React.Component {
               {records && records.length
                 ?
                 <View style={styles.block}>
-                  {records.map((record, id)=>{
+                  {records.map((record, id) => {
                     return (
                       <TouchableOpacity onPress={()=>{this.action(record)}} key={id}>
                         <View style={[componentStyle.item, records.length === id + 1 ? {borderBottomWidth: 0} : {}]}>
-                          <View>
+                          <View style={componentStyle.itemLeft}>
                             <Text>{moment(record.date).format("DD.MM.YYYY")}</Text>
                             {record.odo ? <Text style={[styles.textNote, {marginTop: 5}]}>{number_format(record.odo, 0, "", " ")} {car.odo_unit === "m" ? "миль" : "км"}</Text> : null}
                           </View>
@@ -281,6 +281,9 @@ const componentStyle = StyleSheet.create({
     borderColor: "#d5dae4",
     paddingTop: 10,
     paddingBottom: 10
+  },
+  itemLeft: {
+    width: 85
   },
   itemBody: {
     flex: 1,
