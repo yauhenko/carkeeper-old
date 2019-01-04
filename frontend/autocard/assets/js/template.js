@@ -1,4 +1,3 @@
-
 var formData = {},
   form = document.getElementById("form"),
   formCode = document.getElementById("form_code"),
@@ -6,8 +5,6 @@ var formData = {},
   detail = document.getElementById("card_list-detail"),
   image = document.getElementById("card_image"),
   message = document.getElementById("card_success");
-
-
 
 (function () {
   carkeeper.init({ source: 'land_card2' });
@@ -37,7 +34,7 @@ var formData = {},
         form.style.display = "none";
         formCode.style.display = "block";
       }).catch(function (err) {
-        alert(err.message)
+        notification(err.message)
       });
     };
   }
@@ -50,7 +47,7 @@ var formData = {},
         localStorage.setItem("success", "1");
         window.location.href = "app.html"
       }).catch((e)=>{
-        alert(e.message);
+        notification(e.message);
       })
     }
   }
@@ -87,10 +84,17 @@ function api(method, args = {}, silent = false) {
     }).then(function (data) {
       if(data.hasOwnProperty('error')) processReject(data.error);
       else if(data.hasOwnProperty('result')) resolve(data.result);
-      else processReject({ message: 'Invalid Server Response', code: 2 })
+      else processReject({ message: 'Ошибка ответа от сервера', code: 2 })
     }).catch(function (error) {
-      processReject({ message: 'Network Error', code: 1, raw: error});
+      processReject({ message: 'Ошибка соединения', code: 1, raw: error});
     });
   });
 }
 
+
+var notification = function (message) {
+  new Toast({
+    message: message || "Ошибка",
+    type: "danger"
+  })
+};
