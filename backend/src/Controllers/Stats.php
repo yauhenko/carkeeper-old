@@ -92,7 +92,7 @@ class Stats extends ApiController {
 			' . ($this->params->date_from ? ' AND date >= {$date_from}' : '') . '
 			' . ($this->params->date_till ? ' AND date <= {$date_till}' : '') . '
 			GROUP BY {&group}
-			ORDER BY {&sort} ' . ($this->params->sort ? 'ASC' : 'DESC') . '
+			ORDER BY {&sort} ' . ($this->params->order ? 'ASC' : 'DESC') . '
 		', [
 			'group' => $this->params->group ?: 'date',
 			'sort' => $this->params->sort ?: true,
@@ -103,6 +103,16 @@ class Stats extends ApiController {
 
 		return $stats;
 
+	}
+
+	/**
+	 * @route /stats/sources
+	 */
+	public function sources() {
+		$this->authAdmin();
+		/** @var Client $db */
+		$db = $this->di->db;
+		return $db->enum('SELECT DISTINCT source FROM stats WHERE source != "" ORDER BY source') ?: [];
 	}
 
 }

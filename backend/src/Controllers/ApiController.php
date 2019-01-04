@@ -73,7 +73,7 @@ abstract class ApiController extends AbstractController {
 		if(!$this->user)
 			throw new \Exception('Invalid token', 51);
 
-		$this->admin = in_array($this->user->id, [1, 3]);
+		$this->admin = in_array($this->user->id, [1, 2, 3]);
 
 	}
 
