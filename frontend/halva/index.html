@@ -30,12 +30,17 @@
                         <div class="block_ text">
                             <div class="row">
                                 <div class="col-12 col-md-5 mb-4 mb-md-0">
-                                    <h2 class="card_h2">Халва - карта рассрочки <span style="font-weight: bold">№1</span></h2>
+                                    <h2 class="card_h2 top_h2">Халва - карта рассрочки <span style="font-weight: bold">№1</span></h2>
+
+                                    <div class="scroll_btn_wrap d-md-none d-block">
+                                        <button type="button" onclick="scrollToElement('.order_title')" class="btn btn-warning btn-block card_button mt-3 mb-3">Оформить карту</button>
+                                    </div>
+
                                     <p>Халва - это возможность сделать покупки или воспользоваться услугами партнеров банка прямо сейчас, а оплатить их позже и без процентов.</p>
                                     <hr>
                                     <ul class="card_list">
-                                        <li>Сумма рассрочки от <b>50 до 6 000</b> руб.</li>
-                                        <li>Более <b>20 300</b> партнеров <span>21 век, Евроопт, 5 элемент, ZIKO и т.д.</span></li>
+                                        <li>Сумма рассрочки от <b>50 до 6&nbsp;000</b> руб.</li>
+                                        <li>Более <b>20&nbsp;300</b> партнеров <span>21&nbsp;век, Евроопт, 5&nbsp;элемент, ZIKO и т.д.</span></li>
                                         <li><b>Без комиссий и процентов</b> за пользование рассрочкой в течение всего срока</li>
                                     </ul>
                                     <ul style="display: none" id="card_list-detail" class="card_list card_list-detail">
@@ -56,7 +61,7 @@
                                 </div>
                                 <div class="col-1 d-md-block d-none"></div>
                                 <div class="col">
-                                    <h2 class="card_h2">Заказать карту Халва</h2>
+                                    <h2 class="card_h2 order_title">Заказать карту Халва</h2>
                                     <form id="form">
                                         <div class="form-group">
                                             <label>Фамилия <span class="required">*</span></label>
@@ -120,16 +125,10 @@
         </div>
     </main>
 
-
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.carkeeper.pro/js/sdk.js"></script>
     <script  src="./assets/js/toast.min.js"></script>
     <script src="./assets/js/template.js"></script>
-
-    <!-- BEGIN JIVOSITE CODE {literal} -->
-    <script type='text/javascript'>
-      (function(){ var widget_id = 'Ww7BKeaQgU';var d=document;var w=window;function l(){var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;s.src = '//code.jivosite.com/script/widget/'+widget_id; var ss = document.getElementsByTagName('script')[0]; ss.parentNode.insertBefore(s, ss);}if(d.readyState=='complete'){l();}else{if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-    </script>
-    <!-- {/literal} END JIVOSITE CODE -->
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >

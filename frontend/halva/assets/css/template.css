@@ -205,6 +205,14 @@ span.required {
         background-image: none;
         background-color: #ffe077;
     }
+
+    .top_h2 {
+        margin-bottom: 0;
+    }
+
+    .card_button {
+        width: 100%;
+    }
 }
 
 
@@ -223,4 +231,5 @@ span.required {
     .card_h2 {
         font-size: 26px;
     }
+
 }

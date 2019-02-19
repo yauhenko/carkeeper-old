@@ -7,6 +7,8 @@ var formData = {},
   message = document.getElementById("card_success");
 
 (function () {
+  console.log(jQuery);
+
   carkeeper.init({ source: 'land_card3' });
 
   if(!carkeeper.param("card")) {
@@ -61,6 +63,10 @@ var formData = {},
     };
   }
 })();
+
+var scrollToElement = function (el) {
+  jQuery('html, body').animate({ scrollTop: jQuery(el).offset().top }, 500);
+}
 
 var sendCode = function (tel) {
   return api("account/tel", {tel: tel});
