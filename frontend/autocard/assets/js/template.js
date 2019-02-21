@@ -56,7 +56,7 @@ var formData = {},
     more.onclick = function () {
       detail.style.display = "block";
       more.style.display = "none";
-      image.style.display = "none";
+      // image.style.display = "none";
     };
   }
 })();
