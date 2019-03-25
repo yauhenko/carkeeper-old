@@ -203,7 +203,7 @@ class Autocard extends ApiController {
 		elseif(preg_match('/^38/', $data['tel'])) $data['geo'] = 'UA';
 
 		$auth = new Auth;
-		$auth->verifyTel($data['tel'],  $this->params->code);
+		$auth->verifyTel($this->params->tel,  $this->params->code);
 
 		/** @var Client $db */
 		$db = $this->di->db;

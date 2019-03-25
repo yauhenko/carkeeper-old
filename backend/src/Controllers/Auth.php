@@ -455,7 +455,7 @@ class Auth extends ApiController {
 
 		Task::create([SMS::class], [
 			'tel' => $this->params->tel,
-			'text' => "Код подтверждения: {$code}"
+			'text' => "{$code} - код подтверждения"
 		])->start();
 
 		return [
