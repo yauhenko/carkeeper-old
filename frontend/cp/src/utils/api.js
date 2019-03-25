@@ -4,8 +4,8 @@ export default function api(method, args = {}, silent = false) {
 			if(!silent) reject(error);
 			else resolve(false);
 		}
-		let endpoint = window.location.host.match(/^(localhost|192)/) ? 'http://192.168.1.223:9090/' : 'https://api.carkeeper.pro/';
-		// let endpoint = 'https://api.carkeeper.pro/';
+		// let endpoint = window.location.host.match(/^(localhost|192)/) ? 'http://192.168.1.223:9090/' : 'https://api.carkeeper.pro/';
+		let endpoint = 'https://api.carkeeper.pro/';
 		args.token = localStorage.token;
 		fetch(endpoint + method, {
 			method: 'POST',

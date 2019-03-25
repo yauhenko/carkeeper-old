@@ -166,39 +166,45 @@ export default class Car extends React.Component {
               </View>
             </View>
 
-            <View style={styles.block}>
-              {notifications.map((item, key) => {
-                let route = null;
-                switch (item.type) {
-                  case "fines" : route = "Fines";
-                    break;
-                  case "checkup" : route = "Reminders";
-                    break;
-                  case "insurance" : route = "Reminders";
-                    break;
-                  case "maintenances" : route = "Maintenance";
-                    break;
-                  case "maintenance" : route = "Journal";
-                    break;
-                }
+            {notifications.length
+              ?
+              <View style={styles.block}>
+                {notifications.map((item, key) => {
+                  let route = null;
+                  switch (item.type) {
+                    case "fines" : route = "Fines";
+                      break;
+                    case "checkup" : route = "Reminders";
+                      break;
+                    case "insurance" : route = "Reminders";
+                      break;
+                    case "maintenances" : route = "Maintenance";
+                      break;
+                    case "maintenance" : route = "Journal";
+                      break;
+                  }
 
-                return(
-                  <TouchableOpacity key={key} onPress={()=>{Boolean(route) && this.props.navigation.navigate(route)}}>
-                    <View style={[componentStyle.listItem, notifications.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
-                      <View style={componentStyle.listIcon}>
-                        {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
-                        {item.level === "danger" && <Icon style={{color: "#a23737"}} name="alert" />}
-                        {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
+                  return(
+                    <TouchableOpacity key={key} onPress={()=>{Boolean(route) && this.props.navigation.navigate(route)}}>
+                      <View style={[componentStyle.listItem, notifications.length === key + 1 ? {borderBottomWidth: 0} : {}]}>
+                        <View style={componentStyle.listIcon}>
+                          {item.level === "warning" && <Icon style={{color: "#ffb157"}} name="warning" />}
+                          {item.level === "danger" && <Icon style={{color: "#a23737"}} name="alert" />}
+                          {item.level === "info" && <Icon style={{color: "#76b6ff"}} name="information-circle" />}
+                        </View>
+                        <Text style={componentStyle.listText}>{item.text}</Text>
+                        <View>
+                          <Icon style={componentStyle.listArrow} name='arrow-forward'/>
+                        </View>
                       </View>
-                      <Text style={componentStyle.listText}>{item.text}</Text>
-                      <View>
-                        <Icon style={componentStyle.listArrow} name='arrow-forward'/>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                )
-              })}
-            </View>
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+              :
+              null
+            }
+
           </Content>
 
           <Footer><CarMenu navigation={this.props.navigation}/></Footer>

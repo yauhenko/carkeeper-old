@@ -1,9 +1,10 @@
 import React, {Component, Fragment} from 'react';
 import {observer} from 'mobx-react';
-import {observable, action} from 'mobx';
+import {observable, action, computed} from 'mobx';
 import Loader from '../../components/Loader';
 import api from '../../utils/api';
 import Icon from "../../components/Icon";
+import {number_format} from "../../utils/tools";
 
 @observer
 class Stats extends Component {
@@ -54,6 +55,12 @@ class Stats extends Component {
     }
 
     this.loading = false;
+  };
+
+  @action total = k => {
+    let tmp = 0;
+    for(let i of this.stats) {tmp += Number(i[k])}
+    return number_format(tmp);
   };
 
   render() {
@@ -108,7 +115,9 @@ class Stats extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.stats.length ? this.stats.map((item, key) => (
+                {this.stats.length ?
+                    <Fragment>
+                      {this.stats.map((item, key) => (
                         <tr key={key}>
                           <td>{item.title}</td>
                           <td className="text-right">{item.clicks}</td>
@@ -119,10 +128,22 @@ class Stats extends Component {
                           <td className="text-right">{item.fines}</td>
                           <td className="text-right">{item.cards}</td>
                         </tr>
-                    ))
+                      ))}
+
+                      <tr>
+                        <td><b>Итого на странице:</b></td>
+                        <td className="text-right"><b>{this.total("clicks")}</b></td>
+                        <td className="text-right"><b>{this.total("uniqs")}</b></td>
+                        <td className="text-right"><b>{this.total("installs")}</b></td>
+                        <td className="text-right"><b>{this.total("launches")}</b></td>
+                        <td className="text-right"><b>{this.total("cars")}</b></td>
+                        <td className="text-right"><b>{this.total("fines")}</b></td>
+                        <td className="text-right"><b>{this.total("cards")}</b></td>
+                      </tr>
+                    </Fragment>
                     :
                     <tr>
-                      <td colSpan={10}><p>Лавэ нанэ, саси кар, саси палэ.</p></td>
+                      <td colSpan={10}><p>Нет результатов.</p></td>
                     </tr>
                 }
                 </tbody>

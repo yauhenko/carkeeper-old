@@ -11,7 +11,7 @@ import {cdn} from "../modules/Url";
 export default class Navigation extends Component {
   routes = [
     {
-      title: "Гараж",
+      title: "ГАРАЖ",
       icon: "car",
       path: "Garage",
       action: null
@@ -24,18 +24,18 @@ export default class Navigation extends Component {
     // },
 
     {
-      title: "АвтоКарта",
+      title: "АВТОКАРТА",
       icon: "card",
       path: "Card",
       action: null,
       hidden: User.profile.user.geo !== "BY"
     },
-    {
-      title: "Обратная связь",
-      icon: "text",
-      path: "Support",
-      action: null
-    }
+    // {
+    //   title: "ОБРАТНАЯ СВЯЗЬ",
+    //   icon: "text",
+    //   path: "Support",
+    //   action: null
+    // }
   ];
 
   change = route => {

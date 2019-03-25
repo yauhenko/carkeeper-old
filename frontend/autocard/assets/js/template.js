@@ -1,3 +1,9 @@
+if(carkeeper.param("source") === "avtokartazayavka") {
+  location.href = "https://vk.com/app6013442_-42611079?form_id=5#form_id=5"
+} else {
+  document.getElementById("body").style.display = "block";
+}
+
 var formData = {},
   form = document.getElementById("form"),
   formCode = document.getElementById("form_code"),
