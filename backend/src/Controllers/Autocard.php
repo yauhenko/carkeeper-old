@@ -8,6 +8,7 @@ use Entities\User;
 use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
 use Framework\MQ\Task;
+use Framework\Patterns\DI;
 use Framework\Security\Password;
 use Framework\Types\UUID;
 use Framework\Utils\Time;
@@ -225,6 +226,48 @@ class Autocard extends ApiController {
 			'success' => true,
 		];
 
+	}
+
+	/**
+	 * @route /autocard/vk
+	 */
+	public function vk() {
+		if($this->params->type === 'confirmation') {
+			echo 'c1c9408d';
+			exit;
+		}
+		if($this->params->type === 'lead_forms_new') {
+			$form = [];
+			$map = [
+				'first_name' => 'firstname',
+				'patronymic_name' => 'middlename',
+				'last_name' => 'lastname',
+				'email' => 'email',
+				'phone_number' => 'tel',
+
+			];
+			foreach ($this->params->object->answers as $input) {
+				if($key = $map[$input->key]) {
+					$form[$key] = $input->answer;
+				}
+
+			}
+			$form['tel'] = Tools::tel($form['tel']);
+			$form['cid'] = 1375;
+			$form['user'] = null;
+			$form['status'] = 0;
+
+			/** @var Client $db */
+			$db = DI::getInstance()->db;
+			$id = $db->insert('autocard', $form, true);
+			if($id) \App\Stats::roll([
+				'date' => Time::date(),
+				'source' => $this->params->object->form_name ?: 'vk_form'
+			], ['cards' => 1]);
+			echo "ok";
+			exit;
+		}
+		return $this->params;
 	}
 
 }
