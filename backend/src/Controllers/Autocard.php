@@ -148,6 +148,7 @@ class Autocard extends ApiController {
 			'lastname' => $this->params->lastname,
 			'tel' => $this->params->tel,
 			'email' => $this->params->email,
+			'cid' => $this->params->cid ?: 1031
 		], true);
 
 		if($id) \App\Stats::roll($user->getData(), ['cards' => 1]);

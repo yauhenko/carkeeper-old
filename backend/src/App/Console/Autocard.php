@@ -49,7 +49,7 @@ class Autocard extends Command {
 			$res = $client->request('POST', 'https://recard.by/ajax', [
 				'form_params' => [
 					'submitform' => 'submitform',
-					'cid' => '1031',
+					'cid' => $o['cid'] ?: 1031,
 					'surname' => $o['lastname'],
 					'firstname' => $o['firstname'],
 					'middlename' => $o['middlename'],
