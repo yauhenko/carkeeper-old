@@ -164,4 +164,67 @@ class Autocard extends ApiController {
 
 	}
 
+	/**
+	 * @route /autocard/submit3
+	 * @throws \Exception
+	 */
+	public function submit3() {
+
+		$this->filter(['tel' => [Tools::class, 'tel']], false);
+
+		$this->validate([
+			'lastname' => ['required' => true, 'length' => [2, 30]],
+			'firstname' => ['required' => true, 'length' => [2, 30]],
+			'middlename' => ['required' => true, 'length' => [2, 30]],
+			'email' => ['email' => true],
+			'tel' => ['required' => true, 'match' => '/^375(25|29|33|44)[0-9]{7}$/'],
+			'code' => ['required' => true, 'length' => [6, 6]],
+		]);
+
+		/** @var CacheInterface $ci */
+		$ci = $this->di->get('cache:redis');
+		$ip = $this->req->getClientIp();
+
+		if(!$pixel = (array)json_decode(base64_decode($this->params->pixel)))
+			$pixel = $ci->get("pixel:{$ip}") ?: [
+				'date' => Time::date(),
+				'source' => 'organic'
+			];
+
+		$data = [
+			'date' => $pixel['date'],
+			'source' => $pixel['source'],
+		];
+
+		$data['geo'] = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
+		if(preg_match('/^375/', $data['tel'])) $data['geo'] = 'BY';
+		elseif(preg_match('/^77/', $data['tel'])) $data['geo'] = 'KZ';
+		elseif(preg_match('/^7/', $data['tel'])) $data['geo'] = 'RU';
+		elseif(preg_match('/^38/', $data['tel'])) $data['geo'] = 'UA';
+
+		$auth = new Auth;
+		$auth->verifyTel($data['tel'],  $this->params->code);
+
+		/** @var Client $db */
+		$db = $this->di->db;
+		$id = $db->insert('autocard', [
+			'user' => null,
+			'status' => 0,
+			'firstname' => $this->params->firstname,
+			'middlename' => $this->params->middlename,
+			'lastname' => $this->params->lastname,
+			'tel' => $this->params->tel,
+			'email' => $this->params->email,
+			'cid' => $this->params->cid ?: 1031
+		], true);
+
+		if($id) \App\Stats::roll($data, ['cards' => 1]);
+		else throw new \Exception('Ваша заявка уже была отправлена в банк', 40055);
+
+		return [
+			'success' => true,
+		];
+
+	}
+
 }
