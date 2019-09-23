@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {StyleSheet, View, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Image, Dimensions, ImageBackground} from 'react-native';
 import {Text, List, ListItem, Left, Body, Thumbnail, Icon, Button} from 'native-base';
 import User from "../store/User";
 import Cars from "../store/Cars";
@@ -23,13 +23,13 @@ export default class Navigation extends Component {
     //   action: null
     // },
 
-    {
-      title: "АВТОКАРТА",
-      icon: "card",
-      path: "Card",
-      action: null,
-      hidden: User.profile.user.geo !== "BY"
-    },
+    // {
+    //   title: "АВТОКАРТА",
+    //   icon: "card",
+    //   path: "Card",
+    //   action: null,
+    //   hidden: User.profile.user.geo !== "BY"
+    // },
     // {
     //   title: "ОБРАТНАЯ СВЯЗЬ",
     //   icon: "text",
@@ -64,11 +64,9 @@ export default class Navigation extends Component {
     let cars = Cars.cars;
 
     return (
-      <View style={componentStyle.wrapper}>
-        <View style={[StyleSheet.absoluteFill, {alignItems: "center"}]}>
-          <Image style={{height: Dimensions.get("window").height, width: Dimensions.get("window").width, maxWidth: "100%"}} source={require("../assets/images/login_background.jpg")}/>
-        </View>
-        <View>
+
+      <ImageBackground source={require("../assets/images/login_background.jpg")} style={{width: '100%', height: '100%', flex: 1}}>
+        <View style={{flex: 1}}>
           <View style={componentStyle.top}>
             <View style={{marginRight: 15}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
@@ -112,7 +110,8 @@ export default class Navigation extends Component {
           </View>
           <Button onPress={()=>{this.props.navigation.closeDrawer(); User.logout()}} transparent><Icon style={componentStyle.bottomIcon} name={"power"}/></Button>
         </View>
-      </View>
+      </ImageBackground>
+
     )
   }
 }

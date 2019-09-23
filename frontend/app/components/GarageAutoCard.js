@@ -4,7 +4,6 @@ import styles from "../styles";
 import {Button, Icon} from "native-base";
 import { observable, action} from 'mobx';
 import {observer} from 'mobx-react';
-import Logger from "../modules/Logger";
 import User from "../store/User";
 
 @observer
@@ -40,7 +39,6 @@ export default class GarageAutoCard extends React.Component {
     try {
       await AsyncStorage.setItem("hideGarageAutoCard", "1");
     } catch (e) {
-      Logger.error(e);
     }
   };
 

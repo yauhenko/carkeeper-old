@@ -1,6 +1,5 @@
 import {AsyncStorage} from "react-native";
 import Api from "./Api";
-import Logger from "./Logger";
 
 class Pixel {
   pixel = null;
@@ -24,7 +23,6 @@ class Pixel {
         await AsyncStorage.setItem("pixel", response.pixel);
       }
     } catch (e) {
-      Logger.error("Ошибка в Pixel / request ", e)
     }
   };
 
@@ -34,7 +32,6 @@ class Pixel {
       this.pixel = await AsyncStorage.getItem("pixel", ()=>{});
       await this.request()
     } catch (e) {
-      Logger.error("Ошибка получения пикселя из локалстораджа.", e)
     }
   }
 

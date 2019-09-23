@@ -23,7 +23,6 @@ import {cdn} from "../../modules/Url";
 import AddOrEditCar from "./AddOrEditCar";
 import {number_format} from "../../modules/Utils";
 import Odo from "../../components/Odo";
-import Logger from "../../modules/Logger";
 import moment from "moment";
 
 @observer
@@ -62,7 +61,6 @@ export default class Car extends React.Component {
       });
       this.car.car.odo = this.odoValue;
       this.odoModal = false;
-      Logger.info("Пользователь обновил одометр", {odo: this.odoValue});
       Notification("Пробег сохранён");
     } catch (e) {
       Notification(e);
@@ -76,7 +74,6 @@ export default class Car extends React.Component {
           this.loading = true;
           try {
             await Cars.deleteCar(this.car.car.id);
-            Logger.info("Пользователь удалил автомобиль", {car: this.car.car.id});
             this.props.navigation.navigate('Garage');
             Cars.resetCurrentCar();
           } catch (e) {

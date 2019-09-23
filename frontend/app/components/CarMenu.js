@@ -38,9 +38,9 @@ export default class CarMenu extends React.Component {
           <Icon style={styles.footerBadge} name={"notifications"} />
         </Button>
 
-        <Button style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines")} active={this.activeButton("Fines")}>
-          <Icon style={styles.footerBadge} name={"speedometer"} />
-        </Button>
+        {/*<Button style={this.activeStyle("Fines")} onPress={()=>this.props.navigation.navigate("Fines")} active={this.activeButton("Fines")}>*/}
+        {/*  <Icon style={styles.footerBadge} name={"speedometer"} />*/}
+        {/*</Button>*/}
       </React.Fragment>
     );
   }

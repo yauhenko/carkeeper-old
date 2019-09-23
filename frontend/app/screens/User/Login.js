@@ -39,7 +39,6 @@ export default class Login extends React.Component {
       User.profile = await User.info();
       User.auth = true;
       await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
-      Logger.info("Пользователь авторизовался", {phone: String(this.tel)})
     } catch (e) {
       Vibration.vibrate(300);
       Notification(e);
@@ -67,7 +66,6 @@ export default class Login extends React.Component {
       User.profile = await User.info();
       User.auth = true;
       await AsyncStorage.multiSet([["tel", String(this.tel)],["password", String(this.password)]]);
-      Logger.info("Пользователь зарегистрировался", {phone: String(this.tel)})
     } catch (e) {
       Notification(e)
     }
@@ -132,8 +130,6 @@ export default class Login extends React.Component {
 
   @action sendSMS = async (silent = false) => {
     this.disabled = true;
-
-    Logger.info("Пользователю отправлено СМС с кодом");
 
     try {
       await User.tel({tel: this.tel});

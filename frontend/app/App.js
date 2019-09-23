@@ -22,7 +22,6 @@ import Support from "./screens/User/Support";
 import Maintenance from "./screens/Garage/Maintenance";
 import Card from "./screens/Card/Card";
 import Info from "./screens/User/Info";
-import Logger from "./modules/Logger";
 
 const Navigator = createDrawerNavigator({
   Garage: {screen: Garage},
@@ -64,7 +63,6 @@ export default class App extends React.Component {
     });
 
     Notifications.initial();
-    Logger.info("Запуск приложения");
   }
 
   render() {

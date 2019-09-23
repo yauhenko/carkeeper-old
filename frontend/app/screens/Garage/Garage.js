@@ -8,7 +8,7 @@ import { observable, action} from 'mobx';
 import Notification from "../../components/Notification";
 import {cdn} from "../../modules/Url";
 import AddOrEditCar from "./AddOrEditCar";
-import GarageAutoCard from "../../components/GarageAutoCard";
+// import GarageAutoCard from "../../components/GarageAutoCard";
 
 @observer
 export default class Garage extends React.Component {
@@ -110,7 +110,7 @@ export default class Garage extends React.Component {
             <Button style={[styles.primaryButton, {alignSelf: "center", marginBottom: 10, marginTop: 10}]} onPress={()=>{this.toggleModal(true)}}><Text style={styles.primaryButtonText}>ДОБАВИТЬ АВТОМОБИЛЬ</Text></Button>
           </View>}
 
-          {(!this.loading || Boolean(Cars.cars.cars.length)) && <GarageAutoCard navigation={this.props.navigation}/>}
+          {/*{(!this.loading || Boolean(Cars.cars.cars.length)) && <GarageAutoCard navigation={this.props.navigation}/>}*/}
 
           <AddOrEditCar cb={this.cars} edit={false} onClose={()=>{this.toggleModal(false)}} show={this.modal}/>
         </Content>
