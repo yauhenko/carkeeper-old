@@ -2,7 +2,9 @@
 
 namespace Framework\MVC;
 
+use Exception;
 use Framework\Patterns\DI;
+use Throwable;
 
 /**
  * Class AbstractConsoleApplication
@@ -50,7 +52,7 @@ abstract class AbstractConsoleApplication {
 
 	/**
 	 * AbstractConsoleApplication constructor.
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct() {
 		$this->di = DI::getInstance();
@@ -72,7 +74,7 @@ abstract class AbstractConsoleApplication {
 		try {
 			$this->{$cmd}();
 			exit;
-		} catch (\Throwable $e) {
+		} catch (Throwable $e) {
 			$this->error("{$cmd}: " . $e->getMessage(), $this->params['trace'] ? $e->getTrace() : $e->getTraceAsString());
 		}
 

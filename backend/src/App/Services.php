@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Framework\Annotations\Parser;
 use Framework\Annotations\Routes;
 use Framework\Annotations\Validations;
@@ -23,7 +24,7 @@ class Services {
 	/**
 	 * Register Services
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function register() {
 

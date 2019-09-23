@@ -4,6 +4,7 @@ namespace App;
 
 use Collections\Users;
 use Entities\User;
+use Exception;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
 use Framework\Security\Password;
@@ -23,7 +24,7 @@ class Sessions {
 	 * @param string|null $ip
 	 * @param int $ttl
 	 * @return string
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function start(User $user, string $ip = null, int $ttl = 3600): string {
 
@@ -50,7 +51,7 @@ class Sessions {
 	 * @param string $token
 	 * @param string $ip
 	 * @return User|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function get(string $token, string $ip): ?User {
 
@@ -83,7 +84,7 @@ class Sessions {
 	 *
 	 * @param string $token
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function destroy(string $token): bool {
 		/** @var Client $db */
@@ -94,7 +95,7 @@ class Sessions {
 	/**
 	 * Destroy expired sessions
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function cleanup(): void {
 		/** @var Client $db */

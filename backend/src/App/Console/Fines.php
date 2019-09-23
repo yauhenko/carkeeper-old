@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Exception;
 use Framework\Mutex\FileMutex;
 use Services\FinesService;
 use Symfony\Component\Console\Command\Command;
@@ -26,7 +27,7 @@ class Fines extends Command {
 
 		try {
 			$mutex = new FileMutex($input->getArgument('id'));
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			if($output->isVerbose())
 				$io->error($e->getMessage());
 			return;

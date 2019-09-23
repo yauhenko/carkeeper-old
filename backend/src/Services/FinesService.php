@@ -1,11 +1,13 @@
-<?php
+<?php /** @noinspection ALL */
 
 namespace Services;
 
+use App\Stats;
 use App\Tools;
 use Collections\Cars;
 use Collections\Fines;
 use Collections\Users;
+use DateTime;
 use Entities\Car;
 use Entities\Fine;
 use Entities\User;
@@ -14,15 +16,17 @@ use Framework\MQ\Task;
 use Framework\Patterns\DI;
 use Framework\Utils\Time;
 use GuzzleHttp\Client as HttpClient;
+use GuzzleHttp\Cookie\CookieJar;
 use Tasks\Mail;
 use Tasks\Push;
+use Throwable;
 
 class FinesService {
 
 	protected $jar;
 
 	public function check(int $limit = 10, callable $tick = null): void {
-
+		return;
 		Proxy::load(__DIR__ . '/../../data/proxy.txt');
 
 		/** @var DB $db */
@@ -56,7 +60,7 @@ class FinesService {
 					'read_timeout' => 10,
 					//'http_errors' => false
 				]);
-			} catch (\Throwable $e) {
+			} catch (Throwable $e) {
 				echo $e->getMessage() . PHP_EOL;
 				continue;
 			}
@@ -89,7 +93,7 @@ class FinesService {
 				//print_r($m);
 				$fines = new Fines;
 				if(!$fine = $fines->findOneBy('regid', $m[5], true)) {
-					$d = new \DateTime($m[4]);
+					$d = new DateTime($m[4]);
 					$fine = new Fine;
 					$fine->car = $car->id;
 					$fine->user = $car->user;
@@ -99,7 +103,7 @@ class FinesService {
 					$fine->insert();
 
 					$user = Users::factory()->get($car->user);
-					\App\Stats::roll((array)$user, ['fines' => 1]);
+					Stats::roll((array)$user, ['fines' => 1]);
 
 				}
 				$det = $this->getFineDetails($fine);
@@ -150,7 +154,7 @@ class FinesService {
 
 		if(!$jar = $this->jar) {
 
-			$jar = $this->jar = new \GuzzleHttp\Cookie\CookieJar;
+			$jar = $this->jar = new CookieJar;
 			$res = $http->request('GET', 'http://wmtransfer.by/pay.asp', ['cookies' => $jar]);
 
 			$data = (string)$res->getBody();

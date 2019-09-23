@@ -2,6 +2,7 @@
 
 namespace Framework\MQ;
 
+use Exception;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
 
@@ -18,7 +19,7 @@ class Queue {
 	 * @param string|null $class
 	 * @param string|null $method
 	 * @return Task|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getNextTask(string $class = null, string $method = null): ?Task {
 		/** @var Client $db */
@@ -44,7 +45,7 @@ class Queue {
 	 * @param string|null $class
 	 * @param string|null $method
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function runNextTask(string $class = null, string $method = null): bool {
 		if($task = $this->getNextTask($class, $method)) {
@@ -63,7 +64,7 @@ class Queue {
 	 * @param int $limit
 	 * @param callable|null $tick
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function runWorker(string $class = null, string $method = null, int $limit = 500, callable $tick = null): bool {
 		for($counter = 1; $counter <= $limit; $counter++) {
@@ -82,7 +83,7 @@ class Queue {
 	 *
 	 * @param string $trigger
 	 * @param null $data
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function fire(string $trigger, $data = null): void {
 		/** @var Client $db */

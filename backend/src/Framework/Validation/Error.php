@@ -2,12 +2,14 @@
 
 namespace Framework\Validation;
 
+use Exception;
+
 /**
  * Class Error
  *
  * @package Framework\Validation
  */
-class Error extends \Exception {
+class Error extends Exception {
 
 	/**
 	 * @var array

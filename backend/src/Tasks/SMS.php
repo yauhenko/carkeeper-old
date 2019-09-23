@@ -2,6 +2,7 @@
 
 namespace Tasks;
 
+use Exception;
 use Framework\MQ\Handler;
 use Framework\Patterns\DI;
 use Twilio\Rest\Client;
@@ -23,7 +24,7 @@ class SMS extends Handler {
 					'validity_period' => $cfg->validity_period ?: 24
 				]
 			]);
-			if($res->getStatusCode() !== 200) throw new \Exception('Server Error ' . $res->getStatusCode());
+			if($res->getStatusCode() !== 200) throw new Exception('Server Error ' . $res->getStatusCode());
 			return (string)$res->getBody();
 		} else {
 			/** @var object $cfg */

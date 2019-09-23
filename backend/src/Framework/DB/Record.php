@@ -2,6 +2,7 @@
 
 namespace Framework\DB;
 
+use Exception;
 use Framework\Patterns\DI;
 
 /**
@@ -32,7 +33,7 @@ abstract class Record {
      * Record constructor
      *
      * @param int|null $id
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(int $id = null) {
         $this->_schema = new Schema($this->_fields);
@@ -56,7 +57,7 @@ abstract class Record {
      * @param $value
      * @param bool $silent
      * @return Record|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function getBy(string $field, $value, bool $silent = false): ?self {
         /** @var Client $db */
@@ -67,7 +68,7 @@ abstract class Record {
         } elseif($silent) {
             return null;
         } else {
-            throw new \Exception("{$this->_name} with {$field} {$value} doesn't exists");
+            throw new Exception("{$this->_name} with {$field} {$value} doesn't exists");
         }
         return $this;
     }
@@ -77,7 +78,7 @@ abstract class Record {
      *
      * @param bool $reload
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function save(bool $reload = false): bool {
         if(!$this->_buffer) return false;
@@ -98,7 +99,7 @@ abstract class Record {
      * Delete from database
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function delete(): bool {
         if(!$this->id) return false;
@@ -117,7 +118,7 @@ abstract class Record {
     /**
      * Reload object
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function reload(): void {
         $this->getBy('id', $this->id);
@@ -169,12 +170,12 @@ abstract class Record {
      *
      * @param string $field
      * @param $value
-     * @throws \Exception
+     * @throws Exception
      */
     public function __set(string $field, $value): void {
         $method = $this->id ? 'update' : 'create';
         if(!$this->_schema->checkField($field, $method))
-            throw new \Exception("Field '{$field}' is not allowed in {$method} method", 400);
+            throw new Exception("Field '{$field}' is not allowed in {$method} method", 400);
         $value = $this->trigger('onSet', $field, $value);
         $this->_data[$field] = $this->_buffer[$field] = $value;
     }

@@ -2,11 +2,13 @@
 
 namespace Framework\Annotations;
 
+use Exception;
 use Framework\Patterns\DI;
 use Framework\Cache\CacheInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
+use ReflectionException;
 
 /**
  * Class Annotations
@@ -32,7 +34,7 @@ class Parser {
 	 * Annotations constructor
 	 *
 	 * @param array $dirs
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct(array $dirs) {
 		$this->dirs = $dirs;
@@ -79,7 +81,7 @@ class Parser {
 	 * Parse files in dirs
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	protected function parse(): array {
 		$result = [];

@@ -7,6 +7,7 @@ use Framework\Validation\Error;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{Exception\ResourceNotFoundException, RequestContext, RouteCollection};
 use Symfony\Component\HttpFoundation\{Request, Response};
+use Throwable;
 
 class ApiApplication {
 
@@ -66,7 +67,7 @@ class ApiApplication {
 				$res->setContent(json_encode(['result' => $result], JSON_UNESCAPED_UNICODE));
 			}
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
 
 			if($e instanceof \Error) $res->setStatusCode(500);
 

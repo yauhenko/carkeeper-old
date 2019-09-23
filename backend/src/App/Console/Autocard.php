@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Exception;
 use Framework\DB\Client;
 use Framework\Mutex\FileMutex;
 use Framework\Patterns\DI;
@@ -29,7 +30,7 @@ class Autocard extends Command {
 
 		try {
 			$mutex = new FileMutex($input->getArgument('id'));
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			$io->error($e->getMessage());
 			return;
 		}

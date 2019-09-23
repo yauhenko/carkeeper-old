@@ -2,6 +2,8 @@
 
 namespace Framework\Patterns;
 
+use Exception;
+
 /**
  * Trait Singleton
  *
@@ -18,7 +20,7 @@ trait Singleton {
      * Get Instance
      *
      * @return Singleton
-     * @throws \Exception
+     * @throws Exception
      */
     public static function getInstance(): self {
         if(self::$instance) return self::$instance;
@@ -28,10 +30,10 @@ trait Singleton {
     /**
      * Constructor
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct() {
-        if(self::$instance) throw new \Exception('Instance already constructed. Use ' . self::class . '::getInstance()');
+        if(self::$instance) throw new Exception('Instance already constructed. Use ' . self::class . '::getInstance()');
         self::$instance = $this;
     }
 

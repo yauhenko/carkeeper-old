@@ -2,6 +2,7 @@
 
 namespace Controllers\Garage;
 
+use App\Stats;
 use Entities\Car;
 use Collections\Cars as CarsCollection;
 use Controllers\ApiController;
@@ -51,7 +52,7 @@ class Cars extends ApiController {
 			'id' => ['required' => true, 'type' => 'int']
 		]);
 
-		/** @var \Collections\Cars $cars */
+		/** @var CarsCollection $cars */
 		$cars = CarsCollection::factory();
 
 		/** @var Car $car */
@@ -90,7 +91,7 @@ class Cars extends ApiController {
 		/** @var Car $car */
 		$car = Car::createFromData($data);
 
-		\App\Stats::roll((array)$this->user, ['cars' => 1]);
+		Stats::roll((array)$this->user, ['cars' => 1]);
 
 		return [
 			'created' => true,

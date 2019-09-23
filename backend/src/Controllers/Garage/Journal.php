@@ -6,6 +6,7 @@ use Entities\Car;
 use Entities\Journal\Record;
 use Controllers\ApiController;
 use Collections\Journal\Journal as JournalCollection;
+use Exception;
 use Framework\DB\Client;
 
 class Journal extends ApiController {
@@ -92,7 +93,7 @@ class Journal extends ApiController {
 		$data['user'] = $this->user->id;
 
 		if(!$data['maintenance'] && !$data['title'])
-			throw new \Exception('Укажите название или тип записи');
+			throw new Exception('Укажите название или тип записи');
 
 		$record = Record::createFromData($data);
 
@@ -139,7 +140,7 @@ class Journal extends ApiController {
 		$record->setData((array)$this->params->record);
 
 		if(!$record->maintenance && !$record->title)
-			throw new \Exception('Укажите название или тип записи');
+			throw new Exception('Укажите название или тип записи');
 
 		$res = $record->update();
 

@@ -5,6 +5,7 @@ namespace Controllers;
 use App\Sessions;
 use App\Tools;
 use Entities\User;
+use Exception;
 use Framework\DB\Client;
 use Framework\DB\Entity;
 use Framework\MVC\AbstractController;
@@ -35,7 +36,7 @@ abstract class ApiController extends AbstractController {
 
 	/**
 	 * ApiController constructor
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct() {
 
@@ -59,19 +60,19 @@ abstract class ApiController extends AbstractController {
 	}
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function auth(): void {
 
 		$token = $this->req->headers->get('Token') ?: $this->params->token;
 
 		if(!$token)
-			throw new \Exception('Token is not specified', 50);
+			throw new Exception('Token is not specified', 50);
 
 		$this->user = Sessions::get($token, $this->req->getClientIp());
 
 		if(!$this->user)
-			throw new \Exception('Invalid token', 51);
+			throw new Exception('Invalid token', 51);
 
 		$this->admin = in_array($this->user->id, [1, 2, 3]);
 
@@ -79,30 +80,30 @@ abstract class ApiController extends AbstractController {
 
 	protected function authAdmin(): void {
 		$this->auth();
-		if(!$this->admin) throw new \Exception('Insufficient Privileges', 403);
+		if(!$this->admin) throw new Exception('Insufficient Privileges', 403);
 	}
 
 	protected function checkAccess(string $table, int $id, string $key = 'id'): void {
 		/** @var Client $db */
 		$db = $this->di->db;
 		if(!$entry = $db->findOneBy($table, $key, $id, ['user']))
-			throw new \Exception("Объект {$table} не существует ({$key}: {$id})", 400);
+			throw new Exception("Объект {$table} не существует ({$key}: {$id})", 400);
 		if($entry['user'] !== $this->user->id)
-			throw new \Exception('В доступе отказано', 403);
+			throw new Exception('В доступе отказано', 403);
 	}
 
 	protected function checkDataAccess(array $data = null): void {
 		if(!$data)
-			throw new \Exception('Объект не существует', 404);
+			throw new Exception('Объект не существует', 404);
 		if($data['user'] !== $this->user->id)
-			throw new \Exception('В доступе отказано', 403);
+			throw new Exception('В доступе отказано', 403);
 	}
 
 	protected function checkEntityAccess(Entity $entity = null): void {
 		if(!$entity)
-			throw new \Exception('Объект не существует', 404);
+			throw new Exception('Объект не существует', 404);
 		if($entity->user !== $this->user->id)
-			throw new \Exception('В доступе отказано', 403);
+			throw new Exception('В доступе отказано', 403);
 	}
 
 	protected function validate(array $rules, string $prefix = ''): void {

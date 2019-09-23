@@ -2,6 +2,7 @@
 
 namespace Framework\DB;
 
+use Exception;
 use Framework\Patterns\DI;
 use Framework\DB\Errors\{CommonError, ConstraintError};
 use Framework\Validation\Validator;
@@ -26,7 +27,7 @@ abstract class Collection {
 	 * @return bool
 	 * @throws ConstraintError
 	 * @throws CommonError
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function insert(Entity $entity): bool {
 		$this->checkEntity($entity);
@@ -45,7 +46,7 @@ abstract class Collection {
 	 * @return bool
 	 * @throws ConstraintError
 	 * @throws CommonError
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function update(Entity $entity) {
 		$this->checkEntity($entity);
@@ -60,7 +61,7 @@ abstract class Collection {
 	 *
 	 * @param Entity $entity
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function delete(Entity $entity) {
 		$this->checkEntity($entity);
@@ -75,12 +76,12 @@ abstract class Collection {
 	 * @param Entity $entity
 	 * @param bool $silent
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function checkEntity(Entity $entity, bool $silent = false): bool {
 		if (get_class($entity) == $this->_entity) return true;
 		elseif ($silent) return false;
-		else throw new \Exception('Wrong entity type');
+		else throw new Exception('Wrong entity type');
 	}
 
 	/**
@@ -91,7 +92,7 @@ abstract class Collection {
 	 * @return array
 	 * @throws ConstraintError
 	 * @throws CommonError
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function find(string $query = null, array $data = []): array {
 		$result = [];
@@ -119,7 +120,7 @@ abstract class Collection {
 	 * @param array $data
 	 * @param bool $silent
 	 * @return Entity|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function findOne(string $query = null, array $data = [], bool $silent = false): ?Entity {
 		/** @var Client $db */
@@ -137,7 +138,7 @@ abstract class Collection {
 		} elseif ($silent) {
 			return null;
 		} else {
-			throw new \Exception('Entity does not exists', 404);
+			throw new Exception('Entity does not exists', 404);
 		}
 	}
 
@@ -148,7 +149,7 @@ abstract class Collection {
 	 * @param $value
 	 * @param bool $silent
 	 * @return Entity|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function findOneBy(string $field, $value, bool $silent = false): ?Entity {
 		/** @var Client $db */
@@ -161,7 +162,7 @@ abstract class Collection {
 		} elseif ($silent) {
 			return null;
 		} else {
-			throw new \Exception('Entity does not exists', 404);
+			throw new Exception('Entity does not exists', 404);
 		}
 	}
 
@@ -171,7 +172,7 @@ abstract class Collection {
 	 * @param int $id
 	 * @param bool $silent
 	 * @return Entity|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function get(int $id, bool $silent = false): ?Entity {
 		return $this->findOneBy('id', $id, $silent);
@@ -180,7 +181,7 @@ abstract class Collection {
 	/**
 	 * @param Entity $entity
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function exists(Entity $entity): bool {
 		/** @var Client $db */

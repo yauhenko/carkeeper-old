@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Framework\Patterns\DI;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,7 @@ class MigrationsCreate extends Command {
 		}
 		$name = $input->getArgument('name');
 		if(!$name) $name = $io->ask('Migration name', null, function($name) {
-			if(empty($name)) throw new \RuntimeException('Migration name must be not empty');
+			if(empty($name)) throw new RuntimeException('Migration name must be not empty');
 			return (string)$name;
 		});
 		$slug = str_replace(' ', '_', strtolower($name));

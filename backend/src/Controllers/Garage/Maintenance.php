@@ -2,8 +2,10 @@
 
 namespace Controllers\Garage;
 
+use DateTime;
 use Entities\Car;
 use Controllers\ApiController;
+use Exception;
 use Framework\DB\Client;
 
 class Maintenance extends ApiController {
@@ -119,7 +121,7 @@ class Maintenance extends ApiController {
 		$item = (array)$this->params->maintenance;
 
 		if(!$item['period'] && !$item['distance'])
-			throw new \Exception('Укажите пробег или периодичность обcлуживания');
+			throw new Exception('Укажите пробег или периодичность обcлуживания');
 
 
 		/** @var Car $car */
@@ -151,7 +153,7 @@ class Maintenance extends ApiController {
 		]);
 
 		if(!$item = $this->db->findOneBy('maintenance', 'id', $this->params->id))
-			throw new \Exception('Запись не существует', 404);
+			throw new Exception('Запись не существует', 404);
 
 		$this->checkDataAccess($item);
 
@@ -193,14 +195,14 @@ class Maintenance extends ApiController {
 		]);
 
 		if(!$item = $this->db->findOneBy('maintenance', 'id', $this->params->id))
-			throw new \Exception('Запись не существует', 404);
+			throw new Exception('Запись не существует', 404);
 
 		$this->checkDataAccess($item);
 
 		$item = array_merge($item, (array)$this->params->maintenance);
 
 		if(!$item['period'] && !$item['distance'])
-			throw new \Exception('Укажите пробег или периодичность обcлуживания');
+			throw new Exception('Укажите пробег или периодичность обcлуживания');
 
 		$item = self::calcNext($item);
 
@@ -225,7 +227,7 @@ class Maintenance extends ApiController {
 		]);
 
 		if(!$item = $this->db->findOneBy('maintenance', 'id', $this->params->id))
-			throw new \Exception('Запись не существует', 404);
+			throw new Exception('Запись не существует', 404);
 
 		$this->checkDataAccess($item);
 
@@ -247,7 +249,7 @@ class Maintenance extends ApiController {
 		}
 
 		if($item['last_date'] !== null && $item['period']) {
-			$d = new \DateTime($item['last_date']);
+			$d = new DateTime($item['last_date']);
 			$d->modify('+' . $item['period'] . ' ' . $item['period_type']);
 			$item['next_date'] = $d->format('Y-m-d');
 		} else {

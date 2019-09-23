@@ -6,6 +6,7 @@ use App\Tools;
 use App\Sessions;
 use Entities\User;
 use Collections\Users;
+use Exception;
 use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
 use Framework\MQ\Task;
@@ -16,6 +17,7 @@ use Framework\Validation\Validator;
 use Tasks\Mail;
 use Tasks\Push;
 use Tasks\SMS;
+use Throwable;
 
 /**
  * Class Auth
@@ -53,17 +55,17 @@ class Auth extends ApiController {
 			/** @var User $user */
 			$user = $Users->findOneBy('uuid', $this->params->uuid, true);
 		} else {
-			throw new \Exception('Укажите E-mail или Телефон', 400);
+			throw new Exception('Укажите E-mail или Телефон', 400);
 		}
 
 		if((!$this->params->password && !$this->params->uuid) || $this->params->exists)
 			return ['exists' => (bool)$user];
 
 		if(!$user)
-			throw new \Exception('Пользователь не существует', 400);
+			throw new Exception('Пользователь не существует', 400);
 
 		if($user->password && !Password::checkHash($this->params->password, $user->password))
-			throw new \Exception('Неверный пароль', 403);
+			throw new Exception('Неверный пароль', 403);
 
 		if($this->params->fcm) {
 			$user->fcm = $this->params->fcm;
@@ -98,7 +100,7 @@ class Auth extends ApiController {
 
 	/**
 	 * @route /account/register
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function register() {
 
@@ -131,7 +133,7 @@ class Auth extends ApiController {
 		$data = (array)$this->params->user;
 
 		if(!$data['uuid'] && !$data['email'] && !$data['tel'])
-			throw new \Exception('Необходимо указать E-mail или телефон', 400);
+			throw new Exception('Необходимо указать E-mail или телефон', 400);
 
 		$data['tel'] = $data['tel'] ? Tools::tel($data['tel']) : null;
 		$data['fcm'] = $this->params->fcm ?: null;
@@ -144,13 +146,13 @@ class Auth extends ApiController {
 		$users = new Users;
 
 		if($data['tel'] && $ex = $users->findOneBy('tel', $data['tel'], true))
-			throw new \Exception('Телефон уже зарегистрирован', 40001);
+			throw new Exception('Телефон уже зарегистрирован', 40001);
 
 		if($data['email'] && $ex = $users->findOneBy('email', $data['email'], true))
-			throw new \Exception('E-mail уже зарегистрирован', 40002);
+			throw new Exception('E-mail уже зарегистрирован', 40002);
 
 		if($data['uuid'] && $ex = $users->findOneBy('uuid', $data['uuid'], true))
-			throw new \Exception('UUID уже зарегистрирован', 40003);
+			throw new Exception('UUID уже зарегистрирован', 40003);
 
 		$data['geo'] = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
 		if(preg_match('/^375/', $data['tel'])) $data['geo'] = 'BY';
@@ -196,8 +198,8 @@ class Auth extends ApiController {
 
 		try {
 			$res = $this->user->save();
-		} catch (\Throwable $e) {
-			throw new \Exception('E-mail уже используется другим пользователем');
+		} catch (Throwable $e) {
+			throw new Exception('E-mail уже используется другим пользователем');
 		}
 
 		return $res;
@@ -249,11 +251,11 @@ class Auth extends ApiController {
 			/** @var User $user */
 			$user = Users::factory()->findOneBy('tel', $this->params->tel, true);
 		} else {
-			throw new \Exception('Укажите E-mail или телефон');
+			throw new Exception('Укажите E-mail или телефон');
 		}
 
 		if(!$user)
-			throw new \Exception('Пользователь не существует', 400);
+			throw new Exception('Пользователь не существует', 400);
 
 		$ticket = Password::getMedium(64);
 		$secret = Password::getMedium(64);
@@ -303,7 +305,7 @@ class Auth extends ApiController {
 		$ci = $this->di->get('cache:redis');
 
 		if(!$token = $ci->get($this->params->ticket))
-			throw new \Exception('Ticket invalid or expired', 400);
+			throw new Exception('Ticket invalid or expired', 400);
 
 		if($token === 'sent') return ['status' => 'wait'];
 
@@ -326,7 +328,7 @@ class Auth extends ApiController {
 		$ci = $this->di->get('cache:redis');
 
 		if(!$recovery = $ci->get($this->params->secret))
-			throw new \Exception('Secret invalid or expired', 400);
+			throw new Exception('Secret invalid or expired', 400);
 
 		$ip = $this->params->noip ? null : $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
@@ -443,8 +445,8 @@ class Auth extends ApiController {
 		$cnt = (int)$ci->get("tel:{$tel}:cnt");
 		$lock = (int)$ci->get("tel:{$tel}:lock");
 
-		if($lock) throw new \Exception('Запросить код еще раз можно через ' . ($lock - time()) . ' сек.', 40031);
-		if($cnt >= 3) throw new \Exception('Достигнут лимит SMS. Попробуйте позже', 40030);
+		if($lock) throw new Exception('Запросить код еще раз можно через ' . ($lock - time()) . ' сек.', 40031);
+		if($cnt >= 3) throw new Exception('Достигнут лимит SMS. Попробуйте позже', 40030);
 
 		$code = Password::getPin(6);
 
@@ -502,8 +504,8 @@ class Auth extends ApiController {
 		$cnt = (int)$ci->get("email:{$email}:cnt");
 		$lock = (int)$ci->get("email:{$email}:lock");
 
-		if($lock) throw new \Exception('Запросить код еще раз можно через ' . ($lock - time()) . ' сек.', 40031);
-		if($cnt >= 3) throw new \Exception('Достигнут лимит. Попробуйте позже', 40030);
+		if($lock) throw new Exception('Запросить код еще раз можно через ' . ($lock - time()) . ' сек.', 40031);
+		if($cnt >= 3) throw new Exception('Достигнут лимит. Попробуйте позже', 40030);
 
 		$code = Password::getPin(6);
 
@@ -553,14 +555,14 @@ class Auth extends ApiController {
 
 		$att = (int)$ci->get("tel:{$tel}:att");
 		if($att >= 3)
-			throw new \Exception('Превышен лимит попыток. Запросите новый код', 40034);
+			throw new Exception('Превышен лимит попыток. Запросите новый код', 40034);
 
 		if(!$codeSent = $ci->get("tel:{$tel}:code"))
-			throw new \Exception('Срок действия кода истек. Запросите новый', 40032);
+			throw new Exception('Срок действия кода истек. Запросите новый', 40032);
 
 		if($codeSent != $code) {
 			$ci->set("tel:{$tel}:att", $att + 1, 3600);
-			throw new \Exception('Указан неверный код. Осталось попыток: ' . (2 - $att), 40033);
+			throw new Exception('Указан неверный код. Осталось попыток: ' . (2 - $att), 40033);
 		}
 
 	}
@@ -571,14 +573,14 @@ class Auth extends ApiController {
 
 		$att = (int)$ci->get("email:{$email}:att");
 		if($att >= 3)
-			throw new \Exception('Превышен лимит попыток. Запросите новый код', 40034);
+			throw new Exception('Превышен лимит попыток. Запросите новый код', 40034);
 
 		if(!$codeSent = $ci->get("email:{$email}:code"))
-			throw new \Exception('Срок действия кода истек. Запросите новый', 40032);
+			throw new Exception('Срок действия кода истек. Запросите новый', 40032);
 
 		if($codeSent != $code) {
 			$ci->set("email:{$email}:att", $att + 1, 3600);
-			throw new \Exception('Указан неверный код. Осталось попыток: ' . (2 - $att), 40033);
+			throw new Exception('Указан неверный код. Осталось попыток: ' . (2 - $att), 40033);
 		}
 
 	}

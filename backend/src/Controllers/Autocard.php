@@ -5,6 +5,7 @@ namespace Controllers;
 use App\Tools;
 use Collections\Users;
 use Entities\User;
+use Exception;
 use Framework\Cache\CacheInterface;
 use Framework\DB\Client;
 use Framework\MQ\Task;
@@ -68,7 +69,7 @@ class Autocard extends ApiController {
 		$form['user'] = $this->user->id;
 
 		$id = $db->insert('autocard', $form, true);
-		if(!$id) throw new \Exception("Заявка с указанным номером телефона уже отправлена");
+		if(!$id) throw new Exception("Заявка с указанным номером телефона уже отправлена");
 
 		\App\Stats::roll((array)$this->user, ['cards' => 1]);
 
@@ -81,7 +82,7 @@ class Autocard extends ApiController {
 
 	/**
 	 * @route /autocard/submit2
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function submit2() {
 
@@ -121,10 +122,10 @@ class Autocard extends ApiController {
 		$users = new Users;
 
 		if($data['tel'] && $ex = $users->findOneBy('tel', $data['tel'], true))
-			throw new \Exception('Телефон уже зарегистрирован', 40001);
+			throw new Exception('Телефон уже зарегистрирован', 40001);
 
 		if($data['email'] && $ex = $users->findOneBy('email', $data['email'], true))
-			throw new \Exception('E-mail уже зарегистрирован', 40002);
+			throw new Exception('E-mail уже зарегистрирован', 40002);
 
 		$data['geo'] = $_SERVER['HTTP_CF_IPCOUNTRY'] ?: 'BY';
 		if(preg_match('/^375/', $data['tel'])) $data['geo'] = 'BY';
@@ -167,7 +168,7 @@ class Autocard extends ApiController {
 
 	/**
 	 * @route /autocard/submit3
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function submit3() {
 
@@ -220,7 +221,7 @@ class Autocard extends ApiController {
 		], true);
 
 		if($id) \App\Stats::roll($data, ['cards' => 1]);
-		else throw new \Exception('Ваша заявка уже была отправлена в банк', 40055);
+		else throw new Exception('Ваша заявка уже была отправлена в банк', 40055);
 
 		return [
 			'success' => true,

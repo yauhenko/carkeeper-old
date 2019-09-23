@@ -2,6 +2,7 @@
 
 namespace Framework\DB;
 
+use DateTime;
 use Framework\DB\Errors\CommonError;
 use Framework\DB\Errors\ConstraintError;
 use mysqli;
@@ -241,7 +242,7 @@ class Client {
 		if(is_integer($value) || is_float($value)) return (string)$value;
 		elseif(is_bool($value)) return $value ? 'TRUE' : 'FALSE';
 		elseif(is_null($value)) return 'NULL';
-		elseif($value instanceof \DateTime) return '"' . $value->format('Y-m-d H:i:s') . '"';
+		elseif($value instanceof DateTime) return '"' . $value->format('Y-m-d H:i:s') . '"';
 		elseif(is_array($value)) {
 			$result = [];
 			foreach ($value as $v) $result[] = $this->escape($v);

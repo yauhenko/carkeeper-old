@@ -3,14 +3,16 @@
 namespace Framework\DB;
 
 use App\References;
+use Exception;
 use Framework\Patterns\DI;
+use Iterator;
 
 /**
  * Class Pager
  *
  * @package Framework\DB
  */
-class Pager implements \Iterator {
+class Pager implements Iterator {
 
 	/**
 	 * Count items using COUNT(*) statement
@@ -109,7 +111,7 @@ class Pager implements \Iterator {
 	 *
 	 * @param int $page
 	 * @param int $limit
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __construct(int $page = 1, int $limit = 50) {
 		$this->setPage($page);
@@ -123,7 +125,7 @@ class Pager implements \Iterator {
 	 * @param int $page
 	 * @param int $limit
 	 * @return Pager
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public static function create(int $page = 1, int $limit = 50): self {
 		return new self($page, $limit);
