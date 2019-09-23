@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Exception;
 use Framework\MQ\Queue;
 use Framework\Mutex\FileMutex;
 use Symfony\Component\Console\Command\Command;
@@ -28,7 +29,7 @@ class MQ extends Command {
 
 		try {
 			$mutex = new FileMutex($input->getArgument('id'));
-		} catch (\Exception $e) {
+		} catch (Exception $e) {
 			if($input->getOption('verbose'))
 				$io->error($e->getMessage());
 			return;

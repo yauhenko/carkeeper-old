@@ -2,8 +2,11 @@
 
 namespace Framework\MVC;
 
+use Exception;
 use Framework\Patterns\DI;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
+
 
 /**
  * Class Controller
@@ -24,7 +27,7 @@ abstract class AbstractController {
     /**
      * @param $data
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     final public function json($data): Response {
     	/** @var Response $res */
@@ -38,7 +41,7 @@ abstract class AbstractController {
     /**
      * @param $data
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     final public function jsonResult($data): Response {
 	    return $this->json(['result' => $data]);
@@ -49,7 +52,7 @@ abstract class AbstractController {
      * @param int $code
      * @param mixed|null $context
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
     final public function jsonError(string $message, int $code = -1, $context = null): Response {
 	    $error = ['message' => $message, 'code' => $code];
@@ -61,12 +64,9 @@ abstract class AbstractController {
      * @param string $template
      * @param array $context
      * @return Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     final public function render(string $template, array $context = []): Response {
-    	/** @var \Twig_Environment $twig */
+    	/** @var Environment $twig */
         $twig = $this->di->twig;
         /** @var Response $res */
 	    $res = $this->di->response;

@@ -2,6 +2,7 @@
 
 namespace Framework\DB;
 
+use Exception;
 use Framework\Annotations\Parser;
 use Framework\DB\Errors\CommonError;
 use Framework\DB\Errors\ConstraintError;
@@ -26,7 +27,7 @@ abstract class Entity {
 	 * @return bool
 	 * @throws ConstraintError
 	 * @throws CommonError
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function save(): bool {
 		$collection = $this->getCollection();
@@ -40,7 +41,7 @@ abstract class Entity {
 	/**
 	 * Insert new Entity to Collection
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function insert(): bool {
 		$collection = $this->getCollection();
@@ -51,7 +52,7 @@ abstract class Entity {
 	 * Update Entity in Collection
 	 *
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function update(): bool {
 		$collection = $this->getCollection();
@@ -62,7 +63,7 @@ abstract class Entity {
 	 * Delete Entity from Collection
 	 *
 	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function delete(): bool {
 		$collection = $this->getCollection();
@@ -120,10 +121,10 @@ abstract class Entity {
 	 * Magic getter
 	 *
 	 * @param string $name
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __get(string $name) {
-		throw new \Exception('Unknown property: ' . $name, 400);
+		throw new Exception('Unknown property: ' . $name, 400);
 	}
 
 	/**
@@ -131,10 +132,10 @@ abstract class Entity {
 	 *
 	 * @param string $name
 	 * @param $value
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function __set(string $name, $value) {
-		throw new \Exception('Unknown property: ' . $name, 400);
+		throw new Exception('Unknown property: ' . $name, 400);
 	}
 
 	/**
@@ -151,7 +152,7 @@ abstract class Entity {
 	 *
 	 * @param string $field
 	 * @return Entity|null
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function ref(string $field): ?Entity {
 
@@ -163,7 +164,7 @@ abstract class Entity {
 		$ann = DI::getInstance()->annotations;
 
 		if(!$ref = $ann->getProperties($this)[$field]['ref'])
-			throw new \Exception('Referrence ' . $field . ' does not exists on ' . get_class($this), 500);
+			throw new Exception('Referrence ' . $field . ' does not exists on ' . get_class($this), 500);
 
 		/** @var Entity $obj */
 		$obj = new $ref['class'];

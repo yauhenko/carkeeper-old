@@ -4,6 +4,7 @@ namespace Controllers\Admin;
 
 use Controllers\ApiController;
 use Collections\Users as UsersCollection;
+use Exception;
 use Framework\DB\Pager;
 use Framework\MQ\Task;
 use Tasks\Push;
@@ -53,7 +54,7 @@ class Users extends ApiController {
 	 */
 	public function delete(): array {
 		$this->authAdmin();
-		if(in_array($this->params->id, [1, 3])) throw new \Exception('Нельзя удалять супер админов!');
+		if(in_array($this->params->id, [1, 3])) throw new Exception('Нельзя удалять супер админов!');
 		$user = UsersCollection::factory()->get($this->params->id);
 		$user->delete();
 		return [

@@ -2,6 +2,8 @@
 
 namespace Framework\Patterns;
 
+use Exception;
+
 /**
  * Class DI
  *
@@ -43,7 +45,7 @@ class DI {
      *
      * @param string $name
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function get(string $name) {
         if($this->container[$name]) {
@@ -51,7 +53,7 @@ class DI {
         } elseif($this->factories[$name]) {
             return $this->container[$name] = $this->factories[$name]($this);
         } else {
-            throw new \Exception("Service '{$name}' is not registered");
+            throw new Exception("Service '{$name}' is not registered");
         }
     }
 
@@ -70,7 +72,7 @@ class DI {
      *
      * @param string $name
      * @return mixed
-     * @throws \Exception
+     * @throws Exception
      */
     public function __get(string $name) {
         return $this->get($name);

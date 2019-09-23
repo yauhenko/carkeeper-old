@@ -5,6 +5,7 @@ namespace Controllers\Garage;
 use Entities\Car;
 use Controllers\ApiController;
 use Collections\Cars as CarsCollection;
+use Exception;
 use Framework\DB\Client;
 use Framework\Patterns\DI;
 
@@ -17,7 +18,7 @@ class FinesRU extends ApiController {
 		parent::__construct();
 		$this->auth();
 		if($this->user->geo !== 'RU')
-			throw new \Exception('Данный раздел недоступен для Вашего региона');
+			throw new Exception('Данный раздел недоступен для Вашего региона');
 		$this->db = DI::getInstance()->db;
 	}
 

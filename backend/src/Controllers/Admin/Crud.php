@@ -4,6 +4,7 @@ namespace Controllers\Admin;
 
 use App\References;
 use Controllers\ApiController;
+use Exception;
 use Framework\DB\Client;
 use Framework\DB\Pager;
 
@@ -39,7 +40,7 @@ class Crud extends ApiController {
 	public function get(): array {
 		$this->authAdmin();
 		$item = $this->db->findOneBy($this->di->params['table'], 'id', $this->params->id);
-		if(!$item) throw new \Exception('Item not found', 404);
+		if(!$item) throw new Exception('Item not found', 404);
 		/** @var References $refs */
 		$refs = $this->di->refs;
 		return [

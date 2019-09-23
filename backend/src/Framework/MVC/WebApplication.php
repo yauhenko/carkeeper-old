@@ -6,6 +6,8 @@ use Framework\Patterns\{DI, Singleton};
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\{RequestContext, RouteCollection};
 use Symfony\Component\HttpFoundation\{Request, Response};
+use Throwable;
+use Twig\Environment;
 
 class WebApplication {
 
@@ -48,11 +50,11 @@ class WebApplication {
                 $res = Response::create('Empty response', 444);
             }
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
 
 			$code = $e->getCode() ?: 500;
 
-			/** @var \Twig_Environment $twig */
+			/** @var Environment $twig */
             $twig = $this->di->twig;
             $res = new Response;
 			if($code >= 200 && $code <= 599) $res->setStatusCode($code);

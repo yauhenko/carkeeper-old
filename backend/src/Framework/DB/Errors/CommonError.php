@@ -2,12 +2,14 @@
 
 namespace Framework\DB\Errors;
 
+use Error;
+
 /**
  * Class DB CommonError
  *
  * @package Framework\DB\Errors
  */
-class CommonError extends \Error {
+class CommonError extends Error {
 
 	/** @var string */
 	protected $sql;

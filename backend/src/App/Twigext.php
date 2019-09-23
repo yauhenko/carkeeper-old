@@ -2,55 +2,55 @@
 
 namespace App;
 
-use Twig_Filter;
-use Twig_Function;
-use Twig_Extension;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 /**
  * Class Twigext
  * @package App
  */
-class Twigext extends Twig_Extension {
+class Twigext extends AbstractExtension {
 
 	/**
-	 * @return array|Twig_Filter[]
+	 * @return array|TwigFilter[]
 	 */
 	public function getFilters() {
 		return [
-			new Twig_Filter('t', 't'),
-			new Twig_Filter('bbcode', [$this, 'bbcode'], ['is_safe' => ['html']]),
-			new Twig_Filter('sign', [$this, 'sign']),
-			new Twig_Filter('dump', [$this, 'dump']),
-			new Twig_Filter('def', [$this, 'def'], ['is_safe' => ['html']]),
-			new Twig_Filter('hl', [$this, 'hl'], ['is_safe' => ['html']]),
-			new Twig_Filter('color', [$this, 'color'], ['is_safe' => ['html']]),
-			new Twig_Filter('contrast', [$this, 'contrast'], ['is_safe' => ['html']]),
-			new Twig_Filter('unhtml', [$this, 'unhtml']),
-			new Twig_Filter('truncate', [$this, 'truncate']),
-			new Twig_Filter('substr', 'mb_substr'),
+			new TwigFilter('t', 't'),
+			new TwigFilter('bbcode', [$this, 'bbcode'], ['is_safe' => ['html']]),
+			new TwigFilter('sign', [$this, 'sign']),
+			new TwigFilter('dump', [$this, 'dump']),
+			new TwigFilter('def', [$this, 'def'], ['is_safe' => ['html']]),
+			new TwigFilter('hl', [$this, 'hl'], ['is_safe' => ['html']]),
+			new TwigFilter('color', [$this, 'color'], ['is_safe' => ['html']]),
+			new TwigFilter('contrast', [$this, 'contrast'], ['is_safe' => ['html']]),
+			new TwigFilter('unhtml', [$this, 'unhtml']),
+			new TwigFilter('truncate', [$this, 'truncate']),
+			new TwigFilter('substr', 'mb_substr'),
 		];
 	}
 
 	/**
-	 * @return array|Twig_Function[]
+	 * @return array|TwigFunction[]
 	 */
 	public function getFunctions() {
 		return [
-			new Twig_Function('icon',  [$this, 'icon'], ['is_safe' => ['html']]),
-			new Twig_Function('params',  [$this, 'params'], ['is_safe' => ['html']]),
-			new Twig_Function('trans', [$this, 'trans']),
-			new Twig_Function('t', 't'),
-			new Twig_Function('sort', [$this, 'html_sort'], ['is_safe' => ['html']]),
-			new Twig_Function('perms', [$this, 'perms'], ['is_safe' => ['html']]),
-			new Twig_Function('is_array', 'is_array'),
-			new Twig_Function('date_diff', [$this, 'date_diff']),
-			new Twig_Function('str_pad', 'str_pad'),
-			new Twig_Function('str_repeat', 'str_repeat'),
-			new Twig_Function('count', 'count'),
-			new Twig_Function('implode', 'implode'),
-			new Twig_Function('dataurl', [$this, 'dataurl']),
-			new Twig_Function('cdn', [$this, 'cdn']),
-			new Twig_Function('replaceUpload', [$this, 'replaceUpload']),
+			new TwigFunction('icon',  [$this, 'icon'], ['is_safe' => ['html']]),
+			new TwigFunction('params',  [$this, 'params'], ['is_safe' => ['html']]),
+			new TwigFunction('trans', [$this, 'trans']),
+			new TwigFunction('t', 't'),
+			new TwigFunction('sort', [$this, 'html_sort'], ['is_safe' => ['html']]),
+			new TwigFunction('perms', [$this, 'perms'], ['is_safe' => ['html']]),
+			new TwigFunction('is_array', 'is_array'),
+			new TwigFunction('date_diff', [$this, 'date_diff']),
+			new TwigFunction('str_pad', 'str_pad'),
+			new TwigFunction('str_repeat', 'str_repeat'),
+			new TwigFunction('count', 'count'),
+			new TwigFunction('implode', 'implode'),
+			new TwigFunction('dataurl', [$this, 'dataurl']),
+			new TwigFunction('cdn', [$this, 'cdn']),
+			new TwigFunction('replaceUpload', [$this, 'replaceUpload']),
 		];
 	}
 
