@@ -161,6 +161,7 @@ class Auth extends ApiController {
 		elseif(preg_match('/^38/', $data['tel'])) $data['geo'] = 'UA';
 
 		if($data['tel']) $this->verifyTel($data['tel'],  $this->params->code);
+		if($data['email']) $this->verifyEmail($data['email'],  $this->params->code);
 
 		$user = new User;
 		$user->setData($data);
