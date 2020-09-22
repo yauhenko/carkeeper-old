@@ -242,55 +242,85 @@ class Auth extends ApiController {
 	/**
 	 * @route /account/recovery/email
 	 */
-	public function recovery() {
+	public function recoveryEmail() {
 
-		if($this->params->email) {
-			/** @var User $user */
-			$user = Users::factory()->findOneBy('email', $this->params->email, true);
-		} elseif($this->params->tel) {
-			/** @var User $user */
-			$user = Users::factory()->findOneBy('tel', $this->params->tel, true);
-		} else {
-			throw new Exception('Укажите E-mail или телефон');
-		}
+		$this->validate([
+			'email' => ['required' => true, 'email' => true],
+			'code' => ['required' => true],
+		]);
 
-		if(!$user)
-			throw new Exception('Пользователь не существует', 400);
-
-		$ticket = Password::getMedium(64);
-		$secret = Password::getMedium(64);
+		$this->verifyEmail($this->params->email, $this->params->code);
 
 		$ip = $this->params->noip ? null : $this->req->getClientIp();
 		$ttl = $this->params->ttl ?: 3600;
 
-		/** @var CacheInterface $ci */
-		$ci = $this->di->get('cache:redis');
+		/** @var User $user */
+		$user = Users::factory()->findOneBy('email', $this->params->email);
+		$user->fcm = $this->params->fcm;
+		$user->fcm_auth = 1;
+		$user->update();
 
-		$ci->set($secret, [
-			'user' => $user->id,
-			'ticket' => $ticket,
-			'ip' => $ip,
-			'ttl' => $ttl,
-			'fcm' => $this->params->fcm
-		], 3600);
-
-		$ci->set($ticket, 'sent', 3600);
-
-		$link = "https://carkeeper.pro/recovery?secret={$secret}";
-
-		Task::create([Mail::class, 'sendTpl'], [
-			'tpl' => 'mail/recovery.twig',
-			'to' => "{$user->name} <{$user->email}>",
-			'subject' => 'Восстановление доступа',
-			'user' => $user,
-			'link' => $link
-		])->start();
+		$token = Sessions::start($user, $ip, $ttl);
 
 		return [
-			'ticket' => $ticket
+			'token' => $token
 		];
 
 	}
+
+//
+//	/**
+//	 * route /account/recovery/email
+//	 */
+//	public function recovery() {
+//
+//		if($this->params->email) {
+//			/** @var User $user */
+//			$user = Users::factory()->findOneBy('email', $this->params->email, true);
+//		} elseif($this->params->tel) {
+//			/** @var User $user */
+//			$user = Users::factory()->findOneBy('tel', $this->params->tel, true);
+//		} else {
+//			throw new Exception('Укажите E-mail или телефон');
+//		}
+//
+//		if(!$user)
+//			throw new Exception('Пользователь не существует', 400);
+//
+//		$ticket = Password::getMedium(64);
+//		$secret = Password::getMedium(64);
+//
+//		$ip = $this->params->noip ? null : $this->req->getClientIp();
+//		$ttl = $this->params->ttl ?: 3600;
+//
+//		/** @var CacheInterface $ci */
+//		$ci = $this->di->get('cache:redis');
+//
+//		$ci->set($secret, [
+//			'user' => $user->id,
+//			'ticket' => $ticket,
+//			'ip' => $ip,
+//			'ttl' => $ttl,
+//			'fcm' => $this->params->fcm
+//		], 3600);
+//
+//		$ci->set($ticket, 'sent', 3600);
+//
+//		$link = "https://carkeeper.pro/recovery?secret={$secret}";
+//
+//		Task::create([Mail::class, 'sendTpl'], [
+//			'tpl' => 'mail/recovery.twig',
+//			'to' => "{$user->name} <{$user->email}>",
+//			'subject' => 'Восстановление доступа',
+//			'user' => $user,
+//			'link' => $link
+//		])->start();
+//
+//		return [
+//			'ticket' => $ticket
+//		];
+//
+//	}
 
 	/**
 	 * @route /account/recovery/email/ticket
