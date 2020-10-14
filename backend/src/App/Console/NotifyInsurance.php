@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Tools;
-use Collections\Users;
+//use Collections\Users;
 use Framework\DB\Client;
 use Framework\MQ\Task;
 use Framework\Patterns\DI;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Tasks\Mail;
+//use Tasks\Mail;
 use Tasks\Push;
 
 class NotifyInsurance extends Command {
@@ -67,15 +67,15 @@ class NotifyInsurance extends Command {
 			elseif($item['days'] === 0) $msg = "Сегодня истекает страховка";
 			elseif($item['days'] < 0) $msg = "Истекла страховка";
 
-			if($item['email']) {
-				Task::create([Mail::class, 'sendTpl'], [
-					'tpl' => 'mail/simple.twig',
-					'to' => $item['email'],
-					'user' => Users::factory()->get($item['id']),
-					'subject' => "Необходимо продлить страховку" . $type,
-					'html' => "<p>{$msg}{$type} вашего автомобиля <b>{$item['car']}</b></p>"
-				])->start();
-			}
+//			if($item['email']) {
+//				Task::create([Mail::class, 'sendTpl'], [
+//					'tpl' => 'mail/simple.twig',
+//					'to' => $item['email'],
+//					'user' => Users::factory()->get($item['id']),
+//					'subject' => "Необходимо продлить страховку" . $type,
+//					'html' => "<p>{$msg}{$type} вашего автомобиля <b>{$item['car']}</b></p>"
+//				])->start();
+//			}
 
 			if($item['fcm']) {
 				Task::create(Push::class, [

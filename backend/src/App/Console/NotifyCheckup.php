@@ -63,15 +63,15 @@ class NotifyCheckup extends Command {
 			elseif($item['days'] === 0) $msg = "Сегодня истекает срок техосмотра";
 			elseif($item['days'] < 0) $msg = "Истек срок техосмотра";
 
-			if($item['email']) {
-				Task::create([Mail::class, 'sendTpl'], [
-					'tpl' => 'mail/simple.twig',
-					'to' => $item['email'],
-					'user' => Users::factory()->get($item['id']),
-					'subject' => "Необходимо пройти техосмотр",
-					'html' => "<p>{$msg} вашего автомобиля <b>{$item['car']}</b></p>"
-				])->start();
-			}
+//			if($item['email']) {
+//				Task::create([Mail::class, 'sendTpl'], [
+//					'tpl' => 'mail/simple.twig',
+//					'to' => $item['email'],
+//					'user' => Users::factory()->get($item['id']),
+//					'subject' => "Необходимо пройти техосмотр",
+//					'html' => "<p>{$msg} вашего автомобиля <b>{$item['car']}</b></p>"
+//				])->start();
+//			}
 
 			if($item['fcm']) {
 				Task::create(Push::class, [
